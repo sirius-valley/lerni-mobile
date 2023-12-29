@@ -1,9 +1,10 @@
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import React from 'react'
+import { Link } from 'expo-router'
 
 type Props = {}
 
-const HomePage = (props: Props) => {
+const Landing = (props: Props) => {
   return (
     <View
       style={{
@@ -12,9 +13,12 @@ const HomePage = (props: Props) => {
         alignItems: 'center',
       }}
     >
-      <Text>Home Page</Text>
+      <Text>Landing</Text>
+      <Link asChild href={'home'}>
+        <Button title='Home'></Button>
+      </Link>
     </View>
   )
 }
 
-export default HomePage
+export default Landing
