@@ -1,8 +1,8 @@
-import { api } from './api'
-import { PokemonResponse } from './types/'
+import { api } from './api';
+import { PokemonResponse } from './types/';
 
 export const pokemonApi = api.injectEndpoints({
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getPokemon: builder.query<PokemonResponse, string>({
       query: () => ({
         url: `https://pokeapi.co/api/v2/pokemon?limit=10&offset=0`,
@@ -10,6 +10,6 @@ export const pokemonApi = api.injectEndpoints({
       }),
     }),
   }),
-})
+});
 
-export const { useGetPokemonQuery } = pokemonApi
+export const { useGetPokemonQuery } = pokemonApi;

@@ -1,7 +1,7 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text } from 'react-native';
+import React from 'react';
 
-type Props = {}
+type Props = {};
 
 const Home = (props: Props) => {
   return (
@@ -14,7 +14,7 @@ const Home = (props: Props) => {
     >
       <Text>Home</Text>
     </View>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

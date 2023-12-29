@@ -1,9 +1,9 @@
 export interface PokemonResponse {
-  count: number
-  next: string
-  previous: null | string
+  count: number;
+  next: string;
+  previous: null | string;
   results: {
-    name: string
-    url: string
-  }[]
+    name: string;
+    url: string;
+  }[];
 }

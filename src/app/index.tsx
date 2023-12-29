@@ -1,8 +1,8 @@
-import { View, Text, Button } from 'react-native'
-import React from 'react'
-import { Link } from 'expo-router'
+import { View, Text, Button } from 'react-native';
+import React from 'react';
+import { Link } from 'expo-router';
 
-type Props = {}
+type Props = {};
 
 const Landing = (props: Props) => {
   return (
@@ -15,10 +15,10 @@ const Landing = (props: Props) => {
     >
       <Text>Landing</Text>
       <Link asChild href={'home'}>
-        <Button title='Home'></Button>
+        <Button title="Home"></Button>
       </Link>
     </View>
-  )
-}
+  );
+};
 
-export default Landing
+export default Landing;

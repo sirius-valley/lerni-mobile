@@ -173,5 +173,5 @@ export const theme = {
       letterSpacing: '10%',
     },
   },
-}
-export type MyTheme = typeof theme
+};
+export type MyTheme = typeof theme;
