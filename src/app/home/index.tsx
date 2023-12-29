@@ -4,11 +4,9 @@ import { useGetPokemonQuery } from '../../redux/service/pokemon.service';
 
 const Home = () => {
   console.log('hola');
-  
-  const pokemon = useGetPokemonQuery('')
-  console.log(
-  'hola', pokemon
-  );
+
+  const pokemon = useGetPokemonQuery('');
+  console.log('hola', pokemon);
 
   return (
     <View

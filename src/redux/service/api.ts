@@ -5,12 +5,12 @@ const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_BASE_URL || '',
   prepareHeaders: (headers) => {
     const mobilePlatforms = ['android', 'ios'];
-    if(!mobilePlatforms.includes(Platform.OS)) {
+    if (!mobilePlatforms.includes(Platform.OS)) {
       const token = localStorage.getItem('token');
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
-      };
-    };
+      }
+    }
     return headers;
   },
 });

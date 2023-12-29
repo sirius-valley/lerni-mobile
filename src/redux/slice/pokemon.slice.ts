@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { pokemonApi } from '../service/pokemon.service';
 
-interface initialStateHomeType{
+interface initialStateHomeType {
   pokemon: any;
-};
+}
 
 const initialState: initialStateHomeType = {
   pokemon: {},
@@ -26,7 +26,6 @@ export const pokemonSlice = createSlice({
       const results = payload;
       state.pokemon = results;
       console.log(results);
-      
     });
   },
 });
