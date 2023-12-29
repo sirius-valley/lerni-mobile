@@ -8,8 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "prepare": "husky install",
-    "prettier": "prettier . --write",
-    "eslint": "eslint . --fix"
+    "prettier": "prettier --write .",
+    "eslint": "eslint ."
   },
   "husky": {
     "hooks": {
