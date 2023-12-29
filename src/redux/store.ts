@@ -1,16 +1,30 @@
-import { pokemonApi } from './service/pokemon.service';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from "@reduxjs/toolkit"
+import { api } from "./service/api"
+import { persistReducer } from "redux-persist"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
-import { setupListeners } from '@reduxjs/toolkit/query';
+const reducers = combineReducers({
+    [api.reducerPath]: api.reducer,
+})
 
-export const store = configureStore({
-  reducer: {
-    [pokemonApi.reducerPath]: pokemonApi.reducer,
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(pokemonApi.middleware),
-});
+const persistConfig = {
+    key: "root",
+    storage: AsyncStorage,
+    whitelist: ["auth"],
+}
 
-setupListeners(store.dispatch);
+const persistedReducer = persistReducer(persistConfig, reducers)
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+const store = configureStore({
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            immutableCheck: false,
+            serializableCheck: false,
+        }).concat(api.middleware),
+})
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+
+export default store

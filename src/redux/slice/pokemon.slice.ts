@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { pokemonApi } from '../service/pokemon.service';
 
-type initialStateHomeType = {
+interface initialStateHomeType{
   pokemon: any;
 };
 
@@ -14,9 +14,19 @@ export const pokemonSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addMatcher(pokemonApi.endpoints.getPokemon.matchPending, (state, payload) => {
+      const results = payload;
+      console.log(results);
+    });
+    builder.addMatcher(pokemonApi.endpoints.getPokemon.matchRejected, (state, payload) => {
+      const results = payload;
+      console.log(results);
+    });
     builder.addMatcher(pokemonApi.endpoints.getPokemon.matchFulfilled, (state, payload) => {
       const results = payload;
       state.pokemon = results;
+      console.log(results);
+      
     });
   },
 });
