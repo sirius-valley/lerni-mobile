@@ -2,18 +2,14 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
 
 import { buildProviderTree } from '../utils/BuildProviderTree';
-import { store } from '../redux/store';
-import { theme } from '../constants/Theme';
-import { Slot, Stack } from 'expo-router';
+import { theme } from '../utils/Theme';
+import { Slot } from 'expo-router';
+import store from '../redux/store';
 import React from 'react';
 
-type Props = {};
-
-const _layout = (props: Props) => {
-  let Theme = { theme };
-
+const _layout = () => {
   const ProvidersTree = buildProviderTree([
-    [ThemeProvider, Theme],
+    [ThemeProvider, { theme }],
     [Provider, { store }],
   ]);
 
