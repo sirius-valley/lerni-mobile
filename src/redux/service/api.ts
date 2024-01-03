@@ -1,16 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Platform } from 'react-native';
-import store from '../store';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_BASE_URL || '',
   prepareHeaders: (headers) => {
     const mobilePlatforms = ['android', 'ios'];
     if (!mobilePlatforms.includes(Platform.OS)) {
-      const token = store.getState();
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
+      // const token = store.getState();
+      // if (token) {
+      //   headers.set('Authorization', `Bearer ${token}`);
+      // }
     }
     return headers;
   },

@@ -2,4 +2,8 @@ node_modules
 .expo
 .husky
 .idea
+public
 assets
+README.md 
+package-lock.json
+package.json
