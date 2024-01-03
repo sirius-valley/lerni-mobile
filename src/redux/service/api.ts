@@ -6,10 +6,10 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers) => {
     const mobilePlatforms = ['android', 'ios'];
     if (!mobilePlatforms.includes(Platform.OS)) {
-      const token = localStorage.getItem('token');
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
+      // const token = store.getState();
+      // if (token) {
+      //   headers.set('Authorization', `Bearer ${token}`);
+      // }
     }
     return headers;
   },
