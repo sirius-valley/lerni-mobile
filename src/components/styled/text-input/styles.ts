@@ -2,11 +2,11 @@ import { TextInputProps } from './TextInput';
 import styled from 'styled-components/native';
 
 export const StyledTextInput = styled.TextInput<TextInputProps>`
-  borderradius: 8px;
+  border-radius: 8px;
   padding: 6px 16px 6px 16px;
   gap: 8px;
-  fontsize: 16px;
-  fontfamily: 'Roboto-Medium';
+  font-size: 16px;
+  font-family: 'Roboto-Medium';
   color: ${(props) => {
     if (props.error) {
       return props.theme.red500;
@@ -17,7 +17,7 @@ export const StyledTextInput = styled.TextInput<TextInputProps>`
     }
   }};
 
-  backgroundcolor: ${(props) => {
+  background-color: ${(props) => {
     if (props.error) {
       return props.theme.white;
     } else if (props.disabled) {
@@ -26,9 +26,4 @@ export const StyledTextInput = styled.TextInput<TextInputProps>`
       return props.theme.white;
     }
   }};
-
-  :placeholder {
-    color: ${(props) => props.theme.gray300};
-    backgroundcolor: ${(props) => props.theme.white};
-  }
 `;
