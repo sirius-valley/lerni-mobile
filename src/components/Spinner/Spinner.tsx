@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { ButtonVariant } from '../../utils/constants';
+import { getStyleColorByVariant } from '../../utils/utils';
+import { useTheme } from 'styled-components/native';
 
 type SpinnerSizeType = 'small' | 'large';
 
@@ -10,7 +12,18 @@ interface SpinnerInterface {
 }
 
 const Spinner = ({ size = 'small', variant }: SpinnerInterface) => {
-  return <ActivityIndicator size={size} color={variant} />;
+  const theme = useTheme();
+  const getSpinnerColor = () => {
+    switch (variant) {
+      case 'primary':
+        return getStyleColorByVariant('dark');
+      case 'ghost':
+        return getStyleColorByVariant('primary');
+      default:
+        return theme.white;
+    }
+  };
+  return <ActivityIndicator size={size} color={getSpinnerColor()} />;
 };
 
 export default Spinner;

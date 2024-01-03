@@ -1,4 +1,4 @@
-import { ComponentVariantType } from './constants';
+import { ButtonVariant, ComponentVariantType } from './constants';
 import { theme } from './Theme';
 
 // type CSSProperties = { [key: string]: string | number};
@@ -21,13 +21,13 @@ export const jsToCss = (styles: CSSProperties): string => {
     .join('\n');
 };
 
-export const getStyleColorByVariant = (componentVariant: ComponentVariantType) => {
+export const getStyleColorByVariant = (componentVariant: ButtonVariant) => {
   switch (componentVariant) {
-    case ComponentVariantType.PRIMARY:
+    case 'primary':
       return theme.primary500;
-    case ComponentVariantType.DARK:
+    case 'dark':
       return theme.primary800;
-    case ComponentVariantType.RED:
+    case 'red':
       return theme.red500;
     default:
       return theme.gray300;

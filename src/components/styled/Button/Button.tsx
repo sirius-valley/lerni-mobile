@@ -7,7 +7,7 @@ import Spinner from '../../Spinner/Spinner';
 export interface ButtonProps {
   onPress: () => void;
   children: string;
-  icon?: (arg: any) => JSX.Element;
+  Icon?: (arg: any) => JSX.Element;
   variant?: ButtonVariant;
   disabled?: boolean;
   loading?: boolean;
@@ -19,7 +19,7 @@ const Button = ({
   variant = 'primary',
   disabled = false,
   loading = false,
-  icon,
+  Icon,
   css,
 }: ButtonProps) => {
   const isDisabled = useMemo(
@@ -46,9 +46,9 @@ const Button = ({
         css,
       }}
     >
-      {icon &&
+      {Icon &&
         !loading &&
-        icon({
+        Icon({
           color: '#eee',
           size: 18,
         })}

@@ -114,15 +114,15 @@ export const StyledButton = styled(Pressable).attrs<ButtonProps>((props) => ({
   type: props.type ?? ComponentVariantType.PRIMARY,
   state: props.state ?? ButtonState.DEFAULT,
 }))`
-  width: 96px;
+  min-width: 96px;
   height: 42px;
   border-radius: 6px;
-  padding: 8px 0px;
+  padding: 8px 24px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   box-sizing: border-box;
   font-weight: 700;
   ${(props) => {
@@ -142,13 +142,17 @@ interface StyledTextButton extends ButtonProps {
 }
 
 export const StyledTextButton = styled(Text).attrs<StyledTextButton>((props) => ({
-  type: props.type ?? ComponentVariantType.PRIMARY,
-  state: props.state ?? ButtonState.DEFAULT,
+  type: props.type ?? 'primary',
+  state: props.state ?? 'default',
 }))`
   ${(props) => {
     if (props.type) {
       const styles = getButtonStyles(props.theme)[props.type][props.state];
-      return `color: ${styles.color}`;
+      return `
+        color: ${styles.color};
+        font-size: 16px;
+        font-weight: 700;
+      `;
     }
     return '';
   }};
