@@ -1,17 +1,17 @@
-import { useTheme } from 'styled-components/native';
 import { StyledTextInput } from './styles';
-import { TextInputStatus } from '../../../utils/constants';
 
 export interface TextInputProps {
   placeholder?: string;
-  status?: TextInputStatus;
+  disabled?: boolean;
+  error?: boolean;
   css?: { [key in string]: string | number | boolean };
 }
 
 export const TextInput = ({
   placeholder,
-  status = TextInputStatus.DEFAULT,
+  disabled = false,
+  error = false,
   css,
 }: TextInputProps) => {
-  return <StyledTextInput placeholder={placeholder} status={status} />;
+  return <StyledTextInput placeholder={placeholder} css={css} error={error} disabled={disabled} />;
 };

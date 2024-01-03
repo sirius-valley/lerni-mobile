@@ -2,7 +2,6 @@ import { View, Text, Button } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
 import { TextInput } from '../components/styled/text-input/TextInput';
-import { TextInputStatus } from '../utils/constants';
 import { theme } from '../utils/Theme';
 
 const Landing = () => {
@@ -16,7 +15,7 @@ const Landing = () => {
       }}
     >
       <Text>Landing</Text>
-      <TextInput placeholder="Enter your name..." status={TextInputStatus.DISABLED} />
+      <TextInput placeholder="Enter your name..." />
       <Link asChild href={'home'}>
         <Button title="Home"></Button>
       </Link>
