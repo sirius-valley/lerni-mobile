@@ -1,8 +1,13 @@
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button as RNButton } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
+import Button from '../components/styled/Button/Button';
 
 const Landing = () => {
+  const handleButtonPress = () => {
+    alert('asd');
+  };
+
   return (
     <View
       style={{
@@ -13,8 +18,11 @@ const Landing = () => {
     >
       <Text>Landing</Text>
       <Link asChild href={'home'}>
-        <Button title="Home"></Button>
+        <RNButton title="Home" />
       </Link>
+      <Button onPress={handleButtonPress} variant={'dark'} loading={true}>
+        Press me
+      </Button>
     </View>
   );
 };
