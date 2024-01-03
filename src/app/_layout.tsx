@@ -2,7 +2,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
 
 import { buildProviderTree } from '../utils/BuildProviderTree';
-import { store } from '../redux/store';
+import store from '../redux/store';
 import { theme } from '../constants/Theme';
 import { Slot, Stack } from 'expo-router';
 import React from 'react';
