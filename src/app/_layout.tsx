@@ -1,6 +1,5 @@
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
-
 import { buildProviderTree } from '../utils/BuildProviderTree';
 import { theme } from '../utils/Theme';
 import { Slot } from 'expo-router';
