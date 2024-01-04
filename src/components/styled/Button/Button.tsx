@@ -1,13 +1,15 @@
-import React, { useMemo } from 'react';
-import { ButtonLabelSize, ButtonState, StyledButton, StyledTextButton } from './styles';
+import React, { useMemo, useState } from 'react';
+import { ButtonState, StyledButton, StyledTextButton } from './styles';
 import { ButtonVariant } from '../../../utils/constants';
 import { useTheme } from 'styled-components/native';
 import Spinner from '../../Spinner/Spinner';
+import { getStyleColorByVariant } from '../../../utils/utils';
+import { IconInterface } from '../../../../assets/icons/types';
 
 export interface ButtonProps {
   onPress: () => void;
   children: string;
-  Icon?: (arg: any) => JSX.Element;
+  icon?: React.FC<IconInterface>;
   variant?: ButtonVariant;
   disabled?: boolean;
   loading?: boolean;
@@ -19,40 +21,48 @@ const Button = ({
   variant = 'primary',
   disabled = false,
   loading = false,
-  Icon,
+  icon: Icon,
   css,
 }: ButtonProps) => {
+  const [isPressed, setIsPressed] = useState(false);
+  const theme = useTheme();
+  const getContrastColor = () => {
+    switch (variant) {
+      case 'primary':
+        return getStyleColorByVariant('dark');
+      case 'ghost':
+        return getStyleColorByVariant('primary');
+      default:
+        return theme.white;
+    }
+  };
+
   const isDisabled = useMemo(
     () => (disabled ? ButtonState.DISABLED : ButtonState.DEFAULT),
     [disabled],
   );
-
-  const renderLabel = () => {
-    if (loading) return <Spinner variant={variant} size={'small'} />;
-    return (
-      <StyledTextButton type={variant} state={isDisabled}>
-        {children}
-      </StyledTextButton>
-    );
-  };
 
   return (
     <StyledButton
       type={variant}
       state={isDisabled}
       disabled={disabled}
+      pressed={isPressed}
       onPress={() => (disabled || loading ? undefined : onPress())}
+      onPressIn={() => (!disabled && !loading) && setIsPressed(true)}
+      onPressOut={() => setIsPressed(false)}
       css={{
         css,
       }}
     >
-      {Icon &&
-        !loading &&
-        Icon({
-          color: '#eee',
-          size: 18,
-        })}
-      {renderLabel()}
+      {Icon && <Icon color={getContrastColor()} size={18} />}
+      {loading
+        ? <Spinner color={getContrastColor()} size={'small'} />
+        : (
+          <StyledTextButton type={variant} state={isDisabled} pressed={false}>
+            {children}
+          </StyledTextButton>
+        )}
     </StyledButton>
   );
 };

@@ -1,11 +1,8 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-interface SendIconInterface {
-  color?: string;
-  size?: number;
-}
+import { IconInterface } from './types';
 
-const SendIcon = ({ color = '#000C0F', size = 14 }: SendIconInterface) => {
+const SendIcon = ({ color = '#000C0F', size = 14 }: IconInterface) => {
   return (
     <Svg width={size} height={size} viewBox="0 0 18 14" fill="none">
       <Path

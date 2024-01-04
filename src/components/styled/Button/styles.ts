@@ -1,4 +1,4 @@
-import { Pressable, Text } from 'react-native';
+import { Pressable, PressableProps, Text } from 'react-native';
 import styled from 'styled-components';
 import { jsToCss } from '../../../utils/utils';
 import { DefaultTheme } from 'styled-components/native';
@@ -18,29 +18,17 @@ type StyleByOptionsProps = {
   };
 };
 
-export enum ButtonSizeEnum {
-  SMALL = 'small',
-  MEDIUM = 'medium',
-  LARGE = 'large',
-}
-
 export enum ButtonState {
   DEFAULT = 'default',
   DISABLED = 'disabled',
 }
 
-export enum ButtonLabelSize {
-  BODY1 = 'body1',
-  BODY2 = 'body2',
-  BODY3 = 'body3',
-}
-
 const getButtonStyles = (theme: DefaultTheme): StyleByOptionsProps => {
   return {
-    ['primary']: {
+    'primary': {
       [ButtonState.DEFAULT]: {
         backgroundColor: theme.primary500,
-        color: theme.white,
+        color: theme.blue500,
         border: 'none',
         hover: {
           backgroundColor: theme.primary600,
@@ -53,7 +41,7 @@ const getButtonStyles = (theme: DefaultTheme): StyleByOptionsProps => {
         color: theme.gray500,
       },
     },
-    ['dark']: {
+    'dark': {
       [ButtonState.DEFAULT]: {
         backgroundColor: theme.primary800,
         color: theme.white,
@@ -70,7 +58,7 @@ const getButtonStyles = (theme: DefaultTheme): StyleByOptionsProps => {
         color: theme.gray500,
       },
     },
-    ['ghost']: {
+    'ghost': {
       [ButtonState.DEFAULT]: {
         backgroundColor: 'transparent',
         color: theme.primary500,
@@ -86,7 +74,7 @@ const getButtonStyles = (theme: DefaultTheme): StyleByOptionsProps => {
         color: theme.gray500,
       },
     },
-    ['red']: {
+    'red': {
       [ButtonState.DEFAULT]: {
         backgroundColor: theme.red500,
         color: theme.white,
@@ -104,15 +92,17 @@ const getButtonStyles = (theme: DefaultTheme): StyleByOptionsProps => {
   };
 };
 
-interface ButtonProps {
+interface ButtonProps extends PressableProps {
   type: ButtonVariant;
   state: ButtonState;
   css?: { [x: string]: any };
+  pressed: boolean;
 }
 
 export const StyledButton = styled(Pressable).attrs<ButtonProps>((props) => ({
-  type: props.type ?? ComponentVariantType.PRIMARY,
+  type: props.type ?? 'primary',
   state: props.state ?? ButtonState.DEFAULT,
+  pressed: props.pressed,
 }))`
   min-width: 96px;
   height: 42px;
@@ -126,22 +116,16 @@ export const StyledButton = styled(Pressable).attrs<ButtonProps>((props) => ({
   box-sizing: border-box;
   font-weight: 700;
   ${(props) => {
-    if (props.type) {
-      const { hover, ...restStyles } = getButtonStyles(props.theme)[props.type][props.state];
-      const styleHover: { [key: string]: string | number } = typeof hover === 'object' ? hover : {};
-      return `
-      ${jsToCss(restStyles)}
-      `;
-    }
+    const { hover, ...restStyles } = getButtonStyles(props.theme)[props.type][props.state];
+    const styleHover: { [key: string]: string | number } = typeof hover === 'object' ? hover : {};
+    return `
+      ${jsToCss({ ...restStyles, ...(props.pressed ? styleHover : {}) })}
+    `;
   }}
   ${(props) => props.css && jsToCss(props.css)}
 `;
 
-interface StyledTextButton extends ButtonProps {
-  label?: string;
-}
-
-export const StyledTextButton = styled(Text).attrs<StyledTextButton>((props) => ({
+export const StyledTextButton = styled(Text).attrs<ButtonProps>((props) => ({
   type: props.type ?? 'primary',
   state: props.state ?? 'default',
 }))`
