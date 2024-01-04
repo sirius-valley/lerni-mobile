@@ -58,3 +58,5 @@ export const theme = {
     fontWeight: 400,
   },
 };
+
+export type MyTheme = typeof theme;

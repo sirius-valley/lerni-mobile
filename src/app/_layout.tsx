@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
 import { buildProviderTree } from '../utils/BuildProviderTree';
-import { theme } from '../utils/Theme';
+import { theme } from '../utils/theme';
 import { Slot } from 'expo-router';
 import { useFonts } from 'expo-font';
 import store from '../redux/store';
