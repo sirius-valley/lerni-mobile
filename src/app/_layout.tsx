@@ -2,20 +2,30 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
 
 import { buildProviderTree } from '../utils/BuildProviderTree';
+import { theme } from '../utils/Theme';
+import { Slot } from 'expo-router';
+import { useFonts } from 'expo-font';
 import store from '../redux/store';
-import { theme } from '../constants/Theme';
-import { Slot, Stack } from 'expo-router';
 import React from 'react';
 
-type Props = {};
-
-const _layout = (props: Props) => {
-  let Theme = { theme };
-
+const _layout = () => {
   const ProvidersTree = buildProviderTree([
-    [ThemeProvider, Theme],
+    [ThemeProvider, { theme }],
     [Provider, { store }],
   ]);
+
+  const [fontsLoaded] = useFonts({
+    'Roboto-Thin': require('../../assets/fonts/Roboto-Thin.ttf'),
+    'Roboto-Light': require('../../assets/fonts/Roboto-Light.ttf'),
+    'Roboto-Regular': require('../../assets/fonts/Roboto-Regular.ttf'),
+    'Roboto-Medium': require('../../assets/fonts/Roboto-Medium.ttf'),
+    'Roboto-Bold': require('../../assets/fonts/Roboto-Bold.ttf'),
+    'Roboto-Black': require('../../assets/fonts/Roboto-Black.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <ProvidersTree>

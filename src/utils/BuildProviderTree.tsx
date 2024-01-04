@@ -1,4 +1,3 @@
-import { Provider } from 'react-redux';
 import { Persistor } from 'redux-persist';
 import React, { FunctionComponent, ReactNode } from 'react';
 
