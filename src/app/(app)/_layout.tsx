@@ -5,10 +5,10 @@ import { useEffect } from 'react';
 export const Layout = () => {
   const token = store.getState().auth.token;
   const navigate = useRouter();
-  console.log('hola',token);
-  
+  console.log('hola', token);
+
   useEffect(() => {
-    if(!token) navigate.push('login')
+    if (!token) navigate.push('login');
   }, [token]);
 
   return <Slot />;

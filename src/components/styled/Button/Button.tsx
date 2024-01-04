@@ -49,20 +49,20 @@ const Button = ({
       disabled={disabled}
       pressed={isPressed}
       onPress={() => (disabled || loading ? undefined : onPress())}
-      onPressIn={() => (!disabled && !loading) && setIsPressed(true)}
+      onPressIn={() => !disabled && !loading && setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
       css={{
         css,
       }}
     >
       {Icon && <Icon color={getContrastColor()} size={18} />}
-      {loading
-        ? <Spinner color={getContrastColor()} size={'small'} />
-        : (
-          <StyledTextButton type={variant} state={isDisabled} pressed={false}>
-            {children}
-          </StyledTextButton>
-        )}
+      {loading ? (
+        <Spinner color={getContrastColor()} size={'small'} />
+      ) : (
+        <StyledTextButton type={variant} state={isDisabled} pressed={false}>
+          {children}
+        </StyledTextButton>
+      )}
     </StyledButton>
   );
 };

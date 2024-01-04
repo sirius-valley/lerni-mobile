@@ -6,26 +6,25 @@ import { theme } from '../../utils/Theme';
 import store from '../../redux/store';
 
 const Landing = () => {
- const navigate = useRouter();
+  const navigate = useRouter();
 
- useEffect(() => {
-   const token = store.getState().auth.token;
-   if(!token) navigate.push('login')
- }, []);
+  useEffect(() => {
+    const token = store.getState().auth.token;
+    if (!token) navigate.push('login');
+  }, []);
 
- return (
-   <View
-     style={{
-       flex: 1,
-       justifyContent: 'center',
-       alignItems: 'center',
-       backgroundColor: 'transparent',
-     }}
-   >
-     <Text>Landing</Text>
-     
-   </View>
- );
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'transparent',
+      }}
+    >
+      <Text>Landing</Text>
+    </View>
+  );
 };
 
 export default Landing;
