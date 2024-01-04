@@ -1,15 +1,21 @@
-import { Slot, useRouter } from 'expo-router';
+import {Redirect, Slot, useRouter} from 'expo-router';
 import store from '../../redux/store';
-import { useEffect } from 'react';
+import {useEffect, useState} from 'react';
+import {Text} from "react-native";
 
 export const Layout = () => {
-  const token = store.getState().auth.token;
+  // const token = store.getState().auth.token;
   const navigate = useRouter();
-  console.log('hola', token);
+  const [isLoading, setIsLoading] = useState(true);
+  const token = store.getState().auth.token;
 
-  useEffect(() => {
-    if (!token) navigate.push('login');
-  }, [token]);
+
+  if(!token) {
+    return <Redirect href={'/(auth)/login'}/>
+  }
 
   return <Slot />;
 };
+
+export default Layout;
+
