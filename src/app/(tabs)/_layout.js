@@ -7,10 +7,10 @@ import { theme } from '../../utils/Theme';
 export default function TabsLayout() {
   return (
     <Tabs screenOptions={{ headerShown: false }}>
-      {bottomTabs.map((tab, index) => (
+      {bottomTabs.map(({ id, name, screen, iconName, active, roles }, index) => (
         <Tabs.Screen
           key={index}
-          name={tab.name}
+          name={name}
           options={{
             tabBarShowLabel: false,
             tabBarStyle: {
@@ -20,8 +20,8 @@ export default function TabsLayout() {
               paddingHorizontal: 60,
               gap: 24,
             },
-            title: tab.name,
-            tabBarIcon: ({ focused, size }) => (
+            title: name,
+            tabBarIcon: ({ focused }) => (
               <View
                 style={{
                   display: 'flex',
@@ -31,12 +31,8 @@ export default function TabsLayout() {
                   paddingHorizontal: 12,
                 }}
               >
-                {React.cloneElement(tab.iconName, {
-                  color: focused ? theme.gray100 : theme.primary600,
-                })}
-                <Text style={{ color: focused ? theme.gray100 : theme.primary600 }}>
-                  {tab.screen}{' '}
-                </Text>
+                <iconName color={focused ? theme.gray100 : theme.primary600} />
+                <Text style={{ color: focused ? theme.gray100 : theme.primary600 }}>{screen}</Text>
               </View>
             ),
           }}
