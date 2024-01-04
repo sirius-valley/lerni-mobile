@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs } from 'expo-router';
 import { View, Text } from 'react-native';
 import { bottomTabs } from './bottomTabs';
+import { theme } from '../../utils/Theme';
 
 export default function TabsLayout() {
   return (
@@ -13,13 +14,11 @@ export default function TabsLayout() {
           options={{
             tabBarShowLabel: false,
             tabBarStyle: {
-              backgroundColor: '#072C37',
+              backgroundColor: theme.primary800,
               height: 60,
               paddingVertical: 20,
               paddingHorizontal: 60,
               gap: 24,
-              display: 'inline-flex',
-              alignItems: 'flex-start',
             },
             title: tab.name,
             tabBarIcon: ({ focused, size }) => (
@@ -29,14 +28,15 @@ export default function TabsLayout() {
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: 4,
-                  padding: 0,
                   paddingHorizontal: 12,
                 }}
               >
                 {React.cloneElement(tab.iconName, {
-                  color: focused ? '#F1F5F9' : '#307F90',
+                  color: focused ? theme.gray100 : theme.primary600,
                 })}
-                <Text style={{ color: focused ? '#F1F5F9' : '#307F90' }}>{tab.screen} </Text>
+                <Text style={{ color: focused ? theme.gray100 : theme.primary600 }}>
+                  {tab.screen}{' '}
+                </Text>
               </View>
             ),
           }}
