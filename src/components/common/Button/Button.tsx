@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { ButtonState, StyledButton, StyledTextButton } from './styles';
 import { ButtonVariant } from '../../../utils/constants';
 import { useTheme } from 'styled-components/native';
-import Spinner from '../../Spinner/Spinner';
+import Spinner from '../Spinner/Spinner';
 import { getStyleColorByVariant } from '../../../utils/utils';
 import { IconInterface } from '../../../../assets/icons/types';
 
@@ -55,13 +55,19 @@ const Button = ({
         css,
       }}
     >
-      {Icon && <Icon color={getContrastColor()} size={18} />}
       {loading
         ? <Spinner color={getContrastColor()} size={'small'} />
         : (
-          <StyledTextButton type={variant} state={isDisabled} pressed={false}>
-            {children}
-          </StyledTextButton>
+          <>
+            {Icon && <Icon color={getContrastColor()} size={18} />}
+            <StyledTextButton
+              type={variant}
+              state={isDisabled}
+              pressed={false}
+            >
+              {children}
+            </StyledTextButton>
+          </>
         )}
     </StyledButton>
   );
