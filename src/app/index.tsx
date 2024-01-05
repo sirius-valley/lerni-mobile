@@ -19,7 +19,7 @@ const Landing = () => {
       }}
     >
       <Text>Landing</Text>
-      <Link asChild href={'home'}>
+      <Link asChild href={'/(tabs)/profile'}>
         <RNButton title="Home" />
       </Link>
       <Button
