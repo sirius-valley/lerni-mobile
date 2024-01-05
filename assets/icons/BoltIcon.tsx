@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { IconInterface } from './IconInterface';
+import {IconInterface} from "./types";
 
 const BoltIcon = ({ color = '#307F90', size = 14 }: IconInterface) => {
   return (
