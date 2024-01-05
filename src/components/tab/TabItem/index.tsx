@@ -6,10 +6,10 @@ import {useTheme} from "styled-components";
 interface TabItemProps {
     focused: boolean;
     name: string;
-    IconName: any;
+    icon: any;
 }
 
-const TabItem = ({focused,name,IconName}:TabItemProps) => {
+const TabItem = ({focused,name,icon: Icon}:TabItemProps) => {
     const theme = useTheme()
     return(
         <View
@@ -22,7 +22,7 @@ const TabItem = ({focused,name,IconName}:TabItemProps) => {
                 width: 60,
             }}
         >
-            <IconName color={focused ? theme.gray100 : theme.primary600} size={32}/>
+            <Icon color={focused ? theme.gray100 : theme.primary600} size={32}/>
             <StyledText
                 variant={'body3'}
                 css={{

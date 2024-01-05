@@ -23,14 +23,14 @@ const TabsLayout = () => {
                 paddingBottom:insets.bottom,
             }
         }}>
-            {bottomTabs.map(({name, screen, iconName: IconName}, index) => (
+            {bottomTabs.map(({name, screen, iconName}, index) => (
                 <Tabs.Screen
                     key={index}
                     name={screen}
                     options={{
                         tabBarShowLabel: false,
                         tabBarIcon: ({focused}) => (
-                            <TabItem name={name} focused={focused} IconName={IconName} />
+                            <TabItem name={name} focused={focused} icon={iconName} />
                         ),
                     }}
                 />
