@@ -23,7 +23,7 @@ const TabsLayout = () => {
                 paddingBottom:insets.bottom,
             }
         }}>
-            {bottomTabs.map(({id, name, screen, iconName: IconName, active, roles}, index) => (
+            {bottomTabs.map(({name, screen, iconName: IconName}, index) => (
                 <Tabs.Screen
                     key={index}
                     name={screen}
