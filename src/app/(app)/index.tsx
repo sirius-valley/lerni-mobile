@@ -1,17 +1,6 @@
-import { View, Text, Button } from 'react-native';
-import React, { useEffect } from 'react';
-import { Link, Redirect, router, useNavigation, useRouter } from 'expo-router';
-import { TextInput } from '../../components/styled/text-input/TextInput';
-import { theme } from '../../utils/Theme';
-import store from '../../redux/store';
+import { View, Text } from 'react-native';
 
 const Landing = () => {
-  const navigate = useRouter();
-
-  // useEffect(() => {
-  //   const token = store.getState().auth.token;
-  //   if (!token) navigate.push('login');
-  // }, []);
 
   return (
     <View

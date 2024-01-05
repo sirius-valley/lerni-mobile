@@ -1,12 +1,14 @@
 import { useRouter } from 'expo-router';
 import Button from '../../../components/styled/Button/Button';
 
- const Login = () => {
+const Register = () => {
   const navigate = useRouter();
   const handlePress = () => {
-    navigate.push('/auth/login');
+    navigate.push('/');
   };
-  return <Button onPress={handlePress}>Register</Button>;
+  return (
+    <Button children='Create your account' onPress={handlePress} />
+  );
 };
 
-export default Login;
+export default Register;
