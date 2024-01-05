@@ -2,7 +2,7 @@ import { ButtonVariant, ComponentVariantType } from './constants';
 import { theme } from './Theme';
 
 // type CSSProperties = { [key: string]: string | number};
-type CSSProperties = {
+export type CSSProperties = {
   [key: string]:
     | string
     | number
