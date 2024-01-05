@@ -6,8 +6,10 @@ export interface TextInputProps {
   disabled?: boolean;
   error?: boolean;
   onChangeText: (value: string) => void;
+  onBlur?: () => void;
   value: string;
   css?: { [key in string]: string | number | boolean };
+  type?: "password" | "text"
 }
 
 export const TextInput = ({
@@ -15,10 +17,25 @@ export const TextInput = ({
   disabled = false,
   error = false,
   onChangeText,
+  onBlur,
   value,
   css,
+  type = "text"
 }: TextInputProps) => {
   const theme = useTheme();
 
-  return <StyledTextInput placeholder={placeholder} placeholderTextColor={theme.gray300} css={css} error={error} disabled={disabled} value={value} onChangeText={onChangeText} />;
+  return (
+    <StyledTextInput
+      placeholder={placeholder}
+      placeholderTextColor={theme.gray300}
+      css={css}
+      error={error}
+      disabled={disabled}
+      value={value}
+      onChangeText={onChangeText}
+      onBlur={() => onBlur && onBlur()}
+      autoCapitalize='none'
+      secureTextEntry={type === "password"}
+    />
+  )
 };
