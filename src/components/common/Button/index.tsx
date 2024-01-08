@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { ButtonState, StyledButton, StyledTextButton } from './styles';
 import { ButtonVariant } from '../../../utils/constants';
 import { useTheme } from 'styled-components/native';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner';
 import { getStyleColorByVariant } from '../../../utils/utils';
 import { IconInterface } from '../../../../assets/icons/types';
 

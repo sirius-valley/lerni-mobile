@@ -17,7 +17,7 @@ const Landing = () => {
       <Link asChild href={'register'}>
         <Button title="Register" />
       </Link>
-    </View>
+    </View >
   );
 };
 

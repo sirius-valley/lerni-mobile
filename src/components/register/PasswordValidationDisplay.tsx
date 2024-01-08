@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import MultiplyIcon from '../../../assets/icons/MultiplyIcon';
 import CheckIcon from '../../../assets/icons/CheckIcon';
-import { StyledColumn, StyledRow, StyledText } from '../common/styles';
+import { StyledColumn, StyledRow, StyledText } from '../styled/styles';
 
 interface PasswordValidationDisplayInterface {
   password: string;

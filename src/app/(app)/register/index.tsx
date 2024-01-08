@@ -2,9 +2,9 @@ import { Text } from 'react-native'
 import React, { useState } from 'react'
 import LerniMainIcon from '../../../../assets/icons/LerniMainIcon'
 import MainContainer from '../../../components/register/MainContainer'
-import { StyledColumn, StyledRow, StyledText } from '../../../components/common/styles'
-import { TextInput } from '../../../components/common/TextInput/TextInput'
-import Button from '../../../components/common/Button/Button';
+import { StyledColumn, StyledRow, StyledText } from '../../../components/styled/styles'
+import { TextInput } from '../../../components/common/TextInput'
+import Button from '../../../components/common/Button';
 import {
   Formik,
 } from 'formik';
@@ -24,6 +24,8 @@ const SignupSchema = Yup.object().shape({
 
 const index = () => {
 
+  const [loading, setLoading] = useState(false);
+
   return (
     <MainContainer>
       <LerniMainIcon />
@@ -37,7 +39,13 @@ const index = () => {
       }}>
         <Formik
           initialValues={{ email: '', password: '' }}
-          onSubmit={values => alert(JSON.stringify(values, null, 3))}
+          onSubmit={values => {
+            setLoading(true)
+            setTimeout(() => {
+              alert(JSON.stringify(values, null, 3));
+              setLoading(false);
+            }, 2000)
+          }}
           validationSchema={SignupSchema}
         >
           {({ handleChange, handleBlur, handleSubmit, values, isValid, errors, touched }) => (
@@ -48,6 +56,7 @@ const index = () => {
                 placeholder='Email'
                 onBlur={() => handleBlur('email')}
                 error={!!errors.email && touched.email}
+                disabled={loading}
               />
               <TextInput
                 value={values.password}
@@ -56,6 +65,7 @@ const index = () => {
                 onBlur={() => handleBlur('password')}
                 error={!!errors.password}
                 type="password"
+                disabled={loading}
               />
               {errors.password && touched.password && (
                 <StyledColumn>
@@ -64,13 +74,16 @@ const index = () => {
                   </StyledText>
                 </StyledColumn>
               )}
-              <PasswordValidationDisplay
-                password={values.password}
-              />
+              {values.password.length > 0 && (
+                <PasswordValidationDisplay
+                  password={values.password}
+                />
+              )}
               <Button
                 disabled={!isValid || !values.email || !values.password}
                 onPress={handleSubmit}
                 variant={'dark'}
+                loading={loading}
               >
                 Crear cuenta
               </Button>

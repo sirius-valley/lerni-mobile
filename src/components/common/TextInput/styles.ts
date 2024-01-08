@@ -1,4 +1,4 @@
-import { TextInputProps } from './TextInput';
+import { TextInputProps } from '.';
 import styled from 'styled-components/native';
 
 export const StyledTextInput = styled.TextInput<TextInputProps>`

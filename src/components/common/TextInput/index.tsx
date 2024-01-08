@@ -32,7 +32,7 @@ export const TextInput = ({
       error={error}
       disabled={disabled}
       value={value}
-      onChangeText={onChangeText}
+      onChangeText={(value: string) => !disabled && onChangeText(value)}
       onBlur={() => onBlur && onBlur()}
       autoCapitalize='none'
       secureTextEntry={type === "password"}
