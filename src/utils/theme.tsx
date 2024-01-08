@@ -21,6 +21,8 @@ export const theme = {
   gray800: '#1e293b',
   gray900: '#0F172A',
   gray950: '#020617',
+  error: '#D84545',
+  success: '#0EB51F',
   h1: {
     fontFamily: 'Roboto-Bold',
     fontSize: '24px',
