@@ -1,10 +1,9 @@
-import { Text } from 'react-native'
 import React, { useState } from 'react'
 import LerniMainIcon from '../../../../assets/icons/LerniMainIcon'
 import MainContainer from '../../../components/register/MainContainer'
-import { StyledColumn, StyledRow, StyledText } from '../../../components/styled/styles'
-import { TextInput } from '../../../components/common/TextInput'
-import Button from '../../../components/common/Button';
+import { StyledColumn, StyledText } from '../../../components/styled/styles'
+import { TextInput } from '../../../components/styled/TextInput'
+import Button from '../../../components/styled/Button';
 import {
   Formik,
 } from 'formik';

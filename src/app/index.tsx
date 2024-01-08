@@ -14,7 +14,10 @@ const Landing = () => {
       }}
     >
       <Text>Landing</Text>
-      <Link asChild href={'register'}>
+      <Link asChild href={'/(tabs)/profile'}>
+        <Button title="Home" />
+      </Link>
+      <Link asChild href={'/(app)/register'}>
         <Button title="Register" />
       </Link>
     </View >

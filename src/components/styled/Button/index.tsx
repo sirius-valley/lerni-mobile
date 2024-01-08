@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { ButtonState, StyledButton, StyledTextButton } from './styles';
 import { ButtonVariant } from '../../../utils/constants';
 import { useTheme } from 'styled-components/native';
-import Spinner from '../Spinner';
+import Spinner from '../../common/Spinner';
 import { getStyleColorByVariant } from '../../../utils/utils';
 import { IconInterface } from '../../../../assets/icons/types';
 
@@ -49,7 +49,7 @@ const Button = ({
       disabled={disabled}
       pressed={isPressed}
       onPress={() => (disabled || loading ? undefined : onPress())}
-      onPressIn={() => (!disabled && !loading) && setIsPressed(true)}
+      onPressIn={() => !disabled && !loading && setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
       css={{
         css,

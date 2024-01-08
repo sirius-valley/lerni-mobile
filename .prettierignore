@@ -2,6 +2,11 @@ node_modules
 .expo
 .husky
 .idea
+.eslintrc.json
+.prettierrc.json
+app.json
+babel.config.js
+tsconfig.json
 public
 assets
 README.md 

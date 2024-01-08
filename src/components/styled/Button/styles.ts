@@ -22,7 +22,7 @@ export enum ButtonState {
 
 const getButtonStyles = (theme: DefaultTheme): StyleByOptionsProps => {
   return {
-    'primary': {
+    primary: {
       [ButtonState.DEFAULT]: {
         backgroundColor: theme.primary500,
         color: theme.blue500,
@@ -38,7 +38,7 @@ const getButtonStyles = (theme: DefaultTheme): StyleByOptionsProps => {
         color: theme.gray500,
       },
     },
-    'dark': {
+    dark: {
       [ButtonState.DEFAULT]: {
         backgroundColor: theme.primary800,
         color: theme.white,
@@ -55,7 +55,7 @@ const getButtonStyles = (theme: DefaultTheme): StyleByOptionsProps => {
         color: theme.gray500,
       },
     },
-    'ghost': {
+    ghost: {
       [ButtonState.DEFAULT]: {
         backgroundColor: 'transparent',
         color: theme.primary500,
@@ -71,7 +71,7 @@ const getButtonStyles = (theme: DefaultTheme): StyleByOptionsProps => {
         color: theme.gray500,
       },
     },
-    'red': {
+    red: {
       [ButtonState.DEFAULT]: {
         backgroundColor: theme.red500,
         color: theme.white,

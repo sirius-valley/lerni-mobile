@@ -4,6 +4,8 @@ import styled from 'styled-components/native';
 export const StyledTextInput = styled.TextInput<TextInputProps>`
   border-radius: 8px;
   padding: 6px 16px 6px 16px;
+  height: 40px;
+  width: 342px;
   gap: 8px;
   font-size: 16px;
   font-family: 'Roboto-Medium';

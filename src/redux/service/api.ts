@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Platform } from 'react-native';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.REACT_APP_BASE_URL || '',
+  baseUrl: process.env.REACT_APP_BASE_URL || 'http://localhost:8080/api',
   prepareHeaders: (headers) => {
     const mobilePlatforms = ['android', 'ios'];
     if (!mobilePlatforms.includes(Platform.OS)) {
