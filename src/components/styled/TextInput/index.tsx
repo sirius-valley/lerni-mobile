@@ -20,5 +20,15 @@ export const TextInput = ({
 }: TextInputProps) => {
   const theme = useTheme();
 
-  return <StyledTextInput placeholder={placeholder} placeholderTextColor={theme.gray300} css={css} error={error} disabled={disabled} value={value} onChangeText={onChangeText} />;
+  return (
+    <StyledTextInput
+      placeholder={placeholder}
+      placeholderTextColor={theme.gray300}
+      css={css}
+      error={error}
+      disabled={disabled}
+      value={value}
+      onChangeText={onChangeText}
+    />
+  );
 };
