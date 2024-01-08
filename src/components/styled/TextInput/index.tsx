@@ -1,5 +1,6 @@
 import { useTheme } from 'styled-components';
 import { StyledTextInput } from './styles';
+import { CSSProperties } from '../../../utils/utils';
 
 export interface TextInputProps {
   placeholder?: string;
@@ -8,7 +9,7 @@ export interface TextInputProps {
   onChangeText: (value: string) => void;
   onBlur?: () => void;
   value: string;
-  css?: { [key in string]: string | number | boolean };
+  css?: CSSProperties;
   type?: "password" | "text"
 }
 

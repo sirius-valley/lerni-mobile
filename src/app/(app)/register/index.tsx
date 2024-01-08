@@ -28,13 +28,13 @@ const index = () => {
   return (
     <MainContainer>
       <LerniMainIcon />
-      <StyledText variant='h2' css={{ marginTop: '10%' }}>
+      <StyledText variant='h2' css={{ marginTop: '14%' }}>
         Crear cuenta
       </StyledText>
       <StyledColumn css={{
         gap: '16px',
         width: '100%',
-        padding: '16px',
+        padding: '20px',
       }}>
         <Formik
           initialValues={{ email: '', password: '' }}
@@ -56,6 +56,9 @@ const index = () => {
                 onBlur={() => handleBlur('email')}
                 error={!!errors.email && touched.email}
                 disabled={loading}
+                css={{
+                  width: '100%'
+                }}
               />
               <TextInput
                 value={values.password}
@@ -65,6 +68,9 @@ const index = () => {
                 error={!!errors.password}
                 type="password"
                 disabled={loading}
+                css={{
+                  width: '100%'
+                }}
               />
               {errors.password && touched.password && (
                 <StyledColumn>
@@ -83,6 +89,9 @@ const index = () => {
                 onPress={handleSubmit}
                 variant={'dark'}
                 loading={loading}
+                css={{
+                  marginTop: '8px'
+                }}
               >
                 Crear cuenta
               </Button>

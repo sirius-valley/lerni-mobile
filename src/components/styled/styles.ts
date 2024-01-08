@@ -1,6 +1,6 @@
 import { SafeAreaView, View, Text } from 'react-native';
 import styled, { css as styledComponent } from "styled-components";
-import { CSSProperties, jsToCss } from "../../utils/utils";
+import { CSSProperties } from "../../utils/utils";
 
 interface StyledPropertiesInterface {
   css?: CSSProperties
@@ -22,18 +22,18 @@ export const StyledSafeAreaView = styled(SafeAreaView) <StyledPropertiesInterfac
   flex-direction: row;
   flex: 1;
   padding: 0;
-  ${(props) => props.css && jsToCss(props.css)}
+  ${({ css }) => css && styledComponent(css)};
 `
 export const StyledRow = styled(View) <StyledPropertiesInterface>`
   display: flex;
   flex-direction: row;
-  ${(props) => props.css && jsToCss(props.css)}
+  ${({ css }) => css && styledComponent(css)};
 `
 export const StyledColumn = styled(View) <StyledPropertiesInterface>`
   display: flex;
   flex-direction: column;
-  ${(props) => props.css && jsToCss(props.css)}
+  ${({ css }) => css && styledComponent(css)};
 `
 export const StyledBox = styled(View) <StyledPropertiesInterface>`
-  ${(props) => props.css && jsToCss(props.css)}
+  ${({ css }) => css && styledComponent(css)};
 `
