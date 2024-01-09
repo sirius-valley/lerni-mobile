@@ -3,7 +3,6 @@ import React from 'react';
 import { Link } from 'expo-router';
 
 const Landing = () => {
-
   return (
     <View
       style={{
@@ -20,7 +19,10 @@ const Landing = () => {
       <Link asChild href={'/(app)/register'}>
         <Button title="Register" />
       </Link>
-    </View >
+      <Link asChild href={'/(app)/login'}>
+        <Button title="Login" />
+      </Link>
+    </View>
   );
 };
 
