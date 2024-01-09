@@ -21,7 +21,7 @@ const SignupSchema = Yup.object().shape({
     .required('Password is required'),
 });
 
-const index = () => {
+const RegisterScreen = () => {
 
   const [loading, setLoading] = useState(false);
 
@@ -103,4 +103,4 @@ const index = () => {
   )
 }
 
-export default index;
+export default RegisterScreen;
