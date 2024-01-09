@@ -8,7 +8,7 @@ import { IconInterface } from '../../../../assets/icons/types';
 
 export interface ButtonProps {
   onPress: () => void;
-  children: string;
+  children?: string;
   icon?: React.FC<IconInterface>;
   variant?: ButtonVariant;
   disabled?: boolean;
@@ -17,7 +17,7 @@ export interface ButtonProps {
 }
 const Button = ({
   onPress,
-  children,
+  children = '',
   variant = 'primary',
   disabled = false,
   loading = false,
@@ -51,20 +51,22 @@ const Button = ({
       onPress={() => (disabled || loading ? undefined : onPress())}
       onPressIn={() => !disabled && !loading && setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
-      css={ css }
+      css={css}
     >
       {loading
         ? <Spinner color={getContrastColor()} size={'small'} />
         : (
           <>
             {Icon && <Icon color={getContrastColor()} size={18} />}
-            <StyledTextButton
-              type={variant}
-              state={isDisabled}
-              pressed={false}
-            >
-              {children}
-            </StyledTextButton>
+            {children && (
+              <StyledTextButton
+                type={variant}
+                state={isDisabled}
+                pressed={false}
+              >
+                {children}
+              </StyledTextButton>
+            )}
           </>
         )}
     </StyledButton>

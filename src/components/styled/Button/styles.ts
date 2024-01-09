@@ -101,7 +101,6 @@ export const StyledButton = styled(Pressable).attrs<ButtonProps>((props) => ({
   state: props.state ?? ButtonState.DEFAULT,
   pressed: props.pressed,
 }))`
-  min-width: 96px;
   height: 42px;
   border-radius: 6px;
   padding: 8px 24px;

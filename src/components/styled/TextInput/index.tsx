@@ -11,6 +11,7 @@ export interface TextInputProps {
   value: string;
   css?: CSSProperties;
   type?: "password" | "text"
+  multiline?: boolean;
 }
 
 export const TextInput = ({
@@ -21,7 +22,8 @@ export const TextInput = ({
   onBlur,
   value,
   css,
-  type = "text"
+  type = "text",
+  multiline = false,
 }: TextInputProps) => {
   const theme = useTheme();
 
@@ -37,6 +39,7 @@ export const TextInput = ({
       onBlur={() => onBlur && onBlur()}
       autoCapitalize='none'
       secureTextEntry={type === "password"}
+      multiline={multiline}
     />
   )
 };
