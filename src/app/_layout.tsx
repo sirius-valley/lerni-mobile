@@ -5,7 +5,7 @@ import { Slot } from 'expo-router';
 import { useFonts } from 'expo-font';
 import store from '../redux/store';
 import React from 'react';
-import {theme} from "../utils/theme";
+import { theme } from "../utils/theme";
 
 const _layout = () => {
   const ProvidersTree = buildProviderTree([
