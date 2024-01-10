@@ -1,11 +1,10 @@
 import React from 'react';
-import { useTheme } from 'styled-components';
-import {  StyledColumn, StyledRow } from '../../styled/styles';
 import { TextInput } from '../../styled/TextInput';
 import Button from '../../styled/Button';
 import SendIcon from '../../../../assets/icons/SendIcon';
 import StaticBubble from '../StaticBubble';
 import CharAmountDisplay from '../CharAmountDisplay';
+import { StyledFreeTextContainer, StyledRightColumn } from './styles';
 
 interface FreeTextBubbleInterface {
   value: string;
@@ -24,8 +23,6 @@ const FreeTextBubble = ({
 }: FreeTextBubbleInterface) => {
   const textLength = value.length;
 
-  const Styles = CreateStyles();
-
   const handleOnChangeText = (text: string) => {
     if (!onChangeText)
       return null;
@@ -37,17 +34,20 @@ const FreeTextBubble = ({
     return <StaticBubble text={value} />
 
   return (
-    <StyledRow css={Styles.mainContainer}>
+    <StyledFreeTextContainer>
       <TextInput
         value={value}
         onChangeText={handleOnChangeText}
-        css={Styles.input}
+        css={{
+          width: '80%',
+          height: '100%',
+        }}
         scrollEnabled={false}
         multiline
       />
-      <StyledColumn css={Styles.rightColumn}>
+      <StyledRightColumn>
         {textLength > 130 && (
-          <CharAmountDisplay 
+          <CharAmountDisplay
             text={value}
             topLength={textLimit}
           />
@@ -57,43 +57,17 @@ const FreeTextBubble = ({
           onPress={() => handlePress ? handlePress() : null}
           icon={SendIcon}
           iconColor={'white'}
-          css={Styles.button}
+          css={{
+            borderRadius: '100px',
+            width: '42px',
+            height: '42px',
+            padding: '8px',
+          }}
           disabled={value.length === 0}
         />
-      </StyledColumn>
-    </StyledRow>
+      </StyledRightColumn>
+    </StyledFreeTextContainer>
   )
 }
 
 export default FreeTextBubble;
-
-const CreateStyles = () => {
-  const theme = useTheme();
-  return ({
-    mainContainer: {
-      borderColor: theme.primary500,
-      height: 'fit-content',
-      width: '100%',
-      borderWidth: '1px',
-      borderRadius: 8,
-      padding: '12px 8px 8px 4px',
-    },
-    rightColumn: {
-      width: '20%',
-      height: 'fit-content',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '8px',
-    },
-    input: {
-      width: '80%',
-      height: '100%',
-    },
-    button: {
-      borderRadius: '100px',
-      width: '42px',
-      height: '42px',
-      padding: '8px',
-    }
-  })
-}
