@@ -19,6 +19,9 @@ const Landing = () => {
       <Link asChild href={'/(app)/register'}>
         <Button title="Register" />
       </Link>
+      <Link asChild href={'/(app)/login'}>
+        <Button title="Login" />
+      </Link>
     </View>
   );
 };
