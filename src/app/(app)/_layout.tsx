@@ -1,13 +1,7 @@
-import {Redirect, Slot, useRouter} from 'expo-router';
-import store from '../../redux/store';
+import React from 'react';
+import { Slot } from 'expo-router';
 
 export const Layout = () => {
-  const token = store.getState().auth.token;
-
-
-  if(!token) {
-    return <Redirect href={'/(auth)/login'}/>
-  }
 
   return <Slot />;
 };

@@ -1,5 +1,5 @@
 import { TextInputProps } from '.';
-import styled from 'styled-components/native';
+import styled, { css as styledComponent } from 'styled-components/native';
 
 export const StyledTextInput = styled.TextInput<TextInputProps>`
   border-radius: 8px;
@@ -18,7 +18,6 @@ export const StyledTextInput = styled.TextInput<TextInputProps>`
       return props.theme.gray900;
     }
   }};
-
   background-color: ${(props) => {
     if (props.error) {
       return props.theme.white;
@@ -28,4 +27,5 @@ export const StyledTextInput = styled.TextInput<TextInputProps>`
       return props.theme.white;
     }
   }};
+  ${({ css }) => css && styledComponent(css)};
 `;
