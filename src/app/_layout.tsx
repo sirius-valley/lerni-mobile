@@ -5,42 +5,20 @@ import { Slot } from 'expo-router';
 import { useFonts } from 'expo-font';
 import store from '../redux/store';
 import React from 'react';
-import Toast, { BaseToast } from 'react-native-toast-message';
+import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 import { theme } from '../utils/theme';
+import ToastManager from 'toastify-react-native';
+import { View } from 'react-native';
+import { StyledText } from '../components/styled/styles';
+import { withToast } from '../hoc/withToast';
+import { ToastComponent } from '../hoc/Toast';
 
 const _layout = () => {
-
-  const toastConfig = {
-    success: (props: any) => (
-      <BaseToast
-        {...props}
-        leadingIcon={'😵'}
-        trailingIcon={'X'}
-        style = {{
-          borderRadius: '8px',
-          backgroundColor: theme.success,
-          padding: '12px 18px',
-          gap: '16px',
-          alignItems: 'center',
-        }}
-        contentContainerStyle = {{
-
-        }}
-        text1Style={{
-          fontFamily: theme.body2.fontFamily,
-          fontSize: theme.body2.fontSize,
-          fontWeight: theme.body2.fontWeight,
-          color: theme.white,
-          width: '189px'
-        }}
-      />
-    ),
-  };
 
   const ProvidersTree = buildProviderTree([
     [ThemeProvider, { theme }],
     [Provider, { store }],
-    // [Toast, { toastConfig } ],
+    [ToastComponent, { }],
   ]);
 
   const [fontsLoaded] = useFonts({
@@ -57,9 +35,9 @@ const _layout = () => {
   }
 
   return (
-    <ProvidersTree children={<Slot />} />
-    //   <Slot />
-    // </ProvidersTree>
+    <ProvidersTree>
+      <Slot />
+    </ProvidersTree>
   );
 };
 
