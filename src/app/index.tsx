@@ -35,7 +35,10 @@ const Landing = () => {
           textLimit={150}
         />
       </StyledColumn>
-    </View >
+      <Link asChild href={'/(app)/login'}>
+        <Button title="Login" />
+      </Link>
+    </View>
   );
 };
 
