@@ -1,24 +1,18 @@
 import { Provider } from 'react-redux';
-import { ThemeProvider, useTheme } from 'styled-components/native';
+import { ThemeProvider } from 'styled-components/native';
 import { buildProviderTree } from '../utils/BuildProviderTree';
 import { Slot } from 'expo-router';
 import { useFonts } from 'expo-font';
 import store from '../redux/store';
 import React from 'react';
-import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 import { theme } from '../utils/theme';
-import ToastManager from 'toastify-react-native';
-import { View } from 'react-native';
-import { StyledText } from '../components/styled/styles';
-import { withToast } from '../hoc/withToast';
 import { ToastComponent } from '../hoc/Toast';
 
 const _layout = () => {
-
   const ProvidersTree = buildProviderTree([
     [ThemeProvider, { theme }],
     [Provider, { store }],
-    [ToastComponent, { }],
+    [ToastComponent, {}],
   ]);
 
   const [fontsLoaded] = useFonts({

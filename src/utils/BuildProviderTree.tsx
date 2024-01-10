@@ -1,6 +1,5 @@
 import { Persistor } from 'redux-persist';
 import React, { FunctionComponent, ReactNode } from 'react';
-import { withToast } from '../hoc/withToast';
 
 export interface PersistGateProps {
   persistor: Persistor;
