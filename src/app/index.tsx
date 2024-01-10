@@ -2,12 +2,15 @@ import { View, Text, Button } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
 import FreeTextBubble from '../components/common/FreeTextBubble';
+import { StyledColumn } from '../components/styled/styles';
 
 const Landing = () => {
   const [inputValue, setInputValue] = React.useState('');
+
   const handlePress = () => {
     alert(inputValue);
   }
+
   return (
     <View
       style={{
@@ -24,12 +27,14 @@ const Landing = () => {
       <Link asChild href={'/(app)/register'}>
         <Button title="Register" />
       </Link>
-      <FreeTextBubble
-        value={inputValue}
-        onChangeText={(value) => setInputValue(value)}
-        handlePress={handlePress}
-        textLimit={30}
-      />
+      <StyledColumn css={{ padding: 16, gap: 16, alignItems: 'flex-end', height: '500px', width: '100%' }}>
+        <FreeTextBubble
+          value={inputValue}
+          onChangeText={(value) => setInputValue(value)}
+          handlePress={handlePress}
+          textLimit={150}
+        />
+      </StyledColumn>
     </View >
   );
 };

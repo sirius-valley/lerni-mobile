@@ -1,109 +1,96 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from 'styled-components';
-import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../styled/styles';
-import { StyledTextInput } from '../../styled/TextInput/styles';
+import {  StyledColumn, StyledRow } from '../../styled/styles';
 import { TextInput } from '../../styled/TextInput';
 import Button from '../../styled/Button';
 import SendIcon from '../../../../assets/icons/SendIcon';
-
-enum FREE_TEXT_BUBBLE_STATUS {
-  WRITE_ONLY,
-  READ_ONLY
-}
+import StaticBubble from '../StaticBubble';
+import CharAmountDisplay from '../CharAmountDisplay';
 
 interface FreeTextBubbleInterface {
   value: string;
-  onChangeText: (value: string) => void;
-  handlePress: () => void;
-  status?: FREE_TEXT_BUBBLE_STATUS;
+  onChangeText?: (value: string) => void;
+  handlePress?: () => void;
+  status?: "write-only" | "read-only";
   textLimit?: number;
 }
 
-const Index = ({
+const FreeTextBubble = ({
   value,
   onChangeText,
   handlePress,
-  status = FREE_TEXT_BUBBLE_STATUS.WRITE_ONLY,
+  status = "write-only",
   textLimit = 150,
 }: FreeTextBubbleInterface) => {
   const textLength = value.length;
 
-  const Styles = CreateStyles(textLength > textLimit);
+  const Styles = CreateStyles();
+
+  const handleOnChangeText = (text: string) => {
+    if (!onChangeText)
+      return null;
+
+    return (text.length <= textLimit) && onChangeText(text);
+  }
+
+  if (status === 'read-only')
+    return <StaticBubble text={value} />
 
   return (
-    <StyledBox css={Styles.mainContainer}>
-      <StyledRow>
-        <StyledColumn css={Styles.column1}>
-          <TextInput
-            value={value}
-            onChangeText={(text) => (text.length <= textLimit + 1) && onChangeText(text)}
-            css={Styles.input}
-            multiline
+    <StyledRow css={Styles.mainContainer}>
+      <TextInput
+        value={value}
+        onChangeText={handleOnChangeText}
+        css={Styles.input}
+        scrollEnabled={false}
+        multiline
+      />
+      <StyledColumn css={Styles.rightColumn}>
+        {textLength > 130 && (
+          <CharAmountDisplay 
+            text={value}
+            topLength={textLimit}
           />
-        </StyledColumn>
-        <StyledColumn css={Styles.column2}>
-          {textLength > 130 && (
-            <StyledRow css={Styles.charLengthRow}>
-              <StyledText css={Styles.charLength}>
-                {textLength}
-              </StyledText>
-              <StyledText>
-                /{textLimit}
-              </StyledText>
-              <StyledText>
-                /{textLimit}
-              </StyledText>
-            </StyledRow>
-          )}
-          <Button
-            variant={'primary'}
-            onPress={handlePress}
-            icon={SendIcon}
-            css={Styles.button}
-          />
-        </StyledColumn>
-      </StyledRow>
-    </StyledBox>
+        )}
+        <Button
+          variant={'primary'}
+          onPress={() => handlePress ? handlePress() : null}
+          icon={SendIcon}
+          iconColor={'white'}
+          css={Styles.button}
+          disabled={value.length === 0}
+        />
+      </StyledColumn>
+    </StyledRow>
   )
 }
 
-export default Index;
+export default FreeTextBubble;
 
-const CreateStyles = (charLengthExceeded: boolean) => {
+const CreateStyles = () => {
   const theme = useTheme();
   return ({
     mainContainer: {
       borderColor: theme.primary500,
-      height: '58px',
-      maxHeight: '150px',
+      height: 'fit-content',
       width: '100%',
       borderWidth: '1px',
       borderRadius: 8,
-      padding: '8px',
+      padding: '12px 8px 8px 4px',
     },
-    column1: {
-      width: '80%',
-      height: '100%',
-    },
-    column2: {
+    rightColumn: {
       width: '20%',
-      height: '100%',
+      height: 'fit-content',
       alignItems: 'center',
       justifyContent: 'center',
       gap: '8px',
     },
-    charLengthRow: {
-      alignItems: 'center',
-    },
-    charLength: {
-      color: charLengthExceeded ? theme.red500 : '#F99D32',
-    },
     input: {
-      width: '100%',
+      width: '80%',
+      height: '100%',
     },
     button: {
-      borderRadius: '100%',
+      borderRadius: '100px',
       width: '42px',
       height: '42px',
       padding: '8px',

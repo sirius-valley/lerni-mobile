@@ -8,6 +8,7 @@ export const theme = {
   primary200: '#C0EEF2',
   blue500: '#273873',
   white: '#FFFFFF',
+  warning: '#F99D32',
   red500: '#FC6464',
   red600: '#B93333',
   gray50: '#f8fafc',
@@ -60,3 +61,4 @@ export const theme = {
 };
 
 export type MyTheme = typeof theme;
+export type ThemeColors = Omit<MyTheme, "h1" | "h2" | "h3" | "body1" | "body2" | "body3">
