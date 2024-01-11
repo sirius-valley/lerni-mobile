@@ -1,40 +1,82 @@
 import React from 'react';
-import { View, ScrollView, Text, StyleSheet } from 'react-native';
-import { StyledBox, StyledColumn, StyledText } from '../styled/styles';
+import { StyledBox, StyledColumn, StyledRow, StyledText } from '../styled/styles';
 import { useTheme } from 'styled-components';
 import * as Progress from 'react-native-progress';
+import CloseIcon from '../../../assets/icons/CloseIcon';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+interface Pill {
+  title: string;
+  pillNumber: number;
+  percentageDone: number;
+}
 
 const PillHeader = () => {
   const theme = useTheme();
+  const mockedPill: Pill = {
+    title: 'Nombre de la pildora',
+    pillNumber: 1,
+    percentageDone: 0.35,
+  };
   return (
-    <>
-      <StyledBox
-        css={{
-          flex: 1,
-          backgroundColor: theme.primary900,
-          maxHeight: '117px',
-          width: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          position: 'absolute',
-          paddingTop: 20,
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 10,
-        }}
-      >
-        <StyledColumn css={{ gap: 8, width: '100%' }}>
-          <StyledBox>
-            <StyledText>Nombre de la pildora</StyledText>
-            <Progress.Bar progress={0.3} width={200} />
-            <Progress.Pie progress={0.4} size={50} />
-            <Progress.Circle size={30} indeterminate={true} />
-            <Progress.CircleSnail color={['red', 'green', 'blue']} />
-          </StyledBox>
-        </StyledColumn>
-      </StyledBox>
-    </>
+    <StyledRow
+      css={{
+        height: 117,
+        background: theme.primary900,
+        width: '100%',
+      }}
+    >
+      <StyledColumn css={{ alignItems: 'center', justifyContent: 'center', gap: 8, padding: 12 }}>
+        <StyledRow
+          css={{
+            alignItems: 'center',
+            gap: 12,
+            width: '100%',
+          }}
+        >
+          <StyledRow
+            css={{
+              alignItems: 'center',
+              width: '100%',
+              justifyContent: 'space-between',
+            }}
+          >
+            <StyledRow css={{ alignItems: 'center', gap: 8 }}>
+              <Progress.Circle
+                size={30}
+                borderWidth={0}
+                unfilledColor={theme.gray600}
+                color={theme.primary500}
+                progress={mockedPill.percentageDone}
+                showsText={true}
+                formatText={() => mockedPill.pillNumber}
+                textStyle={{
+                  fontSize: 18,
+                  color: 'white',
+                  fontWeight: '600',
+                  marginBottom: 6,
+                }}
+                animated={false}
+                thickness={3.6}
+              />
+              <StyledText variant="h3" css={{ color: theme.gray100 }}>
+                {mockedPill.title}
+              </StyledText>
+            </StyledRow>
+            <TouchableOpacity onPress={() => alert('X')}>
+              <CloseIcon color={theme.gray500} size={24} />
+            </TouchableOpacity>
+          </StyledRow>
+        </StyledRow>
+        <StyledBox
+          css={{
+            borderBottomWidth: 1,
+            borderBottomColor: theme.gray500,
+            width: '100%',
+          }}
+        ></StyledBox>
+      </StyledColumn>
+    </StyledRow>
   );
 };
 
