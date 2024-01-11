@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyledBox, StyledColumn, StyledRow, StyledText } from '../styled/styles';
+import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../styled/styles';
 import { useTheme } from 'styled-components';
 import * as Progress from 'react-native-progress';
-import CloseIcon from '../../../assets/icons/CloseIcon';
+import CloseIcon from '../../../../assets/icons/CloseIcon';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Pill {
