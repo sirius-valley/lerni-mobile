@@ -6,3 +6,10 @@ export enum ComponentVariantType {
 }
 
 export type ButtonVariant = 'dark' | 'primary' | 'red' | 'ghost';
+
+export interface MessageProps {
+  user?: 'student' | 'professor';
+  isLast?: boolean;
+  content?: string;
+  type?: 'image' | 'text';
+}
