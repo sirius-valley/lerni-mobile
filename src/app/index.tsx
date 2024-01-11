@@ -3,7 +3,6 @@ import React from 'react';
 import { Link } from 'expo-router';
 import Button from '../components/styled/Button/Button';
 import SendIcon from '../../assets/icons/SendIcon';
-import PillHeader from '../components/PillHeader';
 
 const Landing = () => {
   const handleButtonPress = () => {
@@ -19,7 +18,6 @@ const Landing = () => {
         backgroundColor: 'transparent',
       }}
     >
-      <PillHeader />
       <Text>Landing</Text>
       <Link asChild href={'/(tabs)/profile'}>
         <RNButton title="Home" />
