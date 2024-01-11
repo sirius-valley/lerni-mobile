@@ -14,7 +14,7 @@ export const ToastComponent = (props: any) => {
     if (type) {
       setTimeout(() => {
         dispatch(resetToast());
-      }, 2000000);
+      }, 3000);
     }
   }, [type]);
 
