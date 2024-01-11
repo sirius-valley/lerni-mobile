@@ -26,42 +26,36 @@ export const theme = {
     fontSize: '24px',
     fontStyle: 'normal',
     fontWeight: 700,
-    lineHeight: '28px',
   },
   h2: {
     fontFamily: 'Roboto-Bold',
     fontSize: '20px',
     fontStyle: 'normal',
     fontWeight: 700,
-    lineHeight: '26px',
   },
   h3: {
     fontFamily: 'Roboto-Bold',
     fontSize: '18px',
     fontStyle: 'normal',
     fontWeight: 600,
-    lineHeight: '24px',
   },
   body1: {
     fontFamily: 'Roboto-Regular',
     fontSize: '16px',
     fontStyle: 'normal',
     fontWeight: 400,
-    lineHeight: '20px',
   },
   body2: {
     fontFamily: 'Roboto-Regular',
     fontSize: '14px',
     fontStyle: 'normal',
     fontWeight: 400,
-    lineHeight: '18px',
   },
   body3: {
     fontFamily: 'Roboto-Regular',
     fontSize: '12px',
     fontStyle: 'normal',
     fontWeight: 400,
-    lineHeight: '16px',
   },
 };
 

@@ -2,8 +2,8 @@ import React, { useMemo, useState } from 'react';
 import { ButtonState, StyledButton, StyledTextButton } from './styles';
 import { ButtonVariant } from '../../../utils/constants';
 import { useTheme } from 'styled-components/native';
-import Spinner from '../../Spinner/Spinner';
-import { getStyleColorByVariant } from '../../../utils/utils';
+import Spinner from '../../common/Spinner';
+import { CSSProperties, getStyleColorByVariant } from '../../../utils/utils';
 import { IconInterface } from '../../../../assets/icons/types';
 
 export interface ButtonProps {
@@ -13,7 +13,7 @@ export interface ButtonProps {
   variant?: ButtonVariant;
   disabled?: boolean;
   loading?: boolean;
-  css?: { [key in string]: string | number | boolean };
+  css?: CSSProperties;
 }
 const Button = ({
   onPress,
@@ -51,18 +51,22 @@ const Button = ({
       onPress={() => (disabled || loading ? undefined : onPress())}
       onPressIn={() => !disabled && !loading && setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
-      css={{
-        css,
-      }}
+      css={ css }
     >
-      {Icon && <Icon color={getContrastColor()} size={18} />}
-      {loading ? (
-        <Spinner color={getContrastColor()} size={'small'} />
-      ) : (
-        <StyledTextButton type={variant} state={isDisabled} pressed={false}>
-          {children}
-        </StyledTextButton>
-      )}
+      {loading
+        ? <Spinner color={getContrastColor()} size={'small'} />
+        : (
+          <>
+            {Icon && <Icon color={getContrastColor()} size={18} />}
+            <StyledTextButton
+              type={variant}
+              state={isDisabled}
+              pressed={false}
+            >
+              {children}
+            </StyledTextButton>
+          </>
+        )}
     </StyledButton>
   );
 };
