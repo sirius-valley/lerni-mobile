@@ -8,6 +8,7 @@ import React from 'react';
 import { theme } from "../utils/theme";
 
 const _layout = () => {
+  
   const ProvidersTree = buildProviderTree([
     [ThemeProvider, { theme }],
     [Provider, { store }],

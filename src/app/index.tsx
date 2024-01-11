@@ -1,8 +1,25 @@
 import { View, Text, Button } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'expo-router';
+import { authActions } from '../redux/slice/auth.slice';
+import * as SecureStore from 'expo-secure-store';
+import { useDispatch } from 'react-redux';
 
 const Landing = () => {
+  
+  const dispatch = useDispatch();
+
+  const getTokenFromSecureStore = async () => {
+    const token = await SecureStore.getItemAsync("token");
+    if (token) {
+      dispatch(authActions.setToken(token))
+    }
+  }
+
+  useEffect(() => {
+    getTokenFromSecureStore();
+  }, [])
+
   return (
     <View
       style={{

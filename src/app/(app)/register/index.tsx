@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LerniMainIcon from '../../../../assets/icons/LerniMainIcon'
 import MainContainer from '../../../components/register/MainContainer'
 import { StyledColumn, StyledText } from '../../../components/styled/styles'
@@ -9,6 +9,10 @@ import {
 } from 'formik';
 import * as Yup from 'yup';
 import PasswordValidationDisplay from '../../../components/register/PasswordValidationDisplay'
+import { useRouter } from 'expo-router'
+import { useRegisterMutation } from '../../../redux/service/auth.service'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../redux/store'
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -23,7 +27,10 @@ const SignupSchema = Yup.object().shape({
 
 const RegisterScreen = () => {
 
-  const [loading, setLoading] = useState(false);
+  const [register, registerRequestData] = useRegisterMutation();
+  const router = useRouter();
+
+  const goBack = () => router.back();
 
   return (
     <MainContainer>
@@ -38,13 +45,7 @@ const RegisterScreen = () => {
       }}>
         <Formik
           initialValues={{ email: '', password: '' }}
-          onSubmit={values => {
-            setLoading(true)
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 3));
-              setLoading(false);
-            }, 2000)
-          }}
+          onSubmit={values => register(values)}
           validationSchema={SignupSchema}
         >
           {({ handleChange, handleBlur, handleSubmit, values, isValid, errors, touched }) => (
@@ -55,7 +56,7 @@ const RegisterScreen = () => {
                 placeholder='Email'
                 onBlur={() => handleBlur('email')}
                 error={!!errors.email && touched.email}
-                disabled={loading}
+                disabled={registerRequestData.isLoading}
                 css={{
                   width: '100%'
                 }}
@@ -67,7 +68,7 @@ const RegisterScreen = () => {
                 onBlur={() => handleBlur('password')}
                 error={!!errors.password}
                 type="password"
-                disabled={loading}
+                disabled={registerRequestData.isLoading}
                 css={{
                   width: '100%'
                 }}
@@ -88,7 +89,7 @@ const RegisterScreen = () => {
                 disabled={!isValid || !values.email || !values.password}
                 onPress={handleSubmit}
                 variant={'dark'}
-                loading={loading}
+                loading={registerRequestData.isLoading}
                 css={{
                   marginTop: '8px'
                 }}
@@ -98,6 +99,12 @@ const RegisterScreen = () => {
             </>
           )}
         </Formik>
+        <StyledText
+          css={{ textDecorationLine: 'underline' }}
+          onPress={goBack}
+        >
+          volver
+        </StyledText>
       </StyledColumn>
     </MainContainer>
   )

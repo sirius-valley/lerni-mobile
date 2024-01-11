@@ -1,15 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Platform } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.REACT_APP_BASE_URL || 'http://localhost:8080/api',
-  prepareHeaders: (headers) => {
+  baseUrl: process.env.REACT_APP_BASE_URL || 'http://localhost:3001/',
+  prepareHeaders: async (headers) => {
     const mobilePlatforms = ['android', 'ios'];
-    if (!mobilePlatforms.includes(Platform.OS)) {
-      // const token = store.getState();
-      // if (token) {
-      //   headers.set('Authorization', `Bearer ${token}`);
-      // }
+    if (mobilePlatforms.includes(Platform.OS)) {
+      const token = SecureStore.getItemAsync("token");
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
     }
     return headers;
   },
