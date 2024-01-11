@@ -1,11 +1,11 @@
 import { View, Text, Button } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'expo-router';
 import FreeTextBubble from '../components/common/FreeTextBubble';
 import { StyledColumn } from '../components/styled/styles';
 
 const Landing = () => {
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = useState('');
 
   const handlePress = () => {
     alert(inputValue);
