@@ -1,14 +1,6 @@
 import Svg, { Path } from 'react-native-svg';
 import { IconInterface } from '../../../../../../assets/icons/types';
 
-interface IconProps {
-  width?: string;
-  height?: string;
-  color?: string;
-  onPress: () => void;
-  active?: boolean;
-}
-
 export const CancelIcon = ({ color = '#307F90', size = 16 }: IconInterface) => {
   return (
     <Svg width={size} height={size} viewBox="0 0 12 12" fill="none">

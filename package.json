@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "prepare": "husky install",
     "eslint": "eslint --fix .",
-    "prettier": "prettier . -c --write "
+    "prettier": "prettier . --write ",
+    "test": "npm run prettier && npm run eslint"
   },
   "husky": {
     "hooks": {
