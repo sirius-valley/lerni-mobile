@@ -6,3 +6,5 @@ export enum ComponentVariantType {
 }
 
 export type ButtonVariant = 'dark' | 'primary' | 'red' | 'ghost';
+
+export type ToastTypes = 'success' | 'info' | 'error';
