@@ -10,7 +10,7 @@ export interface TextInputProps {
   onBlur?: () => void;
   value: string;
   css?: CSSProperties;
-  type?: "password" | "text"
+  type?: 'password' | 'text';
   multiline?: boolean;
   scrollEnabled?: boolean;
   maxLength?: number;
@@ -24,7 +24,7 @@ export const TextInput = ({
   onBlur,
   value,
   css,
-  type = "text",
+  type = 'text',
   multiline = false,
   scrollEnabled = true,
   maxLength,
@@ -41,8 +41,8 @@ export const TextInput = ({
       value={value}
       onChangeText={(value: string) => !disabled && onChangeText(value)}
       onBlur={() => onBlur && onBlur()}
-      autoCapitalize='none'
-      secureTextEntry={type === "password"}
+      autoCapitalize="none"
+      secureTextEntry={type === 'password'}
       multiline={multiline}
       scrollEnabled={scrollEnabled}
       maxLength={maxLength}

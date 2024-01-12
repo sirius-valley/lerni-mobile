@@ -56,18 +56,18 @@ const Button = ({
       onPressOut={() => setIsPressed(false)}
       css={css}
     >
-      {loading
-        ? <Spinner color={getContrastColor()} size={'small'} />
-        : (
-          <>
-            {Icon && <Icon color={iconColor ? theme[iconColor] : getContrastColor()} size={18} />}
-            {children && (
-              <StyledTextButton type={variant} state={isDisabled} pressed={false} >
-                {children}
-              </StyledTextButton>
-            )}
-          </>
-        )}
+      {loading ? (
+        <Spinner color={getContrastColor()} size={'small'} />
+      ) : (
+        <>
+          {Icon && <Icon color={iconColor ? theme[iconColor] : getContrastColor()} size={18} />}
+          {children && (
+            <StyledTextButton type={variant} state={isDisabled} pressed={false}>
+              {children}
+            </StyledTextButton>
+          )}
+        </>
+      )}
     </StyledButton>
   );
 };

@@ -64,4 +64,4 @@ export const theme = {
 };
 
 export type MyTheme = typeof theme;
-export type ThemeColors = Omit<MyTheme, "h1" | "h2" | "h3" | "body1" | "body2" | "body3">
+export type ThemeColors = Omit<MyTheme, 'h1' | 'h2' | 'h3' | 'body1' | 'body2' | 'body3'>;

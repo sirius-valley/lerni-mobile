@@ -11,7 +11,7 @@ interface FreeTextBubbleInterface {
   value: string;
   onChangeText?: (value: string) => void;
   handlePress?: () => void;
-  status?: "write-only" | "read-only";
+  status?: 'write-only' | 'read-only';
   textLimit?: number;
 }
 
@@ -19,26 +19,24 @@ const FreeTextBubble = ({
   value,
   onChangeText,
   handlePress,
-  status = "write-only",
+  status = 'write-only',
   textLimit = 150,
 }: FreeTextBubbleInterface) => {
   const textLength = value.length;
 
   const handleOnChangeText = (text: string) => {
-    if (!onChangeText)
-      return null;
+    if (!onChangeText) return null;
     return onChangeText(text);
-  }
+  };
 
-  if (status === 'read-only')
-    return <StaticBubble text={value} />
+  if (status === 'read-only') return <StaticBubble text={value} />;
 
   return (
     <StyledFreeTextContainer>
       <StyledColumn
         css={{
           flex: 1,
-          justifyContent: 'center'
+          justifyContent: 'center',
         }}
       >
         <TextInput
@@ -56,15 +54,10 @@ const FreeTextBubble = ({
         />
       </StyledColumn>
       <StyledRightColumn>
-        {textLength > 130 && (
-          <CharAmountDisplay
-            text={value}
-            topLength={textLimit}
-          />
-        )}
+        {textLength >= 130 && <CharAmountDisplay text={value} topLength={textLimit} />}
         <Button
           variant={'primary'}
-          onPress={() => handlePress ? handlePress() : null}
+          onPress={() => (handlePress ? handlePress() : null)}
           icon={SendIcon}
           iconColor={'white'}
           css={{
@@ -77,7 +70,7 @@ const FreeTextBubble = ({
         />
       </StyledRightColumn>
     </StyledFreeTextContainer>
-  )
-}
+  );
+};
 
 export default FreeTextBubble;

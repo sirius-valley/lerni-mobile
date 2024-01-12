@@ -1,5 +1,5 @@
-import styled from "styled-components/native";
-import { StyledColumn, StyledRow } from "../../styled/styles";
+import styled from 'styled-components/native';
+import { StyledColumn, StyledRow } from '../../styled/styles';
 
 export const StyledFreeTextContainer = styled(StyledRow)`
   border-color: ${({ theme }) => theme.primary500};

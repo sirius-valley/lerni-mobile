@@ -9,7 +9,7 @@ const Landing = () => {
 
   const handlePress = () => {
     alert(inputValue);
-  }
+  };
 
   return (
     <View
@@ -30,7 +30,9 @@ const Landing = () => {
       <Link asChild href={'/(app)/login'}>
         <Button title="Login" />
       </Link>
-      <StyledColumn css={{ padding: 16, gap: 16, alignItems: 'flex-end', height: '500px', width: '100%' }}>
+      <StyledColumn
+        css={{ padding: 16, gap: 16, alignItems: 'flex-end', height: '500px', width: '100%' }}
+      >
         <FreeTextBubble
           value={inputValue}
           onChangeText={(value) => setInputValue(value)}
