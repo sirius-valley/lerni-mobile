@@ -5,7 +5,7 @@ export const Layout = () => {
   const token = store.getState().auth.token;
 
   if (!token) {
-    return <Redirect href={'/(app)/login'} />
+    return <Redirect href={'/(app)/login'} />;
   }
 
   return <Slot />;

@@ -1,4 +1,4 @@
-import React, {FC, ReactNode} from 'react';
+import React, { FC, ReactNode } from 'react';
 import CompassIcon from '../../../assets/icons/CompassIcon';
 import BoltIcon from '../../../assets/icons/BoltIcon';
 import PersonCircleIcon from '../../../assets/icons/PersonCircleIcon';
@@ -23,7 +23,7 @@ export const bottomTabs: BottomTab[] = [
     id: 'Trivia',
     name: 'Trivia',
     screen: 'trivia',
-    iconName: BoltIcon ,
+    iconName: BoltIcon,
   },
   {
     id: 'Explorar',

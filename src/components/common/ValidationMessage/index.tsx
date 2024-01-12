@@ -9,17 +9,14 @@ interface ValidationMessageInterface {
   message: string;
 }
 
-const ValidationMessage = ({
-  isValid,
-  message
-}: ValidationMessageInterface) => {
+const ValidationMessage = ({ isValid, message }: ValidationMessageInterface) => {
   const theme = useTheme();
   return (
     <StyledRow css={{ gap: '8px' }}>
       {isValid ? <CheckIcon /> : <MultiplyIcon />}
       <StyledText css={{ color: theme.white }}>{message}</StyledText>
     </StyledRow>
-  )
-}
+  );
+};
 
 export default ValidationMessage;
