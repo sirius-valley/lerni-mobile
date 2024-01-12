@@ -1,8 +1,7 @@
-import { Pressable, Text, View } from 'react-native';
-import { ToastText } from './ToastText/styles';
-import { ToastContainer } from './ToastView/styles';
+import { Pressable, View } from 'react-native';
+import { ToastContainer, ToastText } from './styles';
 import { IconInterface } from '../../../../assets/icons/types';
-import { CancelIcon } from './ToastIcon/CancelIcon';
+import { CancelIcon } from '../../../../assets/icons/CancelIcon';
 import ToastIcon from './ToastIcon';
 import { ToastTypes } from '../../../utils/constants';
 
