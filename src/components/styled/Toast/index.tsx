@@ -25,7 +25,9 @@ export const CustomSuccessToast = ({ type, text, onClose, icon }: ToastProps) =>
         }}
       >
         <ToastIcon type={type} />
-        <ToastText style={{ flex: 1 }}>{text ? text : 'toast'}</ToastText>
+        <ToastText style={{ flex: 1 }} variant="body2">
+          {text ? text : 'toast'}
+        </ToastText>
         <Pressable onPress={onClose}>
           <CancelIcon color="white" />
         </Pressable>
