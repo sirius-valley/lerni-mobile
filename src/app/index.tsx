@@ -27,6 +27,9 @@ const Landing = () => {
       <Link asChild href={'/(app)/register'}>
         <Button title="Register" />
       </Link>
+      <Link asChild href={'/(app)/login'}>
+        <Button title="Login" />
+      </Link>
       <StyledColumn css={{ padding: 16, gap: 16, alignItems: 'flex-end', height: '500px', width: '100%' }}>
         <FreeTextBubble
           value={inputValue}
@@ -35,9 +38,6 @@ const Landing = () => {
           textLimit={150}
         />
       </StyledColumn>
-      <Link asChild href={'/(app)/login'}>
-        <Button title="Login" />
-      </Link>
     </View>
   );
 };

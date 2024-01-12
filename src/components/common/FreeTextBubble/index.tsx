@@ -27,7 +27,7 @@ const FreeTextBubble = ({
     if (!onChangeText)
       return null;
 
-    return (text.length <= textLimit) && onChangeText(text);
+    return onChangeText(text);
   }
 
   if (status === 'read-only')
@@ -43,6 +43,7 @@ const FreeTextBubble = ({
           height: '100%',
         }}
         scrollEnabled={false}
+        maxLength={textLimit}
         multiline
       />
       <StyledRightColumn>

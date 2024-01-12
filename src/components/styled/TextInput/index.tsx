@@ -13,6 +13,7 @@ export interface TextInputProps {
   type?: "password" | "text"
   multiline?: boolean;
   scrollEnabled?: boolean;
+  maxLength?: number;
 }
 
 export const TextInput = ({
@@ -26,6 +27,7 @@ export const TextInput = ({
   type = "text",
   multiline = false,
   scrollEnabled = true,
+  maxLength,
 }: TextInputProps) => {
   const theme = useTheme();
 
@@ -43,6 +45,7 @@ export const TextInput = ({
       secureTextEntry={type === "password"}
       multiline={multiline}
       scrollEnabled={scrollEnabled}
+      maxLength={maxLength}
     />
   );
 };
