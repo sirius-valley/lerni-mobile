@@ -9,6 +9,9 @@ import * as Yup from 'yup';
 import PasswordValidationDisplay from '../../../components/register/PasswordValidationDisplay';
 import { useRouter } from 'expo-router';
 import { useRegisterMutation } from '../../../redux/service/auth.service';
+import { useLDispatch, useLSelector } from '../../../redux/hooks';
+import { resetToast, showToast } from '../../../redux/slice/utils.slice';
+import { authActions } from '../../../redux/slice/auth.slice';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -28,7 +31,19 @@ const RegisterScreen = () => {
   const [register, registerRequestData] = useRegisterMutation();
   const router = useRouter();
 
+  const errorMessage = useLSelector((state) => state.auth.registerErrorMessage);
+  const dispatch = useLDispatch();
   const goToLoginScreen = () => router.replace('/(app)/login');
+
+  useEffect(() => {
+    errorMessage.length > 0 && dispatch(showToast({ type: 'error', text: errorMessage }));
+  }, [errorMessage]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(authActions.resetErrorMessage());
+    };
+  }, []);
 
   return (
     <MainContainer>

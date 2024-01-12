@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LerniMainIcon from '../../../../assets/icons/LerniMainIcon';
 import MainContainer from '../../../components/register/MainContainer';
 import { StyledColumn, StyledText } from '../../../components/styled/styles';
@@ -10,6 +10,9 @@ import { useLoginMutation } from '../../../redux/service/auth.service';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'expo-router';
+import { useLDispatch, useLSelector } from '../../../redux/hooks';
+import { showToast } from '../../../redux/slice/utils.slice';
+import { authActions } from '../../../redux/slice/auth.slice';
 
 const SigninSchema = Yup.object().shape({
   email: Yup.string()
@@ -27,10 +30,22 @@ const SigninSchema = Yup.object().shape({
 
 const LoginScreen = () => {
   const theme = useTheme();
-  const [login, loginRequestData] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   const router = useRouter();
+  const errorMessage = useLSelector((state) => state.auth.loginErrorMessage);
+  const dispatch = useLDispatch();
 
   const goToRegisterScreen = () => router.replace('/(app)/register');
+
+  useEffect(() => {
+    errorMessage.length > 0 && dispatch(showToast({ type: 'error', text: errorMessage }));
+  }, [errorMessage]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(authActions.resetErrorMessage());
+    };
+  }, []);
 
   return (
     <MainContainer>
@@ -56,7 +71,7 @@ const LoginScreen = () => {
                 placeholder="Email"
                 onBlur={() => handleBlur('email')}
                 error={!!errors.email && touched.email}
-                disabled={loginRequestData.isLoading}
+                disabled={isLoading}
                 css={{
                   width: '100%',
                 }}
@@ -69,7 +84,7 @@ const LoginScreen = () => {
                   onBlur={() => handleBlur('password')}
                   error={!!errors.password}
                   type="password"
-                  disabled={loginRequestData.isLoading}
+                  disabled={isLoading}
                   css={{
                     width: '100%',
                   }}
@@ -90,7 +105,7 @@ const LoginScreen = () => {
                 disabled={!isValid || !values.email || !values.password}
                 onPress={handleSubmit}
                 variant={'dark'}
-                loading={loginRequestData.isLoading}
+                loading={isLoading}
                 css={{
                   marginTop: '8px',
                 }}

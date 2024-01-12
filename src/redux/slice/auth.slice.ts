@@ -1,13 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { authApi } from '../service/auth.service';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { authApi, AuthType } from '../service/auth.service';
 import * as SecureStore from 'expo-secure-store';
 
 interface InitialStateAuthType {
   token: string;
+  loginErrorMessage: string;
+  registerErrorMessage: string;
 }
 
 const initialState: InitialStateAuthType = {
   token: '',
+  loginErrorMessage: '',
+  registerErrorMessage: '',
 };
 
 export const authSlice = createSlice({
@@ -21,32 +25,40 @@ export const authSlice = createSlice({
     setToken: (state, payload) => {
       state.token = payload.payload;
     },
+    resetErrorMessage: (state) => {
+      state.loginErrorMessage = '';
+      state.registerErrorMessage = '';
+    },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(authApi.endpoints.login.matchPending, (state, payload) => {
-      console.log('login pending: ', payload);
+    builder.addMatcher(authApi.endpoints.login.matchPending, (state, action) => {
       state.token = '';
+      state.loginErrorMessage = '';
     });
-    builder.addMatcher(authApi.endpoints.login.matchRejected, (state, payload) => {
-      console.log('login rejected: ', payload);
+    builder.addMatcher(authApi.endpoints.login.matchRejected, (state, action: any) => {
+      state.loginErrorMessage = action.payload?.data?.message ?? '';
     });
-    builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
-      state.token = payload.token;
-      SecureStore.setItemAsync('token', payload.token);
-      console.log('login success: ', payload);
-    });
-    builder.addMatcher(authApi.endpoints.register.matchPending, (state, payload) => {
-      console.log('register pending: ', payload);
+    builder.addMatcher(
+      authApi.endpoints.login.matchFulfilled,
+      (state, action: PayloadAction<AuthType>) => {
+        state.token = action.payload.token ?? '';
+        SecureStore.setItemAsync('token', action.payload.token ?? '');
+      },
+    );
+    builder.addMatcher(authApi.endpoints.register.matchPending, (state, action) => {
       state.token = '';
+      state.registerErrorMessage = '';
     });
-    builder.addMatcher(authApi.endpoints.register.matchRejected, (state, payload) => {
-      console.log('register rejected: ', payload);
+    builder.addMatcher(authApi.endpoints.register.matchRejected, (state, action: any) => {
+      state.registerErrorMessage = action.payload?.data.message ?? '';
     });
-    builder.addMatcher(authApi.endpoints.register.matchFulfilled, (state, { payload }) => {
-      state.token = payload.token;
-      SecureStore.setItemAsync('token', payload.token);
-      console.log('register success: ', payload);
-    });
+    builder.addMatcher(
+      authApi.endpoints.register.matchFulfilled,
+      (state, action: PayloadAction<AuthType>) => {
+        state.token = action.payload.token ?? '';
+        SecureStore.setItemAsync('token', action.payload.token ?? '');
+      },
+    );
   },
 });
 
