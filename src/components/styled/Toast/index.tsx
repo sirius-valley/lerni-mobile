@@ -1,8 +1,7 @@
-import { Pressable, Text, View } from 'react-native';
-import { ToastText } from './ToastText/styles';
-import { ToastContainer } from './ToastView/styles';
+import { Pressable, View } from 'react-native';
+import { ToastContainer, ToastText } from './styles';
 import { IconInterface } from '../../../../assets/icons/types';
-import { CancelIcon } from './ToastIcon/CancelIcon';
+import { CancelIcon } from '../../../../assets/icons/CancelIcon';
 import ToastIcon from './ToastIcon';
 import { ToastTypes } from '../../../utils/constants';
 
@@ -26,7 +25,9 @@ export const CustomSuccessToast = ({ type, text, onClose, icon }: ToastProps) =>
         }}
       >
         <ToastIcon type={type} />
-        <ToastText style={{ flex: 1 }}>{text ? text : 'toast'}</ToastText>
+        <ToastText style={{ flex: 1 }} variant="body2">
+          {text ? text : 'toast'}
+        </ToastText>
         <Pressable onPress={onClose}>
           <CancelIcon color="white" />
         </Pressable>
