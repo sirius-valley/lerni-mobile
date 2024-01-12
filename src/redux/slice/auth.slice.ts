@@ -20,7 +20,7 @@ export const authSlice = createSlice({
     });
     builder.addMatcher(authApi.endpoints.login.matchRejected, (state, payload) => {
       const results = payload;
-      console.log(payload);
+      console.log(results);
     });
     builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
       const results = payload;
