@@ -16,12 +16,21 @@ const CharAmountDisplay = ({
   const theme = useTheme();
   const charLengthWarning = (topLength * 0.8) < textLength;
 
+  const getColor = () => {
+    if (charLengthWarning)
+      return theme.warning;
+    else if (textLength === topLength)
+      return theme.red500;
+    else
+      return theme.primary950;
+  }
+
   return (
     <StyledRow css={{ alignItems: 'center' }}>
-      <StyledText css={{ color: charLengthWarning ? theme.warning : theme.primary950 }}>
+      <StyledText css={{ color: getColor(), fontSize: '10px' }}>
         {textLength}
       </StyledText>
-      <StyledText>
+      <StyledText css={{ fontSize: '10px' }}>
         /{topLength}
       </StyledText>
     </StyledRow>

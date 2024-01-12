@@ -5,6 +5,7 @@ import SendIcon from '../../../../assets/icons/SendIcon';
 import StaticBubble from '../StaticBubble';
 import CharAmountDisplay from '../CharAmountDisplay';
 import { StyledFreeTextContainer, StyledRightColumn } from './styles';
+import { StyledColumn } from '../../styled/styles';
 
 interface FreeTextBubbleInterface {
   value: string;
@@ -26,7 +27,6 @@ const FreeTextBubble = ({
   const handleOnChangeText = (text: string) => {
     if (!onChangeText)
       return null;
-
     return onChangeText(text);
   }
 
@@ -35,17 +35,26 @@ const FreeTextBubble = ({
 
   return (
     <StyledFreeTextContainer>
-      <TextInput
-        value={value}
-        onChangeText={handleOnChangeText}
+      <StyledColumn
         css={{
-          width: '80%',
-          height: '100%',
+          flex: 1,
+          justifyContent: 'center'
         }}
-        scrollEnabled={false}
-        maxLength={textLimit}
-        multiline
-      />
+      >
+        <TextInput
+          value={value}
+          onChangeText={handleOnChangeText}
+          css={{
+            width: '100%',
+            height: 'min-content',
+            padding: '0px',
+            fontSize: '14px',
+          }}
+          scrollEnabled={false}
+          maxLength={textLimit}
+          multiline
+        />
+      </StyledColumn>
       <StyledRightColumn>
         {textLength > 130 && (
           <CharAmountDisplay
