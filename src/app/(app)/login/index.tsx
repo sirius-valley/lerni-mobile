@@ -7,9 +7,7 @@ import Button from '../../../components/styled/Button';
 import { useTheme } from 'styled-components';
 import { StyledRow } from '../../../components/styled/styles';
 import { useLoginMutation } from '../../../redux/service/auth.service';
-import {
-  Formik,
-} from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'expo-router';
 
@@ -20,17 +18,19 @@ const SigninSchema = Yup.object().shape({
     .required('Required'),
   password: Yup.string()
     .min(8, 'Password must be at least 8 characters')
-    .matches(/^(?=.*[A-Z])(?=.*[0-9!@#$%^&*()_+|~=\`{}\[\]:;"'<>,.?/\\-]).+$/, 'Password must contain at least one uppercase letter and one number or symbol')
+    .matches(
+      /^(?=.*[A-Z])(?=.*[0-9!@#$%^&*()_+|~=\`{}\[\]:;"'<>,.?/\\-]).+$/,
+      'Password must contain at least one uppercase letter and one number or symbol',
+    )
     .required('Password is required'),
 });
 
 const LoginScreen = () => {
-
   const theme = useTheme();
   const [login, loginRequestData] = useLoginMutation();
   const router = useRouter();
 
-  const goBack = () => router.back();
+  const goToRegisterScreen = () => router.replace('/(app)/register');
 
   return (
     <MainContainer>
@@ -45,7 +45,7 @@ const LoginScreen = () => {
       >
         <Formik
           initialValues={{ email: '', password: '' }}
-          onSubmit={values => login(values)}
+          onSubmit={(values) => login(values)}
           validationSchema={SigninSchema}
         >
           {({ handleChange, handleBlur, handleSubmit, values, isValid, errors, touched }) => (
@@ -53,25 +53,25 @@ const LoginScreen = () => {
               <TextInput
                 value={values.email}
                 onChangeText={handleChange('email')}
-                placeholder='Email'
+                placeholder="Email"
                 onBlur={() => handleBlur('email')}
                 error={!!errors.email && touched.email}
                 disabled={loginRequestData.isLoading}
                 css={{
-                  width: '100%'
+                  width: '100%',
                 }}
               />
               <StyledColumn>
                 <TextInput
                   value={values.password}
                   onChangeText={handleChange('password')}
-                  placeholder='Contraseña'
+                  placeholder="Contraseña"
                   onBlur={() => handleBlur('password')}
                   error={!!errors.password}
                   type="password"
                   disabled={loginRequestData.isLoading}
                   css={{
-                    width: '100%'
+                    width: '100%',
                   }}
                 />
                 <StyledText
@@ -98,15 +98,8 @@ const LoginScreen = () => {
                 Iniciar Sesión
               </Button>
               <StyledRow css={{ justifyContent: 'center' }}>
-                <StyledText
-                  onPress={() => alert('to be defined')}
-                >
-                  No tenés cuenta?
-                </StyledText>
-                <StyledText
-                  css={{ textDecorationLine: 'underline' }}
-                  onPress={goBack}
-                >
+                <StyledText onPress={() => alert('to be defined')}>No tenés cuenta?</StyledText>
+                <StyledText css={{ textDecorationLine: 'underline' }} onPress={goToRegisterScreen}>
                   Crear una ahora
                 </StyledText>
               </StyledRow>

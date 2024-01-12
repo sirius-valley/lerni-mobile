@@ -1,46 +1,30 @@
-import { View, Text, Button } from 'react-native';
-import React, { useEffect } from 'react';
-import { Link } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { Redirect } from 'expo-router';
 import { authActions } from '../redux/slice/auth.slice';
 import * as SecureStore from 'expo-secure-store';
-import { useDispatch } from 'react-redux';
+import { useLDispatch } from '../redux/hooks';
 
 const Landing = () => {
-  
-  const dispatch = useDispatch();
+  const [appIsReady, setAppIsReady] = useState(false);
+  const dispatch = useLDispatch();
 
   const getTokenFromSecureStore = async () => {
-    const token = await SecureStore.getItemAsync("token");
+    const token = await SecureStore.getItemAsync('token');
     if (token) {
-      dispatch(authActions.setToken(token))
+      dispatch(authActions.setToken(token));
     }
-  }
+    setAppIsReady(true);
+  };
 
   useEffect(() => {
     getTokenFromSecureStore();
-  }, [])
+  }, []);
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'transparent',
-      }}
-    >
-      <Text>Landing</Text>
-      <Link asChild href={'/(tabs)/profile'}>
-        <Button title="Home" />
-      </Link>
-      <Link asChild href={'/(app)/register'}>
-        <Button title="Register" />
-      </Link>
-      <Link asChild href={'/(app)/login'}>
-        <Button title="Login" />
-      </Link>
-    </View>
-  );
+  if (!appIsReady) {
+    return null;
+  }
+
+  return <Redirect href={'/(app)/login'} />;
 };
 
 export default Landing;

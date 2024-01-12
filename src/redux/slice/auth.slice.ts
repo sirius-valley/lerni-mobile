@@ -16,15 +16,15 @@ export const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.token = '';
-      SecureStore.deleteItemAsync("token");
+      SecureStore.deleteItemAsync('token');
     },
     setToken: (state, payload) => {
       state.token = payload.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(authApi.endpoints.login.matchPending, (state, payload) => {
-      console.log('login pending: ', payload)
+      console.log('login pending: ', payload);
       state.token = '';
     });
     builder.addMatcher(authApi.endpoints.login.matchRejected, (state, payload) => {
@@ -32,11 +32,11 @@ export const authSlice = createSlice({
     });
     builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
       state.token = payload.token;
-      SecureStore.setItemAsync("token", payload.token);
+      SecureStore.setItemAsync('token', payload.token);
       console.log('login success: ', payload);
     });
     builder.addMatcher(authApi.endpoints.register.matchPending, (state, payload) => {
-      console.log('register pending: ', payload)
+      console.log('register pending: ', payload);
       state.token = '';
     });
     builder.addMatcher(authApi.endpoints.register.matchRejected, (state, payload) => {
@@ -44,7 +44,7 @@ export const authSlice = createSlice({
     });
     builder.addMatcher(authApi.endpoints.register.matchFulfilled, (state, { payload }) => {
       state.token = payload.token;
-      SecureStore.setItemAsync("token", payload.token);
+      SecureStore.setItemAsync('token', payload.token);
       console.log('register success: ', payload);
     });
   },

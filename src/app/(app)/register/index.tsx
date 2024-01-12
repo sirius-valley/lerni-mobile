@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import LerniMainIcon from '../../../../assets/icons/LerniMainIcon'
-import MainContainer from '../../../components/register/MainContainer'
-import { StyledColumn, StyledText } from '../../../components/styled/styles'
-import { TextInput } from '../../../components/styled/TextInput'
+import React, { useEffect, useState } from 'react';
+import LerniMainIcon from '../../../../assets/icons/LerniMainIcon';
+import MainContainer from '../../../components/register/MainContainer';
+import { StyledColumn, StyledText } from '../../../components/styled/styles';
+import { TextInput } from '../../../components/styled/TextInput';
 import Button from '../../../components/styled/Button';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import PasswordValidationDisplay from '../../../components/register/PasswordValidationDisplay'
-import { useRouter } from 'expo-router'
-import { useRegisterMutation } from '../../../redux/service/auth.service'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../redux/store'
+import PasswordValidationDisplay from '../../../components/register/PasswordValidationDisplay';
+import { useRouter } from 'expo-router';
+import { useRegisterMutation } from '../../../redux/service/auth.service';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -27,11 +25,10 @@ const SignupSchema = Yup.object().shape({
 });
 
 const RegisterScreen = () => {
-
   const [register, registerRequestData] = useRegisterMutation();
   const router = useRouter();
 
-  const goBack = () => router.back();
+  const goToLoginScreen = () => router.replace('/(app)/login');
 
   return (
     <MainContainer>
@@ -48,7 +45,7 @@ const RegisterScreen = () => {
       >
         <Formik
           initialValues={{ email: '', password: '' }}
-          onSubmit={values => register(values)}
+          onSubmit={(values) => register(values)}
           validationSchema={SignupSchema}
         >
           {({ handleChange, handleBlur, handleSubmit, values, isValid, errors, touched }) => (
@@ -98,10 +95,7 @@ const RegisterScreen = () => {
             </>
           )}
         </Formik>
-        <StyledText
-          css={{ textDecorationLine: 'underline' }}
-          onPress={goBack}
-        >
+        <StyledText css={{ textDecorationLine: 'underline' }} onPress={goToLoginScreen}>
           volver
         </StyledText>
       </StyledColumn>

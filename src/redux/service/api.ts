@@ -7,7 +7,7 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: async (headers) => {
     const mobilePlatforms = ['android', 'ios'];
     if (mobilePlatforms.includes(Platform.OS)) {
-      const token = SecureStore.getItemAsync("token");
+      const token = SecureStore.getItemAsync('token');
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }

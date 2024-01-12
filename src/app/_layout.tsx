@@ -9,7 +9,6 @@ import { theme } from '../utils/theme';
 import { ToastComponent } from '../hoc/Toast';
 
 const _layout = () => {
-  
   const ProvidersTree = buildProviderTree([
     [ThemeProvider, { theme }],
     [Provider, { store }],
