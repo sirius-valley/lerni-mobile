@@ -44,5 +44,5 @@ export const TextInput = ({
       multiline={multiline}
       scrollEnabled={scrollEnabled}
     />
-  )
+  );
 };

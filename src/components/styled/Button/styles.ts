@@ -4,7 +4,6 @@ import { CSSProperties, jsToCss } from '../../../utils/utils';
 import { DefaultTheme } from 'styled-components/native';
 import { ButtonVariant } from '../../../utils/constants';
 
-
 type styleProps = {
   [key: string]: string | number | { [key in string]: string | number };
 };

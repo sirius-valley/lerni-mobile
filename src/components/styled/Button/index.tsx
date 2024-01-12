@@ -62,11 +62,7 @@ const Button = ({
           <>
             {Icon && <Icon color={iconColor ? theme[iconColor] : getContrastColor()} size={18} />}
             {children && (
-              <StyledTextButton
-                type={variant}
-                state={isDisabled}
-                pressed={false}
-              >
+              <StyledTextButton type={variant} state={isDisabled} pressed={false} >
                 {children}
               </StyledTextButton>
             )}

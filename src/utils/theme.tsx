@@ -2,6 +2,7 @@ export const theme = {
   primary950: '#000C0F',
   primary900: '#001B23',
   primary800: '#072C37',
+  primary700: '#095869',
   primary600: '#307F90',
   primary500: '#18BAC8',
   primary400: '#33C7D3',
@@ -22,6 +23,8 @@ export const theme = {
   gray800: '#1e293b',
   gray900: '#0F172A',
   gray950: '#020617',
+  error: '#D84545',
+  success: '#0EB51F',
   h1: {
     fontFamily: 'Roboto-Bold',
     fontSize: '24px',
