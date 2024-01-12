@@ -20,7 +20,8 @@ const TabsLayout = () => {
 
   return (
     <Tabs screenOptions={{
-      headerShown: false, tabBarStyle: {
+      headerShown: false, 
+      tabBarStyle: {
         backgroundColor: theme.primary800,
         paddingHorizontal: 60,
         height: 80 + insets.bottom,
@@ -45,6 +46,6 @@ const TabsLayout = () => {
       ))}
     </Tabs>
   );
-}
+};
 
 export default TabsLayout;

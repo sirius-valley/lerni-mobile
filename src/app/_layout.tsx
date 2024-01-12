@@ -5,13 +5,15 @@ import { Slot } from 'expo-router';
 import { useFonts } from 'expo-font';
 import store from '../redux/store';
 import React from 'react';
-import { theme } from "../utils/theme";
+import { theme } from '../utils/theme';
+import { ToastComponent } from '../hoc/Toast';
 
 const _layout = () => {
   
   const ProvidersTree = buildProviderTree([
     [ThemeProvider, { theme }],
     [Provider, { store }],
+    [ToastComponent, {}],
   ]);
 
   const [fontsLoaded] = useFonts({

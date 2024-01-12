@@ -1,15 +1,13 @@
 import React from 'react';
 import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
-import { StyledBox, StyledColumn, StyledSafeAreaView } from '../../styled/styles'
+import { StyledBox, StyledColumn, StyledSafeAreaView } from '../../styled/styles';
 import { useTheme } from 'styled-components/native';
 
 interface MainContainerInterface {
   children: React.ReactNode;
 }
 
-const MainContainer = ({
-  children,
-}: MainContainerInterface) => {
+const MainContainer = ({ children }: MainContainerInterface) => {
   const theme = useTheme();
   return (
     <StyledBox
@@ -25,13 +23,11 @@ const MainContainer = ({
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <ScrollView>
-          <StyledColumn css={{ alignItems: 'center', paddingTop: '50%' }}>
-            {children}
-          </StyledColumn>
+          <StyledColumn css={{ alignItems: 'center', paddingTop: '50%' }}>{children}</StyledColumn>
         </ScrollView>
       </KeyboardAvoidingView>
     </StyledBox>
-  )
-}
+  );
+};
 
 export default MainContainer;
