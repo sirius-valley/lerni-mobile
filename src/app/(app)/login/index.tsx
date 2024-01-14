@@ -13,6 +13,7 @@ import { useRouter } from 'expo-router';
 import { useLDispatch, useLSelector } from '../../../redux/hooks';
 import { showToast } from '../../../redux/slice/utils.slice';
 import { authActions } from '../../../redux/slice/auth.slice';
+import {CustomError} from "../../../redux/service/api";
 
 const SigninSchema = Yup.object().shape({
   email: Yup.string()
@@ -30,16 +31,19 @@ const SigninSchema = Yup.object().shape({
 
 const LoginScreen = () => {
   const theme = useTheme();
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading, error }] = useLoginMutation();
   const router = useRouter();
-  const errorMessage = useLSelector((state) => state.auth.loginErrorMessage);
+  // const errorMessage = useLSelector((state) => state.auth.loginErrorMessage);
   const dispatch = useLDispatch();
 
   const goToRegisterScreen = () => router.replace('/(app)/register');
 
   useEffect(() => {
-    errorMessage.length > 0 && dispatch(showToast({ type: 'error', text: errorMessage }));
-  }, [errorMessage]);
+      if(error){
+          const customError = error as CustomError;
+            dispatch(showToast({ type: 'error', text: customError.data.message }));
+      }
+  }, [error]);
 
   useEffect(() => {
     return () => {
