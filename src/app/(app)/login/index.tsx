@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react';
 import LerniMainIcon from '../../../../assets/icons/LerniMainIcon';
 import MainContainer from '../../../components/register/MainContainer';
-import { StyledColumn, StyledText } from '../../../components/styled/styles';
+import { StyledColumn, StyledRow, StyledText } from '../../../components/styled/styles';
 import { TextInput } from '../../../components/styled/TextInput';
 import Button from '../../../components/styled/Button';
 import { useTheme } from 'styled-components';
-import { StyledRow } from '../../../components/styled/styles';
 import { useLoginMutation } from '../../../redux/service/auth.service';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'expo-router';
-import { useLDispatch, useLSelector } from '../../../redux/hooks';
+import { useLDispatch } from '../../../redux/hooks';
 import { showToast } from '../../../redux/slice/utils.slice';
 import { authActions } from '../../../redux/slice/auth.slice';
-import {CustomError} from "../../../redux/service/api";
+import { CustomError } from '../../../redux/service/api';
 
 const SigninSchema = Yup.object().shape({
   email: Yup.string()
@@ -39,10 +38,10 @@ const LoginScreen = () => {
   const goToRegisterScreen = () => router.replace('/(app)/register');
 
   useEffect(() => {
-      if(error){
-          const customError = error as CustomError;
-            dispatch(showToast({ type: 'error', text: customError.data.message }));
-      }
+    if (error) {
+      const customError = error as CustomError;
+      dispatch(showToast({ type: 'error', text: customError.data.message }));
+    }
   }, [error]);
 
   useEffect(() => {

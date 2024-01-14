@@ -1,4 +1,10 @@
-import {BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError} from '@reduxjs/toolkit/query/react';
+import {
+  BaseQueryFn,
+  createApi,
+  FetchArgs,
+  fetchBaseQuery,
+  FetchBaseQueryError,
+} from '@reduxjs/toolkit/query/react';
 import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
@@ -16,17 +22,23 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-export type CustomError = FetchBaseQueryError | {
-  status: 'FETCH_ERROR'
-  data: any,
-  error: {
-    data:{
-      message: string
-    }
-  }
-}
+export type CustomError =
+  | FetchBaseQueryError
+  | {
+      status: 'FETCH_ERROR';
+      data: any;
+      error: {
+        data: {
+          message: string;
+        };
+      };
+    };
 
-const baseQueryInterceptor: BaseQueryFn<string | FetchArgs, unknown, CustomError> = async (args, api, extraOptions) => {
+const baseQueryInterceptor: BaseQueryFn<string | FetchArgs, unknown, CustomError> = async (
+  args,
+  api,
+  extraOptions,
+) => {
   const result = await baseQuery(args, api, extraOptions);
   if (result?.error?.status === 401) {
     api.dispatch({ type: 'login/logout', payload: result.data });
@@ -38,5 +50,5 @@ export const api = createApi({
   reducerPath: 'generalApi',
   baseQuery: baseQueryInterceptor,
   tagTypes: ['Pokemon'],
-  endpoints: () => ({})
+  endpoints: () => ({}),
 });
