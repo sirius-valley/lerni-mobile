@@ -2,7 +2,7 @@ import { SafeAreaView, View, Text } from 'react-native';
 import styled, { css as styledComponent } from 'styled-components';
 import { CSSProperties } from '../../utils/utils';
 
-interface StyledPropertiesInterface {
+export interface StyledPropertiesInterface {
   css?: CSSProperties;
 }
 
