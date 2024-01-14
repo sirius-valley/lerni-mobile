@@ -1,6 +1,6 @@
-import styled, {css as styledComponent} from 'styled-components';
-import {Image, View} from 'react-native';
-import {StyledPropertiesInterface} from '../../../styled/styles';
+import styled, { css as styledComponent } from 'styled-components';
+import { Image, View } from 'react-native';
+import { StyledPropertiesInterface } from '../../../styled/styles';
 
 export const StyledCarouselItemContainer = styled(View)`
   display: flex;

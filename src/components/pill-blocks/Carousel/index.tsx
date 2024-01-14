@@ -1,9 +1,9 @@
-import {StyledCarouselContainer} from './styles';
+import { StyledCarouselContainer } from './styles';
 import Item from './Item';
-import {StyledBox, StyledColumn, StyledRow, StyledText} from '../../styled/styles';
+import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../styled/styles';
 import React from 'react';
 import useZoomImage from '../../../hook/useZoomImage';
-import {InteractiveBubbleProps} from '../../../types';
+import { InteractiveBubbleProps } from '../../../types';
 
 type CarouselItem = {
   id: string;
