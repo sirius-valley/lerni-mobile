@@ -1,12 +1,8 @@
 import { Pressable, PressableProps, Text } from 'react-native';
-import styled from 'styled-components';
-import { jsToCss } from '../../../utils/utils';
+import styled, { css as styledComponent } from 'styled-components';
+import { CSSProperties, jsToCss } from '../../../utils/utils';
 import { DefaultTheme } from 'styled-components/native';
-import { ButtonVariant, ComponentVariantType } from '../../../utils/constants';
-
-export interface StyledProps {
-  css?: { [x: string]: any };
-}
+import { ButtonVariant } from '../../../utils/constants';
 
 type styleProps = {
   [key: string]: string | number | { [key in string]: string | number };
@@ -95,7 +91,7 @@ const getButtonStyles = (theme: DefaultTheme): StyleByOptionsProps => {
 interface ButtonProps extends PressableProps {
   type: ButtonVariant;
   state: ButtonState;
-  css?: { [x: string]: any };
+  css?: CSSProperties;
   pressed: boolean;
 }
 
@@ -122,7 +118,7 @@ export const StyledButton = styled(Pressable).attrs<ButtonProps>((props) => ({
       ${jsToCss({ ...restStyles, ...(props.pressed ? styleHover : {}) })}
     `;
   }}
-  ${(props) => props.css && jsToCss(props.css)}
+  ${({ css }) => css && styledComponent(css)};
 `;
 
 export const StyledTextButton = styled(Text).attrs<ButtonProps>((props) => ({
