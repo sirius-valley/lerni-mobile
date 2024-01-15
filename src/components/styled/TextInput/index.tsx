@@ -10,7 +10,7 @@ export interface TextInputProps {
   onBlur?: () => void;
   value: string;
   css?: CSSProperties;
-  type?: "password" | "text"
+  type?: 'password' | 'text';
 }
 
 export const TextInput = ({
@@ -21,7 +21,7 @@ export const TextInput = ({
   onBlur,
   value,
   css,
-  type = "text"
+  type = 'text',
 }: TextInputProps) => {
   const theme = useTheme();
 
@@ -35,8 +35,8 @@ export const TextInput = ({
       value={value}
       onChangeText={(value: string) => !disabled && onChangeText(value)}
       onBlur={() => onBlur && onBlur()}
-      autoCapitalize='none'
-      secureTextEntry={type === "password"}
+      autoCapitalize="none"
+      secureTextEntry={type === 'password'}
     />
-  )
+  );
 };
