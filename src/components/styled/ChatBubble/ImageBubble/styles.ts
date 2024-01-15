@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { MessageProps } from '../../../../utils/constants';
 
-export const ImageBubble = styled.Image<MessageProps>`
+export const StyledImageBubble = styled.Image<MessageProps>`
   display: flex;
   justify-content: center;
   align-items: ${(props) => {

@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { MessageProps } from '../../../../utils/constants';
+import { MessageProps } from '../../../utils/constants';
 
 export const AvatarContainer = styled.View<MessageProps>`
   width: 28px;
