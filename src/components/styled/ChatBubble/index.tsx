@@ -6,25 +6,20 @@ import { TextBubbleContainer } from './TextBubbleContainer/styles';
 import { Avatar } from '../Avatar';
 import { StyledImageBubble } from './ImageBubble/styles';
 
-export const ChatBubble = ({
-  user = 'professor',
-  isLast = true,
-  content,
-  type,
-}: MessageProps) => {
+export const ChatBubble = ({ user = 'professor', isLast = true, content, type }: MessageProps) => {
   const theme = useTheme();
-  
+
   return (
     <MessageContainer user={user}>
       {(() => {
-        switch(type) {
+        switch (type) {
           case 'text':
             return (
               <TextBubbleContainer user={user}>
                 <StyledText
                   variant="body2"
                   style={{
-                   color: `${user === 'professor' ? theme.white : theme.primary800}`,
+                    color: `${user === 'professor' ? theme.white : theme.primary800}`,
                   }}
                 >
                   {content}
@@ -50,5 +45,5 @@ export const ChatBubble = ({
       })()}
       {isLast && <Avatar />}
     </MessageContainer>
-   );
+  );
 };
