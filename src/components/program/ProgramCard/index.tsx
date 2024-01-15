@@ -26,7 +26,7 @@ const ProgramCard = ({ id, title, imgUrl, status, progress }: ProgramCardProps) 
       }}
     >
       <StyledBox>
-        <Image style={{ width: 109, height: 109 }} source={{ uri: imgUrl }} />
+        <Image style={{ width: 109, height: 109, borderRadius: 6 }} source={{ uri: imgUrl }} />
         {status === 'completed' && (
           <StyledBox css={{ position: 'absolute', bottom: 2, right: 2 }}>
             <CheckIcon />
