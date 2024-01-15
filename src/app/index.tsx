@@ -1,34 +1,30 @@
-import { View, Text, Button } from 'react-native';
-import React from 'react';
-import { Link } from 'expo-router';
-import ProgramCard from '../components/program/ProgramCard';
-import { StyledBox, StyledRow } from '../components/styled/styles';
-import { useTheme } from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import { Redirect } from 'expo-router';
+import { authActions } from '../redux/slice/auth.slice';
+import * as SecureStore from 'expo-secure-store';
+import { useLDispatch } from '../redux/hooks';
 
 const Landing = () => {
-  const theme = useTheme();
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'transparent',
-      }}
-    >
-      <Text>Landing</Text>
+  const [appIsReady, setAppIsReady] = useState(false);
+  const dispatch = useLDispatch();
 
-      <Link asChild href={'/(tabs)/profile'}>
-        <Button title="Home" />
-      </Link>
-      <Link asChild href={'/(app)/register'}>
-        <Button title="Register" />
-      </Link>
-      <Link asChild href={'/(app)/login'}>
-        <Button title="Login" />
-      </Link>
-    </View>
-  );
+  const getTokenFromSecureStore = async () => {
+    const token = await SecureStore.getItemAsync('token');
+    if (token) {
+      dispatch(authActions.setToken(token));
+    }
+    setAppIsReady(true);
+  };
+
+  useEffect(() => {
+    getTokenFromSecureStore();
+  }, []);
+
+  if (!appIsReady) {
+    return null;
+  }
+
+  return <Redirect href={'/(app)/login'} />;
 };
 
 export default Landing;

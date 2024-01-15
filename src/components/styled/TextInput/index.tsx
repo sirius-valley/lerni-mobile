@@ -11,6 +11,9 @@ export interface TextInputProps {
   value: string;
   css?: CSSProperties;
   type?: 'password' | 'text';
+  multiline?: boolean;
+  scrollEnabled?: boolean;
+  maxLength?: number;
 }
 
 export const TextInput = ({
@@ -22,6 +25,9 @@ export const TextInput = ({
   value,
   css,
   type = 'text',
+  multiline = false,
+  scrollEnabled = true,
+  maxLength,
 }: TextInputProps) => {
   const theme = useTheme();
 
@@ -37,6 +43,9 @@ export const TextInput = ({
       onBlur={() => onBlur && onBlur()}
       autoCapitalize="none"
       secureTextEntry={type === 'password'}
+      multiline={multiline}
+      scrollEnabled={scrollEnabled}
+      maxLength={maxLength}
     />
   );
 };
