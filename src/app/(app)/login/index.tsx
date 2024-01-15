@@ -11,7 +11,6 @@ import * as Yup from 'yup';
 import { useRouter } from 'expo-router';
 import { useLDispatch } from '../../../redux/hooks';
 import { showToast } from '../../../redux/slice/utils.slice';
-import { authActions } from '../../../redux/slice/auth.slice';
 import { CustomError } from '../../../redux/service/api';
 
 const SigninSchema = Yup.object().shape({
@@ -42,12 +41,6 @@ const LoginScreen = () => {
       dispatch(showToast({ type: 'error', text: customError.data?.message ?? '' }));
     }
   }, [error]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(authActions.resetErrorMessage());
-    };
-  }, []);
 
   return (
     <MainContainer>

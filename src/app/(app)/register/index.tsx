@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import LerniMainIcon from '../../../../assets/icons/LerniMainIcon';
 import MainContainer from '../../../components/register/MainContainer';
 import { StyledColumn, StyledText } from '../../../components/styled/styles';
@@ -9,9 +9,9 @@ import * as Yup from 'yup';
 import PasswordValidationDisplay from '../../../components/register/PasswordValidationDisplay';
 import { useRouter } from 'expo-router';
 import { useRegisterMutation } from '../../../redux/service/auth.service';
-import { useLDispatch, useLSelector } from '../../../redux/hooks';
-import { resetToast, showToast } from '../../../redux/slice/utils.slice';
-import { authActions } from '../../../redux/slice/auth.slice';
+import { useLDispatch } from '../../../redux/hooks';
+import { showToast } from '../../../redux/slice/utils.slice';
+import { CustomError } from '../../../redux/service/api';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -28,22 +28,18 @@ const SignupSchema = Yup.object().shape({
 });
 
 const RegisterScreen = () => {
-  const [register, registerRequestData] = useRegisterMutation();
+  const [register, { isLoading, error }] = useRegisterMutation();
   const router = useRouter();
 
-  const errorMessage = useLSelector((state) => state.auth.registerErrorMessage);
   const dispatch = useLDispatch();
   const goToLoginScreen = () => router.replace('/(app)/login');
 
   useEffect(() => {
-    errorMessage.length > 0 && dispatch(showToast({ type: 'error', text: errorMessage }));
-  }, [errorMessage]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(authActions.resetErrorMessage());
-    };
-  }, []);
+    if (error) {
+      const customError = error as CustomError;
+      dispatch(showToast({ type: 'error', text: customError.data?.message ?? '' }));
+    }
+  }, [error]);
 
   return (
     <MainContainer>
@@ -71,7 +67,7 @@ const RegisterScreen = () => {
                 placeholder="Email"
                 onBlur={() => handleBlur('email')}
                 error={!!errors.email && touched.email}
-                disabled={registerRequestData.isLoading}
+                disabled={isLoading}
                 css={{
                   width: '100%',
                 }}
@@ -83,7 +79,7 @@ const RegisterScreen = () => {
                 onBlur={() => handleBlur('password')}
                 error={!!errors.password}
                 type="password"
-                disabled={registerRequestData.isLoading}
+                disabled={isLoading}
                 css={{
                   width: '100%',
                 }}
@@ -100,7 +96,7 @@ const RegisterScreen = () => {
                 disabled={!isValid || !values.email || !values.password}
                 onPress={handleSubmit}
                 variant={'dark'}
-                loading={registerRequestData.isLoading}
+                loading={isLoading}
                 css={{
                   marginTop: '8px',
                 }}

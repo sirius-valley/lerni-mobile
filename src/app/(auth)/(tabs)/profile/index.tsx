@@ -1,4 +1,3 @@
-import { Text } from 'react-native';
 import { StyledColumn, StyledText } from '../../../../components/styled/styles';
 import Button from '../../../../components/styled/Button';
 import { useDispatch } from 'react-redux';

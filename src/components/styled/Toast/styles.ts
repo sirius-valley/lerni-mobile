@@ -1,10 +1,14 @@
+import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import { ToastProps } from 'react-native-toast-message';
-import styled from 'styled-components/native';
+import { StyledRow, StyledText } from '../styles';
 
-export const ToastContainer = styled.View<ToastProps>`
-  display: flex;
-  flex-direction: row;
+export const ToastText = styled(StyledText)`
+  gap: 16px;
+  color: ${(props) => props.theme.white};
+`;
+
+export const ToastContainer = styled(StyledRow)<ToastProps>`
   justify-content: space-between;
   align-items: center;
   border-radius: 8px;
