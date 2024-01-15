@@ -13,3 +13,4 @@ export interface MessageProps {
   content?: string;
   type?: 'image' | 'text';
 }
+export type ToastTypes = 'success' | 'info' | 'error';
