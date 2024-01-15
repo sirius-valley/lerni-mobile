@@ -14,21 +14,22 @@ interface BottomTab {
 
 export const bottomTabs: BottomTab[] = [
   {
-    id: 'Profile',
-    name: 'Perfil',
-    screen: 'profile',
-    iconName: PersonCircleIcon,
-  },
-  {
-    id: 'Trivia',
-    name: 'Trivia',
-    screen: 'trivia',
-    iconName: BoltIcon,
-  },
-  {
     id: 'Explorar',
     name: 'Explorar',
     screen: 'explore',
     iconName: CompassIcon,
+  },
+  {
+    id: 'Trivia',
+    name: 'Trivias',
+    screen: 'trivia',
+    iconName: BoltIcon,
+  },
+
+  {
+    id: 'Profile',
+    name: 'Perfil',
+    screen: 'profile',
+    iconName: PersonCircleIcon,
   },
 ];

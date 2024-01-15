@@ -13,7 +13,7 @@ const Landing = () => {
       }}
     >
       <Text>Landing</Text>
-      <Link asChild href={'/(tabs)/profile'}>
+      <Link asChild href={'/(tabs)/explore'}>
         <Button title="Home" />
       </Link>
       <Link asChild href={'/(app)/register'}>
