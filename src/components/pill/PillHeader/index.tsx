@@ -2,8 +2,8 @@ import React from 'react';
 import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../styled/styles';
 import { useTheme } from 'styled-components';
 import * as Progress from 'react-native-progress';
-import CloseIcon from '../../../../assets/icons/CloseIcon';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { CancelIcon } from '../../../../assets/icons/CancelIcon';
 
 interface Pill {
   title: string;
@@ -64,7 +64,7 @@ const PillHeader = () => {
               </StyledText>
             </StyledRow>
             <TouchableOpacity onPress={() => alert('X')}>
-              <CloseIcon color={theme.gray500} size={24} />
+              <CancelIcon color={theme.gray500} size={24} />
             </TouchableOpacity>
           </StyledRow>
         </StyledRow>
