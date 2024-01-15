@@ -10,9 +10,11 @@ interface CarouselItemProps {
   image: string;
   selected: boolean;
   handleOpenImage: () => void;
+  title: string;
+  description: string;
 }
 
-const CarouselItem = ({ image, selected, handleOpenImage }: CarouselItemProps) => {
+const CarouselItem = ({ image, selected, handleOpenImage, title, description }: CarouselItemProps) => {
   const theme = useTheme();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
@@ -89,8 +91,8 @@ const CarouselItem = ({ image, selected, handleOpenImage }: CarouselItemProps) =
       <View style={{ display: 'flex', flexDirection: 'row', gap: 8 }}>
         <Checkbox checked={selected} onPress={handleSelect} />
         <View style={{ display: 'flex', flexDirection: 'column' }}>
-          <StyledText variant={'body1'}>string</StyledText>
-          <StyledText variant={'body2'}>string</StyledText>
+          <StyledText variant={'body1'}>{title}</StyledText>
+          <StyledText variant={'body2'}>{description}</StyledText>
         </View>
       </View>
     </StyledCarouselItemContainer>

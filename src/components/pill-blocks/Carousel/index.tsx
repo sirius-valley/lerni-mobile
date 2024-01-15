@@ -20,16 +20,17 @@ interface CarouselProps extends InteractiveBubbleProps {
 
 const Carousel = ({ items, value, onSelect, multiple }: CarouselProps) => {
   const textToRender = multiple
-    ? value.length > 0
+    ? value?.length > 0
       ? 'Enviar imagenes'
       : 'Al menos 1'
-    : value.length > 0
+    : value?.length > 0
       ? 'Enviar imagen'
       : 'Elige 1';
+
   const { ZoomImageComponent, handleOpenImage } = useZoomImage({
-    images: items.map((item) => ({
+    images: items?.map((item) => ({
       url: item.image,
-    })),
+    })) ?? [],
   });
 
   return (
@@ -53,6 +54,8 @@ const Carousel = ({ items, value, onSelect, multiple }: CarouselProps) => {
             image={item.image}
             selected={index === 0}
             handleOpenImage={() => handleOpenImage(index)}
+            title={item.title}
+            description={item.description}
           />
         ))}
       </StyledCarouselContainer>
