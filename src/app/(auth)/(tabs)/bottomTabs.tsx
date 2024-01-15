@@ -1,8 +1,8 @@
-import React, { FC, ReactNode } from 'react';
-import CompassIcon from '../../../assets/icons/CompassIcon';
-import BoltIcon from '../../../assets/icons/BoltIcon';
-import PersonCircleIcon from '../../../assets/icons/PersonCircleIcon';
-import { IconInterface } from '../../../assets/icons/types';
+import React from 'react';
+import CompassIcon from '../../../../assets/icons/CompassIcon';
+import BoltIcon from '../../../../assets/icons/BoltIcon';
+import PersonCircleIcon from '../../../../assets/icons/PersonCircleIcon';
+import { IconInterface } from '../../../../assets/icons/types';
 
 interface BottomTab {
   id: string;

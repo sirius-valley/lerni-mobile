@@ -1,48 +1,30 @@
-import { View, Text, Button } from 'react-native';
-import React, { useState } from 'react';
-import { Link } from 'expo-router';
-import FreeTextBubble from '../components/common/FreeTextBubble';
-import { StyledColumn } from '../components/styled/styles';
+import React, { useEffect, useState } from 'react';
+import { Redirect } from 'expo-router';
+import { authActions } from '../redux/slice/auth.slice';
+import * as SecureStore from 'expo-secure-store';
+import { useLDispatch } from '../redux/hooks';
 
 const Landing = () => {
-  const [inputValue, setInputValue] = useState('');
+  const [appIsReady, setAppIsReady] = useState(false);
+  const dispatch = useLDispatch();
 
-  const handlePress = () => {
-    alert(inputValue);
+  const getTokenFromSecureStore = async () => {
+    const token = await SecureStore.getItemAsync('token');
+    if (token) {
+      dispatch(authActions.setToken(token));
+    }
+    setAppIsReady(true);
   };
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'transparent',
-      }}
-    >
-      <Text>Landing</Text>
+  useEffect(() => {
+    getTokenFromSecureStore();
+  }, []);
 
-      <Link asChild href={'/(tabs)/profile'}>
-        <Button title="Home" />
-      </Link>
-      <Link asChild href={'/(app)/register'}>
-        <Button title="Register" />
-      </Link>
-      <Link asChild href={'/(app)/login'}>
-        <Button title="Login" />
-      </Link>
-      <StyledColumn
-        css={{ padding: 16, gap: 16, alignItems: 'flex-end', height: '500px', width: '100%' }}
-      >
-        <FreeTextBubble
-          value={inputValue}
-          onChangeText={(value) => setInputValue(value)}
-          handlePress={handlePress}
-          textLimit={150}
-        />
-      </StyledColumn>
-    </View>
-  );
+  if (!appIsReady) {
+    return null;
+  }
+
+  return <Redirect href={'/(app)/login'} />;
 };
 
 export default Landing;

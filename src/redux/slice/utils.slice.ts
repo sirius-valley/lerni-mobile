@@ -18,7 +18,7 @@ export const utilsSlice = createSlice({
       state.type = action.payload.type;
       state.text = action.payload?.text;
     },
-    resetToast: (state, action: PayloadAction<undefined>) => {
+    resetToast: (state) => {
       state.type = undefined;
       state.text = undefined;
     },
