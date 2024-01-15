@@ -1,5 +1,5 @@
 import Svg, { Path } from 'react-native-svg';
-import { IconInterface } from '../../../../../../assets/icons/types';
+import { IconInterface } from './types';
 
 export const CancelIcon = ({ color = '#307F90', size = 16 }: IconInterface) => {
   return (

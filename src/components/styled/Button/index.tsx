@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { ButtonState, StyledButton, StyledTextButton } from './styles';
 import { ButtonVariant } from '../../../utils/constants';
-import { useTheme, DefaultTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import Spinner from '../../common/Spinner';
 import { CSSProperties, getStyleColorByVariant } from '../../../utils/utils';
 import { IconInterface } from '../../../../assets/icons/types';

@@ -1,5 +1,7 @@
-import { Text } from 'react-native';
 import { ToastTypes } from '../../../../utils/constants';
+import { DeadEmojiIcon } from '../../../../../assets/icons/DeadEmojiIcon';
+import { ClapsEmojiIcon } from '../../../../../assets/icons/ClapsEmojiIcon';
+import { InfoEmojiIcon } from '../../../../../assets/icons/InfoEmoIcon';
 
 interface ToastIconProps {
   type?: ToastTypes;
@@ -8,11 +10,11 @@ interface ToastIconProps {
 const ToastIcon = ({ type }: ToastIconProps) => {
   switch (type) {
     case 'success':
-      return <Text style={{ fontSize: 20 }}>👏</Text>;
+      return <ClapsEmojiIcon size={20} />;
     case 'error':
-      return <Text style={{ fontSize: 20 }}>😵</Text>;
+      return <DeadEmojiIcon size={20} />;
     case 'info':
-      return <Text style={{ fontSize: 20 }}>ℹ️</Text>;
+      return <InfoEmojiIcon size={20} />;
     default:
       return null;
   }

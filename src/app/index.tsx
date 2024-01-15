@@ -21,6 +21,7 @@ const Landing = () => {
       }}
     >
       <Text>Landing</Text>
+
       <Link asChild href={'/(tabs)/profile'}>
         <Button title="Home" />
       </Link>
