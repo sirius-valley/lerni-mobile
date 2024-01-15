@@ -1,4 +1,4 @@
-import { ButtonVariant, ComponentVariantType } from './constants';
+import { ButtonVariant } from './constants';
 import { theme } from './theme';
 
 // type CSSProperties = { [key: string]: string | number};

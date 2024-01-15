@@ -1,4 +1,3 @@
-import { Text } from 'react-native';
 import { ToastTypes } from '../../../../utils/constants';
 import { DeadEmojiIcon } from '../../../../../assets/icons/DeadEmojiIcon';
 import { ClapsEmojiIcon } from '../../../../../assets/icons/ClapsEmojiIcon';

@@ -1,12 +1,16 @@
 import { View, Text, Button } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'expo-router';
-import ProgramCard from '../components/program/ProgramCard';
-import { StyledBox, StyledRow } from '../components/styled/styles';
-import { useTheme } from 'styled-components';
+import FreeTextBubble from '../components/common/FreeTextBubble';
+import { StyledColumn } from '../components/styled/styles';
 
 const Landing = () => {
-  const theme = useTheme();
+  const [inputValue, setInputValue] = useState('');
+
+  const handlePress = () => {
+    alert(inputValue);
+  };
+
   return (
     <View
       style={{
@@ -27,6 +31,16 @@ const Landing = () => {
       <Link asChild href={'/(app)/login'}>
         <Button title="Login" />
       </Link>
+      <StyledColumn
+        css={{ padding: 16, gap: 16, alignItems: 'flex-end', height: '500px', width: '100%' }}
+      >
+        <FreeTextBubble
+          value={inputValue}
+          onChangeText={(value) => setInputValue(value)}
+          handlePress={handlePress}
+          textLimit={150}
+        />
+      </StyledColumn>
     </View>
   );
 };
