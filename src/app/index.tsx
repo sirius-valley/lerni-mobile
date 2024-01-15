@@ -1,8 +1,12 @@
 import { View, Text, Button } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
+import ProgramCard from '../components/program/ProgramCard';
+import { StyledBox, StyledRow } from '../components/styled/styles';
+import { useTheme } from 'styled-components';
 
 const Landing = () => {
+  const theme = useTheme();
   return (
     <View
       style={{
