@@ -14,7 +14,13 @@ interface CarouselItemProps {
   description: string;
 }
 
-const CarouselItem = ({ image, selected, handleOpenImage, title, description }: CarouselItemProps) => {
+const CarouselItem = ({
+  image,
+  selected,
+  handleOpenImage,
+  title,
+  description,
+}: CarouselItemProps) => {
   const theme = useTheme();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 

@@ -28,9 +28,10 @@ const Carousel = ({ items, value, onSelect, multiple }: CarouselProps) => {
       : 'Elige 1';
 
   const { ZoomImageComponent, handleOpenImage } = useZoomImage({
-    images: items?.map((item) => ({
-      url: item.image,
-    })) ?? [],
+    images:
+      items?.map((item) => ({
+        url: item.image,
+      })) ?? [],
   });
 
   return (
