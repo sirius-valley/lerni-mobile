@@ -27,11 +27,6 @@ export type CustomError =
   | {
       status: 'FETCH_ERROR';
       data: any;
-      error: {
-        data: {
-          message: string;
-        };
-      };
     };
 
 const baseQueryInterceptor: BaseQueryFn<string | FetchArgs, unknown, CustomError> = async (

@@ -32,15 +32,14 @@ const LoginScreen = () => {
   const theme = useTheme();
   const [login, { isLoading, error }] = useLoginMutation();
   const router = useRouter();
-  // const errorMessage = useLSelector((state) => state.auth.loginErrorMessage);
+
   const dispatch = useLDispatch();
 
   const goToRegisterScreen = () => router.replace('/(app)/register');
-
   useEffect(() => {
     if (error) {
       const customError = error as CustomError;
-      dispatch(showToast({ type: 'error', text: customError.data.message }));
+      dispatch(showToast({ type: 'error', text: customError.data?.message ?? '' }));
     }
   }, [error]);
 
