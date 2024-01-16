@@ -1,8 +1,13 @@
 import { Pressable } from 'react-native';
-import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../../components/styled/styles';
+import {
+  StyledBox,
+  StyledColumn,
+  StyledRow,
+  StyledText,
+} from '../../../../components/styled/styles';
 import { useTheme } from 'styled-components';
-import SearchIcon from '../../../../assets/icons/SearchIcon';
-import ProgramCard from '../../../components/program/ProgramCard';
+import SearchIcon from '../../../../../assets/icons/SearchIcon';
+import ProgramCard from '../../../../components/program/ProgramCard';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ProgramCardStructure, mockedProgramCardsData, programCardsStructure } from './utils';
 
