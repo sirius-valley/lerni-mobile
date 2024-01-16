@@ -1,66 +1,14 @@
-import { Text } from 'react-native';
+import { Pressable } from 'react-native';
 import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../../components/styled/styles';
 import { useTheme } from 'styled-components';
 import SearchIcon from '../../../../assets/icons/SearchIcon';
+import ProgramCard from '../../../components/program/ProgramCard';
+import { ScrollView } from 'react-native-gesture-handler';
+import { ProgramCardStructure, mockedProgramCardsData, programCardsStructure } from './utils';
 
-export default function Page() {
-  const mockedData = {
-    in_progress: [
-      {
-        id: '001',
-        title: 'Project A',
-        image: 'project_a_image.jpg',
-        progress: 50,
-      },
-      {
-        id: '002',
-        title: 'Task B',
-        image: 'task_b_image.png',
-        progress: 75,
-      },
-      {
-        id: '003',
-        title: 'Ongoing Feature',
-        image: 'ongoing_feature_image.jpg',
-        progress: 30,
-      },
-    ],
-    completed: [
-      {
-        id: '101',
-        title: 'Completed Project',
-        image: 'completed_project_image.png',
-      },
-      {
-        id: '102',
-        title: 'Finished Task',
-        image: 'finished_task_image.jpg',
-      },
-    ],
-    not_started: [
-      {
-        id: '201',
-        title: 'New Task',
-        image: 'new_task_image.jpg',
-      },
-      {
-        id: '202',
-        title: 'Unstarted Project',
-        image: 'unstarted_project_image.png',
-      },
-      {
-        id: '203',
-        title: 'Upcoming Feature',
-        image: 'upcoming_feature_image.jpg',
-      },
-      {
-        id: '204',
-        title: 'Pending Assignment',
-        image: 'pending_assignment_image.png',
-      },
-    ],
-  };
+const Page = () => {
   const theme = useTheme();
+
   return (
     <StyledBox
       css={{
@@ -71,34 +19,71 @@ export default function Page() {
         paddingHorizontal: 24,
       }}
     >
-      <StyledColumn css={{ gap: 16 }}>
-        <StyledRow
-          css={{
-            width: 342,
-            height: 33,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            background: theme.white,
-          }}
-        >
-          <StyledText variant="h1" css={{ color: theme.gray6 }}>
-            Explorar
-          </StyledText>
-          <StyledBox css={{ padding: 3 }}>
-            <SearchIcon size={24} />
-          </StyledBox>
-        </StyledRow>
-        <StyledColumn css={{ gap: 32 }}>
-          <StyledColumn css={{ gap: 8, background: theme.gray200 }}>
-            <StyledRow css={{ justifyContent: 'space-between', alignItems: 'center' }}>
-              <StyledText variant="h3">En curso</StyledText>
-            </StyledRow>
-            <StyledRow css={{ gap: 8 }}></StyledRow>
+      <ScrollView>
+        <StyledColumn css={{ gap: 16 }}>
+          <StyledRow
+            css={{
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <StyledText variant="h1" css={{ color: theme.gray6 }}>
+              Explorar
+            </StyledText>
+            <StyledBox css={{ padding: 3 }}>
+              <SearchIcon size={24} />
+            </StyledBox>
+          </StyledRow>
+          <StyledColumn css={{ gap: 32 }}>
+            {programCardsStructure.map(
+              ({ label, status, progressBar }: ProgramCardStructure, index: number) => (
+                <StyledColumn key={index} css={{ gap: 8 }}>
+                  <StyledRow
+                    css={{
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}
+                  >
+                    <StyledText variant="h3" css={{ color: theme.gray100 }}>
+                      {label}
+                    </StyledText>
+                    {mockedProgramCardsData[status].length > 3 && (
+                      <Pressable onPress={() => alert('Ver más ')}>
+                        <StyledText
+                          css={{
+                            color: theme.gray300,
+                            textDecorationLine: 'underline',
+                            marginRight: 24,
+                          }}
+                        >
+                          Ver más
+                        </StyledText>
+                      </Pressable>
+                    )}
+                  </StyledRow>
+                  <StyledRow css={{ gap: 8 }}>
+                    {mockedProgramCardsData[status]
+                      .slice(0, 3)
+                      .map(({ id, image, title, progress }) => (
+                        <ProgramCard
+                          key={id}
+                          id={id}
+                          title={title}
+                          imgUrl={image}
+                          status={status}
+                          progress={progressBar ? progress : undefined}
+                        />
+                      ))}
+                  </StyledRow>
+                </StyledColumn>
+              ),
+            )}
           </StyledColumn>
-          <StyledColumn css={{ gap: 8, background: theme.gray200 }}></StyledColumn>
-          <StyledColumn css={{ gap: 8, background: theme.gray200 }}></StyledColumn>
         </StyledColumn>
-      </StyledColumn>
+      </ScrollView>
     </StyledBox>
   );
-}
+};
+
+export default Page;
