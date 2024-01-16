@@ -12,7 +12,7 @@ interface ToastProps {
   icon?: React.FC<IconInterface>;
 }
 
-export const CustomSuccessToast = ({ type, text, onClose, icon }: ToastProps) => {
+export const CustomSuccessToast = ({ type, text, onClose }: ToastProps) => {
   return (
     <ToastContainer type={type ? type : 'success'}>
       <View

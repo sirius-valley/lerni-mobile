@@ -1,21 +1,39 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  BaseQueryFn,
+  createApi,
+  FetchArgs,
+  fetchBaseQuery,
+  FetchBaseQueryError,
+} from '@reduxjs/toolkit/query/react';
 import { Platform } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.REACT_APP_BASE_URL || 'http://localhost:8080/api',
-  prepareHeaders: (headers) => {
+  baseUrl: process.env.REACT_APP_BASE_URL || 'http://localhost:3001/',
+  prepareHeaders: async (headers) => {
     const mobilePlatforms = ['android', 'ios'];
-    if (!mobilePlatforms.includes(Platform.OS)) {
-      // const token = store.getState();
-      // if (token) {
-      //   headers.set('Authorization', `Bearer ${token}`);
-      // }
+    if (mobilePlatforms.includes(Platform.OS)) {
+      const token = SecureStore.getItemAsync('token');
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
     }
     return headers;
   },
 });
 
-const baseQueryInterceptor = async (args: any, api: any, extraOptions: any) => {
+export type CustomError =
+  | FetchBaseQueryError
+  | {
+      status: 'FETCH_ERROR';
+      data: any;
+    };
+
+const baseQueryInterceptor: BaseQueryFn<string | FetchArgs, unknown, CustomError> = async (
+  args,
+  api,
+  extraOptions,
+) => {
   const result = await baseQuery(args, api, extraOptions);
   if (result?.error?.status === 401) {
     api.dispatch({ type: 'login/logout', payload: result.data });
@@ -25,7 +43,6 @@ const baseQueryInterceptor = async (args: any, api: any, extraOptions: any) => {
 
 export const api = createApi({
   reducerPath: 'generalApi',
-  // @ts-ignore
   baseQuery: baseQueryInterceptor,
   tagTypes: ['Pokemon'],
   endpoints: () => ({}),
