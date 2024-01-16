@@ -1,21 +1,17 @@
-import { useState } from "react";
-import { StyledColumn } from "../styles";
-import { ChoiceContainer, ChoiceMainContainer, ChoiceText } from "./styles"
+import { StyledChoiceContainer, StyledChoiceMainContainer, StyledChoiceText } from './styles';
 
 export interface ChoiceProps {
-  status?: "question" | "selected" | "not_selected";
-  text?: string; 
-  pressed?: boolean;
+  status?: 'question' | 'selected' | 'not_selected';
+  text?: string;
+  id?: number;
   onPress?: () => void;
+  disabled?: boolean;
 }
 
-export const Choice = ({status, text}: ChoiceProps) => {
-  const [isPressed, setIsPressed] = useState(false)
+export const Choice = ({ status, text, onPress, disabled = false }: ChoiceProps) => {
   return (
-    <ChoiceMainContainer status={status}>
-      <ChoiceContainer status={status} pressed={isPressed} onPress={() => {setIsPressed(true); console.log(isPressed)}}>
-        <ChoiceText status={status} >{text}</ChoiceText>
-      </ChoiceContainer>
-    </ChoiceMainContainer>
-  )
-}
+    <StyledChoiceContainer onPress={onPress} status={status} disabled={disabled}>
+      <StyledChoiceText status={status}>{text}</StyledChoiceText>
+    </StyledChoiceContainer>
+  );
+};
