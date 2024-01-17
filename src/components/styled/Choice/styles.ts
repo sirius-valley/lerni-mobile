@@ -16,14 +16,14 @@ export const StyledChoiceContainer = styled.Pressable<ChoiceProps>`
   padding: 13px 36px;
   align-self: stretch;
   border-radius: ${(props) => {
-    if (props.status === 'question') {
+    if (props.status === 'default') {
       return '10px';
     } else {
       return '10px 10px 2px 10px';
     }
   }};
   background-color: ${(props) => {
-    if (props.status === 'question') {
+    if (props.status === 'default') {
       return 'transparent';
     } else if (props.status === 'selected') {
       return props.theme.primary200;
@@ -32,7 +32,7 @@ export const StyledChoiceContainer = styled.Pressable<ChoiceProps>`
     }
   }};
   border: ${(props) => {
-    if (props.status === 'question') {
+    if (props.status === 'default') {
       return `1px solid ${props.theme.primary200}`;
     } else if (props.status === 'selected') {
       return `1px solid ${props.theme.primary200}`;
@@ -44,7 +44,7 @@ export const StyledChoiceContainer = styled.Pressable<ChoiceProps>`
 
 export const StyledChoiceText = styled(StyledText)<ChoiceProps>`
   color: ${(props) => {
-    if (props.status === 'question') {
+    if (props.status === 'default') {
       return props.theme.primary200;
     } else {
       return props.theme.primary900;
