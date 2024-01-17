@@ -4,9 +4,9 @@ import { StyledChoiceMainContainer } from '../../styled/Choice/styles';
 
 interface SingleAnswerProps {
   options: {
-    id: string,
-    text: string,
-    selected?: boolean,
+    id: string;
+    text: string;
+    selected?: boolean;
   }[];
   onPress: (id: string) => void;
   sealed: boolean;
@@ -18,7 +18,11 @@ export const SingleAnswer = ({ options, onPress, sealed }: SingleAnswerProps) =>
       {options.map((option) => (
         <Choice
           status={
-            typeof option.selected == 'boolean' ? (option.selected ? 'selected' : 'not_selected') : 'default' 
+            typeof option.selected == 'boolean'
+              ? option.selected
+                ? 'selected'
+                : 'not_selected'
+              : 'default'
           }
           text={option.text}
           key={option.id}
