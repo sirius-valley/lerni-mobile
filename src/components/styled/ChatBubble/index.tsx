@@ -1,12 +1,18 @@
 import { useTheme } from 'styled-components/native';
-import { MessageProps } from '../../../utils/constants';
 import { StyledText } from '../styles';
 import { MessageContainer } from './styles';
 import { TextBubbleContainer } from './styles';
 import { Avatar } from '../Avatar';
 import { StyledImageBubble } from './styles';
 
-export const ChatBubble = ({ user = 'professor', isLast = true, content, type }: MessageProps) => {
+export interface ChatBubbleProps {
+  user?: 'student' | 'professor';
+  isLast?: boolean;
+  content?: string;
+  type?: 'image' | 'text';
+}
+
+export const ChatBubble = ({ user = 'professor', isLast = true, content, type }: ChatBubbleProps) => {
   const theme = useTheme();
 
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import LerniMainIcon from '../../../../assets/icons/LerniMainIcon';
-import MainContainer from '../../../components/register/MainContainer';
+import MainContainer from '../../../components/common/MainContainer';
 import { StyledColumn, StyledText } from '../../../components/styled/styles';
 import { TextInput } from '../../../components/styled/TextInput';
 import Button from '../../../components/styled/Button';
@@ -42,73 +42,77 @@ const RegisterScreen = () => {
   }, [error]);
 
   return (
-    <MainContainer>
-      <LerniMainIcon />
-      <StyledText variant="h2" css={{ marginTop: '14%' }}>
-        Crear cuenta
-      </StyledText>
-      <StyledColumn
-        css={{
-          gap: '16px',
-          width: '100%',
-          padding: '20px',
-        }}
-      >
-        <Formik
-          initialValues={{ email: '', password: '' }}
-          onSubmit={(values) => register(values)}
-          validationSchema={SignupSchema}
-        >
-          {({ handleChange, handleBlur, handleSubmit, values, isValid, errors, touched }) => (
-            <>
-              <TextInput
-                value={values.email}
-                onChangeText={handleChange('email')}
-                placeholder="Email"
-                onBlur={() => handleBlur('email')}
-                error={!!errors.email && touched.email}
-                disabled={isLoading}
-                css={{
-                  width: '100%',
-                }}
-              />
-              <TextInput
-                value={values.password}
-                onChangeText={handleChange('password')}
-                placeholder="Contraseña"
-                onBlur={() => handleBlur('password')}
-                error={!!errors.password}
-                type="password"
-                disabled={isLoading}
-                css={{
-                  width: '100%',
-                }}
-              />
-              {errors.password && touched.password && (
-                <StyledColumn>
-                  <StyledText>{errors.password}</StyledText>
-                </StyledColumn>
-              )}
-              {values.password.length > 0 && (
-                <PasswordValidationDisplay password={values.password} />
-              )}
-              <Button
-                disabled={!isValid || !values.email || !values.password}
-                onPress={handleSubmit}
-                variant={'dark'}
-                loading={isLoading}
-                css={{
-                  marginTop: '8px',
-                }}
-              >
-                Crear cuenta
-              </Button>
-            </>
-          )}
-        </Formik>
-        <StyledText css={{ textDecorationLine: 'underline' }} onPress={goToLoginScreen}>
-          volver
+    <MainContainer backgroundColor="primary500">
+      <StyledColumn css={{ alignItems: 'center', paddingTop: '50%' }}>
+
+
+        <LerniMainIcon />
+        <StyledText variant="h2" css={{ marginTop: '14%' }}>
+          Crear cuenta
         </StyledText>
+        <StyledColumn
+          css={{
+            gap: '16px',
+            width: '100%',
+            padding: '20px',
+          }}
+        >
+          <Formik
+            initialValues={{ email: '', password: '' }}
+            onSubmit={(values) => register(values)}
+            validationSchema={SignupSchema}
+          >
+            {({ handleChange, handleBlur, handleSubmit, values, isValid, errors, touched }) => (
+              <>
+                <TextInput
+                  value={values.email}
+                  onChangeText={handleChange('email')}
+                  placeholder="Email"
+                  onBlur={() => handleBlur('email')}
+                  error={!!errors.email && touched.email}
+                  disabled={isLoading}
+                  css={{
+                    width: '100%',
+                  }}
+                />
+                <TextInput
+                  value={values.password}
+                  onChangeText={handleChange('password')}
+                  placeholder="Contraseña"
+                  onBlur={() => handleBlur('password')}
+                  error={!!errors.password}
+                  type="password"
+                  disabled={isLoading}
+                  css={{
+                    width: '100%',
+                  }}
+                />
+                {errors.password && touched.password && (
+                  <StyledColumn>
+                    <StyledText>{errors.password}</StyledText>
+                  </StyledColumn>
+                )}
+                {values.password.length > 0 && (
+                  <PasswordValidationDisplay password={values.password} />
+                )}
+                <Button
+                  disabled={!isValid || !values.email || !values.password}
+                  onPress={handleSubmit}
+                  variant={'dark'}
+                  loading={isLoading}
+                  css={{
+                    marginTop: '8px',
+                  }}
+                >
+                  Crear cuenta
+                </Button>
+              </>
+            )}
+          </Formik>
+          <StyledText css={{ textDecorationLine: 'underline' }} onPress={goToLoginScreen}>
+            volver
+          </StyledText>
+        </StyledColumn>
       </StyledColumn>
     </MainContainer>
   );

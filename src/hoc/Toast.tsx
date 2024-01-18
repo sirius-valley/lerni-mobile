@@ -1,11 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, ReactNode } from 'react';
 import { View } from 'react-native';
 import { useLDispatch, useLSelector } from '../redux/hooks';
 import { resetToast } from '../redux/slice/utils.slice';
 import { CustomSuccessToast } from '../components/styled/Toast';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export const ToastComponent = (props: any) => {
+interface ToastComponentProps {
+  children: ReactNode,
+}
+
+export const ToastComponent = ({ children }: ToastComponentProps) => {
   const type = useLSelector((state) => state.utils.type);
   const text = useLSelector((state) => state.utils.text);
   const inset = useSafeAreaInsets();
@@ -20,7 +24,7 @@ export const ToastComponent = (props: any) => {
 
   return (
     <View style={{ flex: 1, position: 'relative' }}>
-      {props.children}
+      {children}
       <View
         style={{
           position: 'absolute',

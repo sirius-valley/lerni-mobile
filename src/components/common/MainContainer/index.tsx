@@ -1,29 +1,31 @@
 import React from 'react';
 import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
-import { StyledBox, StyledColumn } from '../../styled/styles';
+import { StyledBox } from '../../styled/styles';
 import { useTheme } from 'styled-components/native';
+import { ThemeColors } from '../../../utils/theme';
 
 interface MainContainerInterface {
   children: React.ReactNode;
+  backgroundColor: keyof ThemeColors;
 }
 
-const MainContainer = ({ children }: MainContainerInterface) => {
+const MainContainer = ({ children, backgroundColor }: MainContainerInterface) => {
   const theme = useTheme();
   return (
     <StyledBox
       css={{
-        background: theme.primary500,
+        background: theme[backgroundColor],
         width: '100%',
         height: '100%',
       }}
     >
       <KeyboardAvoidingView
         enabled
-        style={{ flex: 1 }}
+        style={{ height: '100%' }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <ScrollView>
-          <StyledColumn css={{ alignItems: 'center', paddingTop: '50%' }}>{children}</StyledColumn>
+          {children}
         </ScrollView>
       </KeyboardAvoidingView>
     </StyledBox>
