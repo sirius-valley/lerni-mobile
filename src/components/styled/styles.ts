@@ -1,19 +1,21 @@
 import { SafeAreaView, View, Text } from 'react-native';
 import styled, { css as styledComponent } from 'styled-components';
 import { CSSProperties } from '../../utils/utils';
+import { ThemeColors } from '../../utils/theme';
 
 interface StyledPropertiesInterface {
   css?: CSSProperties;
 }
 
-type TextVariant = 'h1' | 'h2' | 'h3' | 'body1' | 'body2' | 'body3';
+export type TextVariant = 'h1' | 'h2' | 'h3' | 'body1' | 'body2' | 'body3';
 
 interface StyledTextInterface extends StyledPropertiesInterface {
   variant?: TextVariant;
+  color?: keyof ThemeColors;
 }
 
 export const StyledText = styled(Text)<StyledTextInterface>`
-  color: ${(props) => props.theme.primary900};
+  color: ${(props) => (props.color ? props.theme[props.color] : props.theme.primary900)};
   ${({ variant, theme }) => styledComponent(theme[variant || 'body1'])};
   ${({ css }) => css && styledComponent(css)};
 `;

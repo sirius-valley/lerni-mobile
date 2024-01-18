@@ -10,9 +10,18 @@ import SearchIcon from '../../../../../assets/icons/SearchIcon';
 import ProgramCard from '../../../../components/program/ProgramCard';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ProgramCardStructure, mockedProgramCardsData, programCardsStructure } from './utils';
+import { useRouter } from 'expo-router';
 
 const Page = () => {
   const theme = useTheme();
+  const router = useRouter();
+  const handleGoToProgram = (id: string) =>
+    router.push({
+      pathname: '(tabs)/explore/program',
+      params: {
+        id,
+      },
+    });
 
   return (
     <StyledBox
@@ -76,6 +85,7 @@ const Page = () => {
                           imgUrl={image}
                           status={status}
                           progress={progressBar ? progress : undefined}
+                          onPress={() => handleGoToProgram(id)}
                         />
                       ))}
                   </StyledRow>
