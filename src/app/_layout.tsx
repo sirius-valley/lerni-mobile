@@ -7,6 +7,7 @@ import store from '../redux/store';
 import React from 'react';
 import { theme } from '../utils/theme';
 import { ToastComponent } from '../hoc/Toast';
+import { StatusBar } from 'expo-status-bar';
 
 const _layout = () => {
   const ProvidersTree = buildProviderTree([
@@ -31,6 +32,7 @@ const _layout = () => {
   return (
     <ProvidersTree>
       <Slot />
+      <StatusBar style="light" />
     </ProvidersTree>
   );
 };

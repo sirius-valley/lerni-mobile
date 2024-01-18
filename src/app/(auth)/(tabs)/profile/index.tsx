@@ -6,10 +6,11 @@ import {
 } from '../../../../components/styled/styles';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../../../redux/slice/auth.slice';
-import { Avatar } from '../../../../components/styled/Avatar';
+import { Avatar } from '../../../../components/common/Avatar';
 import { useTheme } from 'styled-components';
 import { LogoutIcon } from '../../../../../assets/icons/LogoutIcon';
 import { Pressable } from 'react-native';
+import { useProfileQuery } from '../../../../redux/service/profile.service';
 
 const profileMocked = {
   name: 'Valentin',
@@ -22,8 +23,9 @@ const profileMocked = {
 export default function Page() {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const { data: profileData, error, isLoading } = useProfileQuery({});
 
-  const handleOnPress = () => dispatch(authActions.logout());
+  const handleLogout = () => dispatch(authActions.logout());
 
   return (
     <StyledColumn
@@ -40,10 +42,10 @@ export default function Page() {
             alignItems: 'center',
           }}
         >
-          <StyledText css={{ color: theme.gray5 }} variant="h1">
+          <StyledText css={{ color: theme.gray100 }} variant="h1">
             Perfil
           </StyledText>
-          <Pressable onPress={handleOnPress}>
+          <Pressable onPress={handleLogout}>
             <LogoutIcon color={theme.primary600} size={32} />
           </Pressable>
         </StyledRow>
@@ -52,16 +54,16 @@ export default function Page() {
             <Avatar size={94} borderRadius={97} />
           </StyledBox>
           <StyledColumn css={{ gap: 4, justifyContent: 'center' }}>
-            <StyledText css={{ color: theme.gray5 }} variant="h3">
+            <StyledText css={{ color: theme.gray100 }} variant="h3">
               {profileMocked.name} {profileMocked.lastname}
             </StyledText>
-            <StyledText css={{ color: theme.gray5 }} variant="body2">
+            <StyledText css={{ color: theme.gray100 }} variant="body2">
               {profileMocked.occupation}
             </StyledText>
-            <StyledText css={{ color: theme.gray5 }} variant="body2">
+            <StyledText css={{ color: theme.gray100 }} variant="body2">
               {profileMocked.job}
             </StyledText>
-            <StyledText css={{ color: theme.gray5 }} variant="body2">
+            <StyledText css={{ color: theme.gray100 }} variant="body2">
               {profileMocked.city}
             </StyledText>
           </StyledColumn>
