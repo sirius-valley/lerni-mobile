@@ -6,7 +6,7 @@ import { CustomSuccessToast } from '../components/styled/Toast';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface ToastComponentProps {
-  children: ReactNode,
+  children: ReactNode;
 }
 
 export const ToastComponent = ({ children }: ToastComponentProps) => {

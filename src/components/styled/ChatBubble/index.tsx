@@ -12,7 +12,12 @@ export interface ChatBubbleProps {
   type?: 'image' | 'text';
 }
 
-export const ChatBubble = ({ user = 'professor', isLast = true, content, type }: ChatBubbleProps) => {
+export const ChatBubble = ({
+  user = 'professor',
+  isLast = true,
+  content,
+  type,
+}: ChatBubbleProps) => {
   const theme = useTheme();
 
   return (

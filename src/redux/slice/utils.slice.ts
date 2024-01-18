@@ -6,5 +6,4 @@ export const utilsSlice = createSlice({
   reducers: {},
 });
 
-
 export default utilsSlice.reducer;

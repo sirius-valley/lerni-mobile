@@ -24,9 +24,7 @@ const MainContainer = ({ children, backgroundColor }: MainContainerInterface) =>
         style={{ height: '100%' }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <ScrollView>
-          {children}
-        </ScrollView>
+        <ScrollView>{children}</ScrollView>
       </KeyboardAvoidingView>
     </StyledBox>
   );

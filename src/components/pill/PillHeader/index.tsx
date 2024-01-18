@@ -11,13 +11,9 @@ export interface PillHeaderProps {
   percentageDone: number;
 }
 
-const PillHeader = ({
-  title,
-  pillNumber,
-  percentageDone,
-}: PillHeaderProps) => {
+const PillHeader = ({ title, pillNumber, percentageDone }: PillHeaderProps) => {
   const theme = useTheme();
-  
+
   return (
     <StyledRow
       css={{

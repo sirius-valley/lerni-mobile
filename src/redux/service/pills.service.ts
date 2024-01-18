@@ -11,26 +11,26 @@ const mockedPill = {
     {
       id: 'bodypill_id_01',
       user: 'professor' as UserType,
-      content: "Respuesta",
+      content: 'Respuesta',
       type: 'text' as PillBodyType,
       isLast: false,
     },
     {
       id: 'bodypill_id_02',
       user: 'professor' as UserType,
-      content: "Y otra pregunta para que responda el alumno?",
+      content: 'Y otra pregunta para que responda el alumno?',
       type: 'text' as PillBodyType,
       isLast: true,
     },
     {
       id: 'bodypill_id_03',
       user: 'student' as UserType,
-      content: "Respuesta del alumno",
+      content: 'Respuesta del alumno',
       type: 'text' as PillBodyType,
       isLast: true,
     },
-  ]
-}
+  ],
+};
 
 type UserType = 'student' | 'professor';
 type PillBodyType = 'image' | 'text';
@@ -45,7 +45,7 @@ export const pillsApi = api.injectEndpoints({
         body: { pillId },
       }),
     }),
-    answerPill: builder.mutation<PillsType, { content: string, contentType: 'text' | 'image' }>({
+    answerPill: builder.mutation<PillsType, { content: string; contentType: 'text' | 'image' }>({
       query: ({ content, contentType }) => ({
         url: `pill/answer`,
         method: 'POST',

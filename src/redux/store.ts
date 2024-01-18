@@ -10,7 +10,7 @@ const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
   auth: authReducer,
   utils: utilsReducer,
-  pills: pillsSlice
+  pills: pillsSlice,
 });
 
 const persistConfig = {

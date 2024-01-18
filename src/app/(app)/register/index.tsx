@@ -44,8 +44,6 @@ const RegisterScreen = () => {
   return (
     <MainContainer backgroundColor="primary500">
       <StyledColumn css={{ alignItems: 'center', paddingTop: '50%' }}>
-
-
         <LerniMainIcon />
         <StyledText variant="h2" css={{ marginTop: '14%' }}>
           Crear cuenta
