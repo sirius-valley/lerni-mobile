@@ -12,7 +12,6 @@ export const theme = {
   warning: '#F99D32',
   red500: '#FC6464',
   red600: '#B93333',
-  gray6: '#F2F2F2',
   gray50: '#f8fafc',
   gray100: '#f1f5f9',
   gray200: '#e2e8f0',

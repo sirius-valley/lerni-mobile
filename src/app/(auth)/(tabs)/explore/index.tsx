@@ -30,7 +30,7 @@ const Page = () => {
               alignItems: 'center',
             }}
           >
-            <StyledText variant="h1" css={{ color: theme.gray6 }}>
+            <StyledText variant="h1" css={{ color: theme.gray100 }}>
               Explorar
             </StyledText>
             <StyledBox css={{ padding: 3 }}>
