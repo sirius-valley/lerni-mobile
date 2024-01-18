@@ -11,12 +11,6 @@ const TabsLayout = () => {
   const insets = useSafeAreaInsets();
   const theme = useTheme();
 
-  const token = useSelector((state: RootState) => state.auth.token);
-
-  if (!token) {
-    return <Redirect href={'/(app)/login'} />;
-  }
-
   return (
     <Tabs
       screenOptions={{

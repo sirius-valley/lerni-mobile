@@ -4,7 +4,7 @@ import store from '../../redux/store';
 export const Layout = () => {
   const token = store.getState().auth.token;
 
-  if (!token) {
+  if (token) {
     return <Redirect href={'/(app)/login'} />;
   }
 
