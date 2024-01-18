@@ -17,15 +17,13 @@ const Page = () => {
   return (
     <StyledBox
       css={{
-        background: theme.primary900,
         width: '100%',
         height: '100%',
-        paddingTop: 60,
-        paddingHorizontal: 24,
+        paddingTop: 20,
       }}
     >
       <ScrollView>
-        <StyledColumn css={{ gap: 16 }}>
+        <StyledColumn css={{ gap: 24 }}>
           <StyledRow
             css={{
               justifyContent: 'space-between',
