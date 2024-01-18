@@ -8,31 +8,35 @@ import { useTheme } from 'styled-components';
 
 interface CarouselItemProps {
   image: string;
-  selected: boolean;
+  selected?: boolean;
   handleOpenImage: () => void;
   title: string;
   description: string;
+  handleSelect: () => void;
+  id: string;
+  disabled: boolean;
 }
 
 const CarouselItem = ({
   image,
+  id,
   selected,
+  handleSelect,
   handleOpenImage,
   title,
   description,
+  disabled,
 }: CarouselItemProps) => {
   const theme = useTheme();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   const imageSource = image;
 
-  const handleSelect = () => {};
   useEffect(() => {
     if (imageSource) {
       Image.getSize(
         imageSource,
         (width, height) => {
-          console.log(width, height);
           let newWidth = width;
           let newHeight = height;
           if (width > Dimensions.get('window').width) {
@@ -95,10 +99,10 @@ const CarouselItem = ({
         />
       </StyledBox>
       <View style={{ display: 'flex', flexDirection: 'row', gap: 8 }}>
-        <Checkbox checked={selected} onPress={handleSelect} />
+        <Checkbox disabled={disabled} checked={selected ? true : false} onPress={handleSelect} />
         <View style={{ display: 'flex', flexDirection: 'column' }}>
-          <StyledText variant={'body1'}>{title}</StyledText>
-          <StyledText variant={'body2'}>{description}</StyledText>
+          <StyledText style={{color: theme.gray100}} variant={'h4'}>{title}</StyledText>
+          <StyledText style={{color: theme.gray100}} variant={'h4'}>{description}</StyledText>
         </View>
       </View>
     </StyledCarouselItemContainer>

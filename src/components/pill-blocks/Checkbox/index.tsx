@@ -6,12 +6,13 @@ import { useTheme } from 'styled-components';
 interface CheckboxProps {
   checked: boolean;
   onPress: () => void;
+  disabled: boolean;
 }
 
-const Checkbox = ({ checked, onPress }: CheckboxProps) => {
+const Checkbox = ({ checked, onPress, disabled }: CheckboxProps) => {
   const theme = useTheme();
   return (
-    <Pressable onPress={onPress}>
+    <Pressable onPress={onPress} disabled={disabled}>
       <View
         style={{
           backgroundColor: checked ? theme.primary500 : theme.primary800,

@@ -42,6 +42,12 @@ export const theme = {
     fontStyle: 'normal',
     fontWeight: 600,
   },
+  h4: {
+    fontFamily: 'Roboto-Bold',
+    fontSize: '16px',
+    fontStyle: 'normal',
+    fontWeight: 700,
+  },
   body1: {
     fontFamily: 'Roboto-Regular',
     fontSize: '16px',
