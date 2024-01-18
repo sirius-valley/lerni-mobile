@@ -1,6 +1,6 @@
 import { api } from './api';
 
-const mockedPill = {
+export const mockedPill = {
   pillId: 'id01',
   pillHeader: {
     title: 'Test_pill',
