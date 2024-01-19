@@ -8,7 +8,14 @@ import useTrivia from '../../../../hook/useTrivia';
 
 export default function Page() {
   const theme = useTheme();
-  const { currentQuestion, currentOptions } = useTrivia();
+  const { currentQuestion, currentOptions, handleSendAnswer,handleChange } = useTrivia();
+
+  const handleAnswer = (answer: string) => {
+    handleChange(currentQuestion.id, answer);
+    handleSendAnswer();
+    console.log('enviado', currentQuestion, answer);
+  }
+
   return (
     <ScrollView
       contentContainerStyle={{
@@ -31,9 +38,9 @@ export default function Page() {
       <StyledColumn css={{ gap: 16 }}>
         {currentOptions.map((option) => (
           <AnswerButton
-            answer={option.answer}
-            onPress={() => {}}
-            selected={currentQuestion.answer && currentQuestion.answer === option.answer}
+            answer={option.text}
+            onPress={handleAnswer}
+            selected={typeof currentQuestion.answer === 'string' ? (currentQuestion.answer === option.text): undefined}
           />
         ))}
       </StyledColumn>

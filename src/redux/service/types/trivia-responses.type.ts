@@ -1,7 +1,7 @@
 export type TriviaQuestion = {
   id: string;
   question: string;
-  answers: string[];
+  answers: {text:string, id:string}[];
   correctAnswer?: boolean;
   userAnswer?: string;
 };
