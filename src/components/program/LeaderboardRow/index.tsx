@@ -22,14 +22,16 @@ const LeaderboardRow = ({
     <StyledLeaderboardRowContainer belongsToOwner={belongsToCurrentUser}>
       <StarBox />
       <Avatar uri={imgUrl ? imgUrl : undefined} size={48} />
-      <StyledText css={{ width: '52%' }} color='gray100' variant="body1">{fullName}</StyledText>
+      <StyledText css={{ width: '52%' }} color="gray100" variant="body1">
+        {fullName}
+      </StyledText>
       <StyledRow css={{ gap: '4px' }}>
         <RhombusIcon />
-        <StyledText color="gray100" variant='body3'>
+        <StyledText color="gray100" variant="body3">
           {points} {points === 1 ? 'punto' : 'puntos'}
         </StyledText>
       </StyledRow>
-    </StyledLeaderboardRowContainer >
+    </StyledLeaderboardRowContainer>
   );
 };
 

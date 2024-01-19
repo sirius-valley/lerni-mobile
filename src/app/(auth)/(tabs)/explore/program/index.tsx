@@ -126,7 +126,7 @@ const Program = () => {
           </StyledColumn>
 
           <StyledColumn css={{ width: '100%', marginVertical: '16px' }}>
-            <StyledText variant="h3" color='white' css={{ marginBottom: '16px' }}>
+            <StyledText variant="h3" color="white" css={{ marginBottom: '16px' }}>
               Leaderboard
             </StyledText>
             {mockedLeaderboardRows.map((row, idx) => (
@@ -139,14 +139,14 @@ const Program = () => {
               marginTop: '8px',
               marginBottom: '24px',
               gap: '8px',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
             <MessageIcon />
             <Pressable onPress={() => alert('to be defined')}>
               <StyledText
-                variant='body2'
-                color='primary500'
+                variant="body2"
+                color="primary500"
                 css={{ textDecorationLine: 'underline' }}
               >
                 Ver comentarios sobre el programa
