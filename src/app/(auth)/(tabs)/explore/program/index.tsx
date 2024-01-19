@@ -17,7 +17,9 @@ import BulletListIcon from '../../../../../../assets/icons/BulletListIcon';
 import ClockIcon from '../../../../../../assets/icons/ClockIcon';
 import CheckSealIcon from '../../../../../../assets/icons/CheckSealIcon';
 import PillRow from '../../../../../components/program/PillRow';
-import { mockedPills } from '../utils';
+import { mockedLeaderboardRows, mockedPills } from '../utils';
+import LeaderboardRow from '../../../../../components/program/LeaderboardRow';
+import MessageIcon from '../../../../../../assets/icons/MessageIcon';
 
 const Program = () => {
   const router = useRouter();
@@ -123,8 +125,33 @@ const Program = () => {
             ))}
           </StyledColumn>
 
-          <StyledColumn>
-            <StyledText variant="h3">Leaderboard</StyledText>
+          <StyledColumn css={{ width: '100%', marginVertical: '16px' }}>
+            <StyledText variant="h3" color='white' css={{ marginBottom: '16px' }}>
+              Leaderboard
+            </StyledText>
+            {mockedLeaderboardRows.map((row, idx) => (
+              <LeaderboardRow {...row} key={idx} />
+            ))}
+          </StyledColumn>
+
+          <StyledColumn
+            css={{
+              marginTop: '8px',
+              marginBottom: '24px',
+              gap: '8px',
+              alignItems: 'center'
+            }}
+          >
+            <MessageIcon />
+            <Pressable onPress={() => alert('to be defined')}>
+              <StyledText
+                variant='body2'
+                color='primary500'
+                css={{ textDecorationLine: 'underline' }}
+              >
+                Ver comentarios sobre el programa
+              </StyledText>
+            </Pressable>
           </StyledColumn>
         </StyledColumn>
       </StyledColumn>

@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, { Path } from 'react-native-svg';
 import { IconInterface } from './types';
 
-const StarBox = ({ color = '#8C8AED', size = 16 }: IconInterface) => {
+const StarBoxIcon = ({ color = '#8C8AED', size = 16 }: IconInterface) => {
   return (
     <Svg width={size} height={size} viewBox="0 0 16 16" fill="none">
       <Path 
@@ -13,4 +13,4 @@ const StarBox = ({ color = '#8C8AED', size = 16 }: IconInterface) => {
   );
 };
 
-export default StarBox;
+export default StarBoxIcon;

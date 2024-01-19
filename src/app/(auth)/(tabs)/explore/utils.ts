@@ -144,23 +144,24 @@ export const mockedPills = [
 
 export const mockedLeaderboardRows = [
   {
-    imgUrl: '',
-    name: 'Nombre y Apellido',
+    imgUrl: 'https://www.comms-express.com/blog/wp-content/uploads/2017/06/funny-emoji.jpg',
+    fullName: 'Nombre y Apellido',
     points: 20,
   },
   {
     imgUrl: '',
-    name: 'Nombre y Apellido',
+    fullName: 'Nombre y Apellido',
+    points: 19,
+    belongsToCurrentUser: true,
+  },
+  {
+    imgUrl: '',
+    fullName: 'Nombre y Apellido',
     points: 19,
   },
   {
     imgUrl: '',
-    name: 'Nombre y Apellido',
-    points: 19,
-  },
-  {
-    imgUrl: '',
-    name: 'Nombre y Apellido',
-    points: 16,
+    fullName: 'Nombre y Apellido',
+    points: 1,
   },
 ];

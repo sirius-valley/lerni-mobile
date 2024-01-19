@@ -3,7 +3,7 @@ import styled, { css as styledComponent } from 'styled-components';
 import { CSSProperties } from '../../utils/utils';
 import { ThemeColors } from '../../utils/theme';
 
-interface StyledPropertiesInterface {
+export interface StyledPropertiesInterface {
   css?: CSSProperties;
 }
 
