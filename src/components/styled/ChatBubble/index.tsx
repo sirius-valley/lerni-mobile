@@ -3,7 +3,7 @@ import { MessageProps } from '../../../utils/constants';
 import { StyledText } from '../styles';
 import { MessageContainer } from './styles';
 import { TextBubbleContainer } from './styles';
-import { Avatar } from '../Avatar';
+import { Avatar } from '../../common/Avatar';
 import { StyledImageBubble } from './styles';
 
 export const ChatBubble = ({ user = 'professor', isLast = true, content, type }: MessageProps) => {
