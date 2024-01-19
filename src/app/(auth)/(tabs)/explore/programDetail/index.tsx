@@ -15,13 +15,12 @@ import { useTheme } from 'styled-components';
 import RhombusIcon from '../../../../../../assets/icons/RhombusIcon';
 import BulletListIcon from '../../../../../../assets/icons/BulletListIcon';
 import ClockIcon from '../../../../../../assets/icons/ClockIcon';
-import CheckSealIcon from '../../../../../../assets/icons/CheckSealIcon';
 import PillRow from '../../../../../components/program/PillRow';
 import { mockedLeaderboardRows, mockedPills } from '../utils';
 import LeaderboardRow from '../../../../../components/program/LeaderboardRow';
 import MessageIcon from '../../../../../../assets/icons/MessageIcon';
 
-const Program = () => {
+const ProgramDetail = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
   const theme = useTheme();
@@ -42,9 +41,29 @@ const Program = () => {
     },
   };
 
+  const mockedSubTitle = [
+    {
+      icon: <BulletListIcon />,
+      label: `${mockedProgram.pillData.pillAmount} pildoras`,
+    },
+    {
+      icon: <ClockIcon />,
+      label: `${mockedProgram.pillData.pillDuration} hora`,
+    },
+    {
+      icon: <RhombusIcon />,
+      label: `${mockedProgram.pillData.pillDuration} puntos`,
+    },
+  ];
+
   return (
-    <ScrollView style={{ width: '100%', paddingHorizontal: 12 }}>
-      <StyledColumn css={{ flex: 1, justifyContent: 'flex-start', height: '100%' }}>
+    <ScrollView
+      style={{ width: '100%', paddingHorizontal: 12 }}
+      scrollIndicatorInsets={{ right: -30 }}
+    >
+      <StyledColumn
+        css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '64px' }}
+      >
         <StyledRow>
           <Pressable onPress={() => router.back()} style={{ padding: 10 }}>
             <BackArrow />
@@ -69,25 +88,16 @@ const Program = () => {
               borderRadius={20}
             />
           </StyledBox>
+
           <StyledRow css={{ justifyContent: 'space-evenly', width: '90%' }}>
-            <StyledRow css={{ gap: '4px', alignItems: 'center' }}>
-              <BulletListIcon />
-              <StyledText variant="body3" color="gray400">
-                {mockedProgram.pillData.pillAmount} pildoras
-              </StyledText>
-            </StyledRow>
-            <StyledRow css={{ gap: '4px', alignItems: 'center' }}>
-              <ClockIcon />
-              <StyledText variant="body3" color="gray400">
-                {mockedProgram.pillData.pillDuration} hora
-              </StyledText>
-            </StyledRow>
-            <StyledRow css={{ gap: '4px', alignItems: 'center' }}>
-              <RhombusIcon />
-              <StyledText variant="body3" color="gray400">
-                {mockedProgram.pillData.pillDuration} puntos
-              </StyledText>
-            </StyledRow>
+            {mockedSubTitle.map((subTitle, idx) => (
+              <StyledRow key={idx} css={{ gap: '4px', alignItems: 'center' }}>
+                {subTitle.icon}
+                <StyledText variant="body3" color="gray400">
+                  {subTitle.label}
+                </StyledText>
+              </StyledRow>
+            ))}
           </StyledRow>
 
           <StyledColumn css={{ gap: '8px', marginTop: '16px' }}>
@@ -99,18 +109,6 @@ const Program = () => {
               ullamcorper mauris, vitae commodo dui efficitur non. Fusce efficitur pulvinar diam vel
               dictum.
             </StyledText>
-            <StyledRow css={{ gap: '8px' }}>
-              <CheckSealIcon />
-              <StyledText color="gray100">Tema 1</StyledText>
-            </StyledRow>
-            <StyledRow css={{ gap: '8px' }}>
-              <CheckSealIcon />
-              <StyledText color="gray100">Tema 2</StyledText>
-            </StyledRow>
-            <StyledRow css={{ gap: '8px' }}>
-              <CheckSealIcon />
-              <StyledText color="gray100">Tema 3</StyledText>
-            </StyledRow>
           </StyledColumn>
 
           <StyledColumn css={{ gap: '8px', width: '100%', marginTop: '16px' }}>
@@ -137,7 +135,7 @@ const Program = () => {
           <StyledColumn
             css={{
               marginTop: '8px',
-              marginBottom: '24px',
+              marginBottom: '48px',
               gap: '8px',
               alignItems: 'center',
             }}
@@ -159,4 +157,4 @@ const Program = () => {
   );
 };
 
-export default Program;
+export default ProgramDetail;

@@ -15,9 +15,10 @@ import { useRouter } from 'expo-router';
 const Page = () => {
   const theme = useTheme();
   const router = useRouter();
+
   const handleGoToProgram = (id: string) =>
     router.push({
-      pathname: '(tabs)/explore/program',
+      pathname: '(tabs)/explore/programDetail',
       params: {
         id,
       },

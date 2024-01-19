@@ -22,7 +22,7 @@ const LeaderboardRow = ({
     <StyledLeaderboardRowContainer belongsToOwner={belongsToCurrentUser}>
       <StarBox />
       <Avatar uri={imgUrl ? imgUrl : undefined} size={48} />
-      <StyledText css={{ width: '52%' }} color="gray100" variant="body1">
+      <StyledText variant="h3" color="gray100" css={{ width: '52%', fontSize: '14px' }}>
         {fullName}
       </StyledText>
       <StyledRow css={{ gap: '4px' }}>
