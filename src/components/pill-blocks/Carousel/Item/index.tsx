@@ -1,10 +1,11 @@
 import { StyledCarouselItemContainer, StyledImageCarousel } from './styles';
-import { Dimensions, Image, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { StyledBox, StyledText } from '../../../styled/styles';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Checkbox from '../../Checkbox';
 import { ZoomIcon } from '../../../../../assets/icons/ZoomIcon';
 import { useTheme } from 'styled-components';
+import useImageDimensions from '../../../../hook/useImageDimensions';
 
 interface CarouselItemProps {
   image: string;
@@ -15,6 +16,7 @@ interface CarouselItemProps {
   handleSelect: () => void;
   id: string;
   disabled: boolean;
+  sealed: boolean;
 }
 
 const CarouselItem = ({
@@ -26,34 +28,12 @@ const CarouselItem = ({
   title,
   description,
   disabled,
+  sealed,
 }: CarouselItemProps) => {
   const theme = useTheme();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const { width, height } = useImageDimensions(image);
 
-  const imageSource = image;
-
-  useEffect(() => {
-    if (imageSource) {
-      Image.getSize(
-        imageSource,
-        (width, height) => {
-          let newWidth = width;
-          let newHeight = height;
-          if (width > Dimensions.get('window').width) {
-            newWidth = Dimensions.get('window').width * 0.85;
-            newHeight = (Dimensions.get('window').width * 0.85 * height) / width;
-          } else if (height > Dimensions.get('window').height) {
-            newHeight = Dimensions.get('window').height * 0.85;
-            newWidth = (Dimensions.get('window').height * 0.85 * width) / height;
-          }
-          setDimensions({ width: newWidth, height: newHeight });
-        },
-        (error) => {
-          console.error('Error obteniendo dimensiones de la imagen:', error);
-        },
-      );
-    }
-  }, [imageSource]);
   return (
     <StyledCarouselItemContainer>
       <StyledBox
@@ -90,19 +70,25 @@ const CarouselItem = ({
         </Pressable>
 
         <StyledImageCarousel
-          source={{ uri: imageSource }}
+          source={{ uri: image }}
           css={{
-            width: dimensions.width,
-            height: dimensions.height,
-            borderRadius: dimensions.height < 58 ? 0 : 8,
+            width: width,
+            height: height,
+            borderRadius: sealed ? '8px 8px 2px 8px' : dimensions.height < 58 ? 0 : 8,
           }}
         />
       </StyledBox>
       <View style={{ display: 'flex', flexDirection: 'row', gap: 8 }}>
-        <Checkbox disabled={disabled} checked={selected ? true : false} onPress={handleSelect} />
+        {!sealed && (
+          <Checkbox disabled={disabled} checked={selected ? true : false} onPress={handleSelect} />
+        )}
         <View style={{ display: 'flex', flexDirection: 'column' }}>
-          <StyledText style={{color: theme.gray100}} variant={'h4'}>{title}</StyledText>
-          <StyledText style={{color: theme.gray100}} variant={'h4'}>{description}</StyledText>
+          <StyledText style={{ color: theme.gray100 }} variant={'h4'}>
+            {title}
+          </StyledText>
+          <StyledText style={{ color: theme.gray100 }} variant={'h4'}>
+            {description}
+          </StyledText>
         </View>
       </View>
     </StyledCarouselItemContainer>

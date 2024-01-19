@@ -1,11 +1,9 @@
 import { StyledCarouselContainer } from './styles';
 import Item from './Item';
-import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../styled/styles';
+import { StyledColumn, StyledRow, StyledText } from '../../styled/styles';
 import React from 'react';
 import useZoomImage from '../../../hook/useZoomImage';
-import { InteractiveBubbleProps } from '../../../types';
-import Button from '../../styled/Button';
-import SendIcon from '../../../../assets/icons/SendIcon';
+import { LabeledSend } from '../../bubbles/LabeledSend';
 
 type CarouselItem = {
   id: string;
@@ -20,13 +18,11 @@ interface CarouselProps {
   multiple?: boolean;
   onSelect: (id: string) => void;
   onPress: () => void;
-  sealed: boolean; 
+  sealed: boolean;
 }
 
 const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps) => {
-//hacer la logica del labeled send text
-
-  
+  //hacer la logica del labeled send text
 
   const { ZoomImageComponent, handleOpenImage } = useZoomImage({
     images:
@@ -61,23 +57,15 @@ const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps)
             description={item.description}
             id={item.id}
             disabled={sealed}
+            sealed={sealed}
           />
         ))}
       </StyledCarouselContainer>
-      {/* //Aca debería ir el labeled send */}
-      <StyledRow style={{ alignItems: 'center', gap: 8 }}>
-        {/* <StyledText variant={'body1'}>{textToRender}</StyledText> */}
-        <Button
+      <StyledRow style={{ alignItems: 'center', gap: 6 }}>
+        <LabeledSend
           onPress={onPress}
-          disabled={sealed}
-          icon={SendIcon}
-          variant='primary'
-          css={{
-            width: 42,
-            height: 42,
-            borderRadius: 50,
-          }}
-        > </Button>
+          status={sealed ? 'sent' : items.some((item) => item.selected) ? 'selected' : 'default'}
+        />
       </StyledRow>
       <ZoomImageComponent />
     </StyledColumn>

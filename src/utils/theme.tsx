@@ -6,7 +6,7 @@ export const theme = {
   primary600: '#307F90',
   primary500: '#18BAC8',
   primary400: '#33C7D3',
-  primary200: '#C0EEF2',
+  primary200: '#C6EFFC',
   blue500: '#273873',
   white: '#FFFFFF',
   red500: '#FC6464',
@@ -18,12 +18,12 @@ export const theme = {
   gray400: '#94A3B8',
   gray500: '#64758B',
   gray600: '#475569',
-  gray700: '#1E293B',
-  gray800: '#1e293b',
+  gray800: '#1E293B',
   gray900: '#0F172A',
   gray950: '#020617',
-  error: '#D84545',
   success: '#0EB51F',
+  warning: '#F99D32',
+  error: '#D84545',
   h1: {
     fontFamily: 'Roboto-Bold',
     fontSize: '24px',
@@ -69,3 +69,4 @@ export const theme = {
 };
 
 export type MyTheme = typeof theme;
+export type ThemeColors = Omit<MyTheme, 'h1' | 'h2' | 'h3' | 'h4' | 'body1' | 'body2' | 'body3'>;
