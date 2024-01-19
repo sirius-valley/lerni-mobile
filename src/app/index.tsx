@@ -3,15 +3,22 @@ import React, { useState } from 'react';
 import { Link } from 'expo-router';
 import SendIcon from '../../assets/icons/SendIcon';
 import Carousel from '../components/pill-blocks/Carousel';
+import { useTheme } from 'styled-components/native';
+import Item from '../components/pill-blocks/Carousel/Item';
+import { ChatBubble } from '../components/styled/ChatBubble';
+import useZoomImage from '../hook/useZoomImage';
+import { StyledColumn } from '../components/styled/styles';
 
 const Landing = () => {
-  const [items, setItems] = useState<{id: string, title: string, description: string, image: string, selected?: boolean}[]>([
+  const [items, setItems] = useState<
+    { id: string; title: string; description: string; image: string; selected?: boolean }[]
+  >([
     {
       id: '1',
       title: 'string',
       description: 'string',
       image:
-        'https://media.discordapp.net/attachments/411201278031560708/1030913090562293770/unknown.png?ex=65ac13a2&is=65999ea2&hm=617e464574737290490c4b5e764bb628db6ea8b1b558579788aab1e6ab46cf9d&=&format=webp&quality=lossless&width=2022&height=224',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTidUHnLgrt4hfhnK168gU28iG72LKtUQ06rzq2IIUoSw&s',
       selected: undefined,
     },
     {
@@ -19,74 +26,105 @@ const Landing = () => {
       title: 'string',
       description: 'string',
       image:
-        'https://media.discordapp.net/attachments/411201278031560708/844324029062184960/unknown.png?ex=65a6f387&is=65947e87&hm=f8b74ccec519a84a990187a3cee0d7417bce7ed796053a6d6340c91318b807ae&=&format=webp&quality=lossless&width=2022&height=1138',
+        'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/cb6d69a3-bb86-4d39-b566-cc73bd020ffc/d78prrx-142f0e0d-bd35-4121-a04e-48a7b27858cc.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2NiNmQ2OWEzLWJiODYtNGQzOS1iNTY2LWNjNzNiZDAyMGZmY1wvZDc4cHJyeC0xNDJmMGUwZC1iZDM1LTQxMjEtYTA0ZS00OGE3YjI3ODU4Y2MuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.NNwfmhWC6casIen2NT24EkSlo-5zGpQDP4_G7oTL-eU',
       selected: undefined,
     },
     {
       id: '3',
       title: 'string',
       description: 'string',
-      image:
-        'https://media.discordapp.net/attachments/411201278031560708/1124484301401116773/peron20color.png?ex=65ab081d&is=6598931d&hm=45ea867c31cb08b5d6bf413e764261bb88c6d4e34d7f1063924fd34391c8d50d&=&format=webp&quality=lossless&width=904&height=922',
+      image: 'https://rickshawtravels.com/assets/images/demo/600x400/2-min.jpg',
       selected: undefined,
     },
-  ])
+  ]);
 
   const multiple: boolean = true;
-  const [sealed, setSealed] = useState(false)
+  const [sealed, setSealed] = useState(false);
+
+  const { ZoomImageComponent, handleOpenImage } = useZoomImage({
+    images:
+      items?.map((item) => ({
+        url: item.image,
+      })) ?? [],
+  });
 
   const handleSelect = (id: string) => {
-    multiple ? 
-    setItems(
-      items.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-            selected: item.selected ? false : true,
-          };
-        } else {
-          return item;
-        }
-      }),
-    )
-    :
-    setItems(
-      items.map(item => {
-        if (item.id === id) {
-          return ({
-            ...item,
-            selected: item.selected ? undefined : true
-          })
-        } else {
-          return ({
-            ...item,
-            selected: false
-          })
-        }
-      })
-    )
+    multiple
+      ? setItems(
+          items.map((item) => {
+            if (item.id === id) {
+              return {
+                ...item,
+                selected: item.selected ? false : true,
+              };
+            } else {
+              return item;
+            }
+          }),
+        )
+      : setItems(
+          items.map((item) => {
+            if (item.id === id) {
+              return {
+                ...item,
+                selected: item.selected ? undefined : true,
+              };
+            } else {
+              return {
+                ...item,
+                selected: false,
+              };
+            }
+          }),
+        );
   };
 
   const handlePress = () => {
-    setSealed(true)
-  }
-  
+    setSealed(true);
+  };
+
+  const theme = useTheme();
 
   return (
     <View
       style={{
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'transparent',
+        alignItems: sealed ? 'flex-end' : 'center',
+        backgroundColor: theme.primary900,
+        gap: 6,
       }}
     >
-      <Carousel
-        items={items}
-        onSelect={handleSelect}
-        sealed={sealed}
-        onPress={handlePress}
-      />
+      {!sealed ? (
+        <Carousel items={items} onSelect={handleSelect} sealed={sealed} onPress={handlePress} />
+      ) : (
+        items.map((item, index) => {
+          return (
+            <StyledColumn
+              key={item.id}
+              style={{
+                alignItems: 'flex-end',
+                gap: 12,
+                marginRight: 6,
+              }}
+            >
+              {item.selected === true && (
+                <Item
+                  image={item.image}
+                  title={item.title}
+                  description={item.description}
+                  handleOpenImage={() => handleOpenImage(index)}
+                  handleSelect={() => null}
+                  id={item.id}
+                  disabled
+                  sealed
+                />
+              )}
+              <ZoomImageComponent />
+            </StyledColumn>
+          );
+        })
+      )}
       <Text>Landing</Text>
       <Link asChild href={'/(tabs)/profile'}>
         <Button title="Home" />

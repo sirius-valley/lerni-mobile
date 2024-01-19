@@ -22,8 +22,6 @@ interface CarouselProps {
 }
 
 const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps) => {
-  //hacer la logica del labeled send text
-
   const { ZoomImageComponent, handleOpenImage } = useZoomImage({
     images:
       items?.map((item) => ({
