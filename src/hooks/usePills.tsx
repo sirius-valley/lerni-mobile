@@ -1,27 +1,49 @@
 import { useEffect, useState } from 'react';
 import { ChatBubble } from '../components/styled/ChatBubble';
-import { mockedPill } from '../redux/service/pills.service';
+import { PillBodyType, mockedPill } from '../redux/service/pills.service';
+import FreeTextBubble from '../components/common/FreeTextBubble';
+import { StyledBox } from '../components/styled/styles';
 
 type UserType = 'student' | 'professor';
-type PillBodyType = 'image' | 'text';
 type PillData = typeof mockedPill;
 
 const usePills = (id: string) => {
   const [pillData, setPillData] = useState<PillData>();
   const [isLoading, setIsLoading] = useState(false);
 
+  const [freeTextValue, setFreeTextValue] = useState('');
+
+  const handleFreeTextChange = (value: string) => setFreeTextValue(value);
+  const handleFreeTextOnPress = () => {
+    answerPill(freeTextValue);
+    setFreeTextValue('');
+  };
+
   const renderPills = () => {
     if (pillData) {
       return pillData?.pillBody?.map((pill) => {
-        return (
-          <ChatBubble
-            key={pill.id}
-            user={pill.user ?? 'professor'}
-            isLast={pill.isLast}
-            content={pill.content}
-            type={pill.type}
-          />
-        );
+        switch (pill.type) {
+          case 'text' || 'image':
+            return (
+              <ChatBubble
+                key={pill.id}
+                user={pill.user ?? 'professor'}
+                isLast={pill.isLast}
+                content={pill.content}
+                type={pill.type}
+              />
+            );
+          case 'free_text':
+            return (
+              <StyledBox key={pill.id} css={{ padding: '16px 0px', marginTop: 'auto' }}>
+                <FreeTextBubble
+                  value={freeTextValue}
+                  onChangeText={handleFreeTextChange}
+                  handlePress={handleFreeTextOnPress}
+                />
+              </StyledBox>
+            );
+        }
       });
     }
     return null;
@@ -41,6 +63,13 @@ const usePills = (id: string) => {
         content,
       },
     ];
+    // swap positions
+    const pillBodyLength = nextPillBody.length;
+    [nextPillBody[pillBodyLength - 2], nextPillBody[pillBodyLength - 1]] = [
+      nextPillBody[pillBodyLength - 1],
+      nextPillBody[pillBodyLength - 2],
+    ];
+
     const nextPillData = {
       pillHeader: pillData?.pillHeader || { title: '', pillNumber: 0, percentageDone: 0 },
       pillId: pillData?.pillId || '',

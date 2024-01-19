@@ -1,22 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PillHeader from '../../../components/pill/PillHeader';
-import { StyledBox, StyledColumn } from '../../../components/styled/styles';
+import { StyledColumn } from '../../../components/styled/styles';
 import Spinner from '../../../components/common/Spinner';
 import { SafeAreaView } from 'react-native';
 import PillMainContainer from '../../../components/pill/PillMainContainer';
-import FreeTextBubble from '../../../components/common/FreeTextBubble';
 import usePills from '../../../hooks/usePills';
 
 const Pill = () => {
-  const { pillData, isLoading, renderPills, answerPill } = usePills('bubble_id');
-
-  const [freeTextValue, setFreeTextValue] = useState('');
-
-  const handleFreeTextChange = (value: string) => setFreeTextValue(value);
-  const handleFreeTextOnPress = () => {
-    answerPill(freeTextValue);
-    setFreeTextValue('');
-  };
+  const { pillData, isLoading, renderPills } = usePills('bubble_id');
 
   return (
     <PillMainContainer backgroundColor="primary900">
@@ -43,13 +34,6 @@ const Pill = () => {
               {renderPills()}
             </StyledColumn>
           )}
-          <StyledBox css={{ padding: '16px 0px' }}>
-            <FreeTextBubble
-              value={freeTextValue}
-              onChangeText={handleFreeTextChange}
-              handlePress={handleFreeTextOnPress}
-            />
-          </StyledBox>
         </StyledColumn>
       </SafeAreaView>
     </PillMainContainer>

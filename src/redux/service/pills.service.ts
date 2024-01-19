@@ -29,11 +29,18 @@ export const mockedPill = {
       type: 'text' as PillBodyType,
       isLast: true,
     },
+    {
+      id: 'bodypill_id_04',
+      user: 'student' as UserType,
+      content: '',
+      type: 'free_text' as PillBodyType,
+      isLast: true,
+    },
   ],
 };
 
 type UserType = 'student' | 'professor';
-type PillBodyType = 'image' | 'text';
+export type PillBodyType = 'image' | 'text' | 'free_text';
 type PillsType = typeof mockedPill;
 
 export const pillsApi = api.injectEndpoints({
