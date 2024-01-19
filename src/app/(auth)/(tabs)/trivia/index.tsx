@@ -8,13 +8,13 @@ import useTrivia from '../../../../hook/useTrivia';
 
 export default function Page() {
   const theme = useTheme();
-  const { currentQuestion, currentOptions, handleSendAnswer,handleChange } = useTrivia();
+  const { currentQuestion, currentOptions, handleSendAnswer, handleChange } = useTrivia();
 
   const handleAnswer = (answer: string) => {
     handleChange(currentQuestion.id, answer);
     handleSendAnswer();
     console.log('enviado', currentQuestion, answer);
-  }
+  };
 
   return (
     <ScrollView
@@ -40,7 +40,11 @@ export default function Page() {
           <AnswerButton
             answer={option.text}
             onPress={handleAnswer}
-            selected={typeof currentQuestion.answer === 'string' ? (currentQuestion.answer === option.text): undefined}
+            selected={
+              typeof currentQuestion.answer === 'string'
+                ? currentQuestion.answer === option.text
+                : undefined
+            }
           />
         ))}
       </StyledColumn>
