@@ -13,7 +13,7 @@ export default function ExploreLayout() {
           flex: 1,
           backgroundColor: theme.primary900,
           paddingTop: insets.top,
-          paddingHorizontal: 24,
+          paddingHorizontal: 12,
         },
       }}
     />

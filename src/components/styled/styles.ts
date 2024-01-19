@@ -14,6 +14,10 @@ interface StyledTextInterface extends StyledPropertiesInterface {
   color?: keyof ThemeColors;
 }
 
+interface StyledLine extends StyledPropertiesInterface {
+  color?: keyof ThemeColors;
+}
+
 export const StyledText = styled(Text)<StyledTextInterface>`
   color: ${(props) => (props.color ? props.theme[props.color] : props.theme.primary900)};
   ${({ variant, theme }) => styledComponent(theme[variant || 'body1'])};
@@ -37,5 +41,13 @@ export const StyledColumn = styled(View)<StyledPropertiesInterface>`
   ${({ css }) => css && styledComponent(css)};
 `;
 export const StyledBox = styled(View)<StyledPropertiesInterface>`
+  ${({ css }) => css && styledComponent(css)};
+`;
+export const StyledLine = styled(View)<StyledLine>`
+  height: 1px;
+  width: 100%;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: ${(props) => (props.color ? props.theme[props.color] : props.theme.primary900)};
   ${({ css }) => css && styledComponent(css)};
 `;
