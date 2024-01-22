@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export enum ComponentVariantType {
   DARK = 'dark',
@@ -19,8 +19,8 @@ export interface MessageProps extends MessageContainerProps {
   isLast?: boolean;
   content: string;
   type: 'image' | 'text';
-  ZoomImageComponent?: () => React.JSX.Element;
 }
+
 export type ToastTypes = 'success' | 'info' | 'error';
 
 export type UserTypes = 'student' | 'professor';

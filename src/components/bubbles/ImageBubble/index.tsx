@@ -1,24 +1,28 @@
-import { Pressable } from "react-native"
-import { StyledBox, StyledColumn } from "../../styled/styles"
-import { ZoomIcon } from "../../../../assets/icons/ZoomIcon"
-import { StyledImageBubble } from "../ChatBubble/styles"
-import { MessageProps } from "../../../utils/constants"
-import { useTheme } from "styled-components/native"
+import { Pressable } from 'react-native';
+import { StyledBox, StyledColumn } from '../../styled/styles';
+import { ZoomIcon } from '../../../../assets/icons/ZoomIcon';
+import { StyledImageBubble } from '../ChatBubble/styles';
+import { MessageProps } from '../../../utils/constants';
+import { useTheme } from 'styled-components/native';
+import useZoomImage from '../../../hook/useZoomImage';
 
-export const ImageBubble = ({user, type, content, isLast, handleOpenImage, ZoomImageComponent }: MessageProps) => {
+export const ImageBubble = ({ user, type, content, isLast }: MessageProps) => {
   const theme = useTheme();
+  const { handleOpenImage, ZoomImageComponent } = useZoomImage({
+    images: [{ url: content }],
+  });
 
   return (
     <StyledColumn>
       <Pressable
-        onPress={handleOpenImage}
+        onPress={() => handleOpenImage(0)}
         style={{
           position: 'absolute',
           top: 8,
           right: 8,
           zIndex: 2,
         }}
-      >         
+      >
         <StyledBox
           css={{
             width: 42,
@@ -41,9 +45,8 @@ export const ImageBubble = ({user, type, content, isLast, handleOpenImage, ZoomI
           height: 200,
           width: 300,
         }}
-        handleOpenImage={handleOpenImage}
       />
-      {ZoomImageComponent && (<ZoomImageComponent />)}
+      <ZoomImageComponent />
     </StyledColumn>
   );
-}
+};

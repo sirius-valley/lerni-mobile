@@ -10,7 +10,12 @@ import { ZoomIcon } from '../../../../assets/icons/ZoomIcon';
 import { Pressable } from 'react-native';
 import { ImageBubble } from '../ImageBubble';
 
-export const ChatBubble = ({ user = 'professor', isLast = true, content, type = 'text', handleOpenImage, ZoomImageComponent }: MessageProps) => {
+export const ChatBubble = ({
+  user = 'professor',
+  isLast = true,
+  content,
+  type = 'text',
+}: MessageProps) => {
   const theme = useTheme();
 
   return (
@@ -31,9 +36,7 @@ export const ChatBubble = ({ user = 'professor', isLast = true, content, type = 
               </TextBubbleContainer>
             );
           case 'image':
-            return (
-              <ImageBubble user={user} content={content} handleOpenImage={handleOpenImage} ZoomImageComponent={ZoomImageComponent} type={type} isLast={isLast} />
-            );
+            return <ImageBubble user={user} content={content} type={type} isLast={isLast} />;
           default:
             return null;
         }
