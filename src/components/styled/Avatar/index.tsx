@@ -11,13 +11,7 @@ export const Avatar = ({ uri, size }: AvatarProps) => {
       source={{
         uri: uri ? uri : 'https://i.pinimg.com/222x/57/70/f0/5770f01a32c3c53e90ecda61483ccb08.jpg',
       }}
-      style={{
-        width: size ? size : 28,
-        height: size ? size : 28,
-        borderRadius: 50,
-        marginTop: 4,
-        marginBottom: 4,
-      }}
+      style={{ width: size ? size : 28, height: size ? size : 28, borderRadius: 50 }}
     />
   );
 };
