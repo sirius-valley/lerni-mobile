@@ -3,6 +3,7 @@ import styled, { css as styledComponent } from 'styled-components';
 import { CSSProperties, jsToCss } from '../../../utils/utils';
 import { DefaultTheme } from 'styled-components/native';
 import { ButtonVariant } from '../../../utils/constants';
+import { rgba } from 'polished';
 
 type styleProps = {
   [key: string]: string | number | { [key in string]: string | number };
@@ -33,8 +34,8 @@ const getButtonStyles = (theme: DefaultTheme): StyleByOptionsProps => {
       },
       [ButtonState.DISABLED]: {
         border: 'none',
-        backgroundColor: theme.gray300,
-        color: theme.gray500,
+        backgroundColor: rgba(theme.primary500, 0.2),
+        color: theme.blue500,
       },
     },
     dark: {
