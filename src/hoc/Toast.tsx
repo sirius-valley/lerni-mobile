@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect } from 'react';
+import { useEffect } from 'react';
 import { View } from 'react-native';
 import { useLDispatch, useLSelector } from '../redux/hooks';
 import { resetToast } from '../redux/slice/utils.slice';

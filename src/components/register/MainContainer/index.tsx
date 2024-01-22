@@ -1,6 +1,6 @@
 import React from 'react';
 import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
-import { StyledBox, StyledColumn, StyledSafeAreaView } from '../../styled/styles';
+import { StyledBox, StyledColumn } from '../../styled/styles';
 import { useTheme } from 'styled-components/native';
 
 interface MainContainerInterface {
