@@ -37,8 +37,6 @@ export const ChatBubble = ({
             );
           case 'image':
             return <ImageBubble user={user} content={content} type={type} isLast={isLast} />;
-          default:
-            return null;
         }
       })()}
       {isLast && <Avatar />}

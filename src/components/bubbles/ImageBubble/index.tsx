@@ -8,34 +8,13 @@ import useZoomImage from '../../../hook/useZoomImage';
 
 export const ImageBubble = ({ user, type, content, isLast }: MessageProps) => {
   const theme = useTheme();
-  const { handleOpenImage, ZoomImageComponent } = useZoomImage({
+  const { handleOpenImage, ZoomImageComponent, ZoomButtonComponent } = useZoomImage({
     images: [{ url: content }],
   });
 
   return (
     <StyledColumn>
-      <Pressable
-        onPress={() => handleOpenImage(0)}
-        style={{
-          position: 'absolute',
-          top: 8,
-          right: 8,
-          zIndex: 2,
-        }}
-      >
-        <StyledBox
-          css={{
-            width: 42,
-            height: 42,
-            borderRadius: 12,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0,0,0,0.5)',
-          }}
-        >
-          <ZoomIcon size={24} color={theme.white} />
-        </StyledBox>
-      </Pressable>
+      <ZoomButtonComponent />
       <StyledImageBubble
         user={user}
         source={{
