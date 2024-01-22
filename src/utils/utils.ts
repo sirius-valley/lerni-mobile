@@ -1,4 +1,5 @@
-import { ButtonVariant, ComponentVariantType } from './constants';
+import { rgba } from 'polished';
+import { ButtonVariant } from './constants';
 import { theme } from './theme';
 
 // type CSSProperties = { [key: string]: string | number};
@@ -26,7 +27,7 @@ export const getStyleColorByVariant = (componentVariant: ButtonVariant) => {
     case 'primary':
       return theme.primary500;
     case 'dark':
-      return theme.primary800;
+      return rgba(theme.primary800, 0.2);
     case 'red':
       return theme.red500;
     default:
