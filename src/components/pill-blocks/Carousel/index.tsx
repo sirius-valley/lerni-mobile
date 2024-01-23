@@ -7,7 +7,6 @@ import { LabeledSend } from '../../bubbles/LabeledSend';
 
 type CarouselItem = {
   id: string;
-  title: string;
   description: string;
   image: string;
   selected?: boolean;
@@ -51,7 +50,6 @@ const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps)
             selected={item.selected}
             handleOpenImage={() => handleOpenImage(index)}
             handleSelect={() => onSelect(item.id)}
-            title={item.title}
             description={item.description}
             id={item.id}
             disabled={sealed}
@@ -59,7 +57,7 @@ const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps)
           />
         ))}
       </StyledCarouselContainer>
-      <StyledRow style={{ alignItems: 'center', gap: 6 }}>
+      <StyledRow style={{ alignItems: 'center', gap: 6, paddingHorizontal: 24 }}>
         <LabeledSend
           onPress={onPress}
           status={sealed ? 'sent' : items.some((item) => item.selected) ? 'selected' : 'default'}
