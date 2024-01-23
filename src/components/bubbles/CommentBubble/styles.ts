@@ -7,5 +7,5 @@ export const StyledCommentBubble = styled.Pressable`
   align-items: flex-start;
   gap: 2.382px;
   border-radius: 12.705px 12.705px 12.705px 1.588px;
-  background: ${props => props.theme.primary800}
+  background: ${(props) => props.theme.primary800};
 `;

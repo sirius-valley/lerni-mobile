@@ -1,6 +1,6 @@
-import { Avatar } from "../../common/Avatar";
-import { StyledRow, StyledText } from "../../styled/styles";
-import { StyledCommentBubble } from "./styles";
+import { Avatar } from '../../common/Avatar';
+import { StyledRow, StyledText } from '../../styled/styles';
+import { StyledCommentBubble } from './styles';
 
 interface CommentBubbleProps {
   author: string;
@@ -8,24 +8,28 @@ interface CommentBubbleProps {
   comment: string;
 }
 
-export const CommentBubble = ({author, avatar, comment}: CommentBubbleProps) => {
+export const CommentBubble = ({ author, avatar, comment }: CommentBubbleProps) => {
   return (
     <StyledRow
       style={{
         gap: 4.764,
         alignSelf: 'stretch',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
       }}
     >
       <Avatar uri={avatar} size={23.822} borderRadius={23.822} />
-      <StyledCommentBubble 
+      <StyledCommentBubble
         style={{
-          alignContent: "flex-start"
+          alignContent: 'flex-start',
         }}
       >
-        <StyledText style={{fontSize: 14, fontFamily:'Roboto-Bold', fontWeight: '700'}}>{author}</StyledText>
-        <StyledText variant="body2" style={{color: 'white'}}>{comment}</StyledText>
+        <StyledText style={{ fontSize: 14, fontFamily: 'Roboto-Bold', fontWeight: '700' }}>
+          {author}
+        </StyledText>
+        <StyledText variant="body2" style={{ color: 'white' }}>
+          {comment}
+        </StyledText>
       </StyledCommentBubble>
     </StyledRow>
-  )
-}
+  );
+};

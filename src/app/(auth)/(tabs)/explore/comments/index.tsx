@@ -1,12 +1,12 @@
-import { ScrollView } from "react-native"
-import { StyledBox, StyledColumn, StyledRow } from "../../../../../components/styled/styles"
-import { useTheme } from "styled-components/native"
-import { useGetComments } from "../../../../../hook/useGetComments";
-import { CommentBubble } from "../../../../../components/bubbles/CommentBubble";
+import { ScrollView } from 'react-native';
+import { StyledBox, StyledColumn, StyledRow } from '../../../../../components/styled/styles';
+import { useTheme } from 'styled-components/native';
+import { useGetComments } from '../../../../../hook/useGetComments';
+import { CommentBubble } from '../../../../../components/bubbles/CommentBubble';
 
 const Page = () => {
   const theme = useTheme();
-  const {comments} = useGetComments()
+  const { comments } = useGetComments();
 
   return (
     <StyledBox
@@ -24,16 +24,19 @@ const Page = () => {
               alignItems: 'center',
             }}
           >
-            {
-              comments?.map((comment) => (
-                <CommentBubble author={comment.author} comment={comment.comment} avatar={comment.avatar} key={comment.id} />
-              ))
-            }
+            {comments?.map((comment) => (
+              <CommentBubble
+                author={comment.author}
+                comment={comment.comment}
+                avatar={comment.avatar}
+                key={comment.id}
+              />
+            ))}
           </StyledRow>
         </StyledColumn>
       </ScrollView>
-    </StyledBox>       
-  )
-}
+    </StyledBox>
+  );
+};
 
 export default Page;
