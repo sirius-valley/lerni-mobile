@@ -6,6 +6,7 @@ import Spinner from '../../common/Spinner';
 import { CSSProperties, getStyleColorByVariant } from '../../../utils/utils';
 import { IconInterface } from '../../../../assets/icons/types';
 import { ThemeColors } from '../../../utils/theme';
+import { rgba } from 'polished';
 
 export interface ButtonProps {
   onPress: () => void;
@@ -60,7 +61,14 @@ const Button = ({
         <Spinner color={getContrastColor()} size={'small'} />
       ) : (
         <>
-          {Icon && <Icon color={iconColor ? theme[iconColor] : getContrastColor()} size={18} />}
+          {Icon && (
+            <Icon
+              color={
+                disabled ? rgba('white', 0.2) : iconColor ? theme[iconColor] : getContrastColor()
+              }
+              size={18}
+            />
+          )}
           {children && (
             <StyledTextButton type={variant} state={isDisabled} pressed={false}>
               {children}

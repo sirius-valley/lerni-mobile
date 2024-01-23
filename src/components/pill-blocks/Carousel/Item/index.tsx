@@ -11,7 +11,6 @@ interface CarouselItemProps {
   image: string;
   selected?: boolean;
   handleOpenImage: () => void;
-  title: string;
   description: string;
   handleSelect: () => void;
   id: string;
@@ -25,7 +24,6 @@ const CarouselItem = ({
   selected,
   handleSelect,
   handleOpenImage,
-  title,
   description,
   disabled,
   sealed,
@@ -82,10 +80,9 @@ const CarouselItem = ({
         {!sealed && (
           <Checkbox disabled={disabled} checked={selected ? true : false} onPress={handleSelect} />
         )}
-        <View style={{ display: 'flex', flexDirection: 'column' }}>
-          <StyledText style={{ color: theme.gray100 }} variant={'h4'}>
-            {title}
-          </StyledText>
+        <View
+          style={{ display: 'flex', flexDirection: 'column', maxHeight: 40, maxWidth: width * 0.9 }}
+        >
           <StyledText style={{ color: theme.gray100 }} variant={'h4'}>
             {description}
           </StyledText>
