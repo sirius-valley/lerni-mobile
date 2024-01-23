@@ -1,6 +1,6 @@
 import { StyledCarouselItemContainer, StyledImageCarousel } from './styles';
-import { Pressable, View } from 'react-native';
-import { StyledBox, StyledText } from '../../../styled/styles';
+import { Pressable } from 'react-native';
+import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../../styled/styles';
 import { useState } from 'react';
 import Checkbox from '../../Checkbox';
 import { ZoomIcon } from '../../../../../assets/icons/ZoomIcon';
@@ -76,18 +76,16 @@ const CarouselItem = ({
           }}
         />
       </StyledBox>
-      <View style={{ display: 'flex', flexDirection: 'row', gap: 8 }}>
+      <StyledRow style={{ gap: 8 }}>
         {!sealed && (
           <Checkbox disabled={disabled} checked={selected ? true : false} onPress={handleSelect} />
         )}
-        <View
-          style={{ display: 'flex', flexDirection: 'column', maxHeight: 40, maxWidth: width * 0.9 }}
-        >
+        <StyledColumn style={{ maxHeight: 40, maxWidth: width * 0.9 }}>
           <StyledText style={{ color: theme.gray100 }} variant={'h4'}>
             {description}
           </StyledText>
-        </View>
-      </View>
+        </StyledColumn>
+      </StyledRow>
     </StyledCarouselItemContainer>
   );
 };
