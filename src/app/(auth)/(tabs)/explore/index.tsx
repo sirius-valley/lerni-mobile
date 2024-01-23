@@ -10,9 +10,11 @@ import SearchIcon from '../../../../../assets/icons/SearchIcon';
 import ProgramCard from '../../../../components/program/ProgramCard';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ProgramCardStructure, mockedProgramCardsData, programCardsStructure } from './utils';
+import { useRouter } from 'expo-router';
 
 const Page = () => {
   const theme = useTheme();
+  const router = useRouter();
 
   return (
     <StyledBox
@@ -52,7 +54,7 @@ const Page = () => {
                       {label}
                     </StyledText>
                     {mockedProgramCardsData[status].length > 3 && (
-                      <Pressable onPress={() => alert('Ver más ')}>
+                      <Pressable onPress={() => router.replace('/explore/comments')}>
                         <StyledText
                           css={{
                             color: theme.gray300,
