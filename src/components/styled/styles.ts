@@ -37,3 +37,11 @@ export const StyledColumn = styled(View)<StyledPropertiesInterface>`
 export const StyledBox = styled(View)<StyledPropertiesInterface>`
   ${({ css }) => css && styledComponent(css)};
 `;
+
+export const StyledLine = styled(View)`
+  height: 1px;
+  width: 100%;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: #828282;
+`;  

@@ -3,6 +3,7 @@ import { StyledBox, StyledColumn, StyledRow } from '../../../../../components/st
 import { useTheme } from 'styled-components/native';
 import { useGetComments } from '../../../../../hook/useGetComments';
 import { CommentBubble } from '../../../../../components/bubbles/CommentBubble';
+import { Header } from '../../../../../components/common/header';
 
 const Page = () => {
   const theme = useTheme();
@@ -15,13 +16,17 @@ const Page = () => {
         height: '100%',
         paddingTop: 20,
       }}
-    >
-      <ScrollView>
-        <StyledColumn css={{ gap: 24 }}>
-          <StyledRow
+    > 
+      <StyledColumn css={{ gap: 16, marginBottom: 90.65}}>
+      <Header title='Comentarios' />
+        <ScrollView>
+          <StyledColumn
             css={{
               justifyContent: 'space-between',
               alignItems: 'center',
+              gap: 8,
+              paddingTop: 9.53,
+              paddingBottom: 9.53,
             }}
           >
             {comments?.map((comment) => (
@@ -32,9 +37,9 @@ const Page = () => {
                 key={comment.id}
               />
             ))}
-          </StyledRow>
-        </StyledColumn>
-      </ScrollView>
+          </StyledColumn>
+        </ScrollView>
+      </StyledColumn>
     </StyledBox>
   );
 };
