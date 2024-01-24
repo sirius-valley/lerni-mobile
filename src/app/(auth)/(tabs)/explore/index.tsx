@@ -10,10 +10,14 @@ import SearchIcon from '../../../../../assets/icons/SearchIcon';
 import ProgramCard from '../../../../components/program/ProgramCard';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ProgramCardStructure, mockedProgramCardsData, programCardsStructure } from './utils';
+import SkeletonHome from '../../../../components/home/HomeSkeleton';
 
 const Page = () => {
   const theme = useTheme();
-
+  const isLoading = true;
+  if (isLoading) {
+    return <SkeletonHome />;
+  }
   return (
     <StyledBox
       css={{
