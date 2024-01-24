@@ -2,11 +2,11 @@ import { SafeAreaView, View, Text } from 'react-native';
 import styled, { css as styledComponent } from 'styled-components';
 import { CSSProperties } from '../../utils/utils';
 
-interface StyledPropertiesInterface {
+export interface StyledPropertiesInterface {
   css?: CSSProperties;
 }
 
-type TextVariant = 'h1' | 'h2' | 'h3' | 'body1' | 'body2' | 'body3';
+type TextVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'body1' | 'body2' | 'body3';
 
 interface StyledTextInterface extends StyledPropertiesInterface {
   variant?: TextVariant;

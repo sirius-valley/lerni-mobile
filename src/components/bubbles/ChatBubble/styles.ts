@@ -1,8 +1,9 @@
 import styled from 'styled-components/native';
+import { MessageContainerProps, MessageProps } from '../../../utils/constants';
 import { Dimensions } from 'react-native';
 import { ChatBubbleProps } from '.';
 
-export const StyledImageBubble = styled.Image<ChatBubbleProps>`
+export const StyledImageBubble = styled.Image<MessageContainerProps>`
   display: flex;
   justify-content: center;
   align-items: ${(props) => {
@@ -21,7 +22,7 @@ export const StyledImageBubble = styled.Image<ChatBubbleProps>`
   }};
 `;
 
-export const MessageContainer = styled.View<ChatBubbleProps>`
+export const MessageContainer = styled.View<MessageContainerProps>`
   display: flex;
   margin: 4px 0px;
   width: ${Dimensions.get('window').width * 0.9}px;
@@ -36,7 +37,7 @@ export const MessageContainer = styled.View<ChatBubbleProps>`
   }};
 `;
 
-export const TextBubbleContainer = styled.View<ChatBubbleProps>`
+export const TextBubbleContainer = styled.View<MessageContainerProps>`
   display: flex;
   padding: 12px 18px;
   flex-direction: column;

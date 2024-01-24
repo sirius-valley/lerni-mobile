@@ -42,6 +42,12 @@ export const theme = {
     fontStyle: 'normal',
     fontWeight: 600,
   },
+  h4: {
+    fontFamily: 'Roboto-Bold',
+    fontSize: '16px',
+    fontStyle: 'normal',
+    fontWeight: 700,
+  },
   body1: {
     fontFamily: 'Roboto-Regular',
     fontSize: '16px',
@@ -63,4 +69,4 @@ export const theme = {
 };
 
 export type MyTheme = typeof theme;
-export type ThemeColors = Omit<MyTheme, 'h1' | 'h2' | 'h3' | 'body1' | 'body2' | 'body3'>;
+export type ThemeColors = Omit<MyTheme, 'h1' | 'h2' | 'h3' | 'h4' | 'body1' | 'body2' | 'body3'>;

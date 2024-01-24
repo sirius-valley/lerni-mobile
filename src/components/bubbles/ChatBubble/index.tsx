@@ -1,23 +1,21 @@
 import { useTheme } from 'styled-components/native';
-import { StyledText } from '../styles';
+import { MessageProps } from '../../../utils/constants';
+import { StyledBox, StyledColumn, StyledText } from '../../styled/styles';
 import { MessageContainer } from './styles';
 import { TextBubbleContainer } from './styles';
 import { Avatar } from '../../common/Avatar';
 import { StyledImageBubble } from './styles';
-
-export interface ChatBubbleProps {
-  user?: 'student' | 'professor';
-  isLast?: boolean;
-  content?: string;
-  type?: 'image' | 'text';
-}
+import useZoomImage from '../../../hook/useZoomImage';
+import { ZoomIcon } from '../../../../assets/icons/ZoomIcon';
+import { Pressable } from 'react-native';
+import { ImageBubble } from '../ImageBubble';
 
 export const ChatBubble = ({
   user = 'professor',
   isLast = true,
   content,
-  type,
-}: ChatBubbleProps) => {
+  type = 'text',
+}: MessageProps) => {
   const theme = useTheme();
 
   return (
@@ -38,20 +36,7 @@ export const ChatBubble = ({
               </TextBubbleContainer>
             );
           case 'image':
-            return (
-              <StyledImageBubble
-                user={user}
-                source={{
-                  uri: content,
-                }}
-                style={{
-                  height: 200,
-                  width: 300,
-                }}
-              />
-            );
-          default:
-            return null;
+            return <ImageBubble user={user} content={content} type={type} isLast={isLast} />;
         }
       })()}
       {isLast && <Avatar />}
