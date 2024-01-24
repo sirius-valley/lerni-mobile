@@ -59,7 +59,25 @@ export const pillsApi = api.injectEndpoints({
         body: { content, contentType },
       }),
     }),
+
+    pillById: builder.query<any, any>({
+      query: (id) => ({
+        url: `pill/${id}`,
+        method: 'GET',
+      }),
+    }),
+    answer: builder.mutation<any, any>({
+      query: (id) => ({
+        url: `pill/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetPillByIdMutation, useAnswerPillMutation } = pillsApi;
+export const {
+  useGetPillByIdMutation,
+  useAnswerPillMutation,
+  usePillByIdQuery,
+  useAnswerMutation,
+} = pillsApi;

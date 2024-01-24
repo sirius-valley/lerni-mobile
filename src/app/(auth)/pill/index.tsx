@@ -1,40 +1,30 @@
-import React from 'react';
-import PillHeader from '../../../components/pill/PillHeader';
-import { StyledColumn } from '../../../components/styled/styles';
-import Spinner from '../../../components/common/Spinner';
-import { SafeAreaView } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyledText } from '../../../components/styled/styles';
+import { SafeAreaView, ScrollView } from 'react-native';
 import PillMainContainer from '../../../components/pill/PillMainContainer';
-import usePills from '../../../hooks/usePills';
+import usePill from '../../../hooks/usePill';
 
 const Pill = () => {
-  const { pillData, isLoading, renderPills } = usePills('bubble_id');
+  const { blocks, AnswerBubble, renderThread: RenderThread } = usePill('bubble_id');
+
+  useEffect(() => {
+    console.log('bubble blocks ', blocks);
+  }, [blocks]);
 
   return (
     <PillMainContainer backgroundColor="primary900">
       <SafeAreaView>
-        <StyledColumn
-          css={{
-            height: '100%',
-            justifyContent: 'space-between',
-            paddingLeft: '24px',
-            paddingRight: '24px',
+        <StyledText variant={'h1'} css={{ color: 'white' }}>
+          Pill
+        </StyledText>
+        <ScrollView
+          contentContainerStyle={{
+            paddingLeft: 24,
+            paddingRight: 24,
           }}
         >
-          {isLoading ? (
-            <StyledColumn css={{ height: '100%', justifyContent: 'center' }}>
-              <Spinner />
-            </StyledColumn>
-          ) : (
-            <StyledColumn>
-              <PillHeader
-                title={pillData?.pillHeader?.title ?? ''}
-                pillNumber={pillData?.pillHeader?.pillNumber ?? 1}
-                percentageDone={pillData?.pillHeader?.percentageDone ?? 0}
-              />
-              {renderPills()}
-            </StyledColumn>
-          )}
-        </StyledColumn>
+          <RenderThread />
+        </ScrollView>
       </SafeAreaView>
     </PillMainContainer>
   );

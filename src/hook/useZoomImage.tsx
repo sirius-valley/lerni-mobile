@@ -20,7 +20,7 @@ const useZoomImage = ({ images }: ZoomImageProps) => {
     setOpenImage(index);
   };
 
-  const ZoomButtonComponent = (size?: number, color?: ThemeColors) => {
+  const ZoomButtonComponent = () => {
     const theme = useTheme();
 
     return (

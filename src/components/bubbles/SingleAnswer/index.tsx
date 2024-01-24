@@ -12,7 +12,8 @@ interface SingleAnswerProps {
   sealed: boolean;
 }
 
-export const SingleAnswer = ({ options, onPress, sealed }: SingleAnswerProps) => {
+const SingleAnswer = ({ options, onPress, sealed }: SingleAnswerProps) => {
+  console.log(options);
   return (
     <StyledChoiceMainContainer>
       {options.map((option) => (
@@ -33,3 +34,5 @@ export const SingleAnswer = ({ options, onPress, sealed }: SingleAnswerProps) =>
     </StyledChoiceMainContainer>
   );
 };
+
+export default SingleAnswer;

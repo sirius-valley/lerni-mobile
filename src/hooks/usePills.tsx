@@ -8,8 +8,8 @@ type UserType = 'student' | 'professor';
 type PillData = typeof mockedPill;
 
 const usePills = (id: string) => {
-  const [pillData, setPillData] = useState<PillData>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [pillData, setPillData] = useState<PillData | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [freeTextValue, setFreeTextValue] = useState('');
 

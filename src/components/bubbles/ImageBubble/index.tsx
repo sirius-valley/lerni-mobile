@@ -1,15 +1,16 @@
-import { Pressable } from 'react-native';
-import { StyledBox, StyledColumn } from '../../styled/styles';
-import { ZoomIcon } from '../../../../assets/icons/ZoomIcon';
+import { StyledColumn } from '../../styled/styles';
 import { StyledImageBubble } from '../ChatBubble/styles';
-import { MessageProps } from '../../../utils/constants';
-import { useTheme } from 'styled-components/native';
+import { UserTypes } from '../../../utils/constants';
 import useZoomImage from '../../../hook/useZoomImage';
 
-export const ImageBubble = ({ user, type, content, isLast }: MessageProps) => {
-  const theme = useTheme();
-  const { handleOpenImage, ZoomImageComponent, ZoomButtonComponent } = useZoomImage({
-    images: [{ url: content }],
+interface ImageBubbleProps {
+  user: UserTypes;
+  url: string;
+}
+
+const ImageBubble = ({ user, url }: ImageBubbleProps) => {
+  const { ZoomImageComponent, ZoomButtonComponent } = useZoomImage({
+    images: [{ url: url }],
   });
 
   return (
@@ -18,7 +19,7 @@ export const ImageBubble = ({ user, type, content, isLast }: MessageProps) => {
       <StyledImageBubble
         user={user}
         source={{
-          uri: content,
+          uri: url,
         }}
         style={{
           height: 200,
@@ -29,3 +30,5 @@ export const ImageBubble = ({ user, type, content, isLast }: MessageProps) => {
     </StyledColumn>
   );
 };
+
+export default ImageBubble;
