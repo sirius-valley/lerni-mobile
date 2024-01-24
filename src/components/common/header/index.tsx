@@ -22,7 +22,7 @@ export const Header = ({ title, onPress }: HeaderProps) => {
           paddingLeft: 2,
           paddingRight: 2,
         }}
-      > 
+      >
         <Pressable onPress={onPress}>
           <ChevronLeftIcon color={theme.gray400} />
         </Pressable>

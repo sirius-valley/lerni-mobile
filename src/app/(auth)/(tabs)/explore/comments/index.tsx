@@ -15,7 +15,7 @@ const Page = () => {
 
   const handleOnPress = () => {
     router.back();
-  }
+  };
 
   return (
     <StyledBox

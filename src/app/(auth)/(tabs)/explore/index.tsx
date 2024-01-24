@@ -18,13 +18,13 @@ import { useEffect, useState } from 'react';
 const Page = () => {
   const theme = useTheme();
   const router = useRouter();
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 700)
-  }, [])
+    }, 700);
+  }, []);
 
   if (loading) {
     return <SkeletonHome />;

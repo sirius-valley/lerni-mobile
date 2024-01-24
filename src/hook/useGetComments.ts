@@ -49,18 +49,18 @@ export const useGetComments = (programId?: string) => {
       id: '6',
     },
   ];
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-    useEffect(() => {
-      try {
-        setLoading(true);
-        setError(false);
-        // getcomments -- 
-        setLoading(false);
-      } catch (error) {
-        setError(true);
-        setLoading(false);
-      }
-    }, [programId]);
-    return { comments, loading, error}
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    try {
+      setLoading(true);
+      setError(false);
+      // getcomments --
+      setLoading(false);
+    } catch (error) {
+      setError(true);
+      setLoading(false);
+    }
+  }, [programId]);
+  return { comments, loading, error };
 };
