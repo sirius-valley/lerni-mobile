@@ -4,10 +4,18 @@ import { useTheme } from 'styled-components/native';
 import { useGetComments } from '../../../../../hook/useGetComments';
 import { CommentBubble } from '../../../../../components/bubbles/CommentBubble';
 import { Header } from '../../../../../components/common/header';
+import { useRef } from 'react';
+import { useRouter } from 'expo-router';
 
 const Page = () => {
   const theme = useTheme();
+  const router = useRouter();
   const { comments } = useGetComments();
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  const handleOnPress = () => {
+    router.back();
+  }
 
   return (
     <StyledBox
@@ -16,17 +24,24 @@ const Page = () => {
         height: '100%',
         paddingTop: 20,
       }}
-    > 
-      <StyledColumn css={{ gap: 16, marginBottom: 90.65}}>
-      <Header title='Comentarios' />
-        <ScrollView>
+    >
+      <StyledColumn css={{ gap: 16, marginBottom: 60 }}>
+        <Header title="Comentarios" onPress={handleOnPress} />
+        <ScrollView
+          ref={scrollViewRef}
+          onContentSizeChange={() => {
+            setTimeout(() => {
+              scrollViewRef.current?.scrollToEnd({ animated: true });
+            }, 100);
+          }}
+        >
           <StyledColumn
             css={{
               justifyContent: 'space-between',
               alignItems: 'center',
               gap: 8,
-              paddingTop: 9.53,
-              paddingBottom: 9.53,
+              paddingTop: 10,
+              paddingBottom: 10,
             }}
           >
             {comments?.map((comment) => (

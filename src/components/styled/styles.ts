@@ -44,4 +44,4 @@ export const StyledLine = styled(View)`
   border-bottom-width: 1px;
   border-style: solid;
   border-color: #828282;
-`;  
+`;

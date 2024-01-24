@@ -13,15 +13,23 @@ import { ProgramCardStructure, mockedProgramCardsData, programCardsStructure } f
 import { useRouter } from 'expo-router';
 
 import SkeletonHome from '../../../../components/home/HomeSkeleton';
+import { useEffect, useState } from 'react';
 
 const Page = () => {
   const theme = useTheme();
   const router = useRouter();
-  const isLoading = true;
-  
-  if (isLoading) {
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 700)
+  }, [])
+
+  if (loading) {
     return <SkeletonHome />;
   }
+
   return (
     <StyledBox
       css={{
@@ -60,7 +68,7 @@ const Page = () => {
                       {label}
                     </StyledText>
                     {mockedProgramCardsData[status].length > 3 && (
-                      <Pressable onPress={() => router.replace('/explore/comments')}>
+                      <Pressable onPress={() => router.push('/explore/comments')}>
                         <StyledText
                           css={{
                             color: theme.gray300,
