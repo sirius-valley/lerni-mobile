@@ -4,12 +4,13 @@ import { StyledBox, StyledColumn, StyledText } from '../../styled/styles';
 import { Image } from 'react-native';
 import * as Progress from 'react-native-progress';
 import CheckIcon from '../../../../assets/icons/CheckIcon';
+import { LockIcon } from '../../../../assets/icons/LockIcon';
 
 interface ProgramCardProps {
   id: string;
   title: string;
   imgUrl: string;
-  status: 'in_progress' | 'completed' | 'not_started';
+  status: 'in_progress' | 'completed' | 'not_started' | 'locked';
   progress?: number;
 }
 
@@ -25,11 +26,16 @@ const ProgramCard = ({ id, title, imgUrl, status, progress }: ProgramCardProps) 
         alignItems: 'center',
       }}
     >
-      <StyledBox>
+      <StyledBox css={{ opacity: status === 'locked' ? 0.3 : 1 }}>
         <Image style={{ width: 109, height: 109, borderRadius: 6 }} source={{ uri: imgUrl }} />
         {status === 'completed' && (
           <StyledBox css={{ position: 'absolute', bottom: 2, right: 2 }}>
             <CheckIcon />
+          </StyledBox>
+        )}
+        {status === 'locked' && (
+          <StyledBox css={{ position: 'absolute', bottom: 2, right: 2 }}>
+            <LockIcon />
           </StyledBox>
         )}
       </StyledBox>

@@ -1,4 +1,4 @@
-export type Status = 'in_progress' | 'completed' | 'not_started';
+export type Status = 'in_progress' | 'completed' | 'not_started' | 'locked';
 
 export interface ProgramCardStructure {
   status: Status;
@@ -32,6 +32,7 @@ export type MockedProgramCards = {
   in_progress: Card[];
   completed: Card[];
   not_started: Card[];
+  locked: Card[];
 };
 
 export const mockedProgramCardsData: MockedProgramCards = {
@@ -87,6 +88,18 @@ export const mockedProgramCardsData: MockedProgramCards = {
       id: '204',
       title: 'Pending ',
       image: 'pending_assignment_image.png',
+    },
+  ],
+  locked: [
+    {
+      id: '015',
+      title: 'Project locked',
+      image: 'project_a_image.jpg',
+    },
+    {
+      id: '016',
+      title: 'Task locked',
+      image: 'task_b_image.png',
     },
   ],
 };

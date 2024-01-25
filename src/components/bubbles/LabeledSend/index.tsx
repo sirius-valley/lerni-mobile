@@ -3,6 +3,7 @@ import { StyledRow, StyledText } from '../../styled/styles';
 import Button from '../../styled/Button';
 import SendIcon from '../../../../assets/icons/SendIcon';
 import { useMemo } from 'react';
+import { rgba } from 'polished';
 
 interface SendComponentProps {
   onPress: () => void;
@@ -23,7 +24,7 @@ export const LabeledSend = ({ onPress, status }: SendComponentProps) => {
   }, [status]);
 
   return (
-    <StyledRow style={{ justifyContent: 'center', alignItems: 'center', gap: 6 }}>
+    <StyledRow style={{ justifyContent: 'flex-end', alignItems: 'center', gap: 6 }}>
       <StyledText
         variant="body2"
         style={{ color: theme.gray300, alignContent: 'flex-end', fontSize: 12 }}
@@ -34,7 +35,7 @@ export const LabeledSend = ({ onPress, status }: SendComponentProps) => {
         variant="primary"
         onPress={onPress}
         icon={SendIcon}
-        iconColor="white"
+        iconColor={'white'}
         css={{
           width: '42px',
           height: '42px',
