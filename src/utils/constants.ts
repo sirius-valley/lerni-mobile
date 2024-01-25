@@ -24,3 +24,5 @@ export interface MessageProps extends MessageContainerProps {
 export type ToastTypes = 'success' | 'info' | 'error';
 
 export type UserTypes = 'student' | 'professor';
+
+export type TriviaStatusTypes = 'not_started' | 'approved' | 'disapproved';
