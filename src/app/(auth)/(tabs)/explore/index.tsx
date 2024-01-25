@@ -11,10 +11,11 @@ import ProgramCard from '../../../../components/program/ProgramCard';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ProgramCardStructure, mockedProgramCardsData, programCardsStructure } from './utils';
 import { useRouter } from 'expo-router';
+import SkeletonHome from '../../../../components/home/HomeSkeleton';
 
 const Page = () => {
-  const theme = useTheme();
   const router = useRouter();
+  const theme = useTheme();
 
   const handleGoToProgram = (id: string) =>
     router.push({
@@ -24,6 +25,10 @@ const Page = () => {
       },
     });
 
+  const isLoading = true;
+  if (isLoading) {
+    return <SkeletonHome />;
+  }
   return (
     <StyledBox
       css={{
