@@ -46,7 +46,11 @@ const IntroModal = ({ handleOnClose }: IntroModalProps) => {
               Ya casi! &#x1F64C;&#x1F3FB;
             </StyledText>
             <StyledText variant="body1" css={{ color: theme.gray100 }}>
-              Para acceder al contenido, es necesario que completes la introducción primero.
+              Para acceder al contenido, es necesario que completes la{' '}
+              <StyledText css={{ fontFamily: 'Roboto-Bold', color: theme.gray100 }}>
+                introducción{' '}
+              </StyledText>
+              primero.
             </StyledText>
           </StyledColumn>
         </StyledColumn>
