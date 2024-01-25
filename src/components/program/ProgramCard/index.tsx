@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTheme } from 'styled-components/native';
 import { StyledBox, StyledColumn, StyledText } from '../../styled/styles';
-import { Image } from 'react-native';
+import { Pressable } from 'react-native';
 import * as Progress from 'react-native-progress';
-import CheckIcon from '../../../../assets/icons/CheckIcon';
+import ProgramImage from '../ProgramImage';
 
 interface ProgramCardProps {
   id: string;
@@ -11,47 +11,45 @@ interface ProgramCardProps {
   imgUrl: string;
   status: 'in_progress' | 'completed' | 'not_started';
   progress?: number;
+  onPress?: () => void;
 }
 
-const ProgramCard = ({ id, title, imgUrl, status, progress }: ProgramCardProps) => {
+const ProgramCard = ({ id, title, imgUrl, status, progress, onPress }: ProgramCardProps) => {
   const theme = useTheme();
+  const handleOnPress = () => onPress && onPress();
+
   return (
-    <StyledColumn
-      key={id}
-      css={{
-        width: 109,
-        height: 145,
-        gap: 6,
-        alignItems: 'center',
-      }}
-    >
-      <StyledBox>
-        <Image style={{ width: 109, height: 109, borderRadius: 6 }} source={{ uri: imgUrl }} />
-        {status === 'completed' && (
-          <StyledBox css={{ position: 'absolute', bottom: 2, right: 2 }}>
-            <CheckIcon />
+    <Pressable onPress={handleOnPress}>
+      <StyledColumn
+        key={id}
+        css={{
+          width: 109,
+          height: 145,
+          gap: 6,
+          alignItems: 'center',
+        }}
+      >
+        <ProgramImage status={status} imgUrl={imgUrl} />
+
+        <StyledText variant="body1" css={{ color: theme.gray100 }}>
+          {title}
+        </StyledText>
+
+        {status === 'in_progress' && (
+          <StyledBox css={{ width: '100%', gap: 10 }}>
+            <Progress.Bar
+              unfilledColor={theme.gray600}
+              color={theme.primary400}
+              height={6}
+              progress={progress}
+              borderWidth={0}
+              width={null}
+              borderRadius={20}
+            />
           </StyledBox>
         )}
-      </StyledBox>
-
-      <StyledText variant="body1" css={{ color: theme.gray100 }}>
-        {title}
-      </StyledText>
-
-      {status === 'in_progress' && (
-        <StyledBox css={{ width: '100%', gap: 10 }}>
-          <Progress.Bar
-            unfilledColor={theme.gray600}
-            color={theme.primary400}
-            height={6}
-            progress={progress}
-            borderWidth={0}
-            width={null}
-            borderRadius={20}
-          />
-        </StyledBox>
-      )}
-    </StyledColumn>
+      </StyledColumn>
+    </Pressable>
   );
 };
 
