@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native';
 import React from 'react';
 import { StyledBox, StyledText } from '../../styled/styles';
 import { useTheme } from 'styled-components';
