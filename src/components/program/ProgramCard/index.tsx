@@ -1,10 +1,13 @@
 import React from 'react';
 import { useTheme } from 'styled-components/native';
 import { StyledBox, StyledColumn, StyledText } from '../../styled/styles';
-import { Image } from 'react-native';
+import { Image, Pressable } from 'react-native';
 import * as Progress from 'react-native-progress';
 import CheckIcon from '../../../../assets/icons/CheckIcon';
 import { LockIcon } from '../../../../assets/icons/LockIcon';
+import { setModalOpen } from '../../../redux/slice/utils.slice';
+import { ModalTypeEnum } from '../../../utils/utils';
+import { useDispatch } from 'react-redux';
 
 interface ProgramCardProps {
   id: string;
@@ -15,7 +18,12 @@ interface ProgramCardProps {
 }
 
 const ProgramCard = ({ id, title, imgUrl, status, progress }: ProgramCardProps) => {
+  const dispatch = useDispatch();
   const theme = useTheme();
+
+  const openIntroModal = () => {
+    dispatch(setModalOpen({ modalType: ModalTypeEnum.INTRO_MODAL }));
+  };
   return (
     <StyledColumn
       key={id}
@@ -27,7 +35,13 @@ const ProgramCard = ({ id, title, imgUrl, status, progress }: ProgramCardProps) 
       }}
     >
       <StyledBox css={{ opacity: status === 'locked' ? 0.3 : 1 }}>
-        <Image style={{ width: 109, height: 109, borderRadius: 6 }} source={{ uri: imgUrl }} />
+        {status === 'locked' ? (
+          <Pressable onPress={openIntroModal}>
+            <Image style={{ width: 109, height: 109, borderRadius: 6 }} source={{ uri: imgUrl }} />
+          </Pressable>
+        ) : (
+          <Image style={{ width: 109, height: 109, borderRadius: 6 }} source={{ uri: imgUrl }} />
+        )}
         {status === 'completed' && (
           <StyledBox css={{ position: 'absolute', bottom: 2, right: 2 }}>
             <CheckIcon />
