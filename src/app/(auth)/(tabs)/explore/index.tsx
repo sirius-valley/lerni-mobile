@@ -25,7 +25,7 @@ const Page = () => {
       },
     });
 
-  const isLoading = true;
+  const isLoading = false;
   if (isLoading) {
     return <SkeletonHome />;
   }
