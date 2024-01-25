@@ -124,9 +124,22 @@ const ProgramDetail = () => {
           </StyledColumn>
 
           <StyledColumn css={{ width: '100%', marginVertical: '16px' }}>
-            <StyledText variant="h3" color="white" css={{ marginBottom: '16px' }}>
-              Leaderboard
-            </StyledText>
+            <StyledRow css={{ justifyContent: 'space-between', alignItems: 'center' }}>
+              <StyledText variant="h3" color="white" css={{ marginBottom: '16px' }}>
+                Leaderboard
+              </StyledText>
+              <StyledText
+                variant="body3"
+                color="white"
+                css={{
+                  textDecoration: 'underline',
+                  marginBottom: '16px',
+                  textDecorationColor: theme.white,
+                }}
+              >
+                Ver todo
+              </StyledText>
+            </StyledRow>
             {mockedLeaderboardRows.map((row, idx) => (
               <LeaderboardRow {...row} key={idx} />
             ))}
@@ -141,6 +154,7 @@ const ProgramDetail = () => {
             }}
           >
             <MessageIcon />
+
             <Pressable onPress={() => alert('to be defined')}>
               <StyledText
                 variant="body2"
