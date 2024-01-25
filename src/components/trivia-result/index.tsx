@@ -4,19 +4,19 @@ import { TiredIcon } from '../../../assets/icons/TiredIcon';
 import { TriviaStatusTypes } from '../../utils/constants';
 import Button from '../styled/Button';
 import { StyledBox, StyledColumn, StyledText } from '../styled/styles';
-import { TriviaResultBox } from './result-text';
+import { TriviaResultBox } from './result-box';
 
 export interface TriviaResultProps {
-  buttonText?: string;
-  handleButtonPress?: () => void;
+  handleOnPress?: () => void;
+  handleOnPlay?: () => void;
   triviaStatus: TriviaStatusTypes;
-  program: string;
-  pointsEarned: number;
+  program?: string;
+  pointsEarned?: number;
 }
 
 export const TriviaResult = ({
-  buttonText,
-  handleButtonPress,
+  handleOnPress,
+  handleOnPlay,
   triviaStatus,
   program,
   pointsEarned,
@@ -26,12 +26,18 @@ export const TriviaResult = ({
       style={{
         justifyContent: 'center',
         alignItems: 'center',
+        gap: 16,
+        paddingTop: 32,
+        padding: 24,
       }}
     >
-      <TriviaResultBox triviaStatus={triviaStatus} program={program} pointsEarned={pointsEarned} />
-      <StyledColumn style={{ width: '90%' }}>
-        <Button onPress={handleButtonPress ? handleButtonPress : () => {}}>{buttonText}</Button>
-      </StyledColumn>
+      <TriviaResultBox
+        triviaStatus={triviaStatus}
+        program={program}
+        pointsEarned={pointsEarned}
+        handleOnPress={handleOnPress}
+        handleOnPlay={handleOnPlay}
+      />
     </StyledColumn>
   );
 };

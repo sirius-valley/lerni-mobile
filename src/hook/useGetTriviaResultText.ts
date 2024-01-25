@@ -7,7 +7,7 @@ export const useGetTriviaResultText = (
   program: string,
   points: number,
 ) => {
-  const triviaResultText1: string = useMemo(() => {
+  const ResultText1: string = useMemo(() => {
     if (triviaStatus === 'not_started') {
       return 'Desafío Intelectual';
     } else if (triviaStatus === 'approved') {
@@ -17,25 +17,45 @@ export const useGetTriviaResultText = (
     }
   }, [triviaStatus]);
 
-  const triviaResultText2: string = useMemo(() => {
+  const ResultText2: string = useMemo(() => {
     if (triviaStatus === 'not_started') {
-      return 'Pone a prueba lo que aprendiste desafiando a algun compañero y compitiendo por quien sabe mas! Ademas vas a tener la posibilidad de ganar 24 puntos!';
+      return 'Pone a prueba lo que aprendiste desafiando a algun compañero y compitiendo por quien sabe mas! ';
     } else if (triviaStatus === 'approved') {
       return `Terminaste ${program}!`;
     } else {
-      return 'Hasta Einstein tropezó antes de triunfar.No te desanimes. En dos días, otra oportunidad.';
+      return 'Hasta Einstein tropezó antes de triunfar. ';
     }
   }, [triviaStatus]);
 
-  const triviaResultText3: string = useMemo(() => {
+  const ResultText3: string = useMemo(() => {
     if (triviaStatus === 'not_started') {
-      return 'Seleccionar por lo menos 1';
+      return 'Ademas vas a tener la posibilidad de ganar ';
     } else if (triviaStatus === 'approved') {
-      return `${points} puntos`;
+      return 'Ganaste ';
+    } else {
+      return 'No te desanimes. En dos días, otra oportunidad.';
+    }
+  }, [triviaStatus]);
+
+  const ResultText4: string = useMemo(() => {
+    if (triviaStatus === 'not_started') {
+      return '24 puntos';
+    } else if (triviaStatus === 'approved') {
+      return ` ${points} puntos!`;
     } else {
       return '';
     }
   }, [triviaStatus]);
 
-  return { triviaResultText1, triviaResultText2, triviaResultText3 };
+  const ResultText5: string = useMemo(() => {
+    if (triviaStatus === 'not_started') {
+      return '!';
+    } else if (triviaStatus === 'approved') {
+      return ``;
+    } else {
+      return '';
+    }
+  }, [triviaStatus]);
+
+  return { ResultText1, ResultText2, ResultText3, ResultText4, ResultText5 };
 };
