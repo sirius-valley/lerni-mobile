@@ -15,11 +15,13 @@ interface ProgramCardProps {
   imgUrl: string;
   status: 'in_progress' | 'completed' | 'not_started' | 'locked';
   progress?: number;
+  onPress?: () => void;
 }
 
-const ProgramCard = ({ id, title, imgUrl, status, progress }: ProgramCardProps) => {
+const ProgramCard = ({ id, title, imgUrl, status, progress, onPress }: ProgramCardProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const handleOnPress = () => onPress && onPress();
 
   const openIntroModal = () => {
     dispatch(setModalOpen({ modalType: ModalTypeEnum.INTRO_MODAL }));
@@ -34,27 +36,12 @@ const ProgramCard = ({ id, title, imgUrl, status, progress }: ProgramCardProps) 
         alignItems: 'center',
       }}
     >
-      <StyledBox css={{ opacity: status === 'locked' ? 0.3 : 1 }}>
-        {status === 'locked' ? (
-          <Pressable onPress={openIntroModal}>
-            <Image style={{ width: 109, height: 109, borderRadius: 6 }} source={{ uri: imgUrl }} />
-          </Pressable>
-        ) : (
-          <Image style={{ width: 109, height: 109, borderRadius: 6 }} source={{ uri: imgUrl }} />
-        )}
-        {status === 'completed' && (
-          <StyledBox css={{ position: 'absolute', bottom: 2, right: 2 }}>
-            <CheckIcon />
-          </StyledBox>
-        )}
-        {status === 'locked' && (
-          <StyledBox css={{ position: 'absolute', bottom: 2, right: 2 }}>
-            <LockIcon />
-          </StyledBox>
-        )}
-      </StyledBox>
+      <ProgramImage status={status} imgUrl={imgUrl} />
 
-      <StyledText variant="body1" css={{ color: theme.gray100 }}>
+      <StyledText
+        variant="body1"
+        css={{ color: theme.gray100, opacity: status === 'locked' ? 0.3 : 1 }}
+      >
         {title}
       </StyledText>
 
