@@ -10,11 +10,22 @@ import SearchIcon from '../../../../../assets/icons/SearchIcon';
 import ProgramCard from '../../../../components/program/ProgramCard';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ProgramCardStructure, mockedProgramCardsData, programCardsStructure } from './utils';
+import { useRouter } from 'expo-router';
 import SkeletonHome from '../../../../components/home/HomeSkeleton';
 
 const Page = () => {
+  const router = useRouter();
   const theme = useTheme();
-  const isLoading = true;
+
+  const handleGoToProgram = (id: string) =>
+    router.push({
+      pathname: '(tabs)/explore/programDetail',
+      params: {
+        id,
+      },
+    });
+
+  const isLoading = false;
   if (isLoading) {
     return <SkeletonHome />;
   }
@@ -24,6 +35,7 @@ const Page = () => {
         width: '100%',
         height: '100%',
         paddingTop: 20,
+        paddingHorizontal: 12,
       }}
     >
       <ScrollView>
@@ -80,6 +92,7 @@ const Page = () => {
                           imgUrl={image}
                           status={status}
                           progress={progressBar ? progress : undefined}
+                          onPress={() => handleGoToProgram(id)}
                         />
                       ))}
                   </StyledRow>
