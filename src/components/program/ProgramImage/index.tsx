@@ -2,13 +2,12 @@ import { Image } from 'react-native';
 import React from 'react';
 import { StyledBox } from '../../styled/styles';
 import CheckIcon from '../../../../assets/icons/CheckIcon';
-
-export type ProgramStatus = 'in_progress' | 'completed' | 'not_started';
+import { Status } from '../../../app/(auth)/(tabs)/explore/utils';
 
 interface ProgramImage {
   imgUrl: string;
   size?: number;
-  status: ProgramStatus;
+  status: Status;
 }
 
 const ProgramImage = ({ imgUrl, size = 109, status }: ProgramImage) => {

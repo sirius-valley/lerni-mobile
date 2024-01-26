@@ -1,19 +1,18 @@
 import React from 'react';
 import { useTheme } from 'styled-components/native';
 import { StyledBox, StyledColumn, StyledText } from '../../styled/styles';
-import { Image, Pressable } from 'react-native';
 import * as Progress from 'react-native-progress';
-import CheckIcon from '../../../../assets/icons/CheckIcon';
-import { LockIcon } from '../../../../assets/icons/LockIcon';
 import { setModalOpen } from '../../../redux/slice/utils.slice';
 import { ModalTypeEnum } from '../../../utils/utils';
 import { useDispatch } from 'react-redux';
+import ProgramImage from '../ProgramImage';
+import { Status } from '../../../app/(auth)/(tabs)/explore/utils';
 
 interface ProgramCardProps {
   id: string;
   title: string;
   imgUrl: string;
-  status: 'in_progress' | 'completed' | 'not_started' | 'locked';
+  status: Status;
   progress?: number;
   onPress?: () => void;
 }
@@ -23,9 +22,6 @@ const ProgramCard = ({ id, title, imgUrl, status, progress, onPress }: ProgramCa
   const theme = useTheme();
   const handleOnPress = () => onPress && onPress();
 
-  const openIntroModal = () => {
-    dispatch(setModalOpen({ modalType: ModalTypeEnum.INTRO_MODAL }));
-  };
   return (
     <StyledColumn
       key={id}
