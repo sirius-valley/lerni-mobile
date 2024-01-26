@@ -11,13 +11,12 @@ import ProgramCard from '../../../../components/program/ProgramCard';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ProgramCardStructure, mockedProgramCardsData, programCardsStructure } from './utils';
 import { useRouter } from 'expo-router';
-
 import SkeletonHome from '../../../../components/home/HomeSkeleton';
 import { useEffect, useState } from 'react';
 
 const Page = () => {
-  const theme = useTheme();
   const router = useRouter();
+  const theme = useTheme();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,8 +26,16 @@ const Page = () => {
   }, []);
 
   if (loading) {
-    return <SkeletonHome />;
+    return <SkeletonHome />
   }
+
+  const handleGoToProgram = (id: string) =>
+    router.push({
+      pathname: '(tabs)/explore/programDetail',
+      params: {
+        id,
+      },
+    });
 
   return (
     <StyledBox
@@ -36,6 +43,7 @@ const Page = () => {
         width: '100%',
         height: '100%',
         paddingTop: 20,
+        paddingHorizontal: 12,
       }}
     >
       <ScrollView>
@@ -92,6 +100,7 @@ const Page = () => {
                           imgUrl={image}
                           status={status}
                           progress={progressBar ? progress : undefined}
+                          onPress={() => handleGoToProgram(id)}
                         />
                       ))}
                   </StyledRow>
