@@ -5,17 +5,19 @@ import { Image } from 'react-native';
 import * as Progress from 'react-native-progress';
 import CheckIcon from '../../../../assets/icons/CheckIcon';
 import { LockIcon } from '../../../../assets/icons/LockIcon';
+import { Status } from '../../../app/(auth)/(tabs)/explore/utils';
 
 interface ProgramCardProps {
   id: string;
   title: string;
   imgUrl: string;
-  status: 'in_progress' | 'completed' | 'not_started' | 'locked';
+  status: Status;
   progress?: number;
 }
 
 const ProgramCard = ({ id, title, imgUrl, status, progress }: ProgramCardProps) => {
   const theme = useTheme();
+
   return (
     <StyledColumn
       key={id}
@@ -35,12 +37,15 @@ const ProgramCard = ({ id, title, imgUrl, status, progress }: ProgramCardProps) 
         )}
         {status === 'locked' && (
           <StyledBox css={{ position: 'absolute', bottom: 2, right: 2 }}>
-            <LockIcon />
+            <LockIcon size={20} />
           </StyledBox>
         )}
       </StyledBox>
 
-      <StyledText variant="body1" css={{ color: theme.gray100 }}>
+      <StyledText
+        variant="body1"
+        css={{ color: theme.gray100, opacity: status === 'locked' ? 0.3 : 1 }}
+      >
         {title}
       </StyledText>
 
