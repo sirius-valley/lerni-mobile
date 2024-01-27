@@ -56,28 +56,18 @@ const IntroModal = ({ handleOnClose }: IntroModalProps) => {
         </StyledColumn>
 
         <Button
-          onPress={() => console.log('to be developed')}
+          onPress={handleOnClose}
           variant={'primary'}
           css={{
             width: '100%',
             backgroundColor: theme.primary400,
-            paddingHorizontal: 40,
-            paddingVertical: 60,
           }}
         >
           Ir a la introducción
         </Button>
-        <StyledText
-          variant="body2"
-          css={{
-            textDecoration: 'underline',
-            textDecorationColor: theme.primary400,
-            color: theme.primary400,
-          }}
-          onPress={handleOnClose}
-        >
+        <Button onPress={handleOnClose} variant="ghost">
           Más tarde
-        </StyledText>
+        </Button>
       </StyledColumn>
     </Modal>
   );
