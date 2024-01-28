@@ -7,7 +7,7 @@ export interface StyledPropertiesInterface {
   css?: CSSProperties;
 }
 
-type TextVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'body1' | 'body2' | 'body3';
+type TextVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'body1' | 'body2' | 'body2Bold' | 'body3';
 
 interface StyledTextInterface extends StyledPropertiesInterface {
   variant?: TextVariant;

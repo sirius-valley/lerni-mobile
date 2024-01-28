@@ -11,6 +11,7 @@ export const theme = {
   white: '#FFFFFF',
   red500: '#FC6464',
   red600: '#B93333',
+  gray6: '#f2f2f2',
   gray50: '#f8fafc',
   gray100: '#f1f5f9',
   gray200: '#e2e8f0',
@@ -65,6 +66,12 @@ export const theme = {
     fontSize: '12px',
     fontStyle: 'normal',
     fontWeight: 400,
+  },
+  body2Bold: {
+    fontFamily: 'Roboto-Bold',
+    fontSize: '14px',
+    fontStyle: 'normal',
+    fontWeight: 700,
   },
 };
 
