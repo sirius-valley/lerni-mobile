@@ -4,7 +4,7 @@ import { IconInterface } from "./types";
 export const TiredIcon = ({color, size}: IconInterface) => {
   return (
     <Svg width={size ? size : '48'} height={size ? size : '48'} viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-<Rect x="0.5" y="0.5" width={size ? size : '48'} height={size ? size : '48'} fill="url(#pattern0)" stroke="black"/>
+<Rect x="0.5" y="0.5" width={size ? size : '48'} height={size ? size : '48'} fill="url(#pattern0)" stroke="none"/>
 <Defs>
 <Pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
 <Use href="#image0_1_2954" transform="scale(0.00625)"/>
