@@ -4,6 +4,7 @@ import { StyledBox, StyledColumn, StyledText } from '../../styled/styles';
 import * as Progress from 'react-native-progress';
 import { Status } from '../../../app/(auth)/(tabs)/explore/utils';
 import ProgramImage from '../ProgramImage';
+import { Pressable } from 'react-native';
 
 interface ProgramCardProps {
   id: string;
@@ -19,38 +20,40 @@ const ProgramCard = ({ id, title, imgUrl, status, progress, onPress }: ProgramCa
   const handleOnPress = () => onPress && onPress();
 
   return (
-    <StyledColumn
-      key={id}
-      css={{
-        width: 109,
-        height: 145,
-        gap: 6,
-        alignItems: 'center',
-      }}
-    >
-      <ProgramImage status={status} imgUrl={imgUrl} />
-
-      <StyledText
-        variant="body1"
-        css={{ color: theme.gray100, opacity: status === 'locked' ? 0.3 : 1 }}
+    <Pressable onPress={handleOnPress}>
+      <StyledColumn
+        key={id}
+        css={{
+          width: 109,
+          height: 145,
+          gap: 6,
+          alignItems: 'center',
+        }}
       >
-        {title}
-      </StyledText>
+        <ProgramImage status={status} imgUrl={imgUrl} />
 
-      {status === 'in_progress' && (
-        <StyledBox css={{ width: '100%', gap: 10 }}>
-          <Progress.Bar
-            unfilledColor={theme.gray600}
-            color={theme.primary400}
-            height={6}
-            progress={progress}
-            borderWidth={0}
-            width={null}
-            borderRadius={20}
-          />
-        </StyledBox>
-      )}
-    </StyledColumn>
+        <StyledText
+          variant="body1"
+          css={{ color: theme.gray100, opacity: status === 'locked' ? 0.3 : 1 }}
+        >
+          {title}
+        </StyledText>
+
+        {status === 'in_progress' && (
+          <StyledBox css={{ width: '100%', gap: 10 }}>
+            <Progress.Bar
+              unfilledColor={theme.gray600}
+              color={theme.primary400}
+              height={6}
+              progress={progress}
+              borderWidth={0}
+              width={null}
+              borderRadius={20}
+            />
+          </StyledBox>
+        )}
+      </StyledColumn>
+    </Pressable>
   );
 };
 
