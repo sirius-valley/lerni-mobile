@@ -1,13 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ToastTypes } from '../../utils/constants';
+import { ModalTypeEnum } from '../../utils/utils';
 
-export interface initialStateHomeType {
+export interface initialStateUtilsType {
   type?: 'success' | 'error' | 'info';
   text?: string;
+  modalType?: ModalTypeEnum;
 }
 
-const initialState: initialStateHomeType = {
+const initialState: initialStateUtilsType = {
   type: undefined,
+  modalType: undefined,
 };
 
 export const utilsSlice = createSlice({
@@ -22,9 +25,15 @@ export const utilsSlice = createSlice({
       state.type = undefined;
       state.text = undefined;
     },
+    setModalOpen: (state, action) => {
+      state.modalType = action.payload?.modalType;
+    },
+    closeModal: (state) => {
+      return initialState;
+    },
   },
 });
 
-export const { showToast, resetToast } = utilsSlice.actions;
+export const { showToast, resetToast, setModalOpen, closeModal } = utilsSlice.actions;
 
 export default utilsSlice.reducer;
