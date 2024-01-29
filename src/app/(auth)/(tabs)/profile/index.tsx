@@ -11,6 +11,8 @@ import { useTheme } from 'styled-components';
 import { LogoutIcon } from '../../../../../assets/icons/LogoutIcon';
 import { Pressable } from 'react-native';
 import { useProfileQuery } from '../../../../redux/service/profile.service';
+import { useEffect, useState } from 'react';
+import { SkeletonProfile } from '../../../../components/common/Skeleton/SkeletonProfile';
 
 const profileMocked = {
   name: 'Valentin',
@@ -23,9 +25,17 @@ const profileMocked = {
 export default function Page() {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const [loading, setLoading] = useState(true);
   const { data: profileData, error, isLoading } = useProfileQuery({});
 
   const handleLogout = () => dispatch(authActions.logout());
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(!loading)
+    }, 1500)
+  }, [loading])
+  
 
   return (
     <StyledColumn
@@ -49,6 +59,7 @@ export default function Page() {
             <LogoutIcon color={theme.primary600} size={32} />
           </Pressable>
         </StyledRow>
+        { loading ? <SkeletonProfile /> :
         <StyledRow css={{ gap: 8 }}>
           <StyledBox>
             <Avatar size={94} borderRadius={97} />
@@ -68,6 +79,7 @@ export default function Page() {
             </StyledText>
           </StyledColumn>
         </StyledRow>
+        }
       </StyledColumn>
     </StyledColumn>
   );
