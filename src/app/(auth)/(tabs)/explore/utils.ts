@@ -1,3 +1,5 @@
+import { UserTypes } from '../../../../utils/constants';
+
 export type Status = 'in_progress' | 'completed' | 'not_started';
 
 export interface ProgramCardStructure {
@@ -165,3 +167,25 @@ export const mockedLeaderboardRows = [
     points: 1,
   },
 ];
+
+interface ProfessorMessageType {
+  type: 'image' | 'text';
+  user: UserTypes;
+  content: string;
+}
+
+export const mockedPillDetail = {
+  order: 1,
+  progress: 0.43,
+  description:
+    'Descripción lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollisullamcorper mauris, vitae commodo dui efficitur non. Fusce efficitur pulvinar diamvel dictum.',
+  professor: 'Profesor/Autor',
+  approved: ['juan', 'valen', 'fabro', 'nico'],
+  introductionDone: true,
+};
+export const mockedProfessorMessage: ProfessorMessageType = {
+  type: 'text',
+  user: 'professor',
+  content:
+    'Bienvenidos!! Mi nombre es ......., soy profesor en ....... y en este curso vamos a hablar sobre ........',
+};

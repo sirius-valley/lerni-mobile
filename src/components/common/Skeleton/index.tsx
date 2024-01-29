@@ -12,10 +12,28 @@ interface SkeletonProps {
 const Skeleton = ({ width, height, type = 'default', css }: SkeletonProps) => {
   const theme = useTheme();
   const pulseAnim = useRef(new Animated.Value(0)).current;
-  const borderRadius: Record<'chatBubble' | 'ellipse' | 'default', string> = {
-    chatBubble: '16px 16px 16px 2px',
-    ellipse: '50px',
-    default: '8px',
+  const borderRadius: Record<
+    'chatBubble' | 'ellipse' | 'default',
+    {
+      borderTopRightRadius?: number;
+      borderBottomRightRadius?: number;
+      borderTopLeftRadius?: number;
+      borderBottomLeftRadius?: number;
+      borderRadius?: number;
+    }
+  > = {
+    chatBubble: {
+      borderTopRightRadius: 16,
+      borderBottomRightRadius: 16,
+      borderTopLeftRadius: 16,
+      borderBottomLeftRadius: 2,
+    },
+    ellipse: {
+      borderRadius: 50,
+    },
+    default: {
+      borderRadius: 2,
+    },
   };
 
   useEffect(() => {
@@ -52,7 +70,14 @@ const Skeleton = ({ width, height, type = 'default', css }: SkeletonProps) => {
   return (
     <Animated.View
       style={[
-        { backgroundColor: theme.primary600, borderRadius: borderRadius[type] },
+        {
+          backgroundColor: theme.primary600,
+          borderRadius: borderRadius[type].borderRadius,
+          borderBottomLeftRadius: borderRadius[type].borderBottomLeftRadius,
+          borderBottomRightRadius: borderRadius[type].borderBottomRightRadius,
+          borderTopLeftRadius: borderRadius[type].borderTopLeftRadius,
+          borderTopRightRadius: borderRadius[type].borderTopRightRadius,
+        },
         { width: width, height: height },
         { opacity: opacityAnim },
         css,

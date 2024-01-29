@@ -8,22 +8,23 @@ import {
 } from '../../../../../components/styled/styles';
 import BackArrow from '../../../../../../assets/icons/BackArrow';
 import { Pressable, ScrollView, View } from 'react-native';
-import { ProgramStatus } from '../../../../../components/program/ProgramImage';
 import { useTheme } from 'styled-components';
-import RhombusIcon from '../../../../../../assets/icons/RhombusIcon';
-import BulletListIcon from '../../../../../../assets/icons/BulletListIcon';
-import ClockIcon from '../../../../../../assets/icons/ClockIcon';
 import { ChatBubble } from '../../../../../components/bubbles/ChatBubble';
 import * as Progress from 'react-native-progress';
 import { Avatar } from '../../../../../components/common/Avatar';
 import PillSkeleton from './PillSkeleton';
+import Button from '../../../../../components/styled/Button';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import LockIcon from '../../../../../../assets/icons/LockIcon';
+import { mockedPillDetail, mockedProfessorMessage } from '../utils';
 
 const PillDetail = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
 
-  const isLoading = true;
+  const isLoading = false;
 
   if (isLoading)
     return (
@@ -32,149 +33,185 @@ const PillDetail = () => {
       </StyledColumn>
     );
   return (
-    <ScrollView
-      style={{ width: '100%', height: '100%', paddingHorizontal: 12 }}
-      scrollIndicatorInsets={{ right: -30 }}
-    >
-      <StyledColumn css={{ flex: 1, justifyContent: 'flex-start', height: '100%' }}>
-        <StyledColumn
-          css={{
-            gap: 16,
-            width: '100%',
-            height: '100%',
-          }}
-        >
-          <StyledRow
-            css={{
-              height: 33,
-              alignItems: 'center',
-            }}
-          >
-            <StyledBox
-              css={{
-                height: 33,
-                paddingHorizontal: 7,
-                paddingVertical: 3,
-              }}
-            >
-              <Pressable onPress={() => router.back()}>
-                <BackArrow />
-              </Pressable>
-            </StyledBox>
-          </StyledRow>
-          <StyledColumn css={{ gap: 8, alignItems: 'center' }}>
-            <StyledBox
-              css={{
-                width: 166,
-                height: 166,
-                justifyContent: ' center',
-                alignItems: ' center',
-              }}
-            >
-              <Progress.Circle
-                size={166}
-                thickness={10}
-                borderColor={theme.gray600}
-                unfilledColor={theme.gray600}
-                color={theme.primary500}
-                progress={0.3}
-                showsText={true}
-                formatText={() => 1}
-                textStyle={{
-                  fontSize: 43,
-                  color: 'white',
-                  fontWeight: '600',
-                  marginBottom: 6,
-                }}
-                animated={false}
-              />
-            </StyledBox>
-            <StyledText
-              variant="h2"
-              css={{
-                gap: 6,
-                alignItems: 'center',
-                color: theme.white,
-              }}
-            >
-              Píldora 1
-            </StyledText>
-            <StyledText
-              variant="body1"
-              css={{
-                gap: 6,
-                alignItems: 'center',
-                color: theme.gray400,
-              }}
-            >
-              Profesor/Autor
-            </StyledText>
-          </StyledColumn>
+    <>
+      <ScrollView
+        style={{ width: '100%', height: '100%', paddingHorizontal: 12 }}
+        scrollIndicatorInsets={{ right: -30 }}
+      >
+        <StyledColumn css={{ flex: 1, justifyContent: 'flex-start', height: '100%' }}>
           <StyledColumn
             css={{
-              alignItems: 'center',
-              gap: 24,
+              gap: 16,
+              width: '100%',
+              height: '100%',
             }}
           >
-            <StyledColumn
+            <StyledRow
               css={{
-                gap: 8,
-                justifyContent: 'center',
-                width: 342,
+                height: 33,
+                alignItems: 'center',
               }}
             >
-              <StyledText
-                variant="h3"
+              <StyledBox
                 css={{
-                  color: theme.gray100,
+                  height: 33,
+                  paddingHorizontal: 7,
+                  paddingVertical: 3,
                 }}
               >
-                Descripción de la píldora
+                <Pressable onPress={() => router.back()}>
+                  <BackArrow />
+                </Pressable>
+              </StyledBox>
+            </StyledRow>
+            <StyledColumn css={{ gap: 8, alignItems: 'center' }}>
+              <StyledBox
+                css={{
+                  width: 166,
+                  height: 166,
+                  justifyContent: ' center',
+                  alignItems: ' center',
+                }}
+              >
+                <Progress.Circle
+                  size={166}
+                  thickness={10}
+                  borderColor={theme.gray600}
+                  unfilledColor={theme.gray600}
+                  color={theme.primary500}
+                  progress={mockedPillDetail.progress}
+                  showsText={true}
+                  formatText={() =>
+                    !mockedPillDetail.introductionDone ? (
+                      <LockIcon size={72} />
+                    ) : (
+                      mockedPillDetail.order
+                    )
+                  }
+                  textStyle={{
+                    fontSize: 43,
+                    color: 'white',
+                    fontWeight: '600',
+                    marginBottom: 6,
+                  }}
+                  animated={false}
+                />
+              </StyledBox>
+              <StyledText
+                variant="h2"
+                css={{
+                  gap: 6,
+                  alignItems: 'center',
+                  color: theme.white,
+                }}
+              >
+                Píldora {mockedPillDetail.order}
               </StyledText>
               <StyledText
                 variant="body1"
                 css={{
-                  color: theme.gray100,
+                  gap: 6,
+                  alignItems: 'center',
+                  color: theme.gray400,
                 }}
               >
-                Descripción lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis
-                ullamcorper mauris, vitae commodo dui efficitur non. Fusce efficitur pulvinar diam
-                vel dictum.
+                {mockedPillDetail.professor}
               </StyledText>
             </StyledColumn>
-            <StyledRow
+            <StyledColumn
               css={{
-                gap: 8,
-                width: '100%',
                 alignItems: 'center',
+                gap: 24,
               }}
             >
-              <StyledRow css={{ alignItems: 'center', gap: -20 }}>
-                <Avatar size={48} />
-                <Avatar size={48} />
-                <Avatar size={48} />
-                <Avatar size={48} />
-                <Avatar size={48} />
-              </StyledRow>
-              <StyledColumn>
-                <StyledText variant="body3" css={{ color: theme.white, fontFamily: 'Roboto-Bold' }}>
-                  53 alumnos
+              <StyledColumn
+                css={{
+                  gap: 8,
+                  justifyContent: 'center',
+                  width: 342,
+                }}
+              >
+                <StyledText
+                  variant="h3"
+                  css={{
+                    color: theme.gray100,
+                  }}
+                >
+                  Descripción de la píldora
                 </StyledText>
-                <StyledText variant="body3" color="white">
-                  aprobaron esta píldora
+                <StyledText
+                  variant="body1"
+                  css={{
+                    color: theme.gray100,
+                  }}
+                >
+                  {mockedPillDetail.description}
                 </StyledText>
               </StyledColumn>
-            </StyledRow>
+              {mockedPillDetail.approved.length > 0 && (
+                <StyledRow
+                  css={{
+                    gap: 8,
+                    width: '100%',
+                    alignItems: 'center',
+                  }}
+                >
+                  <StyledRow css={{ alignItems: 'center', gap: -20 }}>
+                    {mockedPillDetail.approved.map((element) => (
+                      <Avatar key={element} size={48} />
+                    ))}
+                  </StyledRow>
+                  <StyledColumn>
+                    <StyledText
+                      variant="body3"
+                      css={{ color: theme.white, fontFamily: 'Roboto-Bold' }}
+                    >
+                      {`${mockedPillDetail.approved.length} ${
+                        mockedPillDetail.approved.length === 1 ? 'alumno' : 'alumnos'
+                      }`}
+                    </StyledText>
+                    <StyledText variant="body3" color="white">
+                      {`${
+                        mockedPillDetail.approved.length === 1
+                          ? 'completó esta píldora'
+                          : 'completaron esta píldora'
+                      }`}
+                    </StyledText>
+                  </StyledColumn>
+                </StyledRow>
+              )}
 
-            <ChatBubble
-              type="text"
-              user="professor"
-              content="Bienvenidos!! Mi nombre es ......., soy profesor en ....... y en este curso vamos a hablar sobre ........"
-            ></ChatBubble>
+              <ChatBubble
+                type={mockedProfessorMessage.type}
+                user={mockedProfessorMessage.user}
+                content={mockedProfessorMessage.content}
+              ></ChatBubble>
+            </StyledColumn>
           </StyledColumn>
         </StyledColumn>
-      </StyledColumn>
-    </ScrollView>
+      </ScrollView>
+      <StyledRow
+        css={{
+          position: 'absolute',
+          bottom: insets.bottom - 24,
+          width: '100%',
+          height: '42px',
+          marginLeft: 12,
+        }}
+      >
+        <Button
+          disabled={!mockedPillDetail.introductionDone}
+          variant="primary"
+          onPress={() => alert('to be defined')}
+          css={{
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          Comenzar
+        </Button>
+      </StyledRow>
+    </>
   );
 };
 
