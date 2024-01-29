@@ -1,30 +1,33 @@
-import { useTheme } from 'styled-components/native';
-import { StyledColumn, StyledText } from '../../styled/styles';
+import { ErrorIllustration } from '../../../../assets/icons/ErrorIllustration';
+import CustomError from './CustomError';
+import { GhostIcon } from '../../../../assets/icons/GhostIcon';
+import { FC } from 'react';
 
-interface ErrorDisplayProps {
-  Icon: React.FunctionComponent;
-  Title: string;
-  Content: () => JSX.Element;
-  Footer: () => JSX.Element;
+interface ErrorDisplayInterface {
+  type: '404' | '505';
 }
 
-export const ErrorDisplay = ({ Icon, Title, Content, Footer }: ErrorDisplayProps) => {
-  const theme = useTheme();
+const errorsAvailable = {
+  '404': {
+    title: 'Página no encontrada',
+    content: 'Lo sentimos, no pudimos encontrar lo que estás buscando',
+    Icon: ErrorIllustration,
+  },
+  '505': {
+    title: 'Error interno del servidor',
+    content: 'Lo sentimos, no eres tú, somos nosotros. Algo salió mal desde nuestro lado',
+    Icon: GhostIcon,
+  },
+};
+
+const ErrorDisplay = ({ type }: ErrorDisplayInterface) => {
   return (
-    <StyledColumn
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 24,
-        paddingHorizontal: 24,
-      }}
-    >
-      <Icon />
-      <StyledText variant="h2" style={{ color: theme.gray100 }}>
-        {Title}
-      </StyledText>
-      <Content />
-      <Footer />
-    </StyledColumn>
+    <CustomError
+      Icon={errorsAvailable[type].Icon}
+      title={errorsAvailable[type].title}
+      content={errorsAvailable[type].content}
+    />
   );
 };
+
+export default ErrorDisplay;
