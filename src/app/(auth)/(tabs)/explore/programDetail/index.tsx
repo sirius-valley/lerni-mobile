@@ -153,7 +153,7 @@ const ProgramDetail = () => {
               alignItems: 'center',
             }}
           >
-            <MessageIcon />
+            <MessageIcon size={24} />
 
             <Pressable onPress={() => alert('to be defined')}>
               <StyledText

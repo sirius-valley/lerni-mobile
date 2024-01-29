@@ -34,3 +34,7 @@ export const getStyleColorByVariant = (componentVariant: ButtonVariant) => {
       return theme.gray300;
   }
 };
+
+export enum ModalTypeEnum {
+  INTRO_MODAL = 'INTRO_MODAL',
+}
