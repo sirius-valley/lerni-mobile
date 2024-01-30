@@ -108,7 +108,7 @@ const LoginScreen = () => {
                 Iniciar Sesión
               </Button>
               <StyledRow css={{ justifyContent: 'center' }}>
-                <StyledText onPress={() => alert('to be defined')}>No tenés cuenta?</StyledText>
+                <StyledText onPress={() => alert('to be defined')}>No tenés cuenta? </StyledText>
                 <StyledText css={{ textDecorationLine: 'underline' }} onPress={goToRegisterScreen}>
                   Crear una ahora
                 </StyledText>
