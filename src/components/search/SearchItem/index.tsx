@@ -53,7 +53,6 @@ const SearchItem = ({
         transparentOnLocked={false}
         statusIconSize={status === 'completed' ? 15 : 13}
       />
-      // <Avatar uri={imgUrl} size={92} borderRadius={6} />
     );
 
   return (

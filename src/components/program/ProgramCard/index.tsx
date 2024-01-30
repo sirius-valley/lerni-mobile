@@ -38,7 +38,7 @@ const ProgramCard = ({
         css={{
           width: imgSize,
           height: imgSize + (title ? 36 : 0),
-          gap: 6,
+          gap: title ? 6 : 3,
           alignItems: 'center',
         }}
       >
@@ -64,7 +64,7 @@ const ProgramCard = ({
             <Progress.Bar
               unfilledColor={theme.gray600}
               color={theme.primary400}
-              height={title ? 6 : 4}
+              height={title ? 6 : 4.5}
               progress={progress}
               borderWidth={0}
               width={null}
