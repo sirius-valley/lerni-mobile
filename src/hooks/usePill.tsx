@@ -2,7 +2,6 @@ import { useLDispatch, useLSelector } from '../redux/hooks';
 import {
   getPillByID,
   getPillTypeByID,
-  sendAnswer,
   setFreeTextAnswer,
   setMultipleAnswer,
   setSingleAnswer,
@@ -31,11 +30,6 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
     dispatch(setMultipleAnswer({ id: questionId, value: answerId }));
   };
 
-  /*
-
-{pillId: string, questionId: string, answer: string}
-
-     */
   const handleSendAnswer = (valueToSend: string) => {
     answer({ pillId: pillDetails!.pill.id, questionId: questionId, answer: valueToSend });
   };
