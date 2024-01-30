@@ -26,7 +26,7 @@ const Page = () => {
   }, []);
 
   if (loading) {
-    return <SkeletonHome />
+    return <SkeletonHome />;
   }
 
   const handleGoToProgram = (id: string) =>
@@ -76,7 +76,7 @@ const Page = () => {
                       {label}
                     </StyledText>
                     {mockedProgramCardsData[status].length > 3 && (
-                      <Pressable onPress={() => router.push('/explore/comments')}>
+                      <Pressable onPress={() => {}}>
                         <StyledText
                           css={{
                             color: theme.gray300,
