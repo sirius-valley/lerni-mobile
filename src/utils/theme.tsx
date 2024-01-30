@@ -41,7 +41,7 @@ export const theme = {
     fontFamily: 'Roboto-Bold',
     fontSize: '18px',
     fontStyle: 'normal',
-    fontWeight: 600,
+    fontWeight: 700,
   },
   h4: {
     fontFamily: 'Roboto-Bold',
