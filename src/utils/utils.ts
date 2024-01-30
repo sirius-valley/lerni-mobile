@@ -35,6 +35,10 @@ export const getStyleColorByVariant = (componentVariant: ButtonVariant) => {
   }
 };
 
+export const removeHtmlTags = (inputString: string) => {
+  return inputString.replace(/<.*?>/g, '');
+};
+
 export enum ModalTypeEnum {
   INTRO_MODAL = 'INTRO_MODAL',
 }

@@ -6,20 +6,19 @@ interface SingleAnswerProps {
   options: {
     id: string;
     text: string;
-    selected?: boolean;
+    selected?: boolean | string;
   }[];
   onPress: (id: string) => void;
   sealed: boolean;
 }
 
 const SingleAnswer = ({ options, onPress, sealed }: SingleAnswerProps) => {
-  console.log(options);
   return (
     <StyledChoiceMainContainer>
       {options.map((option) => (
         <Choice
           status={
-            typeof option.selected == 'boolean'
+            typeof option.selected == 'boolean' || sealed
               ? option.selected
                 ? 'selected'
                 : 'not_selected'

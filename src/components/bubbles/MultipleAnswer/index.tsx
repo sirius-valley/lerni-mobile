@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Choice } from '../../styled/Choice';
 import { StyledChoiceMainContainer } from '../../styled/Choice/styles';
 import { StyledColumn } from '../../styled/styles';
@@ -16,6 +16,21 @@ interface MultipleAnswerProps {
 }
 
 const MultipleAnswer = ({ options, onPress, onChange, sealed }: MultipleAnswerProps) => {
+  // const [options, setOptions] = useState(defaultOptions)
+  //
+  // const handleOptionChange = (id: string) => {
+  //     const newOptions = options.map((option) => {
+  //         if (option.id === id) {
+  //             return {
+  //                 ...option,
+  //                 selected: !option.selected
+  //             }
+  //         }
+  //         return option
+  //     })
+  //     setOptions(newOptions)
+  // }
+
   return (
     <StyledColumn style={{ gap: 6, alignItems: 'flex-end' }}>
       <StyledChoiceMainContainer>
@@ -30,7 +45,9 @@ const MultipleAnswer = ({ options, onPress, onChange, sealed }: MultipleAnswerPr
             }
             text={option.text}
             key={option.id}
-            onPress={() => onChange(option.id)}
+            onPress={() => {
+              onChange(option.id);
+            }}
             disabled={sealed}
             id={option.id}
           />

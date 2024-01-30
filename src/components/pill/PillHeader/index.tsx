@@ -4,6 +4,7 @@ import { useTheme } from 'styled-components';
 import * as Progress from 'react-native-progress';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { CancelIcon } from '../../../../assets/icons/CancelIcon';
+import { useRouter } from 'expo-router';
 
 export interface PillHeaderProps {
   title: string;
@@ -13,6 +14,7 @@ export interface PillHeaderProps {
 
 const PillHeader = ({ title, pillNumber, percentageDone }: PillHeaderProps) => {
   const theme = useTheme();
+  const router = useRouter();
 
   return (
     <StyledRow
@@ -43,7 +45,7 @@ const PillHeader = ({ title, pillNumber, percentageDone }: PillHeaderProps) => {
                 borderWidth={0}
                 unfilledColor={theme.gray600}
                 color={theme.primary500}
-                progress={percentageDone}
+                progress={percentageDone / 100}
                 showsText={true}
                 formatText={() => pillNumber}
                 textStyle={{
@@ -59,7 +61,7 @@ const PillHeader = ({ title, pillNumber, percentageDone }: PillHeaderProps) => {
                 {title}
               </StyledText>
             </StyledRow>
-            <TouchableOpacity onPress={() => alert('X')}>
+            <TouchableOpacity onPress={() => router.back()}>
               <CancelIcon color={theme.gray500} size={24} />
             </TouchableOpacity>
           </StyledRow>
@@ -70,7 +72,7 @@ const PillHeader = ({ title, pillNumber, percentageDone }: PillHeaderProps) => {
             borderBottomColor: theme.gray500,
             width: '100%',
           }}
-        ></StyledBox>
+        />
       </StyledColumn>
     </StyledRow>
   );

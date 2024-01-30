@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'expo-router';
-import { authActions } from '../redux/slice/auth.slice';
+import { setToken } from '../redux/slice/auth.slice';
 import * as SecureStore from 'expo-secure-store';
 import { useLDispatch } from '../redux/hooks';
 
@@ -11,7 +11,7 @@ const Landing = () => {
   const getTokenFromSecureStore = async () => {
     const token = await SecureStore.getItemAsync('token');
     if (token) {
-      dispatch(authActions.setToken(token));
+      dispatch(setToken(token));
     }
     setAppIsReady(true);
   };

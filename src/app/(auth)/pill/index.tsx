@@ -1,30 +1,64 @@
-import React, { useEffect } from 'react';
-import { StyledText } from '../../../components/styled/styles';
-import { SafeAreaView, ScrollView } from 'react-native';
+import React, { useRef } from 'react';
+import { StyledBox, StyledText } from '../../../components/styled/styles';
+import {
+  KeyboardAvoidingView,
+  ListRenderItemInfo,
+  Platform,
+  SafeAreaView,
+  VirtualizedList,
+} from 'react-native';
 import PillMainContainer from '../../../components/pill/PillMainContainer';
-import usePill from '../../../hooks/usePill';
+import { useLSelector } from '../../../redux/hooks';
+import PillRender from '../../../components/pill/PillRender';
+import { useGetIntroductionPillQuery } from '../../../redux/service/pills.service';
+import FreeTextAnswer from '../../../components/bubbles/FreeTextAnswer';
+import MainContainer from '../../../components/common/MainContainer';
+import PillHeader from '../../../components/pill/PillHeader';
 
 const Pill = () => {
-  const { blocks, AnswerBubble, renderThread: RenderThread } = usePill('bubble_id');
-
-  useEffect(() => {
-    console.log('bubble blocks ', blocks);
-  }, [blocks]);
+  const { data } = useGetIntroductionPillQuery();
+  const blocksIds = useLSelector((state) => state.pill.blocksIds);
+  const pillTitle = useLSelector((state) => state.pill.pill?.pill?.name);
+  const pillProgress = useLSelector((state) => state.pill.pill?.pill?.progress);
+  const virtualRef = useRef<VirtualizedList<unknown> | null>();
 
   return (
     <PillMainContainer backgroundColor="primary900">
       <SafeAreaView>
-        <StyledText variant={'h1'} css={{ color: 'white' }}>
-          Pill
-        </StyledText>
-        <ScrollView
-          contentContainerStyle={{
-            paddingLeft: 24,
-            paddingRight: 24,
-          }}
+        <KeyboardAvoidingView
+          enabled
+          style={{ height: '100%' }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-          <RenderThread />
-        </ScrollView>
+          <PillHeader title={pillTitle ?? ''} pillNumber={1} percentageDone={pillProgress ?? 0} />
+          <VirtualizedList
+            ref={(ref) => {
+              virtualRef.current = ref;
+            }}
+            renderItem={({ item, index }: ListRenderItemInfo<any>) => (
+              <PillRender
+                key={'bubble-inner-' + item.id}
+                blockId={item}
+                nextBlockId={blocksIds?.[index + 1] ?? undefined}
+              />
+            )}
+            contentContainerStyle={{
+              padding: 24,
+              flexGrow: 1,
+            }}
+            onContentSizeChange={(comp) =>
+              setTimeout(() => {
+                virtualRef?.current?.scrollToEnd();
+              }, 250)
+            }
+            data={blocksIds}
+            getItemCount={() => blocksIds.length}
+            getItem={(data, index) => data[index]}
+            keyExtractor={(item, index) => index.toString()}
+          />
+          <FreeTextAnswer />
+          <StyledBox />
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </PillMainContainer>
   );

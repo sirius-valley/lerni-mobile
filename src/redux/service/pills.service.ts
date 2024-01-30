@@ -1,4 +1,5 @@
 import { api } from './api';
+import { PillAnswerBody, PillResponse } from './types/pill.response';
 
 export const mockedPill = {
   pillId: 'id01',
@@ -45,39 +46,32 @@ type PillsType = typeof mockedPill;
 
 export const pillsApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getPillById: builder.mutation<PillsType, { pillId: string }>({
-      query: ({ pillId }) => ({
-        url: `pill`,
-        method: 'POST',
-        body: { pillId },
-      }),
-    }),
-    answerPill: builder.mutation<PillsType, { content: string; contentType: 'text' | 'image' }>({
-      query: ({ content, contentType }) => ({
-        url: `pill/answer`,
-        method: 'POST',
-        body: { content, contentType },
-      }),
-    }),
-
     pillById: builder.query<any, any>({
       query: (id) => ({
         url: `pill/${id}`,
         method: 'GET',
       }),
     }),
-    answer: builder.mutation<any, any>({
-      query: (id) => ({
-        url: `pill/${id}`,
+    answer: builder.mutation<PillResponse, PillAnswerBody>({
+      query: (body) => ({
+        url: `/api/pill/answer`,
         method: 'POST',
+        body: body,
+      }),
+    }),
+    getIntroductionPill: builder.query<PillResponse, void>({
+      query: () => ({
+        url: `api/pill/introduction`,
+        method: 'GET',
       }),
     }),
   }),
 });
 
 export const {
-  useGetPillByIdMutation,
-  useAnswerPillMutation,
   usePillByIdQuery,
   useAnswerMutation,
+
+  // introduction
+  useGetIntroductionPillQuery,
 } = pillsApi;

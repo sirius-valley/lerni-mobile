@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyledPropertiesInterface } from '../components/styled/styles';
 
 export enum ComponentVariantType {
   DARK = 'dark',
@@ -9,7 +10,7 @@ export enum ComponentVariantType {
 
 export type ButtonVariant = 'dark' | 'primary' | 'red' | 'ghost';
 
-export interface MessageContainerProps {
+export interface MessageContainerProps extends StyledPropertiesInterface {
   user?: UserTypes;
   handleOpenImage?: () => void;
 }

@@ -9,9 +9,8 @@ import { StyledColumn } from '../../styled/styles';
 
 interface FreeTextBubbleInterface {
   value: string;
-  onChangeText?: (value: string) => void;
-  handlePress?: () => void;
-  status?: 'write-only' | 'read-only';
+  onChangeText: (value: string) => void;
+  handlePress: () => void;
   textLimit?: number;
 }
 
@@ -19,17 +18,15 @@ const FreeTextBubble = ({
   value,
   onChangeText,
   handlePress,
-  status = 'write-only',
   textLimit = 150,
 }: FreeTextBubbleInterface) => {
   const textLength = value.length;
 
   const handleOnChangeText = (text: string) => {
-    if (!onChangeText) return null;
-    return onChangeText(text);
+    onChangeText(text);
   };
 
-  if (status === 'read-only') return <StaticBubble text={value} />;
+  // if (status === 'read-only') return <StaticBubble text={value} />;
 
   return (
     <StyledFreeTextContainer>

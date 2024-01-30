@@ -1,7 +1,8 @@
-import styled from 'styled-components/native';
+import styled, { css as styledComponent } from 'styled-components/native';
 import { MessageContainerProps } from '../../../utils/constants';
 import { Dimensions } from 'react-native';
 import { memo } from 'react';
+import { StyledBox } from '../../styled/styles';
 
 export const StyledImageBubble = styled.Image<MessageContainerProps>`
   display: flex;
@@ -22,12 +23,11 @@ export const StyledImageBubble = styled.Image<MessageContainerProps>`
   }};
 `;
 
-export const MessageContainer = memo(styled.View<MessageContainerProps>`
+export const MessageContainer = styled(StyledBox)<MessageContainerProps>`
   display: flex;
-  margin: 4px 0px;
-  width: ${Dimensions.get('window').width * 0.9}px;
+  margin: 4px 0;
+  width: 100%;
   flex-direction: column;
-  gap: 4px;
   align-items: ${(props) => {
     if (props.user === 'professor') {
       return 'flex-start';
@@ -35,9 +35,10 @@ export const MessageContainer = memo(styled.View<MessageContainerProps>`
       return 'flex-end';
     }
   }};
-`);
+  ${({ css }) => css && styledComponent(css)};
+`;
 
-export const TextBubbleContainer = styled.View<MessageContainerProps>`
+export const TextBubbleContainer = styled(StyledBox)<MessageContainerProps>`
   display: flex;
   padding: 12px 18px;
   flex-direction: column;
