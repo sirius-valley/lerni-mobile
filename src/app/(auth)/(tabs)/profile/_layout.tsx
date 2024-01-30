@@ -2,7 +2,7 @@ import { Stack } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from 'styled-components';
 
-export default function ProfileLayout() {
+const ProfileLayout = () => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   return (
@@ -18,4 +18,6 @@ export default function ProfileLayout() {
       }}
     />
   );
-}
+};
+
+export default ProfileLayout;

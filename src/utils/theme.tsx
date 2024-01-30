@@ -3,6 +3,7 @@ export const theme = {
   primary900: '#001B23',
   primary800: '#072C37',
   primary700: '#095869',
+  primary650: '#005067',
   primary600: '#307F90',
   primary500: '#18BAC8',
   primary400: '#33C7D3',
@@ -40,7 +41,7 @@ export const theme = {
     fontFamily: 'Roboto-Bold',
     fontSize: '18px',
     fontStyle: 'normal',
-    fontWeight: 600,
+    fontWeight: 700,
   },
   h4: {
     fontFamily: 'Roboto-Bold',
