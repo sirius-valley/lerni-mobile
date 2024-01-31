@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Choice } from '../../styled/Choice';
 import { StyledChoiceMainContainer } from '../../styled/Choice/styles';
 import { StyledColumn } from '../../styled/styles';

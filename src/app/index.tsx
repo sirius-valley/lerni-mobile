@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'expo-router';
-import { setToken } from '../redux/slice/auth.slice';
-import * as SecureStore from 'expo-secure-store';
 import { useLDispatch } from '../redux/hooks';
 import { getTokenFromSecureStore } from '../utils/utils';
 

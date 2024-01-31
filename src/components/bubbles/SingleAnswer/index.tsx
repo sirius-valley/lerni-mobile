@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Choice, ChoiceProps } from '../../styled/Choice';
+import React from 'react';
+import { Choice } from '../../styled/Choice';
 import { StyledChoiceMainContainer } from '../../styled/Choice/styles';
 
 interface SingleAnswerProps {

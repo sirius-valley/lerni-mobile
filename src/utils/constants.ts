@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyledPropertiesInterface } from '../components/styled/styles';
 
 export enum ComponentVariantType {

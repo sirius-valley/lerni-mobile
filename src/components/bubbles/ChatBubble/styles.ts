@@ -1,7 +1,5 @@
 import styled, { css as styledComponent } from 'styled-components/native';
 import { MessageContainerProps } from '../../../utils/constants';
-import { Dimensions } from 'react-native';
-import { memo } from 'react';
 import { StyledBox } from '../../styled/styles';
 
 export const StyledImageBubble = styled.Image<MessageContainerProps>`

@@ -1,7 +1,6 @@
 import { ErrorIllustration } from '../../../../assets/icons/ErrorIllustration';
 import CustomError from './CustomError';
 import { GhostIcon } from '../../../../assets/icons/GhostIcon';
-import { FC } from 'react';
 
 interface ErrorDisplayInterface {
   type: '404' | '505';

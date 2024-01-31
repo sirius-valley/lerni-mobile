@@ -11,8 +11,6 @@ import { useTheme } from 'styled-components';
 import { LogoutIcon } from '../../../../../assets/icons/LogoutIcon';
 import { Pressable } from 'react-native';
 import { useProfileQuery } from '../../../../redux/service/profile.service';
-import Button from '../../../../components/styled/Button';
-import { useRouter } from 'expo-router';
 
 const profileMocked = {
   name: 'Valentin',

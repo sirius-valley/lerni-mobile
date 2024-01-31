@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import FreeTextBubble from '../../common/FreeTextBubble';
 import { useLSelector } from '../../../redux/hooks';
 import { StyledBox } from '../../styled/styles';

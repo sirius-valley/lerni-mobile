@@ -2,7 +2,6 @@ import React from 'react';
 import { StyledColumn, StyledRow, StyledText } from '../../styled/styles';
 import * as Progress from 'react-native-progress';
 import { useTheme } from 'styled-components';
-import { Avatar } from '../../common/Avatar';
 import ProgramCard from '../../program/ProgramCard';
 
 interface SearchItemInterface {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import { StyledBox } from '../../styled/styles';
 import { useTheme } from 'styled-components/native';
 import { ThemeColors } from '../../../utils/theme';

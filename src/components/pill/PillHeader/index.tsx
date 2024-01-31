@@ -61,7 +61,7 @@ const PillHeader = ({ title, pillNumber, percentageDone }: PillHeaderProps) => {
                 {title}
               </StyledText>
             </StyledRow>
-            <TouchableOpacity onPress={() => router.back()}>
+            <TouchableOpacity onPress={() => router.replace('/(auth)/(tabs)/explore')}>
               <CancelIcon color={theme.gray500} size={24} />
             </TouchableOpacity>
           </StyledRow>
