@@ -11,7 +11,7 @@ export const homeApi = api.injectEndpoints({
   }),
 });
 
-export const { useProgramEnrolledQuery, useAboutMeQuery } = homeApi;
+export const { useProgramEnrolledQuery, useLazyAboutMeQuery } = homeApi;
 
 export const {
   endpoints: { programEnrolled, aboutMe },

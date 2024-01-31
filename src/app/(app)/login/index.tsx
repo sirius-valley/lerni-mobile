@@ -12,8 +12,8 @@ import { useRouter } from 'expo-router';
 import { useLDispatch } from '../../../redux/hooks';
 import { showToast } from '../../../redux/slice/utils.slice';
 import { CustomError } from '../../../redux/service/api';
-import { useAboutMeQuery } from '../../../redux/service/home.service';
 import { authActions } from '../../../redux/slice/auth.slice';
+import { useLazyAboutMeQuery } from '../../../redux/service/home.service';
 
 const SigninSchema = Yup.object().shape({
   email: Yup.string()
@@ -32,6 +32,7 @@ const SigninSchema = Yup.object().shape({
 const LoginScreen = () => {
   const theme = useTheme();
   const [login, { isLoading, error }] = useLoginMutation();
+  const [fetch] = useLazyAboutMeQuery();
 
   const router = useRouter();
 
@@ -45,9 +46,7 @@ const LoginScreen = () => {
     }
   }, [error]);
   const handleLogin = (values: any) => {
-    login(values);
-    const { data } = useAboutMeQuery();
-    dispatch(authActions.setCompletedIntroduction(data.hasCompletedIntroduction));
+    login(values).then(() => fetch());
   };
 
   return (

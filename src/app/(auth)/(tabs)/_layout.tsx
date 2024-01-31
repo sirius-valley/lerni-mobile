@@ -6,12 +6,13 @@ import { useTheme } from 'styled-components';
 import TabItem from '../../../components/tab/TabItem';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
-import { useLDispatch, useLSelector } from '../../../redux/hooks';
+import { useLDispatch } from '../../../redux/hooks';
+import { useLazyAboutMeQuery } from '../../../redux/service/home.service';
 
 const TabsLayout = () => {
   const insets = useSafeAreaInsets();
   const theme = useTheme();
-  const hasCompletedIntroduction = useLSelector((state) => state.auth.hasCompletedIntroduction);
+  const [refetch, { data: aboutMe }] = useLazyAboutMeQuery();
   const dispatch = useLDispatch();
 
   const token = useSelector((state: RootState) => state.auth.token);
@@ -40,7 +41,7 @@ const TabsLayout = () => {
         },
       }}
     >
-      {bottomTabs.map(({ name, screen, iconName }, index) => (
+      {bottomTabs.map(({ name, screen, iconName, needsIntroduction }, index) => (
         <Tabs.Screen
           key={index}
           name={screen}
@@ -51,10 +52,7 @@ const TabsLayout = () => {
                 name={name}
                 focused={focused}
                 icon={iconName}
-                onPress={
-                  !hasCompletedIntroduction &&
-                  (name == 'Perfil' || name == 'Trivias' ? handlePress : undefined)
-                }
+                onPress={needsIntroduction ? handlePress : undefined}
               />
             ),
           }}

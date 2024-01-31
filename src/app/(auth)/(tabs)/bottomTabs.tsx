@@ -10,6 +10,7 @@ interface BottomTab {
   screen: string;
   iconName: React.FC<IconInterface>;
   roles?: string[];
+  needsIntroduction?: boolean;
 }
 
 export const bottomTabs: BottomTab[] = [
@@ -18,12 +19,14 @@ export const bottomTabs: BottomTab[] = [
     name: 'Explorar',
     screen: 'explore',
     iconName: CompassIcon,
+    needsIntroduction: false,
   },
   {
     id: 'Trivia',
     name: 'Trivias',
     screen: 'trivia',
     iconName: BoltIcon,
+    needsIntroduction: true,
   },
 
   {
@@ -31,5 +34,6 @@ export const bottomTabs: BottomTab[] = [
     name: 'Perfil',
     screen: 'profile',
     iconName: PersonCircleIcon,
+    needsIntroduction: true,
   },
 ];
