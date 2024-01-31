@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import React from 'react';
 import { useRouter } from 'expo-router';
 import { useLazyAboutMeQuery } from '../../../redux/service/home.service';
@@ -18,6 +18,7 @@ const Home = () => {
         alignItems: 'center',
       }}
     >
+      {/* {aboutMe?.hasCompletedIntroduction && <Pressable onPress={handleGoToPill(id)}><IntroductionPill /></Pressable>} */}
       <Text>Home</Text>
       <Text>Hola</Text>
     </View>
