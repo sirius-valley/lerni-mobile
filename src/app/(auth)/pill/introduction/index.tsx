@@ -1,19 +1,12 @@
 import React, { useRef } from 'react';
-import { StyledBox, StyledText } from '../../../components/styled/styles';
-import {
-  KeyboardAvoidingView,
-  ListRenderItemInfo,
-  Platform,
-  SafeAreaView,
-  VirtualizedList,
-} from 'react-native';
-import PillMainContainer from '../../../components/pill/PillMainContainer';
-import { useLSelector } from '../../../redux/hooks';
-import PillRender from '../../../components/pill/PillRender';
-import { useGetIntroductionPillQuery } from '../../../redux/service/pills.service';
-import FreeTextAnswer from '../../../components/bubbles/FreeTextAnswer';
-import MainContainer from '../../../components/common/MainContainer';
-import PillHeader from '../../../components/pill/PillHeader';
+import { useGetIntroductionPillQuery } from '../../../../redux/service/pills.service';
+import { useLSelector } from '../../../../redux/hooks';
+import { ListRenderItemInfo, VirtualizedList } from 'react-native';
+import PillMainContainer from '../../../../components/pill/PillMainContainer';
+import PillHeader from '../../../../components/pill/PillHeader';
+import PillRender from '../../../../components/pill/PillRender';
+import FreeTextAnswer from '../../../../components/bubbles/FreeTextAnswer';
+import { StyledBox } from '../../../../components/styled/styles';
 
 const Pill = () => {
   const { data } = useGetIntroductionPillQuery();

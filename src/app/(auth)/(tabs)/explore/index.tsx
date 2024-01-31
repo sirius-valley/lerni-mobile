@@ -41,7 +41,7 @@ const Page = () => {
     >
       <ScrollView>
         <StyledColumn css={{ gap: 24 }}>
-          <Button onPress={() => router.push('/(auth)/pill')}>Introduccion</Button>
+          <Button onPress={() => router.push('/(auth)/pill/introduction')}>Introduccion</Button>
           <StyledRow
             css={{
               justifyContent: 'space-between',
