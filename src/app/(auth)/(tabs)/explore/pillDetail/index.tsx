@@ -157,7 +157,7 @@ const PillDetail = () => {
                   }}
                 >
                   <StyledRow css={{ alignItems: 'center', gap: -20 }}>
-                    {mockedPillDetail.approved.map((element) => (
+                    {mockedPillDetail.approved.slice(0, 5).map((element) => (
                       <Avatar key={element} size={48} />
                     ))}
                   </StyledRow>
@@ -185,7 +185,7 @@ const PillDetail = () => {
                 type={mockedProfessorMessage.type}
                 user={mockedProfessorMessage.user}
                 content={mockedProfessorMessage.content}
-              ></ChatBubble>
+              />
             </StyledColumn>
           </StyledColumn>
         </StyledColumn>
