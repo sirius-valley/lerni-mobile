@@ -1,9 +1,11 @@
 import { useTheme } from 'styled-components';
 import { StyledTextInput } from './styles';
 import { CSSProperties } from '../../../utils/utils';
+import { ThemeColors } from '../../../utils/theme';
 
 export interface TextInputProps {
   placeholder?: string;
+  placeholderColor?: keyof ThemeColors;
   disabled?: boolean;
   error?: boolean;
   onChangeText: (value: string) => void;
@@ -19,6 +21,7 @@ export interface TextInputProps {
 export const TextInput = ({
   placeholder,
   disabled = false,
+  placeholderColor = 'gray300',
   error = false,
   onChangeText,
   onBlur,
@@ -34,7 +37,7 @@ export const TextInput = ({
   return (
     <StyledTextInput
       placeholder={placeholder}
-      placeholderTextColor={theme.gray300}
+      placeholderTextColor={theme[placeholderColor]}
       css={css}
       error={error}
       disabled={disabled}

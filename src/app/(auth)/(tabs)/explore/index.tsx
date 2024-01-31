@@ -25,6 +25,11 @@ const Page = () => {
       },
     });
 
+  const handleGoToSearchScreen = () =>
+    router.push({
+      pathname: '(tabs)/explore/searchScreen',
+    });
+
   const isLoading = false;
   if (isLoading) {
     return <SkeletonHome />;
@@ -49,9 +54,11 @@ const Page = () => {
             <StyledText variant="h1" css={{ color: theme.gray100 }}>
               Explorar
             </StyledText>
-            <StyledBox css={{ padding: 3 }}>
-              <SearchIcon size={24} />
-            </StyledBox>
+            <Pressable onPress={handleGoToSearchScreen}>
+              <StyledBox css={{ padding: 3 }}>
+                <SearchIcon size={24} />
+              </StyledBox>
+            </Pressable>
           </StyledRow>
           <StyledColumn css={{ gap: 32 }}>
             {programCardsStructure.map(

@@ -5,11 +5,14 @@ import { useTheme } from 'styled-components';
 import { Avatar } from '../../common/Avatar';
 import ProgramCard from '../../program/ProgramCard';
 
+export type SearchResultType = 'program' | 'pill';
+export type SearchResultStatus = 'in_progress' | 'not_started' | 'completed' | 'locked';
+
 interface SearchItemInterface {
-  type: 'program' | 'pill';
+  type: SearchResultType;
   title: string;
   description: string;
-  status?: 'in_progress' | 'not_started' | 'completed' | 'locked';
+  status?: SearchResultStatus;
   progress?: number;
   imgUrl?: string;
 }
