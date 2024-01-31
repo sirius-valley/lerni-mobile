@@ -4,6 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 
 interface InitialStateAuthType {
   token: string;
+  hasCompletedIntroduction?: boolean;
 }
 
 const initialState: InitialStateAuthType = {
@@ -21,6 +22,9 @@ export const authSlice = createSlice({
     setToken: (state, payload) => {
       state.token = payload.payload;
     },
+    setCompletedIntroduction: (state, action: PayloadAction<boolean>) => {
+      state.hasCompletedIntroduction = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(authApi.endpoints.login.matchPending, (state) => {
@@ -30,6 +34,7 @@ export const authSlice = createSlice({
       authApi.endpoints.login.matchFulfilled,
       (state, action: PayloadAction<AuthType>) => {
         state.token = action.payload.token ?? '';
+        state.hasCompletedIntroduction = false;
         SecureStore.setItemAsync('token', action.payload.token ?? '');
       },
     );

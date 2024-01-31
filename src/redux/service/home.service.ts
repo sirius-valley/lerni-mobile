@@ -5,11 +5,14 @@ export const homeApi = api.injectEndpoints({
     programEnrolled: builder.query({
       query: () => ({ url: '/home', method: 'GET' }),
     }),
+    aboutMe: builder.query<any, void>({
+      query: () => ({ url: 'api/student/me' }),
+    }),
   }),
 });
 
-export const { useProgramEnrolledQuery } = homeApi;
+export const { useProgramEnrolledQuery, useAboutMeQuery } = homeApi;
 
 export const {
-  endpoints: { programEnrolled },
+  endpoints: { programEnrolled, aboutMe },
 } = homeApi;
