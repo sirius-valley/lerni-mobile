@@ -6,16 +6,11 @@ interface AvatarProps {
   borderRadius?: number;
 }
 
-export const Avatar = ({
-  uri = 'https://i.pinimg.com/222x/57/70/f0/5770f01a32c3c53e90ecda61483ccb08.jpg',
-  size = 28,
-  borderRadius = 50,
-}: AvatarProps) => {
+export const Avatar = ({ uri, size = 28, borderRadius = 50 }: AvatarProps) => {
+  const imageSource = uri ? { uri } : require('../../../../assets/default-profile.png');
   return (
     <Image
-      source={{
-        uri: uri,
-      }}
+      source={require('../../../../assets/default-profile.png')}
       style={{ width: size, height: size, borderRadius: borderRadius }}
     />
   );

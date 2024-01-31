@@ -18,10 +18,10 @@ export const SkeletonProfile = () => {
             <Skeleton height={21} width={160} css={{ borderRadius: 4 }} />
             <Skeleton height={16} width={160} css={{ borderRadius: 4 }} />
             <Skeleton height={16} width={170} css={{ borderRadius: 4 }} />
-            {/* <Skeleton height={17} width={187} css={{ borderRadius: 4 }} /> */}  
+            {/* <Skeleton height={17} width={187} css={{ borderRadius: 4 }} /> */}
           </StyledColumn>
         </StyledRow>
-        <Skeleton height={21} width={96} />
+        {/* <Skeleton height={21} width={96} /> */}
       </StyledColumn>
     </StyledColumn>
   );

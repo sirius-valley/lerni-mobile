@@ -13,6 +13,7 @@ import { Pressable } from 'react-native';
 import { useProfileQuery } from '../../../../redux/service/profile.service';
 import { useEffect, useState } from 'react';
 import { SkeletonProfile } from '../../../../components/common/Skeleton/SkeletonProfile';
+import { useMeQuery } from '../../../../redux/service/student.service';
 
 const profileMocked = {
   name: 'Valentin',
@@ -25,17 +26,9 @@ const profileMocked = {
 export default function Page() {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const [loading, setLoading] = useState(true);
-  const { data: profileData, error, isLoading } = useProfileQuery({});
+  const { data: profile, error, isLoading, isError } = useProfileQuery({});
 
   const handleLogout = () => dispatch(authActions.logout());
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(!loading)
-    }, 1500)
-  }, [loading])
-  
 
   return (
     <StyledColumn
@@ -59,27 +52,33 @@ export default function Page() {
             <LogoutIcon color={theme.primary600} size={32} />
           </Pressable>
         </StyledRow>
-        { loading ? <SkeletonProfile /> :
-        <StyledRow css={{ gap: 8 }}>
-          <StyledBox>
-            <Avatar size={94} borderRadius={97} />
-          </StyledBox>
-          <StyledColumn css={{ gap: 4, justifyContent: 'center' }}>
-            <StyledText css={{ color: theme.gray100 }} variant="h3">
-              {profileMocked.name} {profileMocked.lastname}
-            </StyledText>
-            <StyledText css={{ color: theme.gray100 }} variant="body2">
-              {profileMocked.occupation}
-            </StyledText>
-            <StyledText css={{ color: theme.gray100 }} variant="body2">
-              {profileMocked.job}
-            </StyledText>
-            <StyledText css={{ color: theme.gray100 }} variant="body2">
-              {profileMocked.city}
-            </StyledText>
-          </StyledColumn>
-        </StyledRow>
-        }
+        {isLoading || !profile?.hasCompletedIntroduction ? (
+          <SkeletonProfile />
+        ) : (
+          <StyledRow css={{ gap: 8 }}>
+            <StyledBox>
+              <Avatar
+                size={94}
+                borderRadius={97}
+                uri={profile?.image ? profile.image : undefined}
+              />
+            </StyledBox>
+            <StyledColumn css={{ gap: 4, justifyContent: 'center' }}>
+              <StyledText css={{ color: theme.gray100 }} variant="h3">
+                {profile?.name} {profile?.lastname}
+              </StyledText>
+              <StyledText css={{ color: theme.gray100 }} variant="body2">
+                {profile?.occupation}
+              </StyledText>
+              <StyledText css={{ color: theme.gray100 }} variant="body2">
+                {profile?.job}
+              </StyledText>
+              <StyledText css={{ color: theme.gray100 }} variant="body2">
+                {profile?.city}
+              </StyledText>
+            </StyledColumn>
+          </StyledRow>
+        )}
       </StyledColumn>
     </StyledColumn>
   );
