@@ -24,42 +24,34 @@ const Pill = () => {
 
   return (
     <PillMainContainer backgroundColor="primary900">
-      <SafeAreaView>
-        <KeyboardAvoidingView
-          enabled
-          style={{ height: '100%' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
-          <PillHeader title={pillTitle ?? ''} pillNumber={1} percentageDone={pillProgress ?? 0} />
-          <VirtualizedList
-            ref={(ref) => {
-              virtualRef.current = ref;
-            }}
-            renderItem={({ item, index }: ListRenderItemInfo<any>) => (
-              <PillRender
-                key={'bubble-inner-' + item.id}
-                blockId={item}
-                nextBlockId={blocksIds?.[index + 1] ?? undefined}
-              />
-            )}
-            contentContainerStyle={{
-              padding: 24,
-              flexGrow: 1,
-            }}
-            onContentSizeChange={(comp) =>
-              setTimeout(() => {
-                virtualRef?.current?.scrollToEnd();
-              }, 250)
-            }
-            data={blocksIds}
-            getItemCount={() => blocksIds.length}
-            getItem={(data, index) => data[index]}
-            keyExtractor={(item, index) => index.toString()}
+      <PillHeader title={pillTitle ?? ''} pillNumber={1} percentageDone={pillProgress ?? 0} />
+      <VirtualizedList
+        ref={(ref) => {
+          virtualRef.current = ref;
+        }}
+        renderItem={({ item, index }: ListRenderItemInfo<any>) => (
+          <PillRender
+            key={'bubble-inner-' + item.id}
+            blockId={item}
+            nextBlockId={blocksIds?.[index + 1] ?? undefined}
           />
-          <FreeTextAnswer />
-          <StyledBox />
-        </KeyboardAvoidingView>
-      </SafeAreaView>
+        )}
+        contentContainerStyle={{
+          padding: 24,
+          flexGrow: 1,
+        }}
+        onContentSizeChange={(comp) =>
+          setTimeout(() => {
+            virtualRef?.current?.scrollToEnd();
+          }, 250)
+        }
+        data={blocksIds}
+        getItemCount={() => blocksIds.length}
+        getItem={(data, index) => data[index]}
+        keyExtractor={(item, index) => index.toString()}
+      />
+      <FreeTextAnswer />
+      <StyledBox />
     </PillMainContainer>
   );
 };

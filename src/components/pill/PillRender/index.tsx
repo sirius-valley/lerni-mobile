@@ -1,6 +1,6 @@
 import { useLDispatch, useLSelector } from '../../../redux/hooks';
 import TextBubble from '../../bubbles/TextBubble';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Avatar } from '../../common/Avatar';
 import ImageBubble from '../../bubbles/ImageBubble';
 import MultipleAnswer from '../../bubbles/MultipleAnswer';
@@ -31,6 +31,19 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
   const last = useLSelector((state) => state.pill.last);
   const isLastBubbleSide = user !== nextBlockUser;
   const dispatch = useLDispatch();
+
+  const openFreeText = () => {
+    // This is a bolivian solution to a problem that should not exist
+    dispatch(setFreeTextQuestionId({ id: block.id }));
+  };
+
+  useEffect(() => {
+    if (block.type === 'free-text' && last === block.id) {
+      dispatch(setFreeTextQuestionId({ id: block.id }));
+    }
+  }, [block.type]);
+
+  // We could add a useCallback to memorize this function. In the future, we can add this change and check that everything is working as expected
   const BubbleToRender = () => {
     switch (block.type) {
       case 'text':
@@ -85,7 +98,6 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
             </>
           );
         } else {
-          dispatch(setFreeTextQuestionId({ id: block.id }));
           return <></>;
         }
     }
