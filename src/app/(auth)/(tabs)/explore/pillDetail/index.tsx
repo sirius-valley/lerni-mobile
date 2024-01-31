@@ -128,7 +128,7 @@ const PillDetail = () => {
                 css={{
                   gap: 8,
                   justifyContent: 'center',
-                  width: 342,
+                  width: '100%',
                 }}
               >
                 <StyledText
