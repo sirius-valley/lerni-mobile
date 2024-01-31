@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { StyledBox, StyledColumn } from '../../../styled/styles';
+import { styled } from 'styled-components';
 
 interface SkeletonContainerProps {
   skeletonToRender: ReactNode;
@@ -21,3 +22,11 @@ export const SkeletonContainer = ({
     </StyledBox>
   );
 };
+
+export const StyledSkeletonContainer = styled(StyledColumn)`
+  padding: 16px;
+  border-radius: 12px;
+  width: 100%;
+  background-color: white;
+  border: 1px solid ${(props: any) => props.theme.grayColorLight100};
+`;
