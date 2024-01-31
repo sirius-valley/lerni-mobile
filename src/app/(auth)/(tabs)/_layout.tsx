@@ -53,7 +53,7 @@ const TabsLayout = () => {
                 icon={iconName}
                 onPress={
                   !hasCompletedIntroduction &&
-                  (name == 'Explorar' || name == 'Trivias' ? handlePress : undefined)
+                  (name == 'Perfil' || name == 'Trivias' ? handlePress : undefined)
                 }
               />
             ),
