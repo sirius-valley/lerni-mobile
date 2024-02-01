@@ -1,15 +1,40 @@
-import { Animated, Easing, StyleProp, ViewStyle } from 'react-native';
+import { Animated, Easing } from 'react-native';
 import React, { useEffect, useRef } from 'react';
-import { StyledColumn } from '../../styled/styles';
-import { styled, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 
-const Skeleton = (props: {
+interface SkeletonProps {
   width?: number;
   height: number;
+  type?: 'chatBubble' | 'ellipse' | 'default';
   css?: Record<string, string | number | boolean>;
-}) => {
+}
+
+const Skeleton = ({ width, height, type = 'default', css }: SkeletonProps) => {
   const theme = useTheme();
   const pulseAnim = useRef(new Animated.Value(0)).current;
+  const borderRadius: Record<
+    'chatBubble' | 'ellipse' | 'default',
+    {
+      borderTopRightRadius?: number;
+      borderBottomRightRadius?: number;
+      borderTopLeftRadius?: number;
+      borderBottomLeftRadius?: number;
+      borderRadius?: number;
+    }
+  > = {
+    chatBubble: {
+      borderTopRightRadius: 16,
+      borderBottomRightRadius: 16,
+      borderTopLeftRadius: 16,
+      borderBottomLeftRadius: 2,
+    },
+    ellipse: {
+      borderRadius: 50,
+    },
+    default: {
+      borderRadius: 2,
+    },
+  };
 
   useEffect(() => {
     const sharedAnimationConfig = {
@@ -45,21 +70,20 @@ const Skeleton = (props: {
   return (
     <Animated.View
       style={[
-        { backgroundColor: theme.primary600, borderRadius: 8 },
-        { width: props?.width, height: props.height },
+        {
+          backgroundColor: theme.primary600,
+          borderRadius: borderRadius[type].borderRadius,
+          borderBottomLeftRadius: borderRadius[type].borderBottomLeftRadius,
+          borderBottomRightRadius: borderRadius[type].borderBottomRightRadius,
+          borderTopLeftRadius: borderRadius[type].borderTopLeftRadius,
+          borderTopRightRadius: borderRadius[type].borderTopRightRadius,
+        },
+        { width: width, height: height },
         { opacity: opacityAnim },
-        props.css,
+        css,
       ]}
     />
   );
 };
-
-export const StyledSkeletonContainer = styled(StyledColumn)`
-  padding: 16px;
-  border-radius: 12px;
-  width: 100%;
-  background-color: white;
-  border: 1px solid ${(props: any) => props.theme.grayColorLight100};
-`;
 
 export default Skeleton;

@@ -1,17 +1,34 @@
-import { Image } from 'react-native';
+import { CSSObject } from 'styled-components';
+import { StyledImage } from '../../styled/styles';
+import { CSSProperties } from '../../../utils/utils';
+import { DefaultProfile } from '../../../../assets/DefaultProfile';
 
 interface AvatarProps {
   uri?: string;
   size?: number;
   borderRadius?: number;
+  css?: CSSProperties;
 }
 
-export const Avatar = ({ uri, size = 28, borderRadius = 50 }: AvatarProps) => {
-  const imageSource = uri ? { uri } : require('../../../../assets/default-profile.png');
+export const Avatar = ({
+  uri,
+  size = 28,
+  borderRadius = 50,
+  css = {},
+}: AvatarProps) => {
+
+  if (!uri) {
+    return (
+      <DefaultProfile size={size} />
+    )
+  }
+  
   return (
-    <Image
-      source={require('../../../../assets/default-profile.png')}
-      style={{ width: size, height: size, borderRadius: borderRadius }}
+    <StyledImage
+      source={{
+        uri: uri,
+      }}
+      css={{ width: size, height: size, borderRadius: borderRadius, ...css }}
     />
   );
 };

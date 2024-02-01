@@ -1,4 +1,4 @@
-import { StyledChoiceContainer, StyledChoiceMainContainer, StyledChoiceText } from './styles';
+import { StyledChoiceContainer, StyledChoiceText } from './styles';
 
 export interface ChoiceProps {
   status?: 'default' | 'selected' | 'not_selected';
