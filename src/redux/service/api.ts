@@ -9,11 +9,14 @@ import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.REACT_APP_BASE_URL || 'http://localhost:3001/',
+  baseUrl:
+    process.env.REACT_APP_BASE_URL ||
+    process.env.EXPO_PUBLIC_REACT_APP_BASE_URL ||
+    'http://localhost:3000/',
   prepareHeaders: async (headers) => {
     const mobilePlatforms = ['android', 'ios'];
     if (mobilePlatforms.includes(Platform.OS)) {
-      const token = SecureStore.getItemAsync('token');
+      const token = await SecureStore.getItemAsync('token');
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }

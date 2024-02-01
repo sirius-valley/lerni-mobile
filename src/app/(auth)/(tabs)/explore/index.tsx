@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Pressable } from 'react-native';
 import {
   StyledBox,
@@ -12,7 +13,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { ProgramCardStructure, mockedProgramCardsData, programCardsStructure } from './utils';
 import { useRouter } from 'expo-router';
 import SkeletonHome from '../../../../components/home/HomeSkeleton';
-import { useEffect, useState } from 'react';
+import Button from '../../../../components/styled/Button';
 
 const Page = () => {
   const router = useRouter();
@@ -48,6 +49,7 @@ const Page = () => {
     >
       <ScrollView>
         <StyledColumn css={{ gap: 24 }}>
+          <Button onPress={() => router.push('/(auth)/pill/introduction')}>Introduccion</Button>
           <StyledRow
             css={{
               justifyContent: 'space-between',

@@ -3,7 +3,7 @@ import { api } from '../service/api';
 export const profileApi = api.injectEndpoints({
   endpoints: (builder) => ({
     profile: builder.query({
-      query: () => ({ url: '/profile/me', method: 'GET' }),
+      query: () => ({ url: 'api/student/me', method: 'GET' }),
     }),
   }),
 });

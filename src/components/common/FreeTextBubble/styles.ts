@@ -9,6 +9,7 @@ export const StyledFreeTextContainer = styled(StyledRow)`
   border-radius: 8px;
   padding: 8px 8px 8px 8px;
   gap: 10px;
+  background-color: ${({ theme }) => theme.white};
 `;
 
 export const StyledRightColumn = styled(StyledColumn)`

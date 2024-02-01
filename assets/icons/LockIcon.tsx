@@ -2,10 +2,7 @@ import React from 'react';
 import { Svg, Path } from 'react-native-svg';
 import { IconInterface } from './types';
 
-const LockIcon = ({
-  color = "#475569",
-  size = 20
-}: IconInterface) => {
+const LockIcon = ({ color = '#475569', size = 20 }: IconInterface) => {
   return (
     <Svg width={size} height={size} viewBox="0 0 14 20" fill="none">
       <Path
@@ -13,7 +10,7 @@ const LockIcon = ({
         fill={color}
       />
     </Svg>
-  )
-}
+  );
+};
 
 export default LockIcon;

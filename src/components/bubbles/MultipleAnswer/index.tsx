@@ -15,7 +15,7 @@ interface MultipleAnswerProps {
   sealed: boolean;
 }
 
-export const MultipleAnswer = ({ options, onPress, onChange, sealed }: MultipleAnswerProps) => {
+const MultipleAnswer = ({ options, onPress, onChange, sealed }: MultipleAnswerProps) => {
   return (
     <StyledColumn style={{ gap: 6, alignItems: 'flex-end' }}>
       <StyledChoiceMainContainer>
@@ -45,3 +45,5 @@ export const MultipleAnswer = ({ options, onPress, onChange, sealed }: MultipleA
     </StyledColumn>
   );
 };
+
+export default MultipleAnswer;
