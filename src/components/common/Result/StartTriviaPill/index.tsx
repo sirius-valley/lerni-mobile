@@ -51,5 +51,5 @@ export const StartTriviaPill = () => {
     );
   };
 
-  return <Result Icon={icon} Title={title} Footer={footer} Content={content} />;
+  return <Result icon={icon} title={title} footer={footer} content={content} />;
 };

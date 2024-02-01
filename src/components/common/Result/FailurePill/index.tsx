@@ -28,14 +28,12 @@ export const FailurePill = () => {
     return (
       <StyledColumn style={{ alignItems: 'center' }}>
         <StyledText style={{ color: theme.gray50, textAlign: 'center' }}>
-          Hasta Einstein tropezó antes de triunfar.
-        </StyledText>
-        <StyledText style={{ color: theme.gray50, textAlign: 'center' }}>
-          No te desanimes. En dos días, otra oportunidad.
+          Hasta Einstein tropezó antes de triunfar. {'\n'}
+          No te desanimes. En dos días, {'\n'} otra oportunidad.
         </StyledText>
       </StyledColumn>
     );
   };
 
-  return <Result Icon={icon} Title={title} Footer={footer} Content={content} />;
+  return <Result icon={icon} title={title} footer={footer} content={content} />;
 };

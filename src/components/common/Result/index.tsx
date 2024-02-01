@@ -3,13 +3,18 @@ import { useTheme } from 'styled-components/native';
 import { StyledBox, StyledColumn, StyledText } from '../../styled/styles';
 
 interface ResultProps {
-  Icon: React.FunctionComponent;
-  Title: string;
-  Content: () => JSX.Element;
-  Footer: () => JSX.Element;
+  icon: React.FunctionComponent;
+  title: string;
+  content: () => JSX.Element;
+  footer: () => JSX.Element;
 }
 
-export const Result = ({ Icon, Title, Content, Footer }: ResultProps) => {
+export const Result = ({
+  icon: Icon,
+  title: Title,
+  content: Content,
+  footer: Footer,
+}: ResultProps) => {
   const theme = useTheme();
   return (
     <StyledColumn
