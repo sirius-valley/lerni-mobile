@@ -1,7 +1,8 @@
 import { TextInputProps } from '.';
 import styled, { css as styledComponent } from 'styled-components/native';
+import { TextInput } from 'react-native';
 
-export const StyledTextInput = styled.TextInput<TextInputProps>`
+export const StyledTextInput = styled(TextInput)<TextInputProps>`
   border-radius: 8px;
   padding: 6px 16px 6px 16px;
   height: 40px;

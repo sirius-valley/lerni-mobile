@@ -95,7 +95,6 @@ export default function Page() {
           value={texto}
           onChangeText={(e) => handleChange(e)}
           handlePress={handlePress}
-          isSending={loading}
         />
       </StyledColumn>
     </StyledColumn>
