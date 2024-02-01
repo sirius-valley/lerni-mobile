@@ -4,7 +4,7 @@ import * as Progress from 'react-native-progress';
 import { useTheme } from 'styled-components';
 import ProgramCard from '../../program/ProgramCard';
 
-export type SearchResultType = 'program' | 'pill';
+export type SearchResultType = 'program' | 'pill' | 'professionals';
 export type SearchResultStatus = 'in_progress' | 'not_started' | 'completed' | 'locked';
 
 interface SearchItemInterface {

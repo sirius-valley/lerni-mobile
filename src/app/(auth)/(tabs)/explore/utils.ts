@@ -187,18 +187,22 @@ export const quickFilters = [
   {
     id: '0',
     label: 'Todo',
+    type: '',
   },
   {
     id: '1',
     label: 'Píldoras',
+    type: 'pill' as SearchResultType,
   },
   {
     id: '2',
     label: 'Programas',
+    type: 'program' as SearchResultType,
   },
   {
     id: '3',
     label: 'Profesionales',
+    type: 'professionals' as SearchResultType,
   },
 ];
 

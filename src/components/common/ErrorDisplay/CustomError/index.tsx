@@ -7,9 +7,10 @@ interface CustomErrorProps {
   Icon: React.FunctionComponent;
   title: string;
   content: string;
+  hasActionButton?: boolean;
 }
 
-const CustomError = ({ Icon, title, content }: CustomErrorProps) => {
+const CustomError = ({ Icon, title, content, hasActionButton = true }: CustomErrorProps) => {
   const theme = useTheme();
   const router = useRouter();
 
@@ -29,7 +30,7 @@ const CustomError = ({ Icon, title, content }: CustomErrorProps) => {
       <StyledText variant="body1" style={{ color: theme.gray100, textAlign: 'center' }}>
         {content}
       </StyledText>
-      <Button onPress={() => router.push('explore')}>{'Volver'}</Button>
+      {hasActionButton ? <Button onPress={() => router.push('explore')}>{'Volver'}</Button> : <></>}
     </StyledColumn>
   );
 };

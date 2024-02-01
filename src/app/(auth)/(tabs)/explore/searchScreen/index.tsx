@@ -7,24 +7,39 @@ import QuickFilter from '../../../../../components/search/QuickFilter';
 import { mockedSearchResults, quickFilters } from '../utils';
 import SearchItem from '../../../../../components/search/SearchItem';
 import SearchScreenSkeleton from '../../../../../components/search/SearchScreenSkeleton';
+import ErrorDisplay from '../../../../../components/common/ErrorDisplay';
 
 const SearchScreen = () => {
   const [searchValue, setSearchValue] = useState('');
   const [filterValue, setFilterValue] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [quickFilterSelected, setQuickFilterSelected] = useState(quickFilters[0]);
 
   const router = useRouter();
 
   // DEBOUNCE
+  // For now, it filters by title.
   useEffect(() => {
     const timeout = setTimeout(() => {
       setFilterValue(searchValue.toLowerCase());
-    }, 1000);
+    }, 500);
     return () => clearTimeout(timeout);
   }, [searchValue]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
   const handleCancelButton = () => router.back();
+
+  const filteredValues = mockedSearchResults
+    .filter((result) => result.title.toLowerCase().includes(filterValue))
+    .filter((result) => {
+      if (!quickFilterSelected.type) return true;
+      return result.type === quickFilterSelected.type;
+    });
 
   return (
     <StyledColumn
@@ -83,29 +98,36 @@ const SearchScreen = () => {
       </StyledRow>
 
       <ScrollView scrollIndicatorInsets={{ right: -30 }}>
-        <StyledColumn
-          css={{
-            gap: '16px',
-          }}
-        >
-          {isLoading ? (
-            <SearchScreenSkeleton />
-          ) : (
-            mockedSearchResults
-              .filter((result) => result.title.toLowerCase().includes(filterValue))
-              .map((result) => (
-                <SearchItem
-                  key={result.id}
-                  type={result.type}
-                  title={result.title}
-                  description={result.description}
-                  status={result?.status}
-                  progress={result?.progress}
-                  imgUrl={result?.imgUrl}
-                />
-              ))
-          )}
-        </StyledColumn>
+        {isLoading ? (
+          <SearchScreenSkeleton />
+        ) : (
+          <StyledColumn
+            css={{
+              gap: '16px',
+            }}
+          >
+            {filteredValues.map((result) => (
+              <SearchItem
+                key={result.id}
+                type={result.type}
+                title={result.title}
+                description={result.description}
+                status={result?.status}
+                progress={result?.progress}
+                imgUrl={result?.imgUrl}
+              />
+            ))}
+          </StyledColumn>
+        )}
+        {filteredValues.length === 0 && (
+          <StyledColumn
+            css={{
+              paddingTop: '30%',
+            }}
+          >
+            <ErrorDisplay type="no-results" />
+          </StyledColumn>
+        )}
       </ScrollView>
     </StyledColumn>
   );
