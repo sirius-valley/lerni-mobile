@@ -47,7 +47,7 @@ export enum ModalTypeEnum {
 }
 
 export const getTokenFromSecureStore = async (dispatch: Dispatch, callback?: () => void) => {
-  const token = 'asd';
+  const token = await SecureStore.getItemAsync('token');
   if (token) {
     dispatch(setToken(token));
   }
