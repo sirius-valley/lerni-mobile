@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useGetIntroductionPillQuery } from '../../../../redux/service/pills.service';
-import { useLSelector } from '../../../../redux/hooks';
+import { useLDispatch, useLSelector } from '../../../../redux/hooks';
 import {
   Animated,
   Dimensions,
@@ -18,6 +18,7 @@ import { SuccessPill } from '../../../../components/common/Result/SuccessPill';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import usePrevious from '../../../../hook/usePrevious';
 import { PillResponse } from '../../../../redux/service/types/pill.response';
+import { api } from '../../../../redux/service/api';
 
 const Pill = () => {
   const { data } = useGetIntroductionPillQuery();
@@ -25,6 +26,7 @@ const Pill = () => {
   const pillTitle = useLSelector((state) => state.pill.pill?.pill?.name);
   const pillProgress = useLSelector((state) => state.pill.pill?.pill?.progress);
   const pillCompleted = useLSelector((state) => state.pill.pill?.pill?.completed);
+  const dispatch = useLDispatch();
 
   const virtualRef = useRef<VirtualizedList<unknown> | null>();
   const prevData = usePrevious<boolean>(pillCompleted);
@@ -54,6 +56,7 @@ const Pill = () => {
 
   useEffect(() => {
     if (prevData !== undefined && pillCompleted !== prevData) {
+      dispatch(api.util?.invalidateTags(['ME']));
       setTimeout(() => animateBoxes(), 1250);
     }
   }, [pillCompleted, prevData]);

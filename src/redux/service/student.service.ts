@@ -1,8 +1,9 @@
 import { api } from './api';
+import { MeResponse } from './types/student.response';
 
 export const profileApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    me: builder.query<any, void>({
+    me: builder.query<MeResponse, void>({
       query: () => ({ url: 'api/student/me' }),
     }),
   }),

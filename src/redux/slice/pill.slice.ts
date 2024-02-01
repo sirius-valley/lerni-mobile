@@ -93,12 +93,12 @@ export const pillSlice = createSlice({
           if (option.id === value) {
             return {
               ...option,
-              selected: option?.selected === 'default' ? true : 'default',
+              selected: true,
             };
           }
           return {
             ...option,
-            selected: 'not_selected',
+            selected: false,
           };
         }),
       };

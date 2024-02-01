@@ -13,14 +13,6 @@ import { Pressable } from 'react-native';
 import { SkeletonProfile } from '../../../../components/common/Skeleton/SkeletonProfile';
 import { useMeQuery } from '../../../../redux/service/student.service';
 
-const profileMocked = {
-  name: 'Valentin',
-  lastname: 'Morali',
-  occupation: 'Student',
-  job: 'SW developer',
-  city: 'Campana/Argentina',
-};
-
 export default function Page() {
   const dispatch = useDispatch();
   const theme = useTheme();
