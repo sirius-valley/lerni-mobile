@@ -10,8 +10,6 @@ import { Avatar } from '../../../../components/common/Avatar';
 import { useTheme } from 'styled-components';
 import { LogoutIcon } from '../../../../../assets/icons/LogoutIcon';
 import { Pressable } from 'react-native';
-import { useProfileQuery } from '../../../../redux/service/profile.service';
-import { useEffect, useState } from 'react';
 import { SkeletonProfile } from '../../../../components/common/Skeleton/SkeletonProfile';
 import { useMeQuery } from '../../../../redux/service/student.service';
 
@@ -26,7 +24,7 @@ const profileMocked = {
 export default function Page() {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const { data: profile, error, isLoading, isError } = useProfileQuery({});
+  const { data: profile, error, isLoading, isError } = useMeQuery({});
 
   const handleLogout = () => dispatch(logout());
 
@@ -68,10 +66,10 @@ export default function Page() {
                 {profile?.name} {profile?.lastname}
               </StyledText>
               <StyledText css={{ color: theme.gray100 }} variant="body2">
-                {profile?.occupation}
+                {profile?.career}
               </StyledText>
               <StyledText css={{ color: theme.gray100 }} variant="body2">
-                {profile?.job}
+                {profile?.profession}
               </StyledText>
               <StyledText css={{ color: theme.gray100 }} variant="body2">
                 {profile?.city}
