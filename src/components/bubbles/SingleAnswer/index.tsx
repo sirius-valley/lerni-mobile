@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { Choice, ChoiceProps } from '../../styled/Choice';
+import React from 'react';
+import { Choice } from '../../styled/Choice';
 import { StyledChoiceMainContainer } from '../../styled/Choice/styles';
 
 interface SingleAnswerProps {
   options: {
     id: string;
     text: string;
-    selected?: boolean;
+    selected?: boolean | string;
   }[];
   onPress: (id: string) => void;
   sealed: boolean;
 }
 
-export const SingleAnswer = ({ options, onPress, sealed }: SingleAnswerProps) => {
+const SingleAnswer = ({ options, onPress, sealed }: SingleAnswerProps) => {
   return (
     <StyledChoiceMainContainer>
       {options.map((option) => (
         <Choice
           status={
-            typeof option.selected == 'boolean'
+            typeof option.selected == 'boolean' || sealed
               ? option.selected
                 ? 'selected'
                 : 'not_selected'
@@ -33,3 +33,5 @@ export const SingleAnswer = ({ options, onPress, sealed }: SingleAnswerProps) =>
     </StyledChoiceMainContainer>
   );
 };
+
+export default SingleAnswer;

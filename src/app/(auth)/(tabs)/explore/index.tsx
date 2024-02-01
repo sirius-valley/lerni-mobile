@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Pressable } from 'react-native';
 import {
   StyledBox,
@@ -12,10 +13,18 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { ProgramCardStructure, mockedProgramCardsData, programCardsStructure } from './utils';
 import { useRouter } from 'expo-router';
 import SkeletonHome from '../../../../components/home/HomeSkeleton';
+import Button from '../../../../components/styled/Button';
 
 const Page = () => {
   const router = useRouter();
   const theme = useTheme();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 700);
+  }, []);
 
   const handleGoToProgram = (id: string) =>
     router.push({
@@ -30,10 +39,10 @@ const Page = () => {
       pathname: '(tabs)/explore/searchScreen',
     });
 
-  const isLoading = false;
-  if (isLoading) {
+  if (loading) {
     return <SkeletonHome />;
   }
+
   return (
     <StyledBox
       css={{
@@ -43,8 +52,9 @@ const Page = () => {
         paddingHorizontal: 12,
       }}
     >
-      <ScrollView>
+      <ScrollView scrollIndicatorInsets={{ right: -30 }}>
         <StyledColumn css={{ gap: 24 }}>
+          <Button onPress={() => router.push('/(auth)/pill/introduction')}>Introduccion</Button>
           <StyledRow
             css={{
               justifyContent: 'space-between',
@@ -75,7 +85,7 @@ const Page = () => {
                       {label}
                     </StyledText>
                     {mockedProgramCardsData[status].length > 3 && (
-                      <Pressable onPress={() => alert('Ver más ')}>
+                      <Pressable onPress={() => {}}>
                         <StyledText
                           css={{
                             color: theme.gray300,

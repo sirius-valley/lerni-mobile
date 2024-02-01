@@ -11,7 +11,7 @@ import SearchScreenSkeleton from '../../../../../components/search/SearchScreenS
 const SearchScreen = () => {
   const [searchValue, setSearchValue] = useState('');
   const [filterValue, setFilterValue] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [quickFilterSelected, setQuickFilterSelected] = useState(quickFilters[0]);
 
   const router = useRouter();

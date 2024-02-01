@@ -1,7 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { api } from './service/api';
 import authReducer from './slice/auth.slice';
+import studentReducer from './slice/student.slice';
 import utilsReducer from './slice/utils.slice';
+import pillReducer from './slice/pill.slice';
 import { persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -9,6 +11,8 @@ const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
   auth: authReducer,
   utils: utilsReducer,
+  student: studentReducer,
+  pill: pillReducer,
 });
 
 const persistConfig = {

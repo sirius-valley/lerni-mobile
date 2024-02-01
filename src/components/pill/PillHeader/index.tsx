@@ -4,24 +4,22 @@ import { useTheme } from 'styled-components';
 import * as Progress from 'react-native-progress';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { CancelIcon } from '../../../../assets/icons/CancelIcon';
+import { useRouter } from 'expo-router';
 
-interface Pill {
+export interface PillHeaderProps {
   title: string;
   pillNumber: number;
   percentageDone: number;
 }
 
-const PillHeader = () => {
+const PillHeader = ({ title, pillNumber, percentageDone }: PillHeaderProps) => {
   const theme = useTheme();
-  const mockedPill: Pill = {
-    title: 'Nombre de la pildora',
-    pillNumber: 1,
-    percentageDone: 0.35,
-  };
+  const router = useRouter();
+
   return (
     <StyledRow
       css={{
-        height: 117,
+        height: 'fit-content',
         background: theme.primary900,
         width: '100%',
       }}
@@ -47,9 +45,9 @@ const PillHeader = () => {
                 borderWidth={0}
                 unfilledColor={theme.gray600}
                 color={theme.primary500}
-                progress={mockedPill.percentageDone}
+                progress={percentageDone / 100}
                 showsText={true}
-                formatText={() => mockedPill.pillNumber}
+                formatText={() => pillNumber}
                 textStyle={{
                   fontSize: 18,
                   color: 'white',
@@ -60,10 +58,10 @@ const PillHeader = () => {
                 thickness={3.6}
               />
               <StyledText variant="h3" css={{ color: theme.gray100 }}>
-                {mockedPill.title}
+                {title}
               </StyledText>
             </StyledRow>
-            <TouchableOpacity onPress={() => alert('X')}>
+            <TouchableOpacity onPress={() => router.replace('/(auth)/(tabs)/explore')}>
               <CancelIcon color={theme.gray500} size={24} />
             </TouchableOpacity>
           </StyledRow>
@@ -74,7 +72,7 @@ const PillHeader = () => {
             borderBottomColor: theme.gray500,
             width: '100%',
           }}
-        ></StyledBox>
+        />
       </StyledColumn>
     </StyledRow>
   );

@@ -9,14 +9,14 @@ import {
 } from '../../../../../components/styled/styles';
 import BackArrow from '../../../../../../assets/icons/BackArrow';
 import { Pressable, ScrollView } from 'react-native';
-import ProgramImage, { ProgramStatus } from '../../../../../components/program/ProgramImage';
+import ProgramImage from '../../../../../components/program/ProgramImage';
 import * as Progress from 'react-native-progress';
 import { useTheme } from 'styled-components';
 import RhombusIcon from '../../../../../../assets/icons/RhombusIcon';
 import BulletListIcon from '../../../../../../assets/icons/BulletListIcon';
 import ClockIcon from '../../../../../../assets/icons/ClockIcon';
 import PillRow from '../../../../../components/program/PillRow';
-import { mockedLeaderboardRows, mockedPills } from '../utils';
+import { mockedLeaderboardRows, mockedPills, Status } from '../utils';
 import LeaderboardRow from '../../../../../components/program/LeaderboardRow';
 import MessageIcon from '../../../../../../assets/icons/MessageIcon';
 
@@ -31,7 +31,7 @@ const ProgramDetail = () => {
     // title: 'Programa 1',
     imgUrl:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/240px-React_Logo_SVG.svg.png',
-    status: 'in_progress' as ProgramStatus,
+    status: 'in_progress' as Status,
     progress: 0.32,
     pillData: {
       pillProgress: 0.32,
@@ -155,7 +155,7 @@ const ProgramDetail = () => {
           >
             <MessageIcon size={24} />
 
-            <Pressable onPress={() => alert('to be defined')}>
+            <Pressable onPress={() => router.push('/explore/comments')}>
               <StyledText
                 variant="body2"
                 color="primary500"
