@@ -7,12 +7,14 @@ import TabItem from '../../../components/tab/TabItem';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { useLDispatch } from '../../../redux/hooks';
-import { useLazyMeQuery } from '../../../redux/service/student.service';
+import { useLazyMeQuery, useMeQuery } from '../../../redux/service/student.service';
+import { setModalOpen } from '../../../redux/slice/utils.slice';
+import { ModalTypeEnum } from '../../../utils/utils';
 
 const TabsLayout = () => {
   const insets = useSafeAreaInsets();
   const theme = useTheme();
-  const [refetch, { data: aboutMe }] = useLazyMeQuery();
+  const { data: aboutMe } = useMeQuery();
   const dispatch = useLDispatch();
 
   const token = useSelector((state: RootState) => state.auth.token);
@@ -22,8 +24,7 @@ const TabsLayout = () => {
   }
 
   const handlePress = () => {
-    // dispatch(setModalOpen({modalType: ModalTypeEnum.MODAL_TO_BE_DEFINED}))
-    alert('Modal a definir');
+    dispatch(setModalOpen({ modalType: ModalTypeEnum.INTRO_MODAL }));
   };
   return (
     <Tabs

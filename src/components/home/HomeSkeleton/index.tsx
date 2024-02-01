@@ -28,9 +28,7 @@ const SkeletonHome = () => {
             <Skeleton width={24} height={24} />
           </StyledBox>
         </StyledRow>
-        <StyledBox css={{ alignItems: 'center', width: '100%', justifyContent: 'center' }}>
-          <Skeleton width={342} height={50} />
-        </StyledBox>
+
         <StyledColumn css={{ gap: 24 }}>
           <StyledColumn css={{ gap: 8 }}>
             <Skeleton width={71} height={21} />

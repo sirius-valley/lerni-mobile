@@ -4,6 +4,7 @@ import { useLSelector } from '../../../redux/hooks';
 import { StyledColumn, StyledText } from '../../../components/styled/styles';
 import { useTheme } from 'styled-components';
 import Button from '../../../components/styled/Button';
+import { useRouter } from 'expo-router';
 
 interface IntroModalProps {
   handleOnClose: () => void;
@@ -14,6 +15,12 @@ const IntroModal = ({ handleOnClose }: IntroModalProps) => {
   const theme = useTheme();
   const modalType = useLSelector((state) => state.utils.modalType);
   const open = !!modalType;
+  const route = useRouter();
+
+  const handleGoToIntroduction = () => {
+    route.push('/(auth)/pill/introduction');
+    handleOnClose();
+  };
   return (
     <Modal animationType="slide" transparent={true} visible={open} onRequestClose={handleOnClose}>
       <StyledColumn
@@ -56,7 +63,7 @@ const IntroModal = ({ handleOnClose }: IntroModalProps) => {
         </StyledColumn>
 
         <Button
-          onPress={handleOnClose}
+          onPress={handleGoToIntroduction}
           variant={'primary'}
           css={{
             width: '100%',
@@ -65,7 +72,13 @@ const IntroModal = ({ handleOnClose }: IntroModalProps) => {
         >
           Ir a la introducción
         </Button>
-        <Button onPress={handleOnClose} variant="ghost">
+        <Button
+          onPress={handleOnClose}
+          variant="ghost"
+          css={{
+            width: '100%',
+          }}
+        >
           Más tarde
         </Button>
       </StyledColumn>
