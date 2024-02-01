@@ -12,7 +12,7 @@ interface AvatarProps {
 
 export const Avatar = ({ uri, size = 28, borderRadius = 50, css = {} }: AvatarProps) => {
   if (!uri) {
-    return <DefaultProfile size={size} />;
+    return <DefaultProfile size={size} css={css} />;
   }
 
   return (
