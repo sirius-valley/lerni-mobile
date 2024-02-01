@@ -8,6 +8,8 @@ node_modules/
 .idea
 .husky
 
+.env
+
 # Expo
 .expo/
 dist/
