@@ -32,7 +32,7 @@ const LoginScreen = () => {
   const theme = useTheme();
   const [login, { isLoading, error }] = useLoginMutation();
   const router = useRouter();
-  const [fetch] = useLazyMeQuery();
+  const [fetch, { data }] = useLazyMeQuery();
 
   const dispatch = useLDispatch();
 
@@ -44,7 +44,7 @@ const LoginScreen = () => {
     }
   }, [error]);
   const handleLogin = (values: any) => {
-    login(values).then(() => fetch({}));
+    login(values).then(() => fetch());
   };
 
   return (

@@ -24,7 +24,7 @@ const profileMocked = {
 export default function Page() {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const { data: profile, error, isLoading, isError } = useMeQuery({});
+  const { data: profile, error, isLoading, isError } = useMeQuery();
 
   const handleLogout = () => dispatch(logout());
 
