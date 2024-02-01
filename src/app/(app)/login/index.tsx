@@ -12,6 +12,7 @@ import { useRouter } from 'expo-router';
 import { useLDispatch } from '../../../redux/hooks';
 import { CustomError } from '../../../redux/service/api';
 import { showToast } from '../../../redux/slice/utils.slice';
+import { useLazyMeQuery } from '../../../redux/service/student.service';
 
 const SigninSchema = Yup.object().shape({
   email: Yup.string()
@@ -31,6 +32,7 @@ const LoginScreen = () => {
   const theme = useTheme();
   const [login, { isLoading, error }] = useLoginMutation();
   const router = useRouter();
+  const [fetch, { data }] = useLazyMeQuery();
 
   const dispatch = useLDispatch();
 
@@ -41,6 +43,9 @@ const LoginScreen = () => {
       dispatch(showToast({ type: 'error', text: customError.data?.message ?? '' }));
     }
   }, [error]);
+  const handleLogin = (values: any) => {
+    login(values).then(() => fetch());
+  };
 
   return (
     <MainContainer backgroundColor="primary500">
@@ -56,7 +61,7 @@ const LoginScreen = () => {
         >
           <Formik
             initialValues={{ email: '', password: '' }}
-            onSubmit={(values) => login(values)}
+            onSubmit={(values) => handleLogin(values)}
             validationSchema={SigninSchema}
           >
             {({ handleChange, handleBlur, handleSubmit, values, isValid, errors, touched }) => (

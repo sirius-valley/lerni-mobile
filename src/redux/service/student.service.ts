@@ -2,13 +2,13 @@ import { api } from './api';
 
 export const profileApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    me: builder.query({
-      query: () => ({ url: 'api/student/me', method: 'GET' }),
+    me: builder.query<any, void>({
+      query: () => ({ url: 'api/student/me' }),
     }),
   }),
 });
 
-export const { useMeQuery } = profileApi;
+export const { useMeQuery, useLazyMeQuery } = profileApi;
 
 export const {
   endpoints: { me },
