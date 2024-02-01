@@ -1,9 +1,16 @@
 import { Defs, Image, Pattern, Rect, Svg, Use } from "react-native-svg"
 import { IconInterface } from "./icons/types"
+import {CSSObject, CSSProperties} from "styled-components";
+import {ViewStyle} from "react-native";
 
-export const DefaultProfile = ({size}: IconInterface) => {  
+interface DefaultProfileProps extends IconInterface {
+    css?: ViewStyle;
+
+}
+
+export const DefaultProfile = ({size,css={}}: DefaultProfileProps) => {
   return (
-    <Svg width={size ?? "120"} height={size ?? "120"} viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <Svg width={size ?? "120"} height={size ?? "120"} viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style={css}>
     <Rect width={"120"} height={"120"} fill="url(#pattern0)"/>
     <Defs>
     <Pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
