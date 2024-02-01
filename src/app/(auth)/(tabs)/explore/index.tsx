@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Pressable } from 'react-native';
 import {
   StyledBox,
@@ -17,6 +18,17 @@ import Button from '../../../../components/styled/Button';
 const Page = () => {
   const router = useRouter();
   const theme = useTheme();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 700);
+  }, []);
+
+  if (loading) {
+    return <SkeletonHome />;
+  }
 
   const handleGoToProgram = (id: string) =>
     router.push({
@@ -26,10 +38,6 @@ const Page = () => {
       },
     });
 
-  const isLoading = false;
-  if (isLoading) {
-    return <SkeletonHome />;
-  }
   return (
     <StyledBox
       css={{
@@ -39,7 +47,7 @@ const Page = () => {
         paddingHorizontal: 12,
       }}
     >
-      <ScrollView>
+      <ScrollView scrollIndicatorInsets={{ right: -30 }}>
         <StyledColumn css={{ gap: 24 }}>
           <Button onPress={() => router.push('/(auth)/pill/introduction')}>Introduccion</Button>
           <StyledRow
@@ -70,7 +78,7 @@ const Page = () => {
                       {label}
                     </StyledText>
                     {mockedProgramCardsData[status].length > 3 && (
-                      <Pressable onPress={() => alert('Ver más ')}>
+                      <Pressable onPress={() => {}}>
                         <StyledText
                           css={{
                             color: theme.gray300,

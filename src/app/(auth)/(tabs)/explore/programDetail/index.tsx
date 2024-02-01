@@ -155,7 +155,7 @@ const ProgramDetail = () => {
           >
             <MessageIcon size={24} />
 
-            <Pressable onPress={() => alert('to be defined')}>
+            <Pressable onPress={() => router.push('/explore/comments')}>
               <StyledText
                 variant="body2"
                 color="primary500"
