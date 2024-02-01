@@ -12,7 +12,7 @@ export const Layout = () => {
   }, []);
 
   if (token) {
-    return <Redirect href={'/(tabs)/explore'} />;
+    return <Redirect href={'/(tabs)/profile'} />;
   }
 
   return <Slot />;

@@ -11,6 +11,9 @@ import { useTheme } from 'styled-components';
 import { LogoutIcon } from '../../../../../assets/icons/LogoutIcon';
 import { Pressable } from 'react-native';
 import { useProfileQuery } from '../../../../redux/service/profile.service';
+import FreeTextAnswer from '../../../../components/bubbles/FreeTextAnswer';
+import FreeTextBubble from '../../../../components/common/FreeTextBubble';
+import { useEffect, useState } from 'react';
 
 const profileMocked = {
   name: 'Valentin',
@@ -24,6 +27,22 @@ export default function Page() {
   const dispatch = useDispatch();
   const theme = useTheme();
   const { data: profileData, error, isLoading } = useProfileQuery({});
+  const [loading, setisloading] = useState(false);
+
+  const [texto, setTexto] = useState('');
+  const handleChange = (cadena: string) => {
+    setTexto(cadena);
+  };
+  const handlePress = () => {
+    alert(texto ?? 'hola');
+    setTexto('');
+    setisloading(true);
+  };
+  useEffect(() => {
+    if (loading === true) {
+      setTimeout(() => setisloading(false), 4000);
+    }
+  }, [loading]);
 
   const handleLogout = () => dispatch(logout());
 
@@ -68,6 +87,16 @@ export default function Page() {
             </StyledText>
           </StyledColumn>
         </StyledRow>
+        <StyledText css={{ backgroundColor: 'white' }}>answer</StyledText>
+        <FreeTextAnswer />
+        <StyledText css={{ backgroundColor: 'white' }}>bubble</StyledText>
+
+        <FreeTextBubble
+          value={texto}
+          onChangeText={(e) => handleChange(e)}
+          handlePress={handlePress}
+          isSending={loading}
+        />
       </StyledColumn>
     </StyledColumn>
   );

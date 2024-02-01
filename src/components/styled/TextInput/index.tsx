@@ -14,6 +14,7 @@ export interface TextInputProps {
   multiline?: boolean;
   scrollEnabled?: boolean;
   maxLength?: number;
+  onFocus?: any;
 }
 
 export const TextInput = ({
@@ -28,6 +29,7 @@ export const TextInput = ({
   multiline = false,
   scrollEnabled = true,
   maxLength,
+  onFocus,
 }: TextInputProps) => {
   const theme = useTheme();
 
@@ -46,6 +48,7 @@ export const TextInput = ({
       multiline={multiline}
       scrollEnabled={scrollEnabled}
       maxLength={maxLength}
+      onFocus={onFocus}
     />
   );
 };
