@@ -53,7 +53,7 @@ const TabsLayout = () => {
                 focused={focused}
                 icon={iconName}
                 onPress={
-                  needsIntroduction === aboutMe?.hasCompletedIntroduction ? handlePress : undefined
+                  needsIntroduction === aboutMe?.hasCompletedIntroduction ? undefined : handlePress
                 }
               />
             ),
