@@ -1,6 +1,7 @@
 import { CSSObject } from 'styled-components';
 import { StyledImage } from '../../styled/styles';
 import { CSSProperties } from '../../../utils/utils';
+import { DefaultProfile } from '../../../../assets/DefaultProfile';
 
 interface AvatarProps {
   uri?: string;
@@ -9,12 +10,11 @@ interface AvatarProps {
   css?: CSSProperties;
 }
 
-export const Avatar = ({
-  uri = 'https://i.pinimg.com/222x/57/70/f0/5770f01a32c3c53e90ecda61483ccb08.jpg',
-  size = 28,
-  borderRadius = 50,
-  css = {},
-}: AvatarProps) => {
+export const Avatar = ({ uri, size = 28, borderRadius = 50, css = {} }: AvatarProps) => {
+  if (!uri) {
+    return <DefaultProfile size={size} css={css} />;
+  }
+
   return (
     <StyledImage
       source={{

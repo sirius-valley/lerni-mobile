@@ -10,10 +10,8 @@ import { Avatar } from '../../../../components/common/Avatar';
 import { useTheme } from 'styled-components';
 import { LogoutIcon } from '../../../../../assets/icons/LogoutIcon';
 import { Pressable } from 'react-native';
-import { useProfileQuery } from '../../../../redux/service/profile.service';
-import FreeTextAnswer from '../../../../components/bubbles/FreeTextAnswer';
-import FreeTextBubble from '../../../../components/common/FreeTextBubble';
-import { useEffect, useState } from 'react';
+import { SkeletonProfile } from '../../../../components/common/Skeleton/SkeletonProfile';
+import { useMeQuery } from '../../../../redux/service/student.service';
 
 const profileMocked = {
   name: 'Valentin',
@@ -26,23 +24,7 @@ const profileMocked = {
 export default function Page() {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const { data: profileData, error, isLoading } = useProfileQuery({});
-  const [loading, setisloading] = useState(false);
-
-  const [texto, setTexto] = useState('');
-  const handleChange = (cadena: string) => {
-    setTexto(cadena);
-  };
-  const handlePress = () => {
-    alert(texto ?? 'hola');
-    setTexto('');
-    setisloading(true);
-  };
-  useEffect(() => {
-    if (loading === true) {
-      setTimeout(() => setisloading(false), 4000);
-    }
-  }, [loading]);
+  const { data: profile, error, isLoading, isError } = useMeQuery();
 
   const handleLogout = () => dispatch(logout());
 
@@ -68,34 +50,33 @@ export default function Page() {
             <LogoutIcon color={theme.primary600} size={32} />
           </Pressable>
         </StyledRow>
-        <StyledRow css={{ gap: 8 }}>
-          <StyledBox>
-            <Avatar size={94} borderRadius={97} />
-          </StyledBox>
-          <StyledColumn css={{ gap: 4, justifyContent: 'center' }}>
-            <StyledText css={{ color: theme.gray100 }} variant="h3">
-              {profileMocked.name} {profileMocked.lastname}
-            </StyledText>
-            <StyledText css={{ color: theme.gray100 }} variant="body2">
-              {profileMocked.occupation}
-            </StyledText>
-            <StyledText css={{ color: theme.gray100 }} variant="body2">
-              {profileMocked.job}
-            </StyledText>
-            <StyledText css={{ color: theme.gray100 }} variant="body2">
-              {profileMocked.city}
-            </StyledText>
-          </StyledColumn>
-        </StyledRow>
-        <StyledText css={{ backgroundColor: 'white' }}>answer</StyledText>
-        <FreeTextAnswer />
-        <StyledText css={{ backgroundColor: 'white' }}>bubble</StyledText>
-
-        <FreeTextBubble
-          value={texto}
-          onChangeText={(e) => handleChange(e)}
-          handlePress={handlePress}
-        />
+        {isLoading || !profile?.hasCompletedIntroduction ? (
+          <SkeletonProfile />
+        ) : (
+          <StyledRow css={{ gap: 8 }}>
+            <StyledBox>
+              <Avatar
+                size={94}
+                borderRadius={97}
+                uri={profile?.image ? profile.image : undefined}
+              />
+            </StyledBox>
+            <StyledColumn css={{ gap: 4, justifyContent: 'center' }}>
+              <StyledText css={{ color: theme.gray100 }} variant="h3">
+                {profile?.name} {profile?.lastname}
+              </StyledText>
+              <StyledText css={{ color: theme.gray100 }} variant="body2">
+                {profile?.career}
+              </StyledText>
+              <StyledText css={{ color: theme.gray100 }} variant="body2">
+                {profile?.profession}
+              </StyledText>
+              <StyledText css={{ color: theme.gray100 }} variant="body2">
+                {profile?.city}
+              </StyledText>
+            </StyledColumn>
+          </StyledRow>
+        )}
       </StyledColumn>
     </StyledColumn>
   );
