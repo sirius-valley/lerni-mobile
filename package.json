@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
+    "@marko19907/string-to-color": "^1.0.0",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@reduxjs/toolkit": "^2.0.1",
     "expo": "~49.0.15",

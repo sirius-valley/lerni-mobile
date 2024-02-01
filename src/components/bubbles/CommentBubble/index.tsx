@@ -7,10 +7,11 @@ interface CommentBubbleProps {
   author: string;
   avatar: string;
   comment: string;
+  authorId: string;
 }
 
-export const CommentBubble = ({ author, avatar, comment }: CommentBubbleProps) => {
-  const color = useGetNameColor(author.length);
+export const CommentBubble = ({ authorId, author, avatar, comment }: CommentBubbleProps) => {
+  const color = useGetNameColor(authorId);
   return (
     <StyledRow
       style={{
