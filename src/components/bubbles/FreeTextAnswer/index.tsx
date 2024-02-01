@@ -14,7 +14,7 @@ const FreeTextAnswer = () => {
   if (freeTextQuestionId === undefined) return null;
 
   return (
-    <StyledBox css={{ padding: 24 }}>
+    <StyledBox css={{ paddingTop: 0, paddingLeft: 24, paddingRight: 24, paddingBottom: 24 }}>
       <FreeTextBubble
         value={block?.content ?? ''}
         onChangeText={handleFreeTextAnswer}

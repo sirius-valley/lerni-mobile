@@ -156,7 +156,9 @@ export const pillSlice = createSlice({
           ...state.mapBlocks,
           ...blocksToAdd,
         };
-        state.last = action.payload.pill.bubbles[action.payload.pill.bubbles.length - 1].id;
+        if (action.payload.pill?.bubbles.length > 0) {
+          state.last = action.payload.pill?.bubbles[action.payload.pill.bubbles.length - 1]?.id;
+        }
         state.pill = action.payload;
       });
   },

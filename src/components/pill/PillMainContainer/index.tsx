@@ -1,5 +1,4 @@
 import React from 'react';
-import { KeyboardAvoidingView, Platform } from 'react-native';
 import { StyledBox } from '../../styled/styles';
 import { useTheme } from 'styled-components/native';
 import { ThemeColors } from '../../../utils/theme';
@@ -23,13 +22,7 @@ const MainContainer = ({ children, backgroundColor }: MainContainerInterface) =>
         paddingTop: inset.top,
       }}
     >
-      <KeyboardAvoidingView
-        enabled
-        style={{ height: '100%' }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        {children}
-      </KeyboardAvoidingView>
+      {children}
     </StyledBox>
   );
 };
