@@ -9,7 +9,10 @@ import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.REACT_APP_BASE_URL || 'http://192.168.0.7:3000/',
+  baseUrl:
+    process.env.REACT_APP_BASE_URL ||
+    process.env.EXPO_PUBLIC_REACT_APP_BASE_URL ||
+    'http://localhost:3000/',
   prepareHeaders: async (headers) => {
     const mobilePlatforms = ['android', 'ios'];
     if (mobilePlatforms.includes(Platform.OS)) {

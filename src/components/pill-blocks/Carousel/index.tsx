@@ -1,6 +1,6 @@
 import { StyledCarouselContainer } from './styles';
 import Item from './Item';
-import { StyledColumn, StyledRow, StyledText } from '../../styled/styles';
+import { StyledColumn, StyledRow } from '../../styled/styles';
 import React from 'react';
 import useZoomImage from '../../../hook/useZoomImage';
 import { LabeledSend } from '../../bubbles/LabeledSend';

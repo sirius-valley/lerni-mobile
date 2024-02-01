@@ -7,7 +7,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CancelIcon } from '../../assets/icons/CancelIcon';
 import { useTheme } from 'styled-components';
 import { ZoomIcon } from '../../assets/icons/ZoomIcon';
-import { ThemeColors } from '../utils/theme';
 
 interface ZoomImageProps {
   images: IImageInfo[];
@@ -20,7 +19,7 @@ const useZoomImage = ({ images }: ZoomImageProps) => {
     setOpenImage(index);
   };
 
-  const ZoomButtonComponent = (size?: number, color?: ThemeColors) => {
+  const ZoomButtonComponent = () => {
     const theme = useTheme();
 
     return (

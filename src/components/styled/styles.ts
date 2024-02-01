@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text } from 'react-native';
+import { Image, SafeAreaView, View, Text } from 'react-native';
 import styled, { css as styledComponent } from 'styled-components';
 import { CSSProperties } from '../../utils/utils';
 import { ThemeColors } from '../../utils/theme';
@@ -21,6 +21,10 @@ interface StyledLine extends StyledPropertiesInterface {
 export const StyledText = styled(Text)<StyledTextInterface>`
   color: ${(props) => (props.color ? props.theme[props.color] : props.theme.primary900)};
   ${({ variant, theme }) => styledComponent(theme[variant || 'body1'])};
+  ${({ css }) => css && styledComponent(css)};
+`;
+
+export const StyledImage = styled(Image)<StyledPropertiesInterface>`
   ${({ css }) => css && styledComponent(css)};
 `;
 

@@ -3,7 +3,6 @@ import { StyledRow, StyledText } from '../../styled/styles';
 import Button from '../../styled/Button';
 import SendIcon from '../../../../assets/icons/SendIcon';
 import { useMemo } from 'react';
-import { rgba } from 'polished';
 
 interface SendComponentProps {
   onPress: () => void;

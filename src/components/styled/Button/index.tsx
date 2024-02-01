@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import { ButtonState, StyledButton, StyledTextButton } from './styles';
 import { ButtonVariant } from '../../../utils/constants';
 import { useTheme } from 'styled-components';
@@ -10,7 +10,7 @@ import { rgba } from 'polished';
 
 export interface ButtonProps {
   onPress: () => void;
-  children?: string;
+  children?: ReactNode;
   icon?: React.FC<IconInterface>;
   iconColor?: keyof ThemeColors;
   variant?: ButtonVariant;

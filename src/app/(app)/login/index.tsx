@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import LerniMainIcon from '../../../../assets/icons/LerniMainIcon';
-import MainContainer from '../../../components/register/MainContainer';
+import MainContainer from '../../../components/common/MainContainer';
 import { StyledColumn, StyledRow, StyledText } from '../../../components/styled/styles';
 import { TextInput } from '../../../components/styled/TextInput';
 import Button from '../../../components/styled/Button';
@@ -10,9 +10,8 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'expo-router';
 import { useLDispatch } from '../../../redux/hooks';
-import { showToast } from '../../../redux/slice/utils.slice';
 import { CustomError } from '../../../redux/service/api';
-import { authActions } from '../../../redux/slice/auth.slice';
+import { showToast } from '../../../redux/slice/utils.slice';
 import { useLazyAboutMeQuery } from '../../../redux/service/home.service';
 
 const SigninSchema = Yup.object().shape({
@@ -50,7 +49,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <MainContainer>
+    <MainContainer backgroundColor="primary500">
       <LerniMainIcon />
       <StyledColumn
         css={{
