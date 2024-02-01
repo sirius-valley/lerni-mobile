@@ -37,7 +37,7 @@ export const Header = ({ title, onPress }: HeaderProps) => {
           {title}
         </StyledText>
       </StyledRow>
-      <StyledLine />
+      <StyledLine color="gray400" />
     </StyledBox>
   );
 };

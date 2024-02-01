@@ -95,6 +95,7 @@ const Page = () => {
               scrollViewRef.current?.scrollToEnd({ animated: true });
             }, 100);
           }}
+          scrollIndicatorInsets={{ right: -30 }}
         >
           <StyledColumn
             css={{

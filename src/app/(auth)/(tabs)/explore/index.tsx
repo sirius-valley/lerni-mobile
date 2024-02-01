@@ -47,7 +47,7 @@ const Page = () => {
         paddingHorizontal: 12,
       }}
     >
-      <ScrollView>
+      <ScrollView scrollIndicatorInsets={{ right: -30 }}>
         <StyledColumn css={{ gap: 24 }}>
           <Button onPress={() => router.push('/(auth)/pill/introduction')}>Introduccion</Button>
           <StyledRow
