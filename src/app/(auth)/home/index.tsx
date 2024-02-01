@@ -1,7 +1,6 @@
 import { View, Text, Pressable, ScrollView } from 'react-native';
 import React from 'react';
 import { useRouter } from 'expo-router';
-import { useLazyAboutMeQuery } from '../../../redux/service/home.service';
 import {
   ProgramCardStructure,
   mockedProgramCardsData,
@@ -10,12 +9,13 @@ import {
 import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../../components/styled/styles';
 import { useTheme } from 'styled-components';
 import ProgramCard from '../../../components/program/ProgramCard';
+import { useLazyMeQuery } from '../../../redux/service/student.service';
 
 const Home = () => {
   const router = useRouter();
   const theme = useTheme();
 
-  const [refetch, { data: aboutMe }] = useLazyAboutMeQuery();
+  const [refetch, { data: aboutMe }] = useLazyMeQuery();
   const handleGoToPill = (id: string) =>
     router.push({ pathname: 'pill/introduction', params: { id } });
   // missing pill logic

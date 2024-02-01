@@ -7,12 +7,12 @@ import TabItem from '../../../components/tab/TabItem';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { useLDispatch } from '../../../redux/hooks';
-import { useLazyAboutMeQuery } from '../../../redux/service/home.service';
+import { useLazyMeQuery } from '../../../redux/service/student.service';
 
 const TabsLayout = () => {
   const insets = useSafeAreaInsets();
   const theme = useTheme();
-  const [refetch, { data: aboutMe }] = useLazyAboutMeQuery();
+  const [refetch, { data: aboutMe }] = useLazyMeQuery();
   const dispatch = useLDispatch();
 
   const token = useSelector((state: RootState) => state.auth.token);

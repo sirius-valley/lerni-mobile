@@ -8,7 +8,7 @@ export const profileApi = api.injectEndpoints({
   }),
 });
 
-export const { useMeQuery } = profileApi;
+export const { useMeQuery, useLazyMeQuery } = profileApi;
 
 export const {
   endpoints: { me },
