@@ -32,11 +32,6 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
   const isLastBubbleSide = user !== nextBlockUser;
   const dispatch = useLDispatch();
 
-  const openFreeText = () => {
-    // This is a bolivian solution to a problem that should not exist
-    dispatch(setFreeTextQuestionId({ id: block.id }));
-  };
-
   useEffect(() => {
     if (block.type === 'free-text' && last === block.id) {
       dispatch(setFreeTextQuestionId({ id: block.id }));
