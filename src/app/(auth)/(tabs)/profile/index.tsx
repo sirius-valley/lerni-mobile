@@ -5,7 +5,7 @@ import {
   StyledText,
 } from '../../../../components/styled/styles';
 import { useDispatch } from 'react-redux';
-import { authActions } from '../../../../redux/slice/auth.slice';
+import { logout } from '../../../../redux/slice/auth.slice';
 import { Avatar } from '../../../../components/common/Avatar';
 import { useTheme } from 'styled-components';
 import { LogoutIcon } from '../../../../../assets/icons/LogoutIcon';
@@ -25,7 +25,7 @@ export default function Page() {
   const theme = useTheme();
   const { data: profileData, error, isLoading } = useProfileQuery({});
 
-  const handleLogout = () => dispatch(authActions.logout());
+  const handleLogout = () => dispatch(logout());
 
   return (
     <StyledColumn
