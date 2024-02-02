@@ -21,7 +21,7 @@ const EmptyState = () => {
           {'El conocimiento está a \n la espera y tu también'}
         </StyledText>
         <StyledText variant="body1" color={'gray400'} css={{ textAlign: 'center' }}>
-          {'Todavía no tienes ningún programa \n asignado. Intenta denuevo más tarde'}
+          {'Todavía no tienes ningún programa \n asignado. Intenta de nuevo más tarde'}
         </StyledText>
       </StyledColumn>
     </StyledColumn>
