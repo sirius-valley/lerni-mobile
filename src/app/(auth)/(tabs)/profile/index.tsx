@@ -57,12 +57,16 @@ export default function Page() {
               <StyledText css={{ color: theme.gray100 }} variant="h3">
                 {profile?.name} {profile?.lastname}
               </StyledText>
-              <StyledText css={{ color: theme.gray100 }} variant="body2">
-                {profile?.career}
-              </StyledText>
-              <StyledText css={{ color: theme.gray100 }} variant="body2">
-                {profile?.profession}
-              </StyledText>
+              {profile?.career && (
+                <StyledText css={{ color: theme.gray100 }} variant="body2">
+                  {profile?.career}
+                </StyledText>
+              )}
+              {profile?.profession && (
+                <StyledText css={{ color: theme.gray100 }} variant="body2">
+                  {profile?.profession}
+                </StyledText>
+              )}
               <StyledText css={{ color: theme.gray100 }} variant="body2">
                 {profile?.city}
               </StyledText>
