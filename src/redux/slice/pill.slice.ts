@@ -159,7 +159,12 @@ export const pillSlice = createSlice({
         if (action.payload.pill?.bubbles.length > 0) {
           state.last = action.payload.pill?.bubbles[action.payload.pill.bubbles.length - 1]?.id;
         }
-        state.pill = action.payload;
+        state.pill = {
+          ...state.pill,
+          pill: {
+            ...action.payload.pill,
+          },
+        };
       });
   },
 });

@@ -30,6 +30,7 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
   const user = ProfessorBubble.includes(block.type) ? 'professor' : 'student';
   const last = useLSelector((state) => state.pill.last);
   const isLastBubbleSide = user !== nextBlockUser;
+  const profProgram = useLSelector((state) => state.pill?.pill?.teacher?.image);
   const dispatch = useLDispatch();
 
   useEffect(() => {
@@ -45,14 +46,18 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
         return (
           <>
             <TextBubble key={'bubble-inner-' + block.id} content={block.content} user={user} />
-            {isLastBubbleSide && <Avatar css={{ marginBottom: 16, marginTop: 8 }} />}
+            {isLastBubbleSide && (
+              <Avatar css={{ marginBottom: 16, marginTop: 8 }} uri={profProgram} />
+            )}
           </>
         );
       case 'image':
         return (
           <>
             <ImageBubble key={'bubble-inner-' + block.id} url={block.value} user={user} />
-            {isLastBubbleSide && <Avatar css={{ marginBottom: 16, marginTop: 8 }} />}
+            {isLastBubbleSide && (
+              <Avatar css={{ marginBottom: 16, marginTop: 8 }} uri={profProgram} />
+            )}
           </>
         );
       case 'multiple-choice':
