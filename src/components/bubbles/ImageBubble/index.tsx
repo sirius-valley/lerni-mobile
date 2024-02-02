@@ -1,7 +1,7 @@
 import { StyledColumn } from '../../styled/styles';
 import { StyledImageBubble } from '../ChatBubble/styles';
 import { UserTypes } from '../../../utils/constants';
-import useZoomImage from '../../../hook/useZoomImage';
+import useZoomImage from '../../../hooks/useZoomImage';
 
 interface ImageBubbleProps {
   user: UserTypes;

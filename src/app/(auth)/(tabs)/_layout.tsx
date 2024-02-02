@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
-import { Redirect, Tabs, useNavigation } from 'expo-router';
+import React from 'react';
+import { Redirect, Tabs } from 'expo-router';
 import { bottomTabs } from './bottomTabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from 'styled-components';
 import TabItem from '../../../components/tab/TabItem';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
-import { useLDispatch } from '../../../redux/hooks';
-import { useLazyMeQuery, useMeQuery } from '../../../redux/service/student.service';
+import { useLDispatch, useLSelector } from '../../../redux/hooks';
+import { useMeQuery } from '../../../redux/service/student.service';
 import { setModalOpen } from '../../../redux/slice/utils.slice';
 import { ModalTypeEnum } from '../../../utils/utils';
 
@@ -17,7 +15,10 @@ const TabsLayout = () => {
   const { data: aboutMe } = useMeQuery();
   const dispatch = useLDispatch();
 
-  const token = useSelector((state: RootState) => state.auth.token);
+  const token = useLSelector((state) => state.auth.token);
+  const data = useLSelector((state) => state.pill.mapBlocks);
+
+  console.log(JSON.stringify(data, null, 3));
 
   if (!token) {
     return <Redirect href={'/(app)/login'} />;
@@ -54,11 +55,11 @@ const TabsLayout = () => {
                 name={name}
                 focused={focused}
                 icon={iconName}
-                onPress={
-                  needsIntroduction && needsIntroduction === !aboutMe?.hasCompletedIntroduction
-                    ? handlePress
-                    : undefined
-                }
+                // onPress={
+                //   needsIntroduction && needsIntroduction === !aboutMe?.hasCompletedIntroduction
+                //     ? handlePress
+                //     : undefined
+                // }
               />
             ),
           }}

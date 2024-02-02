@@ -3,6 +3,7 @@ import { RootState } from '../store';
 import { pillsApi } from '../service/pills.service';
 import { PillResponse } from '../service/types/pill.response';
 import { transformResponseBlock } from './utils';
+import { logout } from './auth.slice';
 
 export type BubbleType =
   | 'free-text'
@@ -136,6 +137,14 @@ export const pillSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(logout, (state) => {
+      // Reset this state when logout is trigger
+      state.blocksIds = [];
+      state.mapBlocks = {};
+      state.last = undefined;
+      state.freeTextQuestionId = undefined;
+      state.pill = undefined;
+    });
     builder
       .addMatcher(pillsApi.endpoints.getIntroductionPill.matchFulfilled, (state, action) => {
         state.mapBlocks = action.payload.pill.bubbles.reduce((acc: any, block) => {

@@ -1,7 +1,7 @@
 import { Avatar } from '../../common/Avatar';
 import { StyledRow, StyledText } from '../../styled/styles';
 import { StyledCommentBubble } from './styles';
-import { useGetNameColor } from '../../../hook/useGetNameColor';
+import { useGetNameColor } from '../../../hooks/useGetNameColor';
 
 interface CommentBubbleProps {
   author: string;

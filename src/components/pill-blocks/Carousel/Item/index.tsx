@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Checkbox from '../../Checkbox';
 import { ZoomIcon } from '../../../../../assets/icons/ZoomIcon';
 import { useTheme } from 'styled-components';
-import useImageDimensions from '../../../../hook/useImageDimensions';
+import useImageDimensions from '../../../../hooks/useImageDimensions';
 
 interface CarouselItemProps {
   image: string;

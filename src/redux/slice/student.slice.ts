@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { logout } from './auth.slice';
 
 export interface initialStateStudentType {
   id: string | undefined;
@@ -29,6 +30,18 @@ export const studentSlice = createSlice({
     me: (state, action: PayloadAction<{ props: initialStateStudentType }>) => {
       state = action.payload.props;
     },
+  },
+  extraReducers(builder) {
+    builder.addCase(logout, (state) => {
+      state.id = undefined;
+      state.name = undefined;
+      state.lastname = undefined;
+      state.city = undefined;
+      state.profession = undefined;
+      state.career = undefined;
+      state.image = undefined;
+      state.hasCompletedIntroduction = false;
+    });
   },
 });
 
