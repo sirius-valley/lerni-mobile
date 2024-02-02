@@ -13,8 +13,20 @@ interface TabItemProps {
 const TabItem = ({ focused, name, icon: Icon, onPress }: TabItemProps) => {
   const theme = useTheme();
 
-  const TextWithIcon = (
-    <>
+  const WrapperComponent = onPress ? Pressable : View;
+
+  return (
+    <WrapperComponent
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 4,
+        height: 50,
+        width: 60,
+      }}
+      onPress={onPress}
+    >
       <Icon color={focused ? theme.gray100 : theme.primary600} size={32} />
       <StyledText
         variant={'body3'}
@@ -25,21 +37,7 @@ const TabItem = ({ focused, name, icon: Icon, onPress }: TabItemProps) => {
       >
         {name}
       </StyledText>
-    </>
-  );
-  return (
-    <View
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: 4,
-        height: 50,
-        width: 60,
-      }}
-    >
-      {onPress ? <Pressable onPress={onPress}>{TextWithIcon}</Pressable> : TextWithIcon}
-    </View>
+    </WrapperComponent>
   );
 };
 
