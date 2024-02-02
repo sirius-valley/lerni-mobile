@@ -45,7 +45,7 @@ const SearchScreen = () => {
     <StyledColumn
       css={{
         height: '100%',
-        padding: '12px',
+        padding: '12px 0px',
         gap: '24px',
       }}
     >

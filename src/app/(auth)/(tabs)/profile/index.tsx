@@ -13,18 +13,10 @@ import { Pressable } from 'react-native';
 import { SkeletonProfile } from '../../../../components/common/Skeleton/SkeletonProfile';
 import { useMeQuery } from '../../../../redux/service/student.service';
 
-const profileMocked = {
-  name: 'Valentin',
-  lastname: 'Morali',
-  occupation: 'Student',
-  job: 'SW developer',
-  city: 'Campana/Argentina',
-};
-
 export default function Page() {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const { data: profile, error, isLoading, isError } = useMeQuery({});
+  const { data: profile, error, isLoading, isError } = useMeQuery();
 
   const handleLogout = () => dispatch(logout());
 
@@ -65,12 +57,16 @@ export default function Page() {
               <StyledText css={{ color: theme.gray100 }} variant="h3">
                 {profile?.name} {profile?.lastname}
               </StyledText>
-              <StyledText css={{ color: theme.gray100 }} variant="body2">
-                {profile?.career}
-              </StyledText>
-              <StyledText css={{ color: theme.gray100 }} variant="body2">
-                {profile?.profession}
-              </StyledText>
+              {profile?.career && (
+                <StyledText css={{ color: theme.gray100 }} variant="body2">
+                  {profile?.career}
+                </StyledText>
+              )}
+              {profile?.profession && (
+                <StyledText css={{ color: theme.gray100 }} variant="body2">
+                  {profile?.profession}
+                </StyledText>
+              )}
               <StyledText css={{ color: theme.gray100 }} variant="body2">
                 {profile?.city}
               </StyledText>

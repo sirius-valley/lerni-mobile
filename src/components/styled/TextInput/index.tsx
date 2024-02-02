@@ -2,6 +2,7 @@ import { useTheme } from 'styled-components';
 import { StyledTextInput } from './styles';
 import { CSSProperties } from '../../../utils/utils';
 import { ThemeColors } from '../../../utils/theme';
+import { forwardRef } from 'react';
 
 export interface TextInputProps {
   placeholder?: string;
@@ -18,37 +19,43 @@ export interface TextInputProps {
   maxLength?: number;
 }
 
-export const TextInput = ({
-  placeholder,
-  disabled = false,
-  placeholderColor = 'gray300',
-  error = false,
-  onChangeText,
-  onBlur,
-  value,
-  css,
-  type = 'text',
-  multiline = false,
-  scrollEnabled = true,
-  maxLength,
-}: TextInputProps) => {
-  const theme = useTheme();
+export const TextInput = forwardRef<any, TextInputProps>(
+  (
+    {
+      placeholder,
+      placeholderColor = 'gray300',
+      disabled = false,
+      error = false,
+      onChangeText,
+      onBlur,
+      value,
+      css,
+      type = 'text',
+      multiline = false,
+      scrollEnabled = true,
+      maxLength,
+    }: TextInputProps,
+    ref: any,
+  ) => {
+    const theme = useTheme();
 
-  return (
-    <StyledTextInput
-      placeholder={placeholder}
-      placeholderTextColor={theme[placeholderColor]}
-      css={css}
-      error={error}
-      disabled={disabled}
-      value={value}
-      onChangeText={(value: string) => !disabled && onChangeText(value)}
-      onBlur={() => onBlur && onBlur()}
-      autoCapitalize="none"
-      secureTextEntry={type === 'password'}
-      multiline={multiline}
-      scrollEnabled={scrollEnabled}
-      maxLength={maxLength}
-    />
-  );
-};
+    return (
+      <StyledTextInput
+        placeholder={placeholder}
+        placeholderTextColor={theme[placeholderColor]}
+        css={css}
+        error={error}
+        disabled={disabled}
+        value={value}
+        onChangeText={(value: string) => !disabled && onChangeText(value)}
+        onBlur={() => onBlur && onBlur()}
+        autoCapitalize="none"
+        secureTextEntry={type === 'password'}
+        multiline={multiline}
+        scrollEnabled={scrollEnabled}
+        maxLength={maxLength}
+        ref={ref}
+      />
+    );
+  },
+);

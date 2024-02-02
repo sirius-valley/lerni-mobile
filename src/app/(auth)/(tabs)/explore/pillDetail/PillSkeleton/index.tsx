@@ -39,8 +39,8 @@ const PillSkeleton = () => {
         </StyledColumn>
         <StyledColumn css={{ gap: 24 }}>
           <StyledColumn css={{ gap: 8 }}>
-            <Skeleton type="chatBubble" width={342} height={100} />
-            <Skeleton width={32} type="ellipse" height={32} />
+            <Skeleton type="chat" width={342} height={100} />
+            <Skeleton width={32} type="circle" height={32} />
           </StyledColumn>
         </StyledColumn>
       </StyledColumn>

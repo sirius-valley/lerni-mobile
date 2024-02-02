@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useGetIntroductionPillQuery } from '../../../../redux/service/pills.service';
-import { useLSelector } from '../../../../redux/hooks';
+import { useLDispatch, useLSelector } from '../../../../redux/hooks';
 import {
   Animated,
   Dimensions,
@@ -18,13 +18,16 @@ import { SuccessPill } from '../../../../components/common/Result/SuccessPill';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import usePrevious from '../../../../hook/usePrevious';
 import { PillResponse } from '../../../../redux/service/types/pill.response';
+import { api } from '../../../../redux/service/api';
+import SkeletonPill from '../../../../components/pill/SkeletonPill';
 
 const Pill = () => {
-  const { data } = useGetIntroductionPillQuery();
+  const { data, isLoading: isLoadingPill } = useGetIntroductionPillQuery();
   const blocksIds = useLSelector((state) => state.pill.blocksIds);
   const pillTitle = useLSelector((state) => state.pill.pill?.pill?.name);
   const pillProgress = useLSelector((state) => state.pill.pill?.pill?.progress);
   const pillCompleted = useLSelector((state) => state.pill.pill?.pill?.completed);
+  const dispatch = useLDispatch();
 
   const virtualRef = useRef<VirtualizedList<unknown> | null>();
   const prevData = usePrevious<boolean>(pillCompleted);
@@ -54,9 +57,12 @@ const Pill = () => {
 
   useEffect(() => {
     if (prevData !== undefined && pillCompleted !== prevData) {
+      dispatch(api.util?.invalidateTags(['ME']));
       setTimeout(() => animateBoxes(), 1250);
     }
   }, [pillCompleted, prevData]);
+
+  if (isLoadingPill) return <SkeletonPill />;
 
   return (
     <PillMainContainer backgroundColor="primary900">
@@ -71,7 +77,7 @@ const Pill = () => {
           <KeyboardAvoidingView
             enabled
             style={{ height: '100%' }}
-            keyboardVerticalOffset={120}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 75}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           >
             <VirtualizedList
@@ -86,8 +92,8 @@ const Pill = () => {
                 />
               )}
               contentContainerStyle={{
+                paddingHorizontal: 24,
                 padding: 24,
-                flexGrow: 1,
               }}
               onContentSizeChange={(comp) =>
                 setTimeout(() => {
@@ -100,7 +106,6 @@ const Pill = () => {
               keyExtractor={(item, index) => index.toString()}
             />
             <FreeTextAnswer />
-            <StyledBox />
           </KeyboardAvoidingView>
         </Animated.View>
         <Animated.View

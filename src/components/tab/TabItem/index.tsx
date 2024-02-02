@@ -1,5 +1,5 @@
 import { StyledText } from '../../styled/styles';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import React from 'react';
 import { useTheme } from 'styled-components';
 
@@ -7,12 +7,16 @@ interface TabItemProps {
   focused: boolean;
   name: string;
   icon: any;
+  onPress?: any;
 }
 
-const TabItem = ({ focused, name, icon: Icon }: TabItemProps) => {
+const TabItem = ({ focused, name, icon: Icon, onPress }: TabItemProps) => {
   const theme = useTheme();
+
+  const WrapperComponent = onPress ? Pressable : View;
+
   return (
-    <View
+    <WrapperComponent
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -21,6 +25,7 @@ const TabItem = ({ focused, name, icon: Icon }: TabItemProps) => {
         height: 50,
         width: 60,
       }}
+      onPress={onPress}
     >
       <Icon color={focused ? theme.gray100 : theme.primary600} size={32} />
       <StyledText
@@ -32,7 +37,7 @@ const TabItem = ({ focused, name, icon: Icon }: TabItemProps) => {
       >
         {name}
       </StyledText>
-    </View>
+    </WrapperComponent>
   );
 };
 

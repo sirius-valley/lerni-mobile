@@ -53,7 +53,11 @@ const ProgramCard = ({
         {title && (
           <StyledText
             variant="body1"
-            css={{ color: theme.gray100, opacity: status === 'locked' ? 0.3 : 1 }}
+            css={{
+              color: theme.gray100,
+              opacity: status === 'locked' ? 0.3 : 1,
+              textAlign: 'center',
+            }}
           >
             {title}
           </StyledText>

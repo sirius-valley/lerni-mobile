@@ -1,18 +1,13 @@
-import { useEffect, useState } from 'react';
-import ErrorDisplay from '../../../../components/common/ErrorDisplay';
+import CustomError from '../../../../components/common/ErrorDisplay/CustomError';
+import WIPIllustration from '../../../../../assets/icons/WIPIllustration';
 
 export default function Page() {
-  const [is404, setIs404] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIs404(!is404);
-    }, 2000);
-  }, [is404]);
-
-  if (is404) {
-    return <ErrorDisplay type="404" />;
-  }
-
-  return <ErrorDisplay type="505" />;
+  return (
+    <CustomError
+      Icon={WIPIllustration}
+      title={'Página en construcción'}
+      content={'El contenido que querés acceder \n no esta disponible ahora.'}
+      buttonText={'Ir a Explorar'}
+    />
+  );
 }

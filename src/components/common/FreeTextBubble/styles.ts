@@ -7,7 +7,7 @@ export const StyledFreeTextContainer = styled(StyledRow)`
   width: 100%;
   border-width: 1px;
   border-radius: 8px;
-  padding: 8px 8px 8px 8px;
+  padding: 0px 8px;
   gap: 10px;
   background-color: ${({ theme }) => theme.white};
 `;

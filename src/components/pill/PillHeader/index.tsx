@@ -22,9 +22,10 @@ const PillHeader = ({ title, pillNumber, percentageDone }: PillHeaderProps) => {
         height: 'fit-content',
         background: theme.primary900,
         width: '100%',
+        paddingHorizontal: 24,
       }}
     >
-      <StyledColumn css={{ alignItems: 'center', justifyContent: 'center', gap: 8, padding: 12 }}>
+      <StyledColumn css={{ alignItems: 'center', justifyContent: 'center', gap: 8 }}>
         <StyledRow
           css={{
             alignItems: 'center',
