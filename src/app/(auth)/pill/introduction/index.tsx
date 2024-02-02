@@ -19,9 +19,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import usePrevious from '../../../../hook/usePrevious';
 import { PillResponse } from '../../../../redux/service/types/pill.response';
 import { api } from '../../../../redux/service/api';
+import SkeletonPill from '../../../../components/pill/SkeletonPill';
 
 const Pill = () => {
-  const { data } = useGetIntroductionPillQuery();
+  const { data, isLoading: isLoadingPill } = useGetIntroductionPillQuery();
   const blocksIds = useLSelector((state) => state.pill.blocksIds);
   const pillTitle = useLSelector((state) => state.pill.pill?.pill?.name);
   const pillProgress = useLSelector((state) => state.pill.pill?.pill?.progress);
@@ -61,6 +62,8 @@ const Pill = () => {
     }
   }, [pillCompleted, prevData]);
 
+  if (isLoadingPill) return <SkeletonPill />;
+
   return (
     <PillMainContainer backgroundColor="primary900">
       <PillHeader title={pillTitle ?? ''} pillNumber={1} percentageDone={pillProgress ?? 0} />
@@ -89,8 +92,8 @@ const Pill = () => {
                 />
               )}
               contentContainerStyle={{
+                paddingHorizontal: 24,
                 padding: 24,
-                flexGrow: 1,
               }}
               onContentSizeChange={(comp) =>
                 setTimeout(() => {

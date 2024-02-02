@@ -13,7 +13,7 @@ const ExploreLayout = () => {
           flex: 1,
           backgroundColor: theme.primary900,
           paddingTop: insets.top,
-          paddingHorizontal: 12,
+          paddingHorizontal: 24,
         },
       }}
     />

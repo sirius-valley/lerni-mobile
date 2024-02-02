@@ -3,9 +3,9 @@ import React, { useEffect, useRef } from 'react';
 import { useTheme } from 'styled-components';
 
 interface SkeletonProps {
-  width?: number;
+  width?: number | string;
   height: number;
-  type?: 'chatBubble' | 'ellipse' | 'default';
+  type?: 'chat' | 'circle' | 'default';
   css?: Record<string, string | number | boolean>;
 }
 
@@ -13,7 +13,7 @@ const Skeleton = ({ width, height, type = 'default', css }: SkeletonProps) => {
   const theme = useTheme();
   const pulseAnim = useRef(new Animated.Value(0)).current;
   const borderRadius: Record<
-    'chatBubble' | 'ellipse' | 'default',
+    'chat' | 'circle' | 'default',
     {
       borderTopRightRadius?: number;
       borderBottomRightRadius?: number;
@@ -22,13 +22,13 @@ const Skeleton = ({ width, height, type = 'default', css }: SkeletonProps) => {
       borderRadius?: number;
     }
   > = {
-    chatBubble: {
+    chat: {
       borderTopRightRadius: 16,
       borderBottomRightRadius: 16,
       borderTopLeftRadius: 16,
       borderBottomLeftRadius: 2,
     },
-    ellipse: {
+    circle: {
       borderRadius: 50,
     },
     default: {
@@ -78,7 +78,7 @@ const Skeleton = ({ width, height, type = 'default', css }: SkeletonProps) => {
           borderTopLeftRadius: borderRadius[type].borderTopLeftRadius,
           borderTopRightRadius: borderRadius[type].borderTopRightRadius,
         },
-        { width: width, height: height },
+        { width: typeof width === 'string' ? `${Number(width)}%` : width, height: height },
         { opacity: opacityAnim },
         css,
       ]}

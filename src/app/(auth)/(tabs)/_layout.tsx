@@ -39,6 +39,7 @@ const TabsLayout = () => {
           alignItems: 'center',
           paddingTop: 8,
           paddingBottom: insets.bottom,
+          borderTopWidth: 0,
         },
       }}
     >
