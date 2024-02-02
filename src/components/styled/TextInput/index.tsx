@@ -39,7 +39,7 @@ export const TextInput = forwardRef<any, TextInputProps>(
     return (
       <StyledTextInput
         placeholder={placeholder}
-        placeholderTextColor={theme.gray900}
+        placeholderTextColor={theme.gray300}
         css={css}
         error={error}
         disabled={disabled}
