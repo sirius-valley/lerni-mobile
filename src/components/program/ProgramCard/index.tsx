@@ -37,7 +37,7 @@ const ProgramCard = ({
       <StyledColumn
         css={{
           width: imgSize,
-          height: imgSize + (title ? 36 : 0),
+          minHeight: imgSize + (title ? 36 : 0),
           gap: title ? 6 : 3,
           alignItems: 'center',
         }}
