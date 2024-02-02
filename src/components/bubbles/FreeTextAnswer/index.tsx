@@ -20,7 +20,7 @@ const FreeTextAnswer = () => {
         paddingTop: 12,
         paddingLeft: 24,
         paddingRight: 24,
-        paddingBottom: Platform.OS === 'ios' ? 24 : 8,
+        paddingBottom: 8,
       }}
     >
       <FreeTextBubble
