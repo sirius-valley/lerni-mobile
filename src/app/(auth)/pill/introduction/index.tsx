@@ -77,7 +77,7 @@ const Pill = () => {
           <KeyboardAvoidingView
             enabled
             style={{ height: '100%' }}
-            keyboardVerticalOffset={120}
+            keyboardVerticalOffset={75}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           >
             <VirtualizedList
@@ -106,7 +106,7 @@ const Pill = () => {
               keyExtractor={(item, index) => index.toString()}
             />
             <FreeTextAnswer />
-            <StyledBox />
+            {/* <StyledBox /> */}
           </KeyboardAvoidingView>
         </Animated.View>
         <Animated.View
