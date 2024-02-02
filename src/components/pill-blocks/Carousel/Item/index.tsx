@@ -29,7 +29,6 @@ const CarouselItem = ({
   sealed,
 }: CarouselItemProps) => {
   const theme = useTheme();
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const { width, height } = useImageDimensions(image);
 
   return (
@@ -72,7 +71,7 @@ const CarouselItem = ({
           css={{
             width: width,
             height: height,
-            borderRadius: sealed ? '8px 8px 2px 8px' : dimensions.height < 58 ? 0 : 8,
+            borderRadius: sealed ? '8px 8px 2px 8px' : height < 58 ? '0px' : '8px',
           }}
         />
       </StyledBox>

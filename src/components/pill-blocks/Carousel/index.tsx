@@ -36,6 +36,7 @@ const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps)
       }}
     >
       <StyledCarouselContainer
+        showsHorizontalScrollIndicator={false}
         horizontal
         contentContainerStyle={{
           paddingHorizontal: 4,
