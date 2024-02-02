@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
 import { TextInput as TextInputCustom } from '../../styled/TextInput';
-import Button from '../../styled/Button';
 import SendIcon from '../../../../assets/icons/SendIcon';
-import StaticBubble from '../StaticBubble';
 import CharAmountDisplay from '../CharAmountDisplay';
 import { StyledFreeTextContainer, StyledRightColumn } from './styles';
 import { StyledColumn } from '../../styled/styles';
 import { Pressable, TextInput } from 'react-native';
+import BubbleButton from './BubbleButton/bubbleButton';
+import { useTheme } from 'styled-components';
 
 interface FreeTextBubbleInterface {
   value: string;
@@ -23,6 +23,7 @@ const FreeTextBubble = ({
   textLimit = 150,
   placeholder = 'Agrega tu respuesta...',
 }: FreeTextBubbleInterface) => {
+  const theme = useTheme();
   const textLength = value.length;
 
   const handleOnChangeText = (text: string) => {
@@ -75,7 +76,7 @@ const FreeTextBubble = ({
         }}
       >
         {textLength >= 130 && <CharAmountDisplay text={value} topLength={textLimit} />}
-        <Button
+        <BubbleButton
           variant={'primary'}
           onPress={() => (handlePress ? handlePress() : null)}
           icon={SendIcon}
@@ -85,6 +86,7 @@ const FreeTextBubble = ({
             width: '42px',
             height: '42px',
             padding: '8px',
+            backgroundColor: value.length === 0 ? theme.gray300 : theme.primary500,
           }}
           disabled={value.length === 0}
         />
