@@ -16,9 +16,6 @@ const TabsLayout = () => {
   const dispatch = useLDispatch();
 
   const token = useLSelector((state) => state.auth.token);
-  const data = useLSelector((state) => state.pill.mapBlocks);
-
-  console.log(JSON.stringify(data, null, 3));
 
   if (!token) {
     return <Redirect href={'/(app)/login'} />;

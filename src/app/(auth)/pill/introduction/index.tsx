@@ -62,7 +62,6 @@ const Pill = () => {
   }, [pillCompleted, prevData]);
 
   useEffect(() => {
-    console.log('blocksIds: ', blocksIds);
     if (!isLoadingPill && blocksIds.length === 0) refetch();
   }, [blocksIds]);
 
