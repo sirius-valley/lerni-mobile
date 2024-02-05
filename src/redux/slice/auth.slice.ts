@@ -14,10 +14,6 @@ export const authSlice = createSlice({
   name: 'authSlice',
   initialState,
   reducers: {
-    logout: (state) => {
-      state.token = '';
-      SecureStore.deleteItemAsync('token');
-    },
     setToken: (state, payload) => {
       state.token = payload.payload;
     },
@@ -46,6 +42,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logout, setToken } = authSlice.actions;
+export const { setToken } = authSlice.actions;
 
 export default authSlice.reducer;

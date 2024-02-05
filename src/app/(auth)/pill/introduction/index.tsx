@@ -62,7 +62,8 @@ const Pill = () => {
   }, [pillCompleted, prevData]);
 
   useEffect(() => {
-    if (!isLoadingPill && blocksIds.length === 0) refetch();
+    if (!isLoadingPill && blocksIds.length === 0)
+      dispatch(api.util?.invalidateTags(['Introduction']));
   }, [blocksIds]);
 
   if (isLoadingPill) return <SkeletonPill />;
