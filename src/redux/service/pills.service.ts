@@ -18,6 +18,7 @@ export const pillsApi = api.injectEndpoints({
       }),
     }),
     getIntroductionPill: builder.query<PillResponse, void>({
+      providesTags: ['Introduction'],
       query: () => ({
         url: `api/pill/introduction`,
         method: 'GET',

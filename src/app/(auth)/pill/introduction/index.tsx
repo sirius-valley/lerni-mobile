@@ -16,13 +16,12 @@ import FreeTextAnswer from '../../../../components/bubbles/FreeTextAnswer';
 import { StyledBox, StyledColumn } from '../../../../components/styled/styles';
 import { SuccessPill } from '../../../../components/common/Result/SuccessPill';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import usePrevious from '../../../../hook/usePrevious';
-import { PillResponse } from '../../../../redux/service/types/pill.response';
+import usePrevious from '../../../../hooks/usePrevious';
 import { api } from '../../../../redux/service/api';
 import SkeletonPill from '../../../../components/pill/SkeletonPill';
 
 const Pill = () => {
-  const { data, isLoading: isLoadingPill } = useGetIntroductionPillQuery();
+  const { data, isLoading: isLoadingPill, refetch } = useGetIntroductionPillQuery();
   const blocksIds = useLSelector((state) => state.pill.blocksIds);
   const pillTitle = useLSelector((state) => state.pill.pill?.pill?.name);
   const pillProgress = useLSelector((state) => state.pill.pill?.pill?.progress);
@@ -61,6 +60,11 @@ const Pill = () => {
       setTimeout(() => animateBoxes(), 1250);
     }
   }, [pillCompleted, prevData]);
+
+  useEffect(() => {
+    if (!isLoadingPill && blocksIds.length === 0)
+      dispatch(api.util?.invalidateTags(['Introduction']));
+  }, [blocksIds]);
 
   if (isLoadingPill) return <SkeletonPill />;
 

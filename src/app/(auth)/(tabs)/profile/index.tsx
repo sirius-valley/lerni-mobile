@@ -5,20 +5,20 @@ import {
   StyledText,
 } from '../../../../components/styled/styles';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../../../redux/slice/auth.slice';
 import { Avatar } from '../../../../components/common/Avatar';
 import { useTheme } from 'styled-components';
 import { LogoutIcon } from '../../../../../assets/icons/LogoutIcon';
 import { Pressable } from 'react-native';
 import { SkeletonProfile } from '../../../../components/common/Skeleton/SkeletonProfile';
 import { useMeQuery } from '../../../../redux/service/student.service';
+import { resetAllStates } from '../../../../redux/store';
 
 export default function Page() {
   const dispatch = useDispatch();
   const theme = useTheme();
   const { data: profile, error, isLoading, isError } = useMeQuery();
 
-  const handleLogout = () => dispatch(logout());
+  const handleLogout = () => dispatch(resetAllStates());
 
   return (
     <StyledColumn

@@ -2,7 +2,7 @@ import { StyledCarouselContainer } from './styles';
 import Item from './Item';
 import { StyledColumn, StyledRow } from '../../styled/styles';
 import React from 'react';
-import useZoomImage from '../../../hook/useZoomImage';
+import useZoomImage from '../../../hooks/useZoomImage';
 import { LabeledSend } from '../../bubbles/LabeledSend';
 
 type CarouselItem = {
