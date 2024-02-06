@@ -82,7 +82,7 @@ const SearchScreen = () => {
           width: '100%',
         }}
       >
-        <ScrollView horizontal scrollIndicatorInsets={{ bottom: -20 }}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <StyledRow css={{ gap: '8px' }}>
             {quickFilters.map((filter) => (
               <QuickFilter
@@ -97,7 +97,7 @@ const SearchScreen = () => {
         </ScrollView>
       </StyledRow>
 
-      <ScrollView scrollIndicatorInsets={{ right: -30 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {isLoading ? (
           <SearchScreenSkeleton />
         ) : (
