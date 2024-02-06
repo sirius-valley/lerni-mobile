@@ -12,15 +12,12 @@ import { useRouter } from 'expo-router';
 import SkeletonHome from '../../../../components/home/HomeSkeleton';
 import { useMeQuery } from '../../../../redux/service/student.service';
 import EmptyState from '../../../../components/explore/EmptyState';
+import { Pressable } from 'react-native';
 
 const Page = () => {
   const router = useRouter();
   const theme = useTheme();
   const { data, isLoading: meLoading } = useMeQuery();
-
-  if (meLoading) {
-    return <SkeletonHome />;
-  }
 
   const handleGoToProgram = (id: string) =>
     router.push({
@@ -30,7 +27,16 @@ const Page = () => {
       },
     });
 
+  const handleGoToSearchScreen = () =>
+    router.push({
+      pathname: '(tabs)/explore/searchScreen',
+    });
+
   const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
+
+  if (meLoading) {
+    return <SkeletonHome />;
+  }
 
   return (
     <StyledBox
@@ -51,9 +57,11 @@ const Page = () => {
             <StyledText variant="h1" css={{ color: theme.gray100 }}>
               Explorar
             </StyledText>
-            <StyledBox css={{ padding: 3 }}>
-              <SearchIcon size={24} />
-            </StyledBox>
+            <Pressable onPress={handleGoToSearchScreen}>
+              <StyledBox css={{ padding: 3 }}>
+                <SearchIcon size={24} />
+              </StyledBox>
+            </Pressable>
           </StyledRow>
           {!data?.hasCompletedIntroduction ? (
             <StyledColumn css={{ gap: 32 }}>
