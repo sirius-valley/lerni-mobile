@@ -42,7 +42,7 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
   };
 
   const handleSelectCarousel = (answerId: string) => {
-    dispatch(setSelectCarousel({ id: questionId }))
+    dispatch(setSelectCarousel({ id: questionId, value: answerId }))
   }
 
   const handleSendAnswer = (valueToSend: string) => {
