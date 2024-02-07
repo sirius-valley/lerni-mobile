@@ -1,3 +1,4 @@
+import { SearchResultStatus, SearchResultType } from '../../../../components/search/SearchItem';
 import { UserTypes } from '../../../../utils/constants';
 
 export type Status = 'in_progress' | 'completed' | 'not_started' | 'locked';
@@ -181,6 +182,80 @@ export const mockedLeaderboardRows = [
   },
 ];
 
+// SEARCH SCREEN
+export const quickFilters = [
+  {
+    id: '0',
+    label: 'Todo',
+    type: '',
+  },
+  {
+    id: '1',
+    label: 'Píldoras',
+    type: 'pill' as SearchResultType,
+  },
+  {
+    id: '2',
+    label: 'Programas',
+    type: 'program' as SearchResultType,
+  },
+  {
+    id: '3',
+    label: 'Profesionales',
+    type: 'professionals' as SearchResultType,
+  },
+];
+
+export const mockedSearchResults = [
+  {
+    id: '0',
+    type: 'program' as SearchResultType,
+    title: 'Titulo',
+    description:
+      'Descripción lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis ullamcorper mauris, commodo.',
+    imgUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/240px-React_Logo_SVG.svg.png',
+    status: 'not_started' as SearchResultStatus,
+  },
+  {
+    id: '1',
+    type: 'pill' as SearchResultType,
+    title: 'Pill title',
+    description:
+      'Descripción lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis ullamcorper mauris, commodo.',
+    progress: 0.32,
+  },
+  {
+    id: '2',
+    type: 'program' as SearchResultType,
+    title: 'Program',
+    description: 'Descripción lorem ipsum.',
+    imgUrl:
+      'https://media.gcflearnfree.org/content/5e31ca08bc7eff08e4063776_01_29_2020/ProgrammingIllustration.png',
+    status: 'completed' as SearchResultStatus,
+  },
+  {
+    id: '3',
+    type: 'program' as SearchResultType,
+    title: 'Program 2',
+    description:
+      'Descripción lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis ullamcorper mauris, commodo.',
+    imgUrl:
+      'https://media.gcflearnfree.org/content/5e31ca08bc7eff08e4063776_01_29_2020/ProgrammingIllustration.png',
+    status: 'in_progress' as SearchResultStatus,
+    progress: 0.6,
+  },
+  {
+    id: '4',
+    type: 'program' as SearchResultType,
+    title: 'Another program',
+    description:
+      'Descripción lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis ullamcorper mauris, commodo.',
+    imgUrl:
+      'https://media.gcflearnfree.org/content/5e31ca08bc7eff08e4063776_01_29_2020/ProgrammingIllustration.png',
+    status: 'locked' as SearchResultStatus,
+  },
+];
 interface ProfessorMessageType {
   type: 'image' | 'text';
   user: UserTypes;
