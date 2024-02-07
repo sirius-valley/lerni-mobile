@@ -29,8 +29,17 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
     answer({ pillId: pillDetails!.pill.id, questionId: questionId, answer: answerId });
   };
 
-  const handleMultipleAnswer = (answerId: string) => {
-    dispatch(setMultipleAnswer({ id: questionId }));
+  const handleMultipleAnswer = () => {
+    answer({ pillId: pillDetails!.pill.id, questionId: questionId, answer: blockDetails.options.reduce((acc: string[],option: any) => {
+      if(option.selected){
+        return [
+          ...acc,
+          option.value
+        ]
+      }else{
+        return acc
+      }
+    }, []) });
   };
 
   const handleSelectMultipleAnswer = (answerId: string) => {

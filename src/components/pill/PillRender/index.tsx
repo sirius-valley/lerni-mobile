@@ -68,20 +68,18 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
         return (
           <Carousel
             items={block.items}
-            onPress={() =>
-              handleCarousel
-            }
+            onPress={(id) => handleCarousel(id)}
             onSelect={(id) => handleSelectCarousel(id)}
             sealed={block.sealed}
           />
-        );  
+        );
       case 'multiple-choice':
         return (
           <MultipleAnswer
             key={'bubble-inner-' + block.id}
             options={block.options}
-            onPress={() =>
-              handleMultipleAnswer
+            onPress={(id) =>
+              handleMultipleAnswer(id)
             }
             onChange={(id) => handleSelectMultipleAnswer(id)}
             sealed={block.sealed}
