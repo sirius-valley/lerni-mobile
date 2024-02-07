@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 
 interface SendComponentProps {
   onPress: () => void;
-  status: 'default' | 'selected' | 'sent';
+  status: 'default' | 'selected' | 'sent' | 'one_selection_only';
 }
 
 export const LabeledSend = ({ onPress, status }: SendComponentProps) => {
@@ -17,6 +17,8 @@ export const LabeledSend = ({ onPress, status }: SendComponentProps) => {
       return 'Seleccionar por lo menos 1';
     } else if (status === 'selected') {
       return 'Enviar selección';
+    } else if (status === 'one_selection_only') {
+      return 'Elegir 1';
     } else {
       return '';
     }

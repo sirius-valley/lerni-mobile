@@ -46,7 +46,7 @@ const QuestionnaireMultipleAnswer = ({
   };
 
   return (
-    <StyledColumn style={{ gap: 6, alignItems: 'flex-end' }}>
+    <StyledColumn style={{ gap: 8, alignItems: 'flex-end' }}>
       <StyledQuestionnaireChoiceMainContainer>
         {options.map((option) => (
           <StyledRow

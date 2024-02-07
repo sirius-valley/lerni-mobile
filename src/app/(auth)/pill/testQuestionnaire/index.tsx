@@ -4,6 +4,7 @@ import PillHeader from '../../../../components/pill/PillHeader';
 import QuestionnaireAnswer from '../../../../components/bubbles/QuestionnaireAnswer';
 import { StyledBox, StyledText } from '../../../../components/styled/styles';
 import { ScrollView } from 'react-native';
+import QuestionnaireImgAnswer from '../../../../components/bubbles/QuestionnaireImgAnswer';
 
 interface Option {
   id: string;
@@ -33,14 +34,45 @@ const mockedInitialValues: Option[] = [
   },
 ];
 
+const Images = [
+  {
+    id: '01',
+    title: 'title 1',
+    description: 'description 1',
+    image:
+      'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=pexels-mike-bird-170811.jpg&fm=jpg',
+    selected: false,
+  },
+  {
+    id: '02',
+    title: 'title 2',
+    description: 'description 2',
+    image:
+      'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=pexels-mike-bird-170811.jpg&fm=jpg',
+    selected: false,
+  },
+  {
+    id: '03',
+    title: 'title 3',
+    description: 'description 3',
+    image:
+      'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=pexels-mike-bird-170811.jpg&fm=jpg',
+    selected: false,
+  },
+];
+
 const index = () => {
   const [options, setOptions] = useState<Option[]>(mockedInitialValues);
   const [multipleOptions, setMultipleOptions] = useState<Option[]>(mockedInitialValues);
+  const [imagesOptions, setImagesOptions] = useState(Images);
   const [isMultipleAnswerSealed, setIsMultipleAnswerSealed] = useState(false);
   const [isSingleAnswerSealed, setIsSingleAnswerSealed] = useState(false);
+  const [isImageSealed, setIsImageSealed] = useState(false);
+  const [isImgSelectedCorrect, setIsImgSelectedCorrect] = useState(false);
   const [points, setPoints] = useState<number | undefined>();
 
   const correctAnswerSingleSelection = 'Choice 4';
+  const correctAnswerImgSelection = '02';
 
   const handleSelection = (id: string) => {
     const newSelection = options.find((op) => op.id === id);
@@ -75,16 +107,40 @@ const index = () => {
     }
   };
 
+  const handleImagesSelection = (id: string) => {
+    const selection = imagesOptions.map((img) => {
+      return {
+        ...img,
+        selected: img.id === id ? true : false,
+      };
+    });
+    setImagesOptions(selection);
+  };
+  const handleImgSelectionPress = () => {
+    if (imagesOptions.some((img) => img.id === correctAnswerImgSelection && !!img.selected))
+      setIsImgSelectedCorrect(true);
+    setIsImageSealed(true);
+  };
+
   const handlePress = () => setIsMultipleAnswerSealed(true);
 
   return (
     <PillMainContainer backgroundColor="primary900">
       <PillHeader title={'test questionnaire'} pillNumber={4} percentageDone={0.25} />
       <ScrollView>
-        <StyledBox css={{ padding: '10px' }}>
+        <StyledBox css={{ padding: '24px' }}>
           <StyledText color="white">Multiple selection</StyledText>
         </StyledBox>
-        <StyledBox css={{ paddingTop: '20px', paddingRight: '20px' }}>
+        <QuestionnaireImgAnswer
+          items={imagesOptions}
+          onSelect={handleImagesSelection}
+          onPress={handleImgSelectionPress}
+          sealed={isImageSealed}
+          correctAnswerId={correctAnswerImgSelection}
+          isImgSelectedCorrect={isImgSelectedCorrect}
+          points={isImgSelectedCorrect ? 5 : undefined}
+        />
+        <StyledBox css={{ paddingTop: '20px', paddingRight: '24px' }}>
           <QuestionnaireAnswer
             options={multipleOptions}
             onPress={() => handlePress()}
@@ -97,7 +153,7 @@ const index = () => {
         <StyledBox css={{ padding: '10px' }}>
           <StyledText color="white">Single selection</StyledText>
         </StyledBox>
-        <StyledBox css={{ paddingTop: '20px', paddingRight: '20px' }}>
+        <StyledBox css={{ paddingTop: '20px', paddingRight: '24px', paddingBottom: '100px' }}>
           <QuestionnaireAnswer
             options={options}
             onPress={() => handlePress()}
@@ -105,6 +161,7 @@ const index = () => {
             sealed={isSingleAnswerSealed}
             correctAnswers={[correctAnswerSingleSelection]}
             points={points}
+            isSingleAnswer
           />
         </StyledBox>
       </ScrollView>
