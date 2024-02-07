@@ -14,11 +14,14 @@ import { useMeQuery } from '../../../../redux/service/student.service';
 import EmptyState from '../../../../components/explore/EmptyState';
 import { Status } from './utils';
 import { Pressable } from 'react-native';
+import Pill from '../../pill/introduction';
 
 const Page = () => {
   const router = useRouter();
   const theme = useTheme();
   const { data, isLoading: meLoading } = useMeQuery();
+  const hasAssignedPrograms = true;
+  const isLoading = false;
 
   if (meLoading) {
     return <SkeletonHome />;
@@ -57,7 +60,13 @@ const Page = () => {
               <SearchIcon size={24} />
             </StyledBox>
           </StyledRow>
-          {!data?.hasCompletedIntroduction ? (
+          {isLoading ? (
+            <SkeletonHome />
+          ) : !data?.hasCompletedIntroduction ? (
+            <Pill />
+          ) : !hasAssignedPrograms ? (
+            <EmptyState />
+          ) : (
             <StyledColumn css={{ gap: 24 }}>
               <StyledColumn css={{ gap: 8 }}>
                 <StyledRow
@@ -176,8 +185,6 @@ const Page = () => {
                 </StyledRow>
               </StyledColumn>
             </StyledColumn>
-          ) : (
-            <EmptyState />
           )}
         </StyledColumn>
       </ScrollView>
