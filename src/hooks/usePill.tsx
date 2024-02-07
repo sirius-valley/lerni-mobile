@@ -2,8 +2,11 @@ import { useLDispatch, useLSelector } from '../redux/hooks';
 import {
   getPillByID,
   getPillTypeByID,
+  setCarousel,
   setFreeTextAnswer,
   setMultipleAnswer,
+  setSelectCarousel,
+  setSelectMultipleAnswer,
   setSingleAnswer,
 } from '../redux/slice/pill.slice';
 import { useAnswerMutation } from '../redux/service/pills.service';
@@ -27,8 +30,20 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
   };
 
   const handleMultipleAnswer = (answerId: string) => {
-    dispatch(setMultipleAnswer({ id: questionId, value: answerId }));
+    dispatch(setMultipleAnswer({ id: questionId }));
   };
+
+  const handleSelectMultipleAnswer = (answerId: string) => {
+    dispatch(setSelectMultipleAnswer({ id: questionId, value: answerId }));
+  };
+
+  const handleCarousel = (answerId: string) => {
+    dispatch(setCarousel({id: questionId, value: answerId}));
+  };
+
+  const handleSelectCarousel = (answerId: string) => {
+    dispatch(setSelectCarousel({ id: questionId }))
+  }
 
   const handleSendAnswer = (valueToSend: string) => {
     answer({ pillId: pillDetails!.pill.id, questionId: questionId, answer: valueToSend });
@@ -43,6 +58,9 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
     nextBlockType,
     handleSingleAnswer,
     handleMultipleAnswer,
+    handleSelectMultipleAnswer,
+    handleCarousel,
+    handleSelectCarousel,
     handleFreeTextAnswer,
     handleSendAnswer,
     isLoading,
