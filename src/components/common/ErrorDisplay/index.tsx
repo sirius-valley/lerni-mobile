@@ -29,7 +29,7 @@ const errorsAvailable = {
   },
   'no-introduction': {
     title: 'El conocimiento está a la espera y tú tambien',
-    content: 'Todavia no tienes ningun programa asignado. Intenta de nuevo mas tarde',
+    content: 'Todavía no tienes ningún programa asignado. Intenta de nuevo más tarde',
     Icon: ShipIllustration,
     hasActionButton: false,
   },
