@@ -160,25 +160,29 @@ export const mockedPills = [
 
 export const mockedLeaderboardRows = [
   {
-    imgUrl: 'https://www.comms-express.com/blog/wp-content/uploads/2017/06/funny-emoji.jpg',
+    imgUrl: 'https://media.discordapp.net/attachments/1163814783913562132/1204910739647631360/Rectangle.png?ex=65d67392&is=65c3fe92&hm=6992592ff585b8601c3b2dc65ee4242fe3865d9e1e7932d3d2c0c70bccd8a78a&=&format=webp&quality=lossless&width=96&height=96',
     fullName: 'Nombre y Apellido',
     points: 20,
+    position: 1,
   },
   {
-    imgUrl: '',
+    imgUrl: 'https://media.discordapp.net/attachments/1163814783913562132/1204910738867753041/Rectangle_1.png?ex=65d67392&is=65c3fe92&hm=642b379ac7acf23db0ddca709971fdb5dea48e95b3977eb2ec020a9b398fc5ab&=&format=webp&quality=lossless&width=96&height=96',
     fullName: 'Nombre y Apellido',
     points: 19,
+    position: 6,
+  },
+  {
+    imgUrl: 'https://media.discordapp.net/attachments/1163814783913562132/1204910739148775465/Rectangle_2.png?ex=65d67392&is=65c3fe92&hm=7bd244842b94dd63dab159bd8ceea9ac3acae8f39ac1b8b95c3766c7f78ae320&=&format=webp&quality=lossless&width=96&height=96',
+    fullName: 'Nombre y Apellido',
+    points: 18,
     belongsToCurrentUser: true,
+    position: 7,
   },
   {
-    imgUrl: '',
+    imgUrl: 'https://media.discordapp.net/attachments/1163814783913562132/1204910739425337394/Rectangle_3.png?ex=65d67392&is=65c3fe92&hm=51e57ec446be1e6bf5d2d01b2949b13362e6b6815eb9f996df11bb9e04899cc1&=&format=webp&quality=lossless&width=96&height=96',
     fullName: 'Nombre y Apellido',
-    points: 19,
-  },
-  {
-    imgUrl: '',
-    fullName: 'Nombre y Apellido',
-    points: 1,
+    points: 16,
+    position: 8
   },
 ];
 

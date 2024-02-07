@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyledBox,
   StyledColumn,
@@ -19,22 +19,28 @@ import PillRow from '../../../../../components/program/PillRow';
 import { mockedLeaderboardRows, mockedPills, Status } from '../utils';
 import LeaderboardRow from '../../../../../components/program/LeaderboardRow';
 import MessageIcon from '../../../../../../assets/icons/MessageIcon';
+import { MockedDataItem, inProgressMockedData } from '..';
 
 const ProgramDetail = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
+  const programs = inProgressMockedData;
+  const [program, setProgram] = useState<MockedDataItem | undefined>(undefined)
   const theme = useTheme();
 
+  useEffect(() => {
+    setProgram(programs.find(mappedProgram => mappedProgram.id === id))
+  }, [id])
+
   const mockedProgram = {
-    id: Array.isArray(id) ? '' : id ?? '',
-    title: Array.isArray(id) ? 'Programa 1' : id ?? '',
-    // title: 'Programa 1',
+    id: program?.id,
+    title: program?.title,
     imgUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/240px-React_Logo_SVG.svg.png',
+      'https://images.ctfassets.net/aq13lwl6616q/2gqVi4hhjq9vgvdh63UoKZ/c763c6f7e98a80eb2800bbe5eb9d690d/react_native_zero_to_mastery.png',
     status: 'in_progress' as Status,
-    progress: 0.32,
+    progress: program?.progress,
     pillData: {
-      pillProgress: 0.32,
+      pillProgress: program?.progress,
       pillAmount: 5,
       pillDuration: 1,
       pillPoints: 24,

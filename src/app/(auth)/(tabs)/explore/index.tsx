@@ -78,7 +78,7 @@ const Page = () => {
               status={'not_started'}
               onPress={handleGoToIntroductionPill}
             />
-          ) : !hasAssignedPrograms ? (
+          ) : hasAssignedPrograms ? (
             <StyledColumn
               css={{
                 justifyContent: 'center',
@@ -116,7 +116,7 @@ const Page = () => {
                   {data?.hasCompletedIntroduction &&
                     inProgressMockedData
                       .slice(0, 3)
-                      .map(({ id, title, imgUrl, status }) => (
+                      .map(({ id, title, imgUrl, status, progress }) => (
                         <ProgramCard
                           key={id}
                           onPress={() => handleGoToProgram(id)}
@@ -124,6 +124,7 @@ const Page = () => {
                           title={title}
                           imgUrl={imgUrl}
                           status={status}
+                          progress={progress}
                         />
                       ))}
                 </StyledRow>
@@ -217,33 +218,37 @@ const Page = () => {
 };
 
 // mocked program data to be deleted
-type MockedDataItem = {
+export type MockedDataItem = {
   id: string;
   title: string;
   imgUrl: string;
   status: Status;
+  progress?: number;
 };
-const inProgressMockedData: MockedDataItem[] = [
+export const inProgressMockedData: MockedDataItem[] = [
   {
     id: 'inprogress1',
-    title: 'Programa en progreso 3',
+    title: 'Programa en progreso 1',
     imgUrl:
-      'https://cdn.kinandcarta.com/-/media-assets/images/kincarta/insights/2022/02/react-native/react_hero.png?as=0&iar=0&w=1200&rev=61e1dad3af7e465e9544cf8490237772&hash=0AD31383BCBA1DA1C88546327312BA33',
+    'https://images.ctfassets.net/aq13lwl6616q/2gqVi4hhjq9vgvdh63UoKZ/c763c6f7e98a80eb2800bbe5eb9d690d/react_native_zero_to_mastery.png',
     status: 'in_progress',
+    progress: 0.67,
   },
   {
     id: 'inprogress2',
-    title: 'Programa en progreso 3',
+    title: 'Programa en progreso 2',
     imgUrl:
-      'https://cdn.kinandcarta.com/-/media-assets/images/kincarta/insights/2022/02/react-native/react_hero.png?as=0&iar=0&w=1200&rev=61e1dad3af7e465e9544cf8490237772&hash=0AD31383BCBA1DA1C88546327312BA33',
+    'https://images.ctfassets.net/aq13lwl6616q/2gqVi4hhjq9vgvdh63UoKZ/c763c6f7e98a80eb2800bbe5eb9d690d/react_native_zero_to_mastery.png',
     status: 'in_progress',
+    progress: 0.24,
   },
   {
     id: 'inprogress3',
     title: 'Programa en progreso 3',
     imgUrl:
-      'https://cdn.kinandcarta.com/-/media-assets/images/kincarta/insights/2022/02/react-native/react_hero.png?as=0&iar=0&w=1200&rev=61e1dad3af7e465e9544cf8490237772&hash=0AD31383BCBA1DA1C88546327312BA33',
+    'https://images.ctfassets.net/aq13lwl6616q/2gqVi4hhjq9vgvdh63UoKZ/c763c6f7e98a80eb2800bbe5eb9d690d/react_native_zero_to_mastery.png',
     status: 'in_progress',
+    progress: 0.93,
   },
 ];
 const notStartedMockedData: MockedDataItem[] = [
@@ -272,21 +277,21 @@ const completedMockedData: MockedDataItem[] = [
     id: 'completed1',
     title: 'Completado 1',
     imgUrl:
-      'https://images.ctfassets.net/aq13lwl6616q/2gqVi4hhjq9vgvdh63UoKZ/c763c6f7e98a80eb2800bbe5eb9d690d/react_native_zero_to_mastery.png',
+    'https://cdn.kinandcarta.com/-/media-assets/images/kincarta/insights/2022/02/react-native/react_hero.png?as=0&iar=0&w=1200&rev=61e1dad3af7e465e9544cf8490237772&hash=0AD31383BCBA1DA1C88546327312BA33',
     status: 'completed',
   },
   {
     id: 'completed2',
     title: 'Completado 2',
     imgUrl:
-      'https://images.ctfassets.net/aq13lwl6616q/2gqVi4hhjq9vgvdh63UoKZ/c763c6f7e98a80eb2800bbe5eb9d690d/react_native_zero_to_mastery.png',
+    'https://cdn.kinandcarta.com/-/media-assets/images/kincarta/insights/2022/02/react-native/react_hero.png?as=0&iar=0&w=1200&rev=61e1dad3af7e465e9544cf8490237772&hash=0AD31383BCBA1DA1C88546327312BA33',
     status: 'completed',
   },
   {
     id: 'completed3',
     title: 'Completado 3',
     imgUrl:
-      'https://images.ctfassets.net/aq13lwl6616q/2gqVi4hhjq9vgvdh63UoKZ/c763c6f7e98a80eb2800bbe5eb9d690d/react_native_zero_to_mastery.png',
+    'https://cdn.kinandcarta.com/-/media-assets/images/kincarta/insights/2022/02/react-native/react_hero.png?as=0&iar=0&w=1200&rev=61e1dad3af7e465e9544cf8490237772&hash=0AD31383BCBA1DA1C88546327312BA33',
     status: 'completed',
   },
   {
