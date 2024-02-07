@@ -1,19 +1,21 @@
 import { Animated, Easing } from 'react-native';
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from 'styled-components';
+import { ThemeColors } from '../../../utils/theme';
 
 interface SkeletonProps {
   width?: number | string;
   height: number;
-  type?: 'chat' | 'circle' | 'default';
+  type?: 'chat' | 'circle' | 'rounded' | 'default';
+  color?: keyof ThemeColors;
   css?: Record<string, string | number | boolean>;
 }
 
-const Skeleton = ({ width, height, type = 'default', css }: SkeletonProps) => {
+const Skeleton = ({ width, height, type = 'default', color, css }: SkeletonProps) => {
   const theme = useTheme();
   const pulseAnim = useRef(new Animated.Value(0)).current;
   const borderRadius: Record<
-    'chat' | 'circle' | 'default',
+    'chat' | 'circle' | 'rounded' | 'default',
     {
       borderTopRightRadius?: number;
       borderBottomRightRadius?: number;
@@ -30,6 +32,9 @@ const Skeleton = ({ width, height, type = 'default', css }: SkeletonProps) => {
     },
     circle: {
       borderRadius: 50,
+    },
+    rounded: {
+      borderRadius: 8,
     },
     default: {
       borderRadius: 2,
@@ -71,7 +76,7 @@ const Skeleton = ({ width, height, type = 'default', css }: SkeletonProps) => {
     <Animated.View
       style={[
         {
-          backgroundColor: theme.primary600,
+          backgroundColor: theme[color ? color : 'primary600'],
           borderRadius: borderRadius[type].borderRadius,
           borderBottomLeftRadius: borderRadius[type].borderBottomLeftRadius,
           borderBottomRightRadius: borderRadius[type].borderBottomRightRadius,

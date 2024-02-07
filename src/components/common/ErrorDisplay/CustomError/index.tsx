@@ -8,9 +8,16 @@ interface CustomErrorProps {
   title: string;
   content: string;
   buttonText?: string;
+  hasActionButton?: boolean;
 }
 
-const CustomError = ({ Icon, title, content, buttonText = 'Volver' }: CustomErrorProps) => {
+const CustomError = ({
+  Icon,
+  title,
+  content,
+  buttonText = 'Volver',
+  hasActionButton = true,
+}: CustomErrorProps) => {
   const theme = useTheme();
   const router = useRouter();
 
@@ -30,7 +37,11 @@ const CustomError = ({ Icon, title, content, buttonText = 'Volver' }: CustomErro
       <StyledText variant="body1" style={{ color: theme.gray100, textAlign: 'center' }}>
         {content}
       </StyledText>
-      <Button onPress={() => router.push('explore')}>{buttonText}</Button>
+      {hasActionButton ? (
+        <Button onPress={() => router.push('explore')}>{buttonText}</Button>
+      ) : (
+        <></>
+      )}
     </StyledColumn>
   );
 };

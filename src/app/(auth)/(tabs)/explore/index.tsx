@@ -14,7 +14,6 @@ import { useMeQuery } from '../../../../redux/service/student.service';
 import EmptyState from '../../../../components/explore/EmptyState';
 import { Status } from './utils';
 import { Pressable } from 'react-native';
-import Pill from '../../pill/introduction';
 
 const Page = () => {
   const router = useRouter();
@@ -22,10 +21,6 @@ const Page = () => {
   const { data, isLoading: meLoading } = useMeQuery();
   const hasAssignedPrograms = false;
   const isLoading = false;
-
-  if (meLoading) {
-    return <SkeletonHome />;
-  }
 
   const handleGoToProgram = (id: string) =>
     router.push({
@@ -35,7 +30,16 @@ const Page = () => {
       },
     });
 
+  const handleGoToSearchScreen = () =>
+    router.push({
+      pathname: '(tabs)/explore/searchScreen',
+    });
+
   const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
+
+  if (meLoading) {
+    return <SkeletonHome />;
+  }
 
   return (
     <StyledBox
@@ -56,9 +60,11 @@ const Page = () => {
             <StyledText variant="h1" css={{ color: theme.gray100 }}>
               Explorar
             </StyledText>
-            <StyledBox css={{ padding: 3 }}>
-              <SearchIcon size={24} />
-            </StyledBox>
+            <Pressable onPress={handleGoToSearchScreen}>
+              <StyledBox css={{ padding: 3 }}>
+                <SearchIcon size={24} />
+              </StyledBox>
+            </Pressable>
           </StyledRow>
           {isLoading ? (
             <SkeletonHome />
