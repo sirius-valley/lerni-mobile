@@ -20,7 +20,7 @@ const Page = () => {
   const router = useRouter();
   const theme = useTheme();
   const { data, isLoading: meLoading } = useMeQuery();
-  const hasAssignedPrograms = true;
+  const hasAssignedPrograms = false;
   const isLoading = false;
 
   if (meLoading) {
@@ -63,9 +63,15 @@ const Page = () => {
           {isLoading ? (
             <SkeletonHome />
           ) : !data?.hasCompletedIntroduction ? (
-            <Pressable onPress={handleGoToIntroductionPill}>
-              <Pill />
-            </Pressable>
+            <ProgramCard
+              id={'introduction'}
+              title={'Introducción a la plataforma'}
+              imgUrl={
+                'https://cdn.discordapp.com/attachments/411201278031560708/1202706664101380186/introduction.jpg?ex=65ce6edd&is=65bbf9dd&hm=1e66425900cef824c7105a23d993ede7534e758006238e6f926590aa3eeadadb&'
+              }
+              status={'not_started'}
+              onPress={handleGoToIntroductionPill}
+            />
           ) : !hasAssignedPrograms ? (
             <EmptyState />
           ) : (
