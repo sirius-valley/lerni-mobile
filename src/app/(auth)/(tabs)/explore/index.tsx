@@ -11,9 +11,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
 import SkeletonHome from '../../../../components/home/HomeSkeleton';
 import { useMeQuery } from '../../../../redux/service/student.service';
-import EmptyState from '../../../../components/explore/EmptyState';
 import { Status } from './utils';
-import { Pressable } from 'react-native';
+import { Dimensions, Pressable } from 'react-native';
+import ErrorDisplay from '../../../../components/common/ErrorDisplay';
 
 const Page = () => {
   const router = useRouter();
@@ -79,7 +79,14 @@ const Page = () => {
               onPress={handleGoToIntroductionPill}
             />
           ) : !hasAssignedPrograms ? (
-            <EmptyState />
+            <StyledColumn
+              css={{
+                justifyContent: 'center',
+                height: Dimensions.get('window').height - 250,
+              }}
+            >
+              <ErrorDisplay type="no-introduction" />
+            </StyledColumn>
           ) : (
             <StyledColumn css={{ gap: 24 }}>
               <StyledColumn css={{ gap: 8 }}>
