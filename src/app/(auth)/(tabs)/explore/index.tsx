@@ -63,7 +63,9 @@ const Page = () => {
           {isLoading ? (
             <SkeletonHome />
           ) : !data?.hasCompletedIntroduction ? (
-            <Pill />
+            <Pressable onPress={handleGoToIntroductionPill}>
+              <Pill />
+            </Pressable>
           ) : !hasAssignedPrograms ? (
             <EmptyState />
           ) : (
@@ -98,6 +100,7 @@ const Page = () => {
                       .map(({ id, title, imgUrl, status }) => (
                         <ProgramCard
                           key={id}
+                          onPress={() => handleGoToProgram(id)}
                           id={id}
                           title={title}
                           imgUrl={imgUrl}
@@ -137,6 +140,7 @@ const Page = () => {
                       .map(({ id, title, imgUrl, status }) => (
                         <ProgramCard
                           key={id}
+                          onPress={() => handleGoToProgram(id)}
                           id={id}
                           title={title}
                           imgUrl={imgUrl}
@@ -176,6 +180,7 @@ const Page = () => {
                       .map(({ id, title, imgUrl, status }) => (
                         <ProgramCard
                           key={id}
+                          onPress={() => handleGoToProgram(id)}
                           id={id}
                           title={title}
                           imgUrl={imgUrl}
