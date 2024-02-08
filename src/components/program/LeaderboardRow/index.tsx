@@ -23,7 +23,7 @@ const LeaderboardRow = ({
   const theme = useTheme();
   return (
     <StyledLeaderboardRowContainer belongsToOwner={belongsToCurrentUser}>
-      <StyledRow css={{ gap: 8, alignItems: 'center', justifyContent: 'flex-start' }}>
+      <StyledRow css={{ gap: 8, alignItems: 'center', justifyContent: 'flex-start', width: '83%' }}>
         <StyledBox css={{ justifyContent: 'center', padddingVertical: 11, paddingHorizontal: 8 }}>
           <StyledText variant="h2" style={{ color: theme.gray100 }}>
             {position}
