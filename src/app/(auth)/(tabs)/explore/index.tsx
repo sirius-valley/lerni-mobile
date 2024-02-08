@@ -80,7 +80,7 @@ const Page = () => {
                 status={'not_started'}
                 onPress={handleGoToIntroductionPill}
               />
-              <ProgramCard
+              {/* <ProgramCard
                 id={'test_pill'}
                 title={'test'}
                 imgUrl={
@@ -88,7 +88,7 @@ const Page = () => {
                 }
                 status={'not_started'}
                 onPress={handleGoToTestQuestionnaire}
-              />
+              /> */}
             </>
           ) : !hasAssignedPrograms ? (
             <StyledColumn
