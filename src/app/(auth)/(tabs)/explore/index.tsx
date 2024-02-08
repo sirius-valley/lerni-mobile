@@ -229,8 +229,7 @@ export const inProgressMockedData: MockedDataItem[] = [
   {
     id: 'inprogress1',
     title: 'Programa en progreso 1',
-    imgUrl:
-      'https://images.ctfassets.net/aq13lwl6616q/2gqVi4hhjq9vgvdh63UoKZ/c763c6f7e98a80eb2800bbe5eb9d690d/react_native_zero_to_mastery.png',
+    imgUrl: 'https://media.discordapp.net/attachments/1163814783913562132/1205135747217100861/image.png?ex=65d74520&is=65c4d020&hm=cba5fd93c2bd2dae25e78fd4940674b2559fb95183fc0c030730370f6abc4039&=&format=webp&quality=lossless&width=220&height=220',
     status: 'in_progress',
     progress: 0.67,
   },
@@ -238,7 +237,7 @@ export const inProgressMockedData: MockedDataItem[] = [
     id: 'inprogress2',
     title: 'Programa en progreso 2',
     imgUrl:
-      'https://images.ctfassets.net/aq13lwl6616q/2gqVi4hhjq9vgvdh63UoKZ/c763c6f7e98a80eb2800bbe5eb9d690d/react_native_zero_to_mastery.png',
+      'https://media.discordapp.net/attachments/1163814783913562132/1205135747443855371/image_1.png?ex=65d74520&is=65c4d020&hm=3083227db29e72488b3f85c474178f024f2a838149f14330187c027b8591eb9b&=&format=webp&quality=lossless&width=218&height=220',
     status: 'in_progress',
     progress: 0.24,
   },
@@ -246,7 +245,7 @@ export const inProgressMockedData: MockedDataItem[] = [
     id: 'inprogress3',
     title: 'Programa en progreso 3',
     imgUrl:
-      'https://images.ctfassets.net/aq13lwl6616q/2gqVi4hhjq9vgvdh63UoKZ/c763c6f7e98a80eb2800bbe5eb9d690d/react_native_zero_to_mastery.png',
+      'https://media.discordapp.net/attachments/1163814783913562132/1205135747670212638/image_2.png?ex=65d74520&is=65c4d020&hm=f83dc10c501f285fdafb14559bb82e6b405151344115ce1ef31fcb0f149266c4&=&format=webp&quality=lossless&width=218&height=220',
     status: 'in_progress',
     progress: 0.93,
   },

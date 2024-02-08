@@ -34,8 +34,7 @@ const ProgramDetail = () => {
   const mockedProgram = {
     id: program?.id,
     title: program?.title,
-    imgUrl:
-      'https://images.ctfassets.net/aq13lwl6616q/2gqVi4hhjq9vgvdh63UoKZ/c763c6f7e98a80eb2800bbe5eb9d690d/react_native_zero_to_mastery.png',
+    imgUrl: program?.imgUrl ? program?.imgUrl : 'https://reactnative.dev/img/logo-og.png',
     status: 'in_progress' as Status,
     progress: program?.progress,
     pillData: {
@@ -118,8 +117,8 @@ const ProgramDetail = () => {
               Pildoras
             </StyledText>
 
-            {mockedPills.map((pill) => (
-              <PillRow {...pill} />
+            {mockedPills.map((pill, idx) => (
+              <PillRow {...pill} key={idx} />
             ))}
           </StyledColumn>
 
