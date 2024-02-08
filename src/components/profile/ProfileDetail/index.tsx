@@ -10,7 +10,7 @@ export const ProfileDetail = ({ image, name, lastname, career, profession, city 
   const theme = useTheme();
 
   return (
-    <StyledRow css={{ gap: 8 }}>
+    <StyledRow css={{ gap: 8, alignItems: 'center' }}>
       <StyledBox>
         <Avatar size={94} borderRadius={97} uri={image ? image : undefined} />
       </StyledBox>
@@ -18,23 +18,6 @@ export const ProfileDetail = ({ image, name, lastname, career, profession, city 
         <StyledText css={{ color: theme.gray100 }} variant="h3">
           {name} {lastname}
         </StyledText>
-        {career && (
-          <StyledRow style={{ gap: 4, alignItems: 'center' }}>
-            <StyledBox
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: 2,
-              }}
-            >
-              <CareerIcon size={24} />
-            </StyledBox>
-            <StyledText css={{ color: theme.gray100 }} variant="body2">
-              {career}
-            </StyledText>
-          </StyledRow>
-        )}
         {profession && (
           <StyledRow style={{ gap: 4, alignItems: 'center' }}>
             <StyledBox
@@ -49,6 +32,23 @@ export const ProfileDetail = ({ image, name, lastname, career, profession, city 
             </StyledBox>
             <StyledText css={{ color: theme.gray100 }} variant="body2">
               {profession}
+            </StyledText>
+          </StyledRow>
+        )}
+        {career && (
+          <StyledRow style={{ gap: 4, alignItems: 'center' }}>
+            <StyledBox
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 2,
+              }}
+            >
+              <CareerIcon size={24} />
+            </StyledBox>
+            <StyledText css={{ color: theme.gray100 }} variant="body2">
+              {career}
             </StyledText>
           </StyledRow>
         )}
