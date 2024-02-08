@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import {
   StyledBox,
   StyledColumn,
-  StyledLine,
   StyledRow,
   StyledText,
 } from '../../../../../components/styled/styles';
@@ -19,18 +18,18 @@ import PillRow from '../../../../../components/program/PillRow';
 import { mockedLeaderboardRows, mockedPills, Status } from '../utils';
 import LeaderboardRow from '../../../../../components/program/LeaderboardRow';
 import MessageIcon from '../../../../../../assets/icons/MessageIcon';
-import { MockedDataItem, inProgressMockedData } from '..';
+import { inProgressMockedData, MockedDataItem } from '..';
 
 const ProgramDetail = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
   const programs = inProgressMockedData;
-  const [program, setProgram] = useState<MockedDataItem | undefined>(undefined)
+  const [program, setProgram] = useState<MockedDataItem | undefined>(undefined);
   const theme = useTheme();
 
   useEffect(() => {
-    setProgram(programs.find(mappedProgram => mappedProgram.id === id))
-  }, [id])
+    setProgram(programs.find((mappedProgram) => mappedProgram.id === id));
+  }, [id]);
 
   const mockedProgram = {
     id: program?.id,
@@ -63,10 +62,7 @@ const ProgramDetail = () => {
   ];
 
   return (
-    <ScrollView
-      style={{ width: '100%', paddingHorizontal: 12 }}
-      scrollIndicatorInsets={{ right: -30 }}
-    >
+    <ScrollView style={{ width: '100%' }} scrollIndicatorInsets={{ right: -30 }}>
       <StyledColumn
         css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '64px' }}
       >
@@ -121,11 +117,9 @@ const ProgramDetail = () => {
             <StyledText color="gray100" variant="h3">
               Pildoras
             </StyledText>
-            {mockedPills.map((pill, idx) => (
-              <StyledBox key={idx}>
-                <PillRow {...pill} />
-                <StyledLine css={{ marginTop: '8px' }} color="gray500" />
-              </StyledBox>
+
+            {mockedPills.map((pill) => (
+              <PillRow {...pill} />
             ))}
           </StyledColumn>
 
