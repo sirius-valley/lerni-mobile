@@ -1,3 +1,5 @@
+import { BubbleResponse } from '../redux/service/types/pill.response';
+
 export interface QuestionnaireChoiceOption {
   id: string;
   text: string;
@@ -74,17 +76,36 @@ export type QuestionnaireBubbles =
       id: string;
       type: 'single-choice';
       options: string[];
-      value: string;
+      value?: string;
     }
   | {
       id: string;
       type: 'multiple-choice';
       options: string[];
-      value: string[];
+      value?: string[];
     }
   | {
       id: string;
       type: 'carousel';
       options: string[];
-      value: string[];
+      value?: string[];
     };
+
+export const questionnaireResponseMockedData: BubbleResponse[] = [
+  {
+    content: '<p>Bienvenido</p>',
+    id: '796c43a6-5cf7-442b-9d78-249ffe087d9f',
+    type: 'text',
+  },
+  {
+    content: '<p>Pregunta del profesor</p>',
+    id: '796c43a6-5cf7-442b-9d78-249ffe087d9f',
+    type: 'text',
+  },
+  {
+    id: 'a45869e8-bc3e-4c3e-b87a-65c6c743cac0',
+    options: ['Choice 1', 'Choice 2', 'Choice 3'],
+    type: 'single-choice',
+    value: '',
+  },
+];

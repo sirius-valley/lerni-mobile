@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PillMainContainer from '../../../../components/pill/PillMainContainer';
 import PillHeader from '../../../../components/pill/PillHeader';
 import QuestionnaireAnswer from '../../../../components/bubbles/QuestionnaireAnswer';
@@ -10,8 +10,12 @@ import {
   QuestionnaireChoiceOption,
   mockedInitialValues,
 } from '../../../../utils/questionnaireUtils';
+import { useLDispatch, useLSelector } from '../../../../redux/hooks';
+import { useQuestionnaireByIdQuery } from '../../../../redux/service/questionnaire.service';
+import { getQuestionnaireById } from '../../../../redux/slice/questionnaire.slice';
 
 const index = () => {
+  const { data } = useQuestionnaireByIdQuery({ id: '01' });
   const [options, setOptions] = useState<QuestionnaireChoiceOption[]>(mockedInitialValues);
   const [multipleOptions, setMultipleOptions] =
     useState<QuestionnaireChoiceOption[]>(mockedInitialValues);
@@ -21,6 +25,18 @@ const index = () => {
   const [isImageSealed, setIsImageSealed] = useState(false);
   const [isImgSelectedCorrect, setIsImgSelectedCorrect] = useState(false);
   const [points, setPoints] = useState<number | undefined>();
+
+  const blocksIds = useLSelector((state) => state.questionnaire.blocksIds);
+  const pillTitle = useLSelector((state) => state.pill.pill?.pill?.name);
+  const pillProgress = useLSelector((state) => state.pill.pill?.pill?.progress);
+  const pillCompleted = useLSelector((state) => state.pill.pill?.pill?.completed);
+  const dispatch = useLDispatch();
+
+  useEffect(() => {
+    dispatch(getQuestionnaireById('01'));
+  }, []);
+
+  console.log('questionnaire blocksIds: ', blocksIds);
 
   const correctAnswerSingleSelection = 'Choice 4';
   const correctAnswerImgSelection = '02';

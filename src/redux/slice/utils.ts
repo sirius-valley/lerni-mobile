@@ -2,6 +2,7 @@ import { removeHtmlTags } from '../../utils/utils';
 import { BubbleResponse } from '../service/types/pill.response';
 
 export const transformResponseBlock = (acc: any[], block: BubbleResponse) => {
+  console.log('block: ', block);
   if (block?.content) {
     return {
       ...acc,
