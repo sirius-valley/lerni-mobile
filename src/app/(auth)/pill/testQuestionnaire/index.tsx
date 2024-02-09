@@ -5,66 +5,17 @@ import QuestionnaireAnswer from '../../../../components/bubbles/QuestionnaireAns
 import { StyledBox, StyledText } from '../../../../components/styled/styles';
 import { ScrollView } from 'react-native';
 import QuestionnaireImgAnswer from '../../../../components/bubbles/QuestionnaireImgAnswer';
-
-interface Option {
-  id: string;
-  text: string;
-  selected?: boolean;
-}
-const mockedInitialValues: Option[] = [
-  {
-    id: '01',
-    text: 'Choice 1',
-    selected: false,
-  },
-  {
-    id: '02',
-    text: 'Choice 2',
-    selected: false,
-  },
-  {
-    id: '03',
-    text: 'Choice 3',
-    selected: false,
-  },
-  {
-    id: '04',
-    text: 'Choice 4',
-    selected: false,
-  },
-];
-
-const Images = [
-  {
-    id: '01',
-    title: 'title 1',
-    description: 'description 1',
-    image:
-      'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=pexels-mike-bird-170811.jpg&fm=jpg',
-    selected: false,
-  },
-  {
-    id: '02',
-    title: 'title 2',
-    description: 'description 2',
-    image:
-      'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=pexels-mike-bird-170811.jpg&fm=jpg',
-    selected: false,
-  },
-  {
-    id: '03',
-    title: 'title 3',
-    description: 'description 3',
-    image:
-      'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=pexels-mike-bird-170811.jpg&fm=jpg',
-    selected: false,
-  },
-];
+import {
+  QuestionnaireChoiceImages,
+  QuestionnaireChoiceOption,
+  mockedInitialValues,
+} from '../../../../utils/questionnaireUtils';
 
 const index = () => {
-  const [options, setOptions] = useState<Option[]>(mockedInitialValues);
-  const [multipleOptions, setMultipleOptions] = useState<Option[]>(mockedInitialValues);
-  const [imagesOptions, setImagesOptions] = useState(Images);
+  const [options, setOptions] = useState<QuestionnaireChoiceOption[]>(mockedInitialValues);
+  const [multipleOptions, setMultipleOptions] =
+    useState<QuestionnaireChoiceOption[]>(mockedInitialValues);
+  const [imagesOptions, setImagesOptions] = useState(QuestionnaireChoiceImages);
   const [isMultipleAnswerSealed, setIsMultipleAnswerSealed] = useState(false);
   const [isSingleAnswerSealed, setIsSingleAnswerSealed] = useState(false);
   const [isImageSealed, setIsImageSealed] = useState(false);
@@ -111,11 +62,12 @@ const index = () => {
     const selection = imagesOptions.map((img) => {
       return {
         ...img,
-        selected: img.id === id ? true : false,
+        selected: img.id === id ? !img.selected : false,
       };
     });
     setImagesOptions(selection);
   };
+
   const handleImgSelectionPress = () => {
     if (imagesOptions.some((img) => img.id === correctAnswerImgSelection && !!img.selected))
       setIsImgSelectedCorrect(true);

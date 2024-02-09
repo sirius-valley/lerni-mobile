@@ -14,6 +14,7 @@ import { useMeQuery } from '../../../../redux/service/student.service';
 import { Status } from './utils';
 import { Dimensions, Pressable } from 'react-native';
 import ErrorDisplay from '../../../../components/common/ErrorDisplay';
+import { useEffect } from 'react';
 
 const Page = () => {
   const router = useRouter();
@@ -36,7 +37,10 @@ const Page = () => {
     });
 
   const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
-  const handleGoToTestQuestionnaire = () => router.push('/(auth)/pill/testQuestionnaire');
+
+  useEffect(() => {
+    router.push('/(auth)/pill/testQuestionnaire');
+  }, []);
 
   if (meLoading) {
     return <SkeletonHome />;
@@ -80,15 +84,6 @@ const Page = () => {
                 status={'not_started'}
                 onPress={handleGoToIntroductionPill}
               />
-              {/* <ProgramCard
-                id={'test_pill'}
-                title={'test'}
-                imgUrl={
-                  'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/240px-React_Logo_SVG.svg.png'
-                }
-                status={'not_started'}
-                onPress={handleGoToTestQuestionnaire}
-              /> */}
             </>
           ) : !hasAssignedPrograms ? (
             <StyledColumn
