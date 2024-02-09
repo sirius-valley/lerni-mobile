@@ -1,6 +1,6 @@
 import React from 'react';
-import { Choice } from '../../styled/Choice';
-import { StyledChoiceMainContainer } from '../../styled/Choice/styles';
+import { PillChoice } from '../../styled/PillChoice';
+import { StyledChoiceMainContainer } from '../../styled/PillChoice/styles';
 import { StyledColumn } from '../../styled/styles';
 import { LabeledSend } from '../LabeledSend';
 
@@ -20,7 +20,7 @@ const MultipleAnswer = ({ options, onPress, onChange, sealed }: MultipleAnswerPr
     <StyledColumn style={{ gap: 6, alignItems: 'flex-end' }}>
       <StyledChoiceMainContainer>
         {options.map((option) => (
-          <Choice
+          <PillChoice
             status={
               typeof option.selected == 'boolean'
                 ? option.selected

@@ -36,6 +36,7 @@ const Page = () => {
     });
 
   const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
+  const handleGoToTestQuestionnaire = () => router.push('/(auth)/pill/testQuestionnaire');
 
   if (meLoading) {
     return <SkeletonHome />;
@@ -69,15 +70,26 @@ const Page = () => {
           {isLoading ? (
             <SkeletonHome />
           ) : !data?.hasCompletedIntroduction ? (
-            <ProgramCard
-              id={'introduction'}
-              title={'Introducción a la plataforma'}
-              imgUrl={
-                'https://cdn.discordapp.com/attachments/411201278031560708/1202706664101380186/introduction.jpg?ex=65ce6edd&is=65bbf9dd&hm=1e66425900cef824c7105a23d993ede7534e758006238e6f926590aa3eeadadb&'
-              }
-              status={'not_started'}
-              onPress={handleGoToIntroductionPill}
-            />
+            <>
+              <ProgramCard
+                id={'introduction'}
+                title={'Introducción a la plataforma'}
+                imgUrl={
+                  'https://cdn.discordapp.com/attachments/411201278031560708/1202706664101380186/introduction.jpg?ex=65ce6edd&is=65bbf9dd&hm=1e66425900cef824c7105a23d993ede7534e758006238e6f926590aa3eeadadb&'
+                }
+                status={'not_started'}
+                onPress={handleGoToIntroductionPill}
+              />
+              {/* <ProgramCard
+                id={'test_pill'}
+                title={'test'}
+                imgUrl={
+                  'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/240px-React_Logo_SVG.svg.png'
+                }
+                status={'not_started'}
+                onPress={handleGoToTestQuestionnaire}
+              /> */}
+            </>
           ) : !hasAssignedPrograms ? (
             <StyledColumn
               css={{
