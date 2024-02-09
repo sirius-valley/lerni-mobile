@@ -1,6 +1,6 @@
 export type BubbleResponse = {
   id: string;
-  type: 'text';
+  type: 'text' | 'free-text';
   content?: string;
   options?: string[];
   value?: string | string[];

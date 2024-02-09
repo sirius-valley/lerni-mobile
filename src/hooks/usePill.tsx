@@ -30,24 +30,37 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
   };
 
   const handleMultipleAnswer = () => {
-    answer({ pillId: pillDetails!.pill.id, questionId: questionId, answer: blockDetails.options.reduce((acc: string[],option: any) => {
-      if(option.selected){
+    answer({ pillId: pillDetails!.pill.id, questionId: blockDetails.id, answer: blockDetails.options.reduce((acc: string[],option: any) => {
+      if(option.selected === true){
+        console.log('handle multiple answer', option, option.selected, ' - questionId: ', questionId);
         return [
           ...acc,
-          option.value
+          option.id
         ]
       }else{
         return acc
       }
     }, []) });
+    dispatch(setMultipleAnswer({id: questionId}));
   };
 
   const handleSelectMultipleAnswer = (answerId: string) => {
     dispatch(setSelectMultipleAnswer({ id: questionId, value: answerId }));
   };
 
-  const handleCarousel = (answerId: string) => {
-    dispatch(setCarousel({id: questionId, value: answerId}));
+  const handleCarousel = () => {
+    answer({ pillId: pillDetails!.pill.id, questionId: blockDetails.id, answer: blockDetails.items.reduce((acc: string[],item: any) => {
+      if(item.selected){
+        console.log('contestado carousel', item.selected);
+        return [
+          ...acc,
+          item.id
+        ]
+      }else{
+        return acc
+      }
+    }, []) });
+    dispatch(setCarousel({id: questionId}));
   };
 
   const handleSelectCarousel = (answerId: string) => {

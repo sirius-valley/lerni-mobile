@@ -21,13 +21,14 @@ import { api } from '../../../../redux/service/api';
 import SkeletonPill from '../../../../components/pill/SkeletonPill';
 
 const Pill = () => {
-  // const { data, isLoading: isLoadingPill, refetch } = useGetIntroductionPillQuery();
+  const { data, isLoading: isLoadingPill, refetch } = useGetIntroductionPillQuery();
   const blocksIds = useLSelector((state) => state.pill.blocksIds);
   const pillTitle = useLSelector((state) => state.pill.pill?.pill?.name);
   const pillProgress = useLSelector((state) => state.pill.pill?.pill?.progress);
+  
   const pillCompleted = useLSelector((state) => state.pill.pill?.pill?.completed);
   const dispatch = useLDispatch();
-  const isLoadingPill = false
+  // const isLoadingPill = false
   const virtualRef = useRef<VirtualizedList<unknown> | null>();
   const prevData = usePrevious<boolean>(pillCompleted);
 
