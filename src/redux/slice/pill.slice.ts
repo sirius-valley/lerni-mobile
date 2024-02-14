@@ -47,7 +47,7 @@ export interface CarouselBlockType extends CommonBlockType {
     description: string;
     image: string;
     selected?: boolean | string;
-  }[]
+  }[];
   // {
   //   id: string;
   //   type: 'carousel';
@@ -55,7 +55,6 @@ export interface CarouselBlockType extends CommonBlockType {
   //   value: string[];
   //   optionDescriptions: string[];
   // };
-  ;
 }
 
 export interface TextBlockType extends CommonBlockType {
@@ -128,8 +127,7 @@ export const pillSlice = createSlice({
     setSelectMultipleAnswer: (state, payload) => {
       const { id, value } = payload.payload;
       const block: MultipleChoiceBlockType = state.mapBlocks[id] as MultipleChoiceBlockType;
-      console.log('set select log', 'block: ', JSON.stringify(block));
-      
+
       if (block.type === 'multiple-choice' && !block.sealed) {
         state.mapBlocks[id] = {
           ...block,
@@ -152,7 +150,7 @@ export const pillSlice = createSlice({
       state.mapBlocks[id] = {
         ...block,
         options: block.options.map((option) => {
-          if (option.selected!== true) {
+          if (option.selected !== true) {
             return {
               ...option,
               selected: false,
@@ -163,8 +161,6 @@ export const pillSlice = createSlice({
         }),
         sealed: true,
       };
-      console.log(state.mapBlocks[id]);
-      
     },
     setSelectCarousel: (state, payload) => {
       const { id, value } = payload.payload;
@@ -174,14 +170,14 @@ export const pillSlice = createSlice({
         state.mapBlocks[id] = {
           ...block,
           items: block.items.map((item) => {
-              if (item.id === value) {
-                return {
-                  ...item,
-                  selected: item.selected ? undefined : true,
-                };
-              } else {
-                return item;
-              }
+            if (item.id === value) {
+              return {
+                ...item,
+                selected: item.selected ? undefined : true,
+              };
+            } else {
+              return item;
+            }
           }),
         };
       }
@@ -189,7 +185,7 @@ export const pillSlice = createSlice({
     setCarousel: (state, payload) => {
       const { id } = payload.payload;
       const block: CarouselBlockType = state.mapBlocks[id] as CarouselBlockType;
-  
+
       state.mapBlocks[id] = {
         ...block,
         items: block.items.map((item) => {
@@ -197,7 +193,7 @@ export const pillSlice = createSlice({
             return {
               ...item,
               selected: false,
-            }
+            };
           } else {
             return item;
           }
@@ -229,7 +225,6 @@ export const pillSlice = createSlice({
         state.pill = action.payload;
       })
       .addMatcher(pillsApi.endpoints.answer.matchFulfilled, (state, action) => {
-        console.log('answer fulfilled', action.payload);
         state.freeTextQuestionId = undefined;
         const blocksToAdd = action.payload.pill.bubbles.reduce((acc: any, block) => {
           state.blocksIds = [...state.blocksIds, block.id];
@@ -249,12 +244,7 @@ export const pillSlice = createSlice({
             ...action.payload.pill,
           },
         };
-        console.log('answer fulfilled this is how it answered: ', state.mapBlocks);
-        
-      })
-      .addMatcher(pillsApi.endpoints.answer.matchRejected, (state, action) => {
-        console.log('answer rejected', action);
-      })
+      });
   },
 });
 
@@ -274,7 +264,14 @@ export const getPillTypeByID = createSelector(
   },
 );
 
-export const { setSingleAnswer, setMultipleAnswer, setSelectMultipleAnswer, setCarousel, setSelectCarousel, setFreeTextAnswer, setFreeTextQuestionId } =
-  pillSlice.actions;
+export const {
+  setSingleAnswer,
+  setMultipleAnswer,
+  setSelectMultipleAnswer,
+  setCarousel,
+  setSelectCarousel,
+  setFreeTextAnswer,
+  setFreeTextQuestionId,
+} = pillSlice.actions;
 
 export default pillSlice.reducer;

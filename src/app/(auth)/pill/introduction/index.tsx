@@ -25,10 +25,9 @@ const Pill = () => {
   const blocksIds = useLSelector((state) => state.pill.blocksIds);
   const pillTitle = useLSelector((state) => state.pill.pill?.pill?.name);
   const pillProgress = useLSelector((state) => state.pill.pill?.pill?.progress);
-  
+
   const pillCompleted = useLSelector((state) => state.pill.pill?.pill?.completed);
   const dispatch = useLDispatch();
-  // const isLoadingPill = false
   const virtualRef = useRef<VirtualizedList<unknown> | null>();
   const prevData = usePrevious<boolean>(pillCompleted);
 

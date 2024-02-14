@@ -30,18 +30,18 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
   };
 
   const handleMultipleAnswer = () => {
-    answer({ pillId: pillDetails!.pill.id, questionId: blockDetails.id, answer: blockDetails.options.reduce((acc: string[],option: any) => {
-      if(option.selected === true){
-        console.log('handle multiple answer', option, option.selected, ' - questionId: ', questionId);
-        return [
-          ...acc,
-          option.id
-        ]
-      }else{
-        return acc
-      }
-    }, []) });
-    dispatch(setMultipleAnswer({id: questionId}));
+    answer({
+      pillId: pillDetails!.pill.id,
+      questionId: blockDetails.id,
+      answer: blockDetails.options.reduce((acc: string[], option: any) => {
+        if (option.selected === true) {
+          return [...acc, option.id];
+        } else {
+          return acc;
+        }
+      }, []),
+    });
+    dispatch(setMultipleAnswer({ id: questionId }));
   };
 
   const handleSelectMultipleAnswer = (answerId: string) => {
@@ -49,23 +49,23 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
   };
 
   const handleCarousel = () => {
-    answer({ pillId: pillDetails!.pill.id, questionId: blockDetails.id, answer: blockDetails.items.reduce((acc: string[],item: any) => {
-      if(item.selected){
-        console.log('contestado carousel', item.selected);
-        return [
-          ...acc,
-          item.id
-        ]
-      }else{
-        return acc
-      }
-    }, []) });
-    dispatch(setCarousel({id: questionId}));
+    answer({
+      pillId: pillDetails!.pill.id,
+      questionId: blockDetails.id,
+      answer: blockDetails.items.reduce((acc: string[], item: any) => {
+        if (item.selected) {
+          return [...acc, item.id];
+        } else {
+          return acc;
+        }
+      }, []),
+    });
+    dispatch(setCarousel({ id: questionId }));
   };
 
   const handleSelectCarousel = (answerId: string) => {
-    dispatch(setSelectCarousel({ id: questionId, value: answerId }))
-  }
+    dispatch(setSelectCarousel({ id: questionId, value: answerId }));
+  };
 
   const handleSendAnswer = (valueToSend: string) => {
     answer({ pillId: pillDetails!.pill.id, questionId: questionId, answer: valueToSend });
