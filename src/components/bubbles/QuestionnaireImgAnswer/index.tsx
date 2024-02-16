@@ -41,7 +41,6 @@ const QuestionnaireImgAnswer = ({
         url: item.image,
       })) ?? [],
   });
-  console.log(JSON.stringify(items, null, 3));
 
   const renderStatusIcon = (id: string, selected: boolean) => {
     if (selected && sealed) {
@@ -84,7 +83,7 @@ const QuestionnaireImgAnswer = ({
                   hideSelf={sealed && !item?.selected && !isImgSelectedCorrect}
                   hasOpacity={sealed && !item?.selected}
                 />
-                {renderStatusIcon(item.id, !!item?.selected)}
+                {renderStatusIcon(item.image, !!item?.selected)}
               </StyledRow>
               {sealed && item.selected && <PointsDisplay points={points ?? 0} />}
             </StyledColumn>

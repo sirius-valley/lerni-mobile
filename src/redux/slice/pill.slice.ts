@@ -52,6 +52,7 @@ export interface ImageBlockType extends CommonBlockType {
   imgOptions?: ImagesOptions[];
   correctAnswer?: string[];
   points?: number;
+  value: string;
 }
 
 export interface TextBlockType extends CommonBlockType {

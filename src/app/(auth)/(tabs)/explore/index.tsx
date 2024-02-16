@@ -14,7 +14,6 @@ import { useMeQuery } from '../../../../redux/service/student.service';
 import { Status } from './utils';
 import { Dimensions, Pressable } from 'react-native';
 import ErrorDisplay from '../../../../components/common/ErrorDisplay';
-import { useEffect } from 'react';
 
 const Page = () => {
   const router = useRouter();
@@ -83,15 +82,6 @@ const Page = () => {
                 }
                 status={'not_started'}
                 onPress={handleGoToIntroductionPill}
-              />
-              <ProgramCard
-                id={'introductionasd'}
-                title={'Cuestionario'}
-                imgUrl={
-                  'https://blog.logrocket.com/wp-content/uploads/2021/05/displaying-images-react-native-image-component.png'
-                }
-                status={'not_started'}
-                onPress={() => router.push('/(auth)/pill/testQuestionnaire')}
               />
             </>
           ) : !hasAssignedPrograms ? (

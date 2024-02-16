@@ -114,13 +114,10 @@ export const questionnaireSlice = createSlice({
         state.mapBlocks[id] = {
           ...block,
           imgOptions: block.imgOptions?.map((option) => {
-            if (option.id === value) {
-              return {
-                ...option,
-                selected: option?.selected === false ? true : false,
-              };
-            }
-            return option;
+            return {
+              ...option,
+              selected: option.id === value ? true : false,
+            };
           }),
         };
       }
@@ -129,17 +126,17 @@ export const questionnaireSlice = createSlice({
       const { id } = action.payload;
       const block: ImageBlockType = state.mapBlocks[id] as ImageBlockType;
 
-      const correactAnswersAmount = block.correctAnswer!.length;
-      let correctAnswersCount = 0;
+      let value = '';
 
       if (block.type === 'carousel') {
         block.imgOptions?.forEach((option) => {
-          if (option.selected && block.correctAnswer?.includes(option.image)) correctAnswersCount++;
+          if (option.selected && block.correctAnswer?.includes(option.image)) value = option.image;
         });
 
         state.mapBlocks[id] = {
           ...block,
-          points: correctAnswersCount === correactAnswersAmount ? 5 : 0,
+          points: value ? 5 : 0,
+          value: value,
         };
       }
     },
@@ -159,20 +156,21 @@ export const questionnaireSlice = createSlice({
         };
         state.last = mappedValues[mappedValues.length - 1].id;
         state.questionnaire?.pill.bubbles.concat(questionnaireEndMessage);
-        // } else if (state.mapBlocks[state.last ?? '']?.type === 'multiple-choice') {
-        //   const mappedValues = questionnaireImgSelectionMessage
-        //     .map(q => ({ ...q, id: `${Math.random()}` }));
-        //   const newBlocks = mappedValues
-        //     .reduce((acc: any, block) => {
-        //       state.blocksIds = [...state.blocksIds, block.id];
-        //       return transformQuestionnaireResponseBlock(acc, block);
-        //     }, {});
-        //   state.mapBlocks = {
-        //     ...state.mapBlocks,
-        //     ...newBlocks
-        //   };
-        //   state.last = mappedValues[mappedValues.length - 1].id;
-        //   state.questionnaire?.pill.bubbles.concat(questionnaireEndMessage);
+      } else if (state.mapBlocks[state.last ?? '']?.type === 'multiple-choice') {
+        const mappedValues = questionnaireImgSelectionMessage.map((q) => ({
+          ...q,
+          id: `${Math.random()}`,
+        }));
+        const newBlocks = mappedValues.reduce((acc: any, block) => {
+          state.blocksIds = [...state.blocksIds, block.id];
+          return transformQuestionnaireResponseBlock(acc, block);
+        }, {});
+        state.mapBlocks = {
+          ...state.mapBlocks,
+          ...newBlocks,
+        };
+        state.last = mappedValues[mappedValues.length - 1].id;
+        state.questionnaire?.pill.bubbles.concat(questionnaireEndMessage);
       } else {
         const mappedValues = questionnaireEndMessage.map((q) => ({ ...q, id: `${Math.random()}` }));
         const newBlocks = mappedValues.reduce((acc: any, block) => {
@@ -186,7 +184,6 @@ export const questionnaireSlice = createSlice({
         state.last = mappedValues[mappedValues.length - 1].id;
         state.questionnaire?.pill.bubbles.concat(questionnaireEndMessage);
       }
-      console.log(JSON.stringify(state, null, 3));
     },
   },
   extraReducers: (builder) => {},

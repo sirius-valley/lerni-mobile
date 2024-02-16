@@ -4,14 +4,12 @@ import TextBubble from '../../bubbles/TextBubble';
 import ImageBubble from '../../bubbles/ImageBubble';
 import { Avatar } from '../../common/Avatar';
 import { MessageContainer } from '../../bubbles/ChatBubble/styles';
-import QuestionnaireChoice from '../../styled/QuestionnaireChoice';
 import useQuestionnaire from '../../../hooks/useQuestionnaire';
 import { useLSelector } from '../../../redux/hooks';
 import QuestionnaireMultipleAnswer from '../../bubbles/QuestionnaireAnswer';
 import QuestionnaireImgAnswer from '../../bubbles/QuestionnaireImgAnswer';
 
 const ProfessorBubble = ['text', 'image'];
-const StudentBubble = ['single-choice', 'multiple-choice'];
 
 interface QuestionnaireRenderProps {
   blockId: string;
@@ -34,7 +32,7 @@ const QuestionnaireRender = ({ blockId, nextBlockId }: QuestionnaireRenderProps)
   const last = useLSelector((state) => state.questionnaire.last);
   const isLastBubbleSide = user !== nextBlockUser;
   const profProgram = useLSelector((state) => state.questionnaire?.questionnaire?.teacher?.image);
-  console.log(JSON.stringify(block, null, 3));
+
   const BubbleToRender = () => {
     switch (block.type) {
       case 'text':
