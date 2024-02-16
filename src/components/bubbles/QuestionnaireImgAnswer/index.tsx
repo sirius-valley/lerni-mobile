@@ -41,6 +41,7 @@ const QuestionnaireImgAnswer = ({
         url: item.image,
       })) ?? [],
   });
+  console.log(JSON.stringify(items, null, 3));
 
   const renderStatusIcon = (id: string, selected: boolean) => {
     if (selected && sealed) {

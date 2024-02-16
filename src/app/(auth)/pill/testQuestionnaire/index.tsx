@@ -1,138 +1,105 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PillMainContainer from '../../../../components/pill/PillMainContainer';
 import PillHeader from '../../../../components/pill/PillHeader';
-import QuestionnaireAnswer from '../../../../components/bubbles/QuestionnaireAnswer';
-import { StyledBox, StyledText } from '../../../../components/styled/styles';
-import { ScrollView } from 'react-native';
-import QuestionnaireImgAnswer from '../../../../components/bubbles/QuestionnaireImgAnswer';
+import { StyledBox, StyledColumn } from '../../../../components/styled/styles';
 import {
-  QuestionnaireChoiceImages,
-  QuestionnaireChoiceOption,
-  mockedInitialValues,
-} from '../../../../utils/questionnaireUtils';
+  Animated,
+  Dimensions,
+  KeyboardAvoidingView,
+  ListRenderItemInfo,
+  Platform,
+  VirtualizedList,
+} from 'react-native';
 import { useLDispatch, useLSelector } from '../../../../redux/hooks';
 import { useQuestionnaireByIdQuery } from '../../../../redux/service/questionnaire.service';
 import { getQuestionnaireById } from '../../../../redux/slice/questionnaire.slice';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import usePrevious from '../../../../hooks/usePrevious';
+import { SuccessPill } from '../../../../components/common/Result/SuccessPill';
+import QuestionnaireRender from '../../../../components/pill/QuestionnaireRender';
 
 const index = () => {
   const { data } = useQuestionnaireByIdQuery({ id: '01' });
-  const [options, setOptions] = useState<QuestionnaireChoiceOption[]>(mockedInitialValues);
-  const [multipleOptions, setMultipleOptions] =
-    useState<QuestionnaireChoiceOption[]>(mockedInitialValues);
-  const [imagesOptions, setImagesOptions] = useState(QuestionnaireChoiceImages);
-  const [isMultipleAnswerSealed, setIsMultipleAnswerSealed] = useState(false);
-  const [isSingleAnswerSealed, setIsSingleAnswerSealed] = useState(false);
-  const [isImageSealed, setIsImageSealed] = useState(false);
-  const [isImgSelectedCorrect, setIsImgSelectedCorrect] = useState(false);
-  const [points, setPoints] = useState<number | undefined>();
+  const [show, setShow] = useState(false);
 
   const blocksIds = useLSelector((state) => state.questionnaire.blocksIds);
-  const pillTitle = useLSelector((state) => state.pill.pill?.pill?.name);
-  const pillProgress = useLSelector((state) => state.pill.pill?.pill?.progress);
-  const pillCompleted = useLSelector((state) => state.pill.pill?.pill?.completed);
+  const pillTitle = useLSelector((state) => state.questionnaire.questionnaire?.pill.name);
+  const pillProgress = useLSelector((state) => state.questionnaire.questionnaire?.pill?.progress);
+  const pillCompleted = useLSelector((state) => state.questionnaire.questionnaire?.pill?.completed);
+
+  const virtualRef = useRef<VirtualizedList<unknown> | null>();
+  const prevData = usePrevious<boolean>(pillCompleted);
+
+  const insets = useSafeAreaInsets();
+  const screenHeight = Dimensions.get('window').height - insets.top - insets.bottom - 40;
+  const box1Height = useRef(new Animated.Value(0)).current;
+  const box2Height = useRef(new Animated.Value(screenHeight)).current;
+
   const dispatch = useLDispatch();
 
   useEffect(() => {
     dispatch(getQuestionnaireById('01'));
   }, []);
 
-  console.log('questionnaire blocksIds: ', blocksIds);
-
-  const correctAnswerSingleSelection = 'Choice 4';
-  const correctAnswerImgSelection = '02';
-
-  const handleSelection = (id: string) => {
-    const newSelection = options.find((op) => op.id === id);
-    if (newSelection)
-      setMultipleOptions((prev) =>
-        prev.map((option) => {
-          if (option.id === id)
-            return {
-              ...option,
-              selected: !option.selected,
-            };
-          return option;
-        }),
-      );
-  };
-
-  const handleSingleSelection = (id: string) => {
-    const selection = options.find((op) => op.id === id);
-    if (selection) {
-      setOptions((prev) =>
-        prev.map((option) => {
-          if (option.id === id)
-            return {
-              ...option,
-              selected: !option.selected,
-            };
-          return option;
-        }),
-      );
-      setIsSingleAnswerSealed(true);
-      setPoints(selection.text === correctAnswerSingleSelection ? 5 : 0);
-    }
-  };
-
-  const handleImagesSelection = (id: string) => {
-    const selection = imagesOptions.map((img) => {
-      return {
-        ...img,
-        selected: img.id === id ? !img.selected : false,
-      };
-    });
-    setImagesOptions(selection);
-  };
-
-  const handleImgSelectionPress = () => {
-    if (imagesOptions.some((img) => img.id === correctAnswerImgSelection && !!img.selected))
-      setIsImgSelectedCorrect(true);
-    setIsImageSealed(true);
-  };
-
-  const handlePress = () => setIsMultipleAnswerSealed(true);
-
   return (
     <PillMainContainer backgroundColor="primary900">
-      <PillHeader title={'test questionnaire'} pillNumber={4} percentageDone={0.25} />
-      <ScrollView>
-        <StyledBox css={{ padding: '24px' }}>
-          <StyledText color="white">Multiple selection</StyledText>
-        </StyledBox>
-        <QuestionnaireImgAnswer
-          items={imagesOptions}
-          onSelect={handleImagesSelection}
-          onPress={handleImgSelectionPress}
-          sealed={isImageSealed}
-          correctAnswerId={correctAnswerImgSelection}
-          isImgSelectedCorrect={isImgSelectedCorrect}
-          points={isImgSelectedCorrect ? 5 : undefined}
-        />
-        <StyledBox css={{ paddingTop: '20px', paddingRight: '24px' }}>
-          <QuestionnaireAnswer
-            options={multipleOptions}
-            onPress={() => handlePress()}
-            onChange={handleSelection}
-            sealed={isMultipleAnswerSealed}
-            correctAnswers={['Choice 2', 'Choice 4']}
-            points={5}
-          />
-        </StyledBox>
-        <StyledBox css={{ padding: '10px' }}>
-          <StyledText color="white">Single selection</StyledText>
-        </StyledBox>
-        <StyledBox css={{ paddingTop: '20px', paddingRight: '24px', paddingBottom: '100px' }}>
-          <QuestionnaireAnswer
-            options={options}
-            onPress={() => handlePress()}
-            onChange={handleSingleSelection}
-            sealed={isSingleAnswerSealed}
-            correctAnswers={[correctAnswerSingleSelection]}
-            points={points}
-            isSingleAnswer
-          />
-        </StyledBox>
-      </ScrollView>
+      <PillHeader title={pillTitle ?? ''} pillNumber={1} percentageDone={pillProgress ?? 0} />
+      <StyledColumn css={{ flexGrow: 1 }}>
+        <Animated.View
+          style={{
+            height: box2Height as unknown as number,
+            overflow: 'hidden',
+          }}
+        >
+          <KeyboardAvoidingView
+            enabled
+            style={{ height: '100%' }}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 75}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          >
+            <VirtualizedList
+              ref={(ref) => {
+                virtualRef.current = ref;
+              }}
+              renderItem={({ item, index }: ListRenderItemInfo<any>) => (
+                <QuestionnaireRender
+                  key={'bubble-inner-' + item.id}
+                  blockId={item}
+                  nextBlockId={blocksIds?.[index + 1] ?? undefined}
+                />
+              )}
+              contentContainerStyle={{
+                paddingHorizontal: 24,
+                padding: 24,
+              }}
+              onContentSizeChange={(comp) =>
+                setTimeout(() => {
+                  virtualRef?.current?.scrollToEnd();
+                }, 250)
+              }
+              data={blocksIds}
+              getItemCount={() => blocksIds.length}
+              getItem={(data, index) => data[index]}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </KeyboardAvoidingView>
+        </Animated.View>
+        <Animated.View
+          style={{
+            height: box1Height as unknown as number,
+            overflow: 'hidden',
+          }}
+        >
+          <StyledBox
+            css={{
+              padding: 24,
+              height: screenHeight,
+            }}
+          >
+            <SuccessPill show={show} programName={'la introducción'} />
+          </StyledBox>
+        </Animated.View>
+      </StyledColumn>
     </PillMainContainer>
   );
 };

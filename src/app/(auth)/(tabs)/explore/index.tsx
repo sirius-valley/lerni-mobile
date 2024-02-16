@@ -38,9 +38,9 @@ const Page = () => {
 
   const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
 
-  useEffect(() => {
-    router.push('/(auth)/pill/testQuestionnaire');
-  }, []);
+  // useEffect(() => {
+  //   router.push('/(auth)/pill/testQuestionnaire');
+  // }, []);
 
   if (meLoading) {
     return <SkeletonHome />;
@@ -83,6 +83,15 @@ const Page = () => {
                 }
                 status={'not_started'}
                 onPress={handleGoToIntroductionPill}
+              />
+              <ProgramCard
+                id={'introductionasd'}
+                title={'Cuestionario'}
+                imgUrl={
+                  'https://blog.logrocket.com/wp-content/uploads/2021/05/displaying-images-react-native-image-component.png'
+                }
+                status={'not_started'}
+                onPress={() => router.push('/(auth)/pill/testQuestionnaire')}
               />
             </>
           ) : !hasAssignedPrograms ? (
