@@ -1,170 +1,105 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PillMainContainer from '../../../../components/pill/PillMainContainer';
 import PillHeader from '../../../../components/pill/PillHeader';
-import QuestionnaireAnswer from '../../../../components/bubbles/QuestionnaireAnswer';
-import { StyledBox, StyledText } from '../../../../components/styled/styles';
-import { ScrollView } from 'react-native';
-import QuestionnaireImgAnswer from '../../../../components/bubbles/QuestionnaireImgAnswer';
-
-interface Option {
-  id: string;
-  text: string;
-  selected?: boolean;
-}
-const mockedInitialValues: Option[] = [
-  {
-    id: '01',
-    text: 'Choice 1',
-    selected: false,
-  },
-  {
-    id: '02',
-    text: 'Choice 2',
-    selected: false,
-  },
-  {
-    id: '03',
-    text: 'Choice 3',
-    selected: false,
-  },
-  {
-    id: '04',
-    text: 'Choice 4',
-    selected: false,
-  },
-];
-
-const Images = [
-  {
-    id: '01',
-    title: 'title 1',
-    description: 'description 1',
-    image:
-      'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=pexels-mike-bird-170811.jpg&fm=jpg',
-    selected: false,
-  },
-  {
-    id: '02',
-    title: 'title 2',
-    description: 'description 2',
-    image:
-      'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=pexels-mike-bird-170811.jpg&fm=jpg',
-    selected: false,
-  },
-  {
-    id: '03',
-    title: 'title 3',
-    description: 'description 3',
-    image:
-      'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=pexels-mike-bird-170811.jpg&fm=jpg',
-    selected: false,
-  },
-];
+import { StyledBox, StyledColumn } from '../../../../components/styled/styles';
+import {
+  Animated,
+  Dimensions,
+  KeyboardAvoidingView,
+  ListRenderItemInfo,
+  Platform,
+  VirtualizedList,
+} from 'react-native';
+import { useLDispatch, useLSelector } from '../../../../redux/hooks';
+import { useQuestionnaireByIdQuery } from '../../../../redux/service/questionnaire.service';
+import { getQuestionnaireById } from '../../../../redux/slice/questionnaire.slice';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import usePrevious from '../../../../hooks/usePrevious';
+import { SuccessPill } from '../../../../components/common/Result/SuccessPill';
+import QuestionnaireRender from '../../../../components/pill/QuestionnaireRender';
 
 const index = () => {
-  const [options, setOptions] = useState<Option[]>(mockedInitialValues);
-  const [multipleOptions, setMultipleOptions] = useState<Option[]>(mockedInitialValues);
-  const [imagesOptions, setImagesOptions] = useState(Images);
-  const [isMultipleAnswerSealed, setIsMultipleAnswerSealed] = useState(false);
-  const [isSingleAnswerSealed, setIsSingleAnswerSealed] = useState(false);
-  const [isImageSealed, setIsImageSealed] = useState(false);
-  const [isImgSelectedCorrect, setIsImgSelectedCorrect] = useState(false);
-  const [points, setPoints] = useState<number | undefined>();
+  const { data } = useQuestionnaireByIdQuery({ id: '01' });
+  const [show, setShow] = useState(false);
 
-  const correctAnswerSingleSelection = 'Choice 4';
-  const correctAnswerImgSelection = '02';
+  const blocksIds = useLSelector((state) => state.questionnaire.blocksIds);
+  const pillTitle = useLSelector((state) => state.questionnaire.questionnaire?.pill.name);
+  const pillProgress = useLSelector((state) => state.questionnaire.questionnaire?.pill?.progress);
+  const pillCompleted = useLSelector((state) => state.questionnaire.questionnaire?.pill?.completed);
 
-  const handleSelection = (id: string) => {
-    const newSelection = options.find((op) => op.id === id);
-    if (newSelection)
-      setMultipleOptions((prev) =>
-        prev.map((option) => {
-          if (option.id === id)
-            return {
-              ...option,
-              selected: !option.selected,
-            };
-          return option;
-        }),
-      );
-  };
+  const virtualRef = useRef<VirtualizedList<unknown> | null>();
+  const prevData = usePrevious<boolean>(pillCompleted);
 
-  const handleSingleSelection = (id: string) => {
-    const selection = options.find((op) => op.id === id);
-    if (selection) {
-      setOptions((prev) =>
-        prev.map((option) => {
-          if (option.id === id)
-            return {
-              ...option,
-              selected: !option.selected,
-            };
-          return option;
-        }),
-      );
-      setIsSingleAnswerSealed(true);
-      setPoints(selection.text === correctAnswerSingleSelection ? 5 : 0);
-    }
-  };
+  const insets = useSafeAreaInsets();
+  const screenHeight = Dimensions.get('window').height - insets.top - insets.bottom - 40;
+  const box1Height = useRef(new Animated.Value(0)).current;
+  const box2Height = useRef(new Animated.Value(screenHeight)).current;
 
-  const handleImagesSelection = (id: string) => {
-    const selection = imagesOptions.map((img) => {
-      return {
-        ...img,
-        selected: img.id === id ? true : false,
-      };
-    });
-    setImagesOptions(selection);
-  };
-  const handleImgSelectionPress = () => {
-    if (imagesOptions.some((img) => img.id === correctAnswerImgSelection && !!img.selected))
-      setIsImgSelectedCorrect(true);
-    setIsImageSealed(true);
-  };
+  const dispatch = useLDispatch();
 
-  const handlePress = () => setIsMultipleAnswerSealed(true);
+  useEffect(() => {
+    dispatch(getQuestionnaireById('01'));
+  }, []);
 
   return (
     <PillMainContainer backgroundColor="primary900">
-      <PillHeader title={'test questionnaire'} pillNumber={4} percentageDone={0.25} />
-      <ScrollView>
-        <StyledBox css={{ padding: '24px' }}>
-          <StyledText color="white">Multiple selection</StyledText>
-        </StyledBox>
-        <QuestionnaireImgAnswer
-          items={imagesOptions}
-          onSelect={handleImagesSelection}
-          onPress={handleImgSelectionPress}
-          sealed={isImageSealed}
-          correctAnswerId={correctAnswerImgSelection}
-          isImgSelectedCorrect={isImgSelectedCorrect}
-          points={isImgSelectedCorrect ? 5 : undefined}
-        />
-        <StyledBox css={{ paddingTop: '20px', paddingRight: '24px' }}>
-          <QuestionnaireAnswer
-            options={multipleOptions}
-            onPress={() => handlePress()}
-            onChange={handleSelection}
-            sealed={isMultipleAnswerSealed}
-            correctAnswers={['Choice 2', 'Choice 4']}
-            points={5}
-          />
-        </StyledBox>
-        <StyledBox css={{ padding: '10px' }}>
-          <StyledText color="white">Single selection</StyledText>
-        </StyledBox>
-        <StyledBox css={{ paddingTop: '20px', paddingRight: '24px', paddingBottom: '100px' }}>
-          <QuestionnaireAnswer
-            options={options}
-            onPress={() => handlePress()}
-            onChange={handleSingleSelection}
-            sealed={isSingleAnswerSealed}
-            correctAnswers={[correctAnswerSingleSelection]}
-            points={points}
-            isSingleAnswer
-          />
-        </StyledBox>
-      </ScrollView>
+      <PillHeader title={pillTitle ?? ''} pillNumber={1} percentageDone={pillProgress ?? 0} />
+      <StyledColumn css={{ flexGrow: 1 }}>
+        <Animated.View
+          style={{
+            height: box2Height as unknown as number,
+            overflow: 'hidden',
+          }}
+        >
+          <KeyboardAvoidingView
+            enabled
+            style={{ height: '100%' }}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 75}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          >
+            <VirtualizedList
+              ref={(ref) => {
+                virtualRef.current = ref;
+              }}
+              renderItem={({ item, index }: ListRenderItemInfo<any>) => (
+                <QuestionnaireRender
+                  key={'bubble-inner-' + item.id}
+                  blockId={item}
+                  nextBlockId={blocksIds?.[index + 1] ?? undefined}
+                />
+              )}
+              contentContainerStyle={{
+                paddingHorizontal: 24,
+                padding: 24,
+              }}
+              onContentSizeChange={(comp) =>
+                setTimeout(() => {
+                  virtualRef?.current?.scrollToEnd();
+                }, 250)
+              }
+              data={blocksIds}
+              getItemCount={() => blocksIds.length}
+              getItem={(data, index) => data[index]}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </KeyboardAvoidingView>
+        </Animated.View>
+        <Animated.View
+          style={{
+            height: box1Height as unknown as number,
+            overflow: 'hidden',
+          }}
+        >
+          <StyledBox
+            css={{
+              padding: 24,
+              height: screenHeight,
+            }}
+          >
+            <SuccessPill show={show} programName={'la introducción'} />
+          </StyledBox>
+        </Animated.View>
+      </StyledColumn>
     </PillMainContainer>
   );
 };
