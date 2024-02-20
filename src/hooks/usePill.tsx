@@ -2,8 +2,11 @@ import { useLDispatch, useLSelector } from '../redux/hooks';
 import {
   getPillByID,
   getPillTypeByID,
+  setCarousel,
   setFreeTextAnswer,
   setMultipleAnswer,
+  setSelectCarousel,
+  setSelectMultipleAnswer,
   setSingleAnswer,
 } from '../redux/slice/pill.slice';
 import { useAnswerMutation } from '../redux/service/pills.service';
@@ -26,8 +29,42 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
     answer({ pillId: pillDetails!.pill.id, questionId: questionId, answer: answerId });
   };
 
-  const handleMultipleAnswer = (answerId: string) => {
-    dispatch(setMultipleAnswer({ id: questionId, value: answerId }));
+  const handleMultipleAnswer = () => {
+    answer({
+      pillId: pillDetails!.pill.id,
+      questionId: blockDetails.id,
+      answer: blockDetails.options.reduce((acc: string[], option: any) => {
+        if (option.selected === true) {
+          return [...acc, option.id];
+        } else {
+          return acc;
+        }
+      }, []),
+    });
+    dispatch(setMultipleAnswer({ id: questionId }));
+  };
+
+  const handleSelectMultipleAnswer = (answerId: string) => {
+    dispatch(setSelectMultipleAnswer({ id: questionId, value: answerId }));
+  };
+
+  const handleCarousel = () => {
+    answer({
+      pillId: pillDetails!.pill.id,
+      questionId: blockDetails.id,
+      answer: blockDetails.items.reduce((acc: string[], item: any) => {
+        if (item.selected) {
+          return [...acc, item.id];
+        } else {
+          return acc;
+        }
+      }, []),
+    });
+    dispatch(setCarousel({ id: questionId }));
+  };
+
+  const handleSelectCarousel = (answerId: string) => {
+    dispatch(setSelectCarousel({ id: questionId, value: answerId }));
   };
 
   const handleSendAnswer = (valueToSend: string) => {
@@ -43,6 +80,9 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
     nextBlockType,
     handleSingleAnswer,
     handleMultipleAnswer,
+    handleSelectMultipleAnswer,
+    handleCarousel,
+    handleSelectCarousel,
     handleFreeTextAnswer,
     handleSendAnswer,
     isLoading,

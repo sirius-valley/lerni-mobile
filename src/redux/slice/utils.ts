@@ -21,7 +21,7 @@ export const transformResponseBlock = (acc: any[], block: BubbleResponse) => {
             {
               id: option,
               text: option,
-              selected: block.value === '' ? 'default' : block!.value === option,
+              selected: block.value === '' ? undefined : block!.value === option,
             },
           ];
         }, []),

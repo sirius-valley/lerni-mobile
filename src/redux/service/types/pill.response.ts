@@ -1,6 +1,6 @@
 export type BubbleResponse = {
   id: string;
-  type: 'text' | 'single-choice' | 'multiple-choice' | 'carousel';
+  type: 'text' | 'single-choice' | 'multiple-choice' | 'carousel' | 'free-text';
   content?: string;
   options?: string[];
   imgOptions?: ImagesOptions[];

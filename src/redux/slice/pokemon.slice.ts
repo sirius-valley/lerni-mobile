@@ -16,16 +16,13 @@ export const pokemonSlice = createSlice({
   extraReducers: (builder) => {
     builder.addMatcher(pokemonApi.endpoints.getPokemon.matchPending, (state, payload) => {
       const results = payload;
-      console.log(results);
     });
     builder.addMatcher(pokemonApi.endpoints.getPokemon.matchRejected, (state, payload) => {
       const results = payload;
-      console.log(results);
     });
     builder.addMatcher(pokemonApi.endpoints.getPokemon.matchFulfilled, (state, payload) => {
       const results = payload;
       state.pokemon = results;
-      console.log(results);
     });
   },
 });
