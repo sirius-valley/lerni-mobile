@@ -24,6 +24,14 @@ const PillDetail = () => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
 
+  const handleBeginPill = () =>
+    router.push({
+      pathname: 'pill/mainPill',
+      params: {
+        id,
+      },
+    });
+
   const isLoading = false;
 
   if (isLoading)
@@ -32,6 +40,7 @@ const PillDetail = () => {
         <PillSkeleton />
       </StyledColumn>
     );
+
   return (
     <>
       <ScrollView
@@ -202,7 +211,7 @@ const PillDetail = () => {
         <Button
           disabled={!mockedPillDetail.introductionDone}
           variant="primary"
-          onPress={() => alert('to be defined')}
+          onPress={handleBeginPill}
           css={{
             width: '100%',
             height: '100%',

@@ -145,6 +145,14 @@ export const pillSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addMatcher(pillsApi.endpoints.pillById.matchFulfilled, (state, action) => {
+        state.mapBlocks = action.payload.pill.bubbles.reduce((acc: any, block) => {
+          state.blocksIds = [...state.blocksIds, block.id];
+          return transformResponseBlock(acc, block);
+        }, {});
+        state.last = action.payload.pill.bubbles[action.payload.pill.bubbles.length - 1].id;
+        state.pill = action.payload;
+      })
       .addMatcher(pillsApi.endpoints.getIntroductionPill.matchFulfilled, (state, action) => {
         state.mapBlocks = action.payload.pill.bubbles.reduce((acc: any, block) => {
           state.blocksIds = [...state.blocksIds, block.id];

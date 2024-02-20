@@ -14,6 +14,7 @@ import { useMeQuery } from '../../../../redux/service/student.service';
 import { Status } from './utils';
 import { Dimensions, Pressable } from 'react-native';
 import ErrorDisplay from '../../../../components/common/ErrorDisplay';
+import { useEffect } from 'react';
 
 const Page = () => {
   const router = useRouter();
@@ -30,6 +31,14 @@ const Page = () => {
       },
     });
 
+  const handleGoToPillDetail = (id: string) =>
+    router.push({
+      pathname: '(tabs)/explore/pillDetail',
+      params: {
+        id,
+      },
+    });
+
   const handleGoToSearchScreen = () =>
     router.push({
       pathname: '(tabs)/explore/searchScreen',
@@ -37,9 +46,10 @@ const Page = () => {
 
   const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
 
-  // useEffect(() => {
-  //   router.push('/(auth)/pill/testQuestionnaire');
-  // }, []);
+  useEffect(() => {
+    // router.push('/(auth)/pill/testQuestionnaire');
+    handleGoToPillDetail('04');
+  }, []);
 
   if (meLoading) {
     return <SkeletonHome />;
