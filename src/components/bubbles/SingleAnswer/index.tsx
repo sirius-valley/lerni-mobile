@@ -1,6 +1,6 @@
 import React from 'react';
-import { Choice } from '../../styled/Choice';
-import { StyledChoiceMainContainer } from '../../styled/Choice/styles';
+import { PillChoice } from '../../styled/PillChoice';
+import { StyledChoiceMainContainer } from '../../styled/PillChoice/styles';
 
 interface SingleAnswerProps {
   options: {
@@ -16,7 +16,7 @@ const SingleAnswer = ({ options, onPress, sealed }: SingleAnswerProps) => {
   return (
     <StyledChoiceMainContainer>
       {options.map((option) => (
-        <Choice
+        <PillChoice
           status={
             typeof option.selected == 'boolean' || sealed
               ? option.selected

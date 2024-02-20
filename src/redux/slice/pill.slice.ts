@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { pillsApi } from '../service/pills.service';
-import { PillResponse } from '../service/types/pill.response';
+import { ImagesOptions, PillResponse } from '../service/types/pill.response';
 import { transformResponseBlock } from './utils';
 
 export type BubbleType =
@@ -25,6 +25,8 @@ export interface SingleChoiceBlockType extends CommonBlockType {
     text: string;
     selected?: boolean | string;
   }[];
+  correctAnswer?: string[];
+  points?: number;
 }
 
 export interface MultipleChoiceBlockType extends CommonBlockType {
@@ -36,6 +38,8 @@ export interface MultipleChoiceBlockType extends CommonBlockType {
     text: string;
     selected?: boolean | string;
   }[];
+  correctAnswer?: string[];
+  points?: number;
 }
 
 export interface CarouselBlockType extends CommonBlockType {
@@ -56,8 +60,12 @@ export interface TextBlockType extends CommonBlockType {
 }
 
 export interface ImageBlockType extends CommonBlockType {
-  type: 'image';
+  type: 'carousel';
   content: string;
+  imgOptions?: ImagesOptions[];
+  correctAnswer?: string[];
+  points?: number;
+  value: string;
 }
 
 export interface TextBlockType extends CommonBlockType {
