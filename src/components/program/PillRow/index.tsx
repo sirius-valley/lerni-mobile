@@ -6,14 +6,15 @@ import LockIcon from '../../../../assets/icons/LockIcon';
 
 interface PillRowInterface {
   pillNumber: number;
-  progress: number;
-  title: string;
+  pillProgress: number;
+  pillName: string;
   duration: number;
-  started?: boolean;
 }
 
-const PillRow = ({ pillNumber, progress, title, duration, started = true }: PillRowInterface) => {
+const PillRow = ({ pillNumber, pillProgress, pillName, duration }: PillRowInterface) => {
   const theme = useTheme();
+  const started = pillProgress > 0 ? true : false;
+
   return (
     <StyledRow css={{ alignItems: 'center', gap: '8px', height: '40px' }}>
       <StyledRow css={{ width: '10%', justifyContent: 'center' }}>
@@ -23,7 +24,7 @@ const PillRow = ({ pillNumber, progress, title, duration, started = true }: Pill
             borderWidth={0}
             unfilledColor={theme.gray600}
             color={theme.primary500}
-            progress={progress}
+            progress={pillProgress}
             showsText={true}
             formatText={() => pillNumber}
             textStyle={{
@@ -40,10 +41,10 @@ const PillRow = ({ pillNumber, progress, title, duration, started = true }: Pill
         )}
       </StyledRow>
       <StyledText variant="body2" color="gray100" css={{ width: '75%' }}>
-        {title}
+        {pillName}
       </StyledText>
       <StyledText variant="body3" color="gray500">
-        {duration}min
+        {duration}{' min'}
       </StyledText>
     </StyledRow>
   );
