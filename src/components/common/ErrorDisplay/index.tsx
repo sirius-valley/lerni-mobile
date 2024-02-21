@@ -28,8 +28,8 @@ const errorsAvailable = {
     hasActionButton: false,
   },
   'no-introduction': {
-    title: 'El conocimiento está a la espera y tú tambien',
-    content: 'Todavía no tienes ningún programa asignado. Intenta de nuevo más tarde',
+    title: 'El conocimiento está \n a la espera y tú tambien',
+    content: 'Todavía no tienes ningún programa \n asignado. Intenta de nuevo más tarde',
     Icon: ShipIllustration,
     hasActionButton: false,
   },

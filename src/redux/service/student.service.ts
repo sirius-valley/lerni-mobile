@@ -5,6 +5,7 @@ export const profileApi = api.injectEndpoints({
   endpoints: (builder) => ({
     me: builder.query<MeResponse, void>({
       query: () => ({ url: 'api/student/me' }),
+      providesTags: ['ME'],
     }),
   }),
 });
