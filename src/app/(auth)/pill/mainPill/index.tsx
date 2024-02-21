@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  useGetIntroductionPillQuery,
-  usePillByIdQuery,
-} from '../../../../redux/service/pills.service';
+import { usePillByIdQuery } from '../../../../redux/service/pills.service';
 import { useLDispatch, useLSelector } from '../../../../redux/hooks';
 import {
   Animated,
@@ -26,12 +23,7 @@ import { useLocalSearchParams } from 'expo-router';
 
 const MainPill = () => {
   const { id } = useLocalSearchParams();
-  console.log('id: ', id);
-  const {
-    data,
-    isLoading: isLoadingPill,
-    refetch,
-  } = usePillByIdQuery({ id: typeof id === 'string' ? id : '' });
+  const { isLoading: isLoadingPill } = usePillByIdQuery({ id: typeof id === 'string' ? id : '' });
   const blocksIds = useLSelector((state) => state.pill.blocksIds);
   const pillTitle = useLSelector((state) => state.pill.pill?.pill?.name);
   const pillProgress = useLSelector((state) => state.pill.pill?.pill?.progress);
@@ -72,8 +64,7 @@ const MainPill = () => {
   }, [pillCompleted, prevData]);
 
   useEffect(() => {
-    if (!isLoadingPill && blocksIds.length === 0)
-      dispatch(api.util?.invalidateTags(['Introduction']));
+    if (!isLoadingPill && blocksIds.length === 0) dispatch(api.util?.invalidateTags(['MainPill']));
   }, [blocksIds]);
 
   if (isLoadingPill) return <SkeletonPill />;
@@ -134,7 +125,11 @@ const MainPill = () => {
               height: screenHeight,
             }}
           >
-            <SuccessPill show={show} programName={'la introducción'} />
+            <SuccessPill
+              show={show}
+              programName={`terminaste la pildora ${pillTitle}`}
+              iconType="handsup"
+            />
           </StyledBox>
         </Animated.View>
       </StyledColumn>

@@ -43,10 +43,7 @@ const PillDetail = () => {
 
   return (
     <>
-      <ScrollView
-        style={{ width: '100%', height: '100%', paddingHorizontal: 12 }}
-        scrollIndicatorInsets={{ right: -30 }}
-      >
+      <ScrollView style={{ width: '100%', height: '100%' }} showsVerticalScrollIndicator={false}>
         <StyledColumn css={{ flex: 1, justifyContent: 'flex-start', height: '100%' }}>
           <StyledColumn
             css={{
@@ -203,9 +200,9 @@ const PillDetail = () => {
         css={{
           position: 'absolute',
           bottom: insets.bottom - 24,
+          left: insets.left + 24,
           width: '100%',
           height: '42px',
-          marginLeft: 12,
         }}
       >
         <Button
