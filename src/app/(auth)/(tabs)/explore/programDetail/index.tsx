@@ -55,12 +55,15 @@ const ProgramDetail = () => {
   const { id } = useLocalSearchParams();
   const theme = useTheme();
 
-  const {data: program, isLoading, isError} = useProgramByIdQuery(id) as {
-    data: ProgramDetailType,
-    isLoading: boolean,
-    isError: boolean,
-  }
-
+  const {
+    data: program,
+    isLoading,
+    isError,
+  } = useProgramByIdQuery(id) as {
+    data: ProgramDetailType;
+    isLoading: boolean;
+    isError: boolean;
+  };
 
   const mockedProgram = {
     id: Array.isArray(id) ? '' : id ?? '',
@@ -94,7 +97,7 @@ const ProgramDetail = () => {
   ];
 
   if (isLoading || isError) {
-    return <SkeletonHome />
+    return <SkeletonHome />;
   }
 
   return (
@@ -113,7 +116,7 @@ const ProgramDetail = () => {
         <StyledColumn css={{ width: '100%', alignItems: 'center', gap: '8px' }}>
           <ProgramImage status={mockedProgram.status} imgUrl={mockedProgram.imgUrl} size={150} />
           <StyledText variant="h2" color="gray100">
-            {program.programName} 
+            {program.programName}
           </StyledText>
           <StyledText variant="body1" color="gray400">
             {program.teacher.lastname}, {program.teacher.name}
@@ -134,7 +137,7 @@ const ProgramDetail = () => {
             <StyledRow css={{ gap: '4px', alignItems: 'center' }}>
               <BulletListIcon size={14} color={theme.primary500} />
               <StyledText variant="body3" color="gray400">
-                {program.pillCount} {program.pillCount > 1 ? 'píldoras' : 'píldora'} 
+                {program.pillCount} {program.pillCount > 1 ? 'píldoras' : 'píldora'}
               </StyledText>
             </StyledRow>
             <StyledRow css={{ gap: '4px', alignItems: 'center' }}>
@@ -151,7 +154,9 @@ const ProgramDetail = () => {
             </StyledRow>
           </StyledRow>
 
-          <StyledColumn css={{ gap: '8px', marginTop: '16px', justifyContent: 'flex-start', width: '100%' }}>
+          <StyledColumn
+            css={{ gap: '8px', marginTop: '16px', justifyContent: 'flex-start', width: '100%' }}
+          >
             <StyledText variant="h3" color="gray100">
               Descripcion del programa
             </StyledText>
@@ -166,7 +171,12 @@ const ProgramDetail = () => {
             </StyledText>
             {program.pills?.map((pill, idx) => (
               <StyledBox key={idx}>
-               <PillRow pillName={pill.pillName} pillProgress={pill.pillProgress} pillNumber={idx} duration={10} />
+                <PillRow
+                  pillName={pill.pillName}
+                  pillProgress={pill.pillProgress}
+                  pillNumber={idx}
+                  duration={10}
+                />
                 <StyledLine css={{ marginTop: '8px' }} color="gray500" />
               </StyledBox>
             ))}

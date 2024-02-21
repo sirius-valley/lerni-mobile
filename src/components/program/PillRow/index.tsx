@@ -44,7 +44,8 @@ const PillRow = ({ pillNumber, pillProgress, pillName, duration }: PillRowInterf
         {pillName}
       </StyledText>
       <StyledText variant="body3" color="gray500">
-        {duration}{' min'}
+        {duration}
+        {' min'}
       </StyledText>
     </StyledRow>
   );
