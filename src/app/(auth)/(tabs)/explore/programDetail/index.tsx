@@ -23,6 +23,7 @@ import { useProgramByIdQuery } from '../../../../../redux/service/program.servic
 import { useLSelector } from '../../../../../redux/hooks';
 import ProgramCardSkeleton from '../../../../../components/program/ProgramCardSkeleton';
 import SkeletonHome from '../../../../../components/home/HomeSkeleton';
+import ProgramSkeleton from './ProgramSkeleton';
 
 interface ProgramDetailType {
   id: string;
@@ -96,15 +97,12 @@ const ProgramDetail = () => {
     },
   ];
 
-  if (isLoading || isError) {
-    return <SkeletonHome />;
+  if (isLoading) {
+    return <ProgramSkeleton />;
   }
 
   return (
-    <ScrollView
-      style={{ width: '100%', paddingHorizontal: 12 }}
-      scrollIndicatorInsets={{ right: -30 }}
-    >
+    <ScrollView style={{ width: '100%' }} scrollIndicatorInsets={{ right: -30 }}>
       <StyledColumn
         css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '64px' }}
       >
