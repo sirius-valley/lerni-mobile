@@ -21,7 +21,7 @@ const ProgramSkeleton = () => {
         <Skeleton width={150} height={150} css={{ borderRadius: 8 }} />
         <Skeleton height={23} width={130} css={{ borderRadius: 8 }} />
         <Skeleton width={120} height={19} css={{ borderRadius: 8 }} />
-        <Skeleton width={290} height={7} css={{ borderRadius: 8 }} />
+        <Skeleton width={'90'} height={7} css={{ borderRadius: 8 }} />
 
         <StyledRow css={{ justifyContent: 'space-evenly', width: '90%', gap: 32 }}>
           <StyledRow css={{ gap: '4px', alignItems: 'center' }}>
@@ -38,26 +38,26 @@ const ProgramSkeleton = () => {
         <StyledColumn
           css={{ gap: '8px', marginTop: '16px', justifyContent: 'flex-start', width: '100%' }}
         >
-          <Skeleton width={208} height={21} css={{ borderRadius: 8 }} />
-          <Skeleton width={342} height={76} css={{ borderRadius: 8 }} />
+          <Skeleton width={'60'} height={21} css={{ borderRadius: 8 }} />
+          <Skeleton width={'100'} height={76} css={{ borderRadius: 8 }} />
         </StyledColumn>
 
         <StyledColumn css={{ gap: '8px', width: '100%', marginTop: '16px' }}>
           <Skeleton width={67} height={21} css={{ borderRadius: 8 }} />
-          <Skeleton width={342} height={48} css={{ borderRadius: 23 }} />
-          <Skeleton width={342} height={48} css={{ borderRadius: 23 }} />
-          <Skeleton width={342} height={48} css={{ borderRadius: 23 }} />
-          <Skeleton width={342} height={48} css={{ borderRadius: 23 }} />
+          <Skeleton width={'100'} height={48} css={{ borderRadius: 23 }} />
+          <Skeleton width={'100'} height={48} css={{ borderRadius: 23 }} />
+          <Skeleton width={'100'} height={48} css={{ borderRadius: 23 }} />
+          <Skeleton width={'100'} height={48} css={{ borderRadius: 23 }} />
         </StyledColumn>
 
-        <StyledColumn css={{ width: '100%', marginVertical: '16px' }}>
+        <StyledColumn css={{ width: '100%', marginVertical: '16px', gap: 8 }}>
           <StyledRow css={{ justifyContent: 'space-between', alignItems: 'center' }}>
             <Skeleton width={102} height={21} css={{ borderRadius: 8 }} />
             <Skeleton width={45} height={21} css={{ borderRadius: 8 }} />
           </StyledRow>
-          <Skeleton width={342} height={48} css={{ borderRadius: 8 }} />
-          <Skeleton width={342} height={48} css={{ borderRadius: 8 }} />
-          <Skeleton width={342} height={48} css={{ borderRadius: 8 }} />
+          <Skeleton width={'100'} height={48} css={{ borderRadius: 8 }} />
+          <Skeleton width={'100'} height={48} css={{ borderRadius: 8 }} />
+          <Skeleton width={'100'} height={48} css={{ borderRadius: 8 }} />
         </StyledColumn>
 
         <StyledColumn

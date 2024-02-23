@@ -3,6 +3,7 @@ import * as Progress from 'react-native-progress';
 import { StyledRow, StyledText } from '../../styled/styles';
 import { useTheme } from 'styled-components';
 import LockIcon from '../../../../assets/icons/LockIcon';
+import { Platform } from 'react-native';
 
 interface PillRowInterface {
   pillNumber: number;
@@ -26,9 +27,9 @@ const PillRow = ({ pillNumber, pillProgress, pillName, duration }: PillRowInterf
             color={theme.primary500}
             progress={pillProgress}
             showsText={true}
-            formatText={() => pillNumber}
+            formatText={() => 8}
             textStyle={{
-              fontSize: 18,
+              fontSize: Platform.OS === 'ios' ? 18 : 16,
               color: 'white',
               fontWeight: '600',
               marginBottom: 6,

@@ -20,9 +20,6 @@ import { mockedLeaderboardRows, mockedPills, Status } from '../utils';
 import LeaderboardRow from '../../../../../components/program/LeaderboardRow';
 import MessageIcon from '../../../../../../assets/icons/MessageIcon';
 import { useProgramByIdQuery } from '../../../../../redux/service/program.service';
-import { useLSelector } from '../../../../../redux/hooks';
-import ProgramCardSkeleton from '../../../../../components/program/ProgramCardSkeleton';
-import SkeletonHome from '../../../../../components/home/HomeSkeleton';
 import ProgramSkeleton from './ProgramSkeleton';
 
 interface ProgramDetailType {
@@ -102,7 +99,7 @@ const ProgramDetail = () => {
   }
 
   return (
-    <ScrollView style={{ width: '100%' }} scrollIndicatorInsets={{ right: -30 }}>
+    <ScrollView style={{ width: '100%' }} showsVerticalScrollIndicator={false}>
       <StyledColumn
         css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '64px' }}
       >
