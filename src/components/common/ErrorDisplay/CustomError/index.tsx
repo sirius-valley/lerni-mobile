@@ -31,7 +31,7 @@ const CustomError = ({
       }}
     >
       <Icon />
-      <StyledText variant="h2" style={{ color: theme.gray100 }}>
+      <StyledText variant="h2" style={{ color: theme.gray100, textAlign: 'center' }}>
         {title}
       </StyledText>
       <StyledText variant="body1" style={{ color: theme.gray100, textAlign: 'center' }}>

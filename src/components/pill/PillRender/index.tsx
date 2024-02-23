@@ -78,9 +78,7 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
           <MultipleAnswer
             key={'bubble-inner-' + block.id}
             options={block.options}
-            onPress={
-              handleMultipleAnswer
-            }
+            onPress={handleMultipleAnswer}
             onChange={(id) => handleSelectMultipleAnswer(id)}
             sealed={block.sealed}
           />
