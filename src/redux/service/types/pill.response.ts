@@ -1,8 +1,11 @@
 export type BubbleResponse = {
   id: string;
-  type: 'text';
+  type: 'text' | 'single-choice' | 'multiple-choice' | 'carousel' | 'free-text';
   content?: string;
   options?: string[];
+  imgOptions?: ImagesOptions[];
+  correctAnswer?: string[];
+  points?: number;
   value?: string | string[];
 };
 
@@ -31,4 +34,12 @@ export type PillAnswerBody = {
   pillId: string;
   questionId: string;
   answer: string;
+};
+
+export type ImagesOptions = {
+  title: string;
+  description: string;
+  image: string;
+  id?: string;
+  selected?: boolean;
 };

@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { pillsApi } from '../service/pills.service';
-import { PillResponse } from '../service/types/pill.response';
+import { ImagesOptions, PillResponse } from '../service/types/pill.response';
 import { transformResponseBlock } from './utils';
 
 export type BubbleType =
@@ -25,14 +25,31 @@ export interface SingleChoiceBlockType extends CommonBlockType {
     text: string;
     selected?: boolean | string;
   }[];
+  correctAnswer?: string[];
+  points?: number;
 }
 
 export interface MultipleChoiceBlockType extends CommonBlockType {
   type: 'multiple-choice';
   content?: string[];
+  sealed: boolean;
   options: {
     id: string;
     text: string;
+    selected?: boolean | string;
+  }[];
+  correctAnswer?: string[];
+  points?: number;
+}
+
+export interface CarouselBlockType extends CommonBlockType {
+  type: 'carousel';
+  sealed: boolean;
+  multiple: boolean;
+  items: {
+    id: string;
+    description: string;
+    image: string;
     selected?: boolean | string;
   }[];
 }
@@ -43,8 +60,12 @@ export interface TextBlockType extends CommonBlockType {
 }
 
 export interface ImageBlockType extends CommonBlockType {
-  type: 'image';
+  type: 'carousel';
   content: string;
+  imgOptions?: ImagesOptions[];
+  correctAnswer?: string[];
+  points?: number;
+  value: string;
 }
 
 export interface TextBlockType extends CommonBlockType {
@@ -62,6 +83,7 @@ export type BlockType =
   | SingleChoiceBlockType
   | ImageBlockType
   | MultipleChoiceBlockType
+  | CarouselBlockType
   | FreeTextBlockType;
 
 interface initialStatePillType {
@@ -103,24 +125,82 @@ export const pillSlice = createSlice({
         }),
       };
     },
-    setMultipleAnswer: (state, payload) => {
+    setSelectMultipleAnswer: (state, payload) => {
       const { id, value } = payload.payload;
-      const block = state.mapBlocks[id];
+      const block: MultipleChoiceBlockType = state.mapBlocks[id] as MultipleChoiceBlockType;
 
-      if (block.type === 'multiple-choice') {
+      if (block.type === 'multiple-choice' && !block.sealed) {
         state.mapBlocks[id] = {
           ...block,
           options: block.options.map((option) => {
             if (option.id === value) {
               return {
                 ...option,
-                selected: option?.selected === 'default' ? 'selected' : 'default',
+                selected: option.selected !== true ? true : undefined,
               };
             }
             return option;
           }),
         };
       }
+    },
+    setMultipleAnswer: (state, payload) => {
+      const { id } = payload.payload;
+      const block: MultipleChoiceBlockType = state.mapBlocks[id] as MultipleChoiceBlockType;
+
+      state.mapBlocks[id] = {
+        ...block,
+        options: block.options.map((option) => {
+          if (option.selected !== true) {
+            return {
+              ...option,
+              selected: false,
+            };
+          } else {
+            return option;
+          }
+        }),
+        sealed: true,
+      };
+    },
+    setSelectCarousel: (state, payload) => {
+      const { id, value } = payload.payload;
+      const block: CarouselBlockType = state.mapBlocks[id] as CarouselBlockType;
+
+      if (block.type === 'carousel' && !block.sealed) {
+        state.mapBlocks[id] = {
+          ...block,
+          items: block.items.map((item) => {
+            if (item.id === value) {
+              return {
+                ...item,
+                selected: item.selected ? undefined : true,
+              };
+            } else {
+              return item;
+            }
+          }),
+        };
+      }
+    },
+    setCarousel: (state, payload) => {
+      const { id } = payload.payload;
+      const block: CarouselBlockType = state.mapBlocks[id] as CarouselBlockType;
+
+      state.mapBlocks[id] = {
+        ...block,
+        items: block.items.map((item) => {
+          if (item.selected === undefined) {
+            return {
+              ...item,
+              selected: false,
+            };
+          } else {
+            return item;
+          }
+        }),
+        sealed: true,
+      };
     },
     setFreeTextAnswer: (state, payload) => {
       const { id, value } = payload.payload;
@@ -185,7 +265,14 @@ export const getPillTypeByID = createSelector(
   },
 );
 
-export const { setSingleAnswer, setMultipleAnswer, setFreeTextAnswer, setFreeTextQuestionId } =
-  pillSlice.actions;
+export const {
+  setSingleAnswer,
+  setMultipleAnswer,
+  setSelectMultipleAnswer,
+  setCarousel,
+  setSelectCarousel,
+  setFreeTextAnswer,
+  setFreeTextQuestionId,
+} = pillSlice.actions;
 
 export default pillSlice.reducer;

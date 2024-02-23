@@ -8,6 +8,7 @@ import usePill from '../../../hooks/usePill';
 import SingleAnswer from '../../bubbles/SingleAnswer';
 import { MessageContainer } from '../../bubbles/ChatBubble/styles';
 import { setFreeTextQuestionId } from '../../../redux/slice/pill.slice';
+import Carousel from '../../pill-blocks/Carousel';
 
 const ProfessorBubble = ['text', 'image'];
 const StudentBubble = ['single-choice', 'multiple-choice', 'carousel'];
@@ -23,6 +24,9 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
     nextBlockType,
     handleSingleAnswer,
     handleMultipleAnswer,
+    handleSelectMultipleAnswer,
+    handleCarousel,
+    handleSelectCarousel,
     handleSendAnswer,
     handleFreeTextAnswer,
   } = usePill(blockId, { nextBlockId });
@@ -60,20 +64,23 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
             )}
           </>
         );
+      case 'carousel':
+        return (
+          <Carousel
+            items={block.items}
+            onPress={handleCarousel}
+            onSelect={(id) => handleSelectCarousel(id)}
+            sealed={block.sealed}
+          />
+        );
       case 'multiple-choice':
         return (
           <MultipleAnswer
             key={'bubble-inner-' + block.id}
             options={block.options}
-            onPress={() =>
-              handleSendAnswer(
-                block.options
-                  .map((option: any) => (option.selected ? option.id : null))
-                  .filter((option: any) => option !== null),
-              )
-            }
-            onChange={handleMultipleAnswer}
-            sealed={!(last === block.id)}
+            onPress={handleMultipleAnswer}
+            onChange={(id) => handleSelectMultipleAnswer(id)}
+            sealed={block.sealed}
           />
         );
       case 'single-choice':

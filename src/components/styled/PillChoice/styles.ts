@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { StyledColumn, StyledText } from '../styles';
-import { ChoiceProps } from '.';
+import { PillChoiceProps } from '.';
 import { Dimensions } from 'react-native';
 
 export const StyledChoiceMainContainer = styled(StyledColumn)`
@@ -9,7 +9,7 @@ export const StyledChoiceMainContainer = styled(StyledColumn)`
   align-items: 'flex-end';
 `;
 
-export const StyledChoiceContainer = styled.Pressable<ChoiceProps>`
+export const StyledChoiceContainer = styled.Pressable<PillChoiceProps>`
   gap: 10px;
   align-items: center;
   justify-content: center;
@@ -42,7 +42,7 @@ export const StyledChoiceContainer = styled.Pressable<ChoiceProps>`
   }};
 `;
 
-export const StyledChoiceText = styled(StyledText)<ChoiceProps>`
+export const StyledChoiceText = styled(StyledText)<PillChoiceProps>`
   color: ${(props) => {
     if (props.status === 'default') {
       return props.theme.primary200;

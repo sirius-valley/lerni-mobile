@@ -42,6 +42,7 @@ const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps)
           gap: 24,
           alignItems: 'flex-end',
         }}
+        showsHorizontalScrollIndicator={false}
       >
         {items.map((item, index) => (
           <Item

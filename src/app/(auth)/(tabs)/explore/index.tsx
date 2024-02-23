@@ -37,6 +37,10 @@ const Page = () => {
 
   const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
 
+  // useEffect(() => {
+  //   router.push('/(auth)/pill/testQuestionnaire');
+  // }, []);
+
   if (meLoading) {
     return <SkeletonHome />;
   }
