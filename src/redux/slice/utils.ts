@@ -11,20 +11,27 @@ export const transformResponseBlock = (acc: any[], block: BubbleResponse) => {
       },
     };
   } else if (block?.options) {
+    let sealed = false;
     return {
       ...acc,
       [block.id]: {
         ...block,
         options: block.options.reduce((acc: any, option: string) => {
+          const selected =
+            typeof block.value === 'string' ? block.value?.replaceAll('"', '') === option : false;
+          // Check if it has any value selected to sealed the block.
+          if (!sealed) sealed = selected;
+
           return [
             ...acc,
             {
               id: option,
               text: option,
-              selected: block.value === '' ? undefined : block!.value === option,
+              selected: block.value === '' ? undefined : selected,
             },
           ];
         }, []),
+        sealed,
       },
     };
   } else {

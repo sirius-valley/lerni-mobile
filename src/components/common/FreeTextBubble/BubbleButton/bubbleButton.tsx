@@ -50,7 +50,10 @@ const BubbleButton = ({
       state={isDisabled}
       disabled={disabled}
       pressed={isPressed}
-      onPress={() => (disabled || loading ? undefined : onPress())}
+      onPress={() => {
+        console.log('press: ', onPress, disabled, loading);
+        return disabled || loading ? undefined : onPress();
+      }}
       onPressIn={() => !disabled && !loading && setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
       css={css}

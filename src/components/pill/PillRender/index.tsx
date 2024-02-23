@@ -42,7 +42,7 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
       dispatch(setFreeTextQuestionId({ id: block.id }));
     }
   }, [block.type]);
-
+  console.log(JSON.stringify(block, null, 3));
   // We could add a useCallback to memorize this function. In the future, we can add this change and check that everything is working as expected
   const BubbleToRender = () => {
     switch (block.type) {
@@ -70,7 +70,7 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
             items={block.items}
             onPress={handleCarousel}
             onSelect={(id) => handleSelectCarousel(id)}
-            sealed={block.sealed}
+            sealed={block.sealed || !(last === block.id)}
           />
         );
       case 'multiple-choice':
@@ -80,7 +80,7 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
             options={block.options}
             onPress={handleMultipleAnswer}
             onChange={(id) => handleSelectMultipleAnswer(id)}
-            sealed={block.sealed}
+            sealed={block.sealed || !(last === block.id)}
           />
         );
       case 'single-choice':
@@ -89,7 +89,7 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
             key={'bubble-inner-' + block.id}
             options={block.options}
             onPress={(id) => handleSingleAnswer(id)}
-            sealed={!(last === block.id)}
+            sealed={block.sealed || !(last === block.id)}
           />
         );
       case 'free-text':
