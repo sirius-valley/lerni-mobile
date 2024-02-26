@@ -4,6 +4,7 @@ import { StyledRow, StyledText } from '../../styled/styles';
 import { useTheme } from 'styled-components';
 import LockIcon from '../../../../assets/icons/LockIcon';
 import ChevronRightIcon from '../../../../assets/icons/ChevronRightIcon';
+import { EllipseIcon } from '../../../../assets/icons/EllipseIcon';
 
 interface PillRowInterface {
   pillNumber: number;
@@ -33,7 +34,7 @@ const PillRow = ({
         justifyContent: 'space-between',
       }}
     >
-      <StyledRow css={{ alignItems: 'center', gap: 8, justifyContent: 'flex-start', width: '60%' }}>
+      <StyledRow css={{ alignItems: 'center', gap: 8, justifyContent: 'flex-start', width: '90%' }}>
         <StyledRow css={{ width: '10%', justifyContent: 'center' }}>
           {started ? (
             <Progress.Circle
@@ -57,12 +58,13 @@ const PillRow = ({
             <LockIcon />
           )}
         </StyledRow>
-        <StyledRow css={{ alignItems: 'center', gap: 4 }}>
-          <StyledText variant="body2" color={started ? 'white' : 'gray600'}>
+        <StyledRow css={{ alignItems: 'center', gap: 4, width: '75%' }}>
+          <StyledText variant="body2" color={started ? 'gray100' : 'gray600'}>
             {title}
           </StyledText>
-          <StyledText variant="body3" color="gray500">
-            · {duration} min
+          <EllipseIcon size={4} color={started ? theme.gray100 : theme.gray500} />
+          <StyledText variant="body3" color={started ? 'primary600' : 'gray600'}>
+            {duration} min
           </StyledText>
         </StyledRow>
       </StyledRow>

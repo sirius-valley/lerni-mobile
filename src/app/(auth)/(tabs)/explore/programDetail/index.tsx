@@ -19,6 +19,7 @@ import { mockedLeaderboardRows, mockedPills, Status } from '../utils';
 import LeaderboardRow from '../../../../../components/program/LeaderboardRow';
 import MessageIcon from '../../../../../../assets/icons/MessageIcon';
 import { inProgressMockedData, MockedDataItem } from '..';
+import { ThreeDots } from '../../../../../components/program/LeaderboardRow/ThreeDots';
 
 const ProgramDetail = () => {
   const router = useRouter();
@@ -139,9 +140,14 @@ const ProgramDetail = () => {
                 Ver todo
               </StyledText>
             </StyledRow>
-            {mockedLeaderboardRows.map((row, idx) => (
+            <LeaderboardRow {...mockedLeaderboardRows[0]} />
+            <ThreeDots />
+            <LeaderboardRow {...mockedLeaderboardRows[1]} />
+            <LeaderboardRow {...mockedLeaderboardRows[2]} />
+            <LeaderboardRow {...mockedLeaderboardRows[3]} />
+            {/* {mockedLeaderboardRows.map((row, idx) => (
               <LeaderboardRow {...row} key={idx} />
-            ))}
+            ))} */}
           </StyledColumn>
 
           <StyledColumn
