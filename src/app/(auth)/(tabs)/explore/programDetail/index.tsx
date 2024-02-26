@@ -1,9 +1,8 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyledBox,
   StyledColumn,
-  StyledLine,
   StyledRow,
   StyledText,
 } from '../../../../../components/styled/styles';
@@ -19,22 +18,28 @@ import PillRow from '../../../../../components/program/PillRow';
 import { mockedLeaderboardRows, mockedPills, Status } from '../utils';
 import LeaderboardRow from '../../../../../components/program/LeaderboardRow';
 import MessageIcon from '../../../../../../assets/icons/MessageIcon';
+import { inProgressMockedData, MockedDataItem } from '..';
+import { ThreeDots } from '../../../../../components/program/LeaderboardRow/ThreeDots';
 
 const ProgramDetail = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
+  const programs = inProgressMockedData;
+  const [program, setProgram] = useState<MockedDataItem | undefined>(undefined);
   const theme = useTheme();
 
+  useEffect(() => {
+    setProgram(programs.find((mappedProgram) => mappedProgram.id === id));
+  }, [id]);
+
   const mockedProgram = {
-    id: Array.isArray(id) ? '' : id ?? '',
-    title: Array.isArray(id) ? 'Programa 1' : id ?? '',
-    // title: 'Programa 1',
-    imgUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/240px-React_Logo_SVG.svg.png',
+    id: program?.id,
+    title: program?.title,
+    imgUrl: program?.imgUrl ? program?.imgUrl : 'https://reactnative.dev/img/logo-og.png',
     status: 'in_progress' as Status,
-    progress: 0.32,
+    progress: program?.progress,
     pillData: {
-      pillProgress: 0.32,
+      pillProgress: program?.progress,
       pillAmount: 5,
       pillDuration: 1,
       pillPoints: 24,
@@ -57,12 +62,9 @@ const ProgramDetail = () => {
   ];
 
   return (
-    <ScrollView
-      style={{ width: '100%', paddingHorizontal: 12 }}
-      scrollIndicatorInsets={{ right: -30 }}
-    >
+    <ScrollView style={{ width: '100%' }} scrollIndicatorInsets={{ right: -30 }}>
       <StyledColumn
-        css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '64px' }}
+        css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '12px' }}
       >
         <StyledRow>
           <Pressable onPress={() => router.back()} style={{ padding: 10 }}>
@@ -115,11 +117,9 @@ const ProgramDetail = () => {
             <StyledText color="gray100" variant="h3">
               Pildoras
             </StyledText>
+
             {mockedPills.map((pill, idx) => (
-              <StyledBox key={idx}>
-                <PillRow {...pill} />
-                <StyledLine css={{ marginTop: '8px' }} color="gray500" />
-              </StyledBox>
+              <PillRow {...pill} key={idx} />
             ))}
           </StyledColumn>
 
@@ -140,9 +140,14 @@ const ProgramDetail = () => {
                 Ver todo
               </StyledText>
             </StyledRow>
-            {mockedLeaderboardRows.map((row, idx) => (
+            <LeaderboardRow {...mockedLeaderboardRows[0]} />
+            <ThreeDots />
+            <LeaderboardRow {...mockedLeaderboardRows[1]} />
+            <LeaderboardRow {...mockedLeaderboardRows[2]} />
+            <LeaderboardRow {...mockedLeaderboardRows[3]} />
+            {/* {mockedLeaderboardRows.map((row, idx) => (
               <LeaderboardRow {...row} key={idx} />
-            ))}
+            ))} */}
           </StyledColumn>
 
           <StyledColumn
