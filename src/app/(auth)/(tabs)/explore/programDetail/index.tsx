@@ -64,7 +64,7 @@ const ProgramDetail = () => {
   return (
     <ScrollView style={{ width: '100%' }} scrollIndicatorInsets={{ right: -30 }}>
       <StyledColumn
-        css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '64px' }}
+        css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '12px' }}
       >
         <StyledRow>
           <Pressable onPress={() => router.back()} style={{ padding: 10 }}>
