@@ -44,7 +44,9 @@ const PillDetail = () => {
   return (
     <>
       <ScrollView style={{ width: '100%', height: '100%' }} showsVerticalScrollIndicator={false}>
-        <StyledColumn css={{ flex: 1, justifyContent: 'flex-start', height: '100%' }}>
+        <StyledColumn
+          css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '64px' }}
+        >
           <StyledColumn
             css={{
               gap: 16,
@@ -199,7 +201,7 @@ const PillDetail = () => {
       <StyledRow
         css={{
           position: 'absolute',
-          bottom: insets.bottom - 24,
+          bottom: insets.bottom + 12,
           left: insets.left + 24,
           width: '100%',
           height: '42px',

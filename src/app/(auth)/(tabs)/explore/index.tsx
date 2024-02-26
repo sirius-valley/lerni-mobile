@@ -47,7 +47,7 @@ const Page = () => {
   const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
 
   // useEffect(() => {
-  //   handleGoToPillDetail('3');
+  //   handleGoToPillDetail('pillId');
   // }, []);
 
   if (meLoading) {

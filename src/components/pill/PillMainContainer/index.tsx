@@ -19,7 +19,7 @@ const MainContainer = ({ children, backgroundColor }: MainContainerInterface) =>
         color: theme.white,
         width: '100%',
         height: '100%',
-        paddingTop: inset.top,
+        paddingTop: inset.top + 24,
       }}
     >
       {children}
