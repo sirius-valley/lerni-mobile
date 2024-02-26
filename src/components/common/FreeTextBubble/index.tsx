@@ -14,6 +14,7 @@ interface FreeTextBubbleInterface {
   handlePress: () => void;
   textLimit?: number;
   placeholder?: string;
+  handleOnFocus?: () => void;
 }
 
 const FreeTextBubble = ({
@@ -22,6 +23,7 @@ const FreeTextBubble = ({
   handlePress,
   textLimit = 150,
   placeholder = 'Agrega tu respuesta...',
+  handleOnFocus,
 }: FreeTextBubbleInterface) => {
   const theme = useTheme();
   const textLength = value.length;
@@ -66,6 +68,7 @@ const FreeTextBubble = ({
             scrollEnabled={false}
             maxLength={textLimit}
             multiline
+            onFocus={handleOnFocus}
           />
         </StyledColumn>
       </Pressable>

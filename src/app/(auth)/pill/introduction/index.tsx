@@ -109,7 +109,9 @@ const Pill = () => {
               getItem={(data, index) => data[index]}
               keyExtractor={(item, index) => index.toString()}
             />
-            <FreeTextAnswer />
+            <FreeTextAnswer
+              scrollToEnd={() => setTimeout(() => virtualRef?.current?.scrollToEnd(), 250)}
+            />
           </KeyboardAvoidingView>
         </Animated.View>
         <Animated.View
