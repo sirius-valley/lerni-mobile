@@ -3,9 +3,12 @@ import FreeTextBubble from '../../common/FreeTextBubble';
 import { useLSelector } from '../../../redux/hooks';
 import { StyledBox } from '../../styled/styles';
 import usePill from '../../../hooks/usePill';
-import { Platform } from 'react-native';
 
-const FreeTextAnswer = () => {
+interface FreeTextAnswerProps {
+  scrollToEnd: () => void;
+}
+
+const FreeTextAnswer = ({ scrollToEnd }: FreeTextAnswerProps) => {
   const freeTextQuestionId = useLSelector((state) => state.pill.freeTextQuestionId);
   const { block, handleSendAnswer, handleFreeTextAnswer } = usePill(freeTextQuestionId ?? '', {});
 
@@ -27,6 +30,7 @@ const FreeTextAnswer = () => {
         value={block?.content ?? ''}
         onChangeText={handleFreeTextAnswer}
         handlePress={handleSend}
+        handleOnFocus={scrollToEnd}
       />
     </StyledBox>
   );

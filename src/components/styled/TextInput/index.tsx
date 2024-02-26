@@ -2,9 +2,10 @@ import { useTheme } from 'styled-components';
 import { StyledTextInput } from './styles';
 import { CSSProperties } from '../../../utils/utils';
 import { ThemeColors } from '../../../utils/theme';
-import { forwardRef } from 'react';
+import { ComponentProps, forwardRef } from 'react';
+import { TextInput as TextInputNative } from 'react-native';
 
-export interface TextInputProps {
+export interface TextInputProps extends ComponentProps<typeof TextInputNative> {
   placeholder?: string;
   placeholderColor?: keyof ThemeColors;
   disabled?: boolean;
@@ -17,6 +18,7 @@ export interface TextInputProps {
   multiline?: boolean;
   scrollEnabled?: boolean;
   maxLength?: number;
+  onFocus?: () => void;
 }
 
 export const TextInput = forwardRef<any, TextInputProps>(
@@ -34,6 +36,7 @@ export const TextInput = forwardRef<any, TextInputProps>(
       multiline = false,
       scrollEnabled = true,
       maxLength,
+      onFocus,
     }: TextInputProps,
     ref: any,
   ) => {
@@ -55,6 +58,7 @@ export const TextInput = forwardRef<any, TextInputProps>(
         scrollEnabled={scrollEnabled}
         maxLength={maxLength}
         ref={ref}
+        onFocus={onFocus}
       />
     );
   },
