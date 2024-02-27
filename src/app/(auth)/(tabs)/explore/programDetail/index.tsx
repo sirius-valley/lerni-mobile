@@ -56,7 +56,7 @@ interface ProgramDetailType {
     completionTimeMinutes: number;
     questionnaireProgress: number;
     isLocked: boolean;
-  }
+  };
 }
 
 const ProgramDetail = () => {
@@ -164,11 +164,11 @@ const ProgramDetail = () => {
               </StyledBox>
             ))}
             <PillRow
-            pillName={program.questionnaire.questionnaireName}
-            pillProgress={program.questionnaire.questionnaireProgress}
-            pillNumber={program.pills.length + 1}
-            duration={program.questionnaire.completionTimeMinutes}
-            isLocked={program.questionnaire.isLocked}
+              pillName={program.questionnaire.questionnaireName}
+              pillProgress={program.questionnaire.questionnaireProgress}
+              pillNumber={program.pills.length + 1}
+              duration={program.questionnaire.completionTimeMinutes}
+              isLocked={program.questionnaire.isLocked}
             />
           </StyledColumn>
 
@@ -195,7 +195,6 @@ const ProgramDetail = () => {
                 {idx === 0 && mockedLeaderboardRows[idx + 1].position > row.position + 1 && (
                   <ThreeDots />
                 )}
-                
               </React.Fragment>
             ))}
           </StyledColumn>

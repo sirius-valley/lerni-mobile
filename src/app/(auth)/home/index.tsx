@@ -67,7 +67,7 @@ const Home = () => {
                           id={id}
                           title={title}
                           imgUrl={image}
-                          status={!aboutMe.hasCompletedIntroduction ? 'locked' : status}
+                          status={!aboutMe?.hasCompletedIntroduction ? 'locked' : status}
                           progress={progressBar ? progress : undefined}
                           onPress={() => handleGoToPill(id)}
                         />
