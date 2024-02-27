@@ -1,6 +1,6 @@
 import { StyledCarouselContainer } from './styles';
 import Item from './Item';
-import { StyledColumn, StyledRow } from '../../styled/styles';
+import { StyledBox, StyledColumn, StyledRow } from '../../styled/styles';
 import React from 'react';
 import useZoomImage from '../../../hooks/useZoomImage';
 import { LabeledSend } from '../../bubbles/LabeledSend';
@@ -33,32 +33,41 @@ const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps)
       style={{
         alignItems: 'flex-end',
         gap: 12,
+        paddingLeft: 24,
       }}
     >
       <StyledCarouselContainer
-        horizontal
+        horizontal={!sealed}
         contentContainerStyle={{
-          paddingHorizontal: 12,
           gap: 24,
           alignItems: 'flex-end',
+          paddingHorizontal: 12,
         }}
         showsHorizontalScrollIndicator={false}
       >
-        {items?.map((item, index) => (
-          <Item
-            key={index}
-            image={item.image}
-            selected={item.selected}
-            handleOpenImage={() => handleOpenImage(index)}
-            handleSelect={() => onSelect(item.id)}
-            description={item.description}
-            id={item.id}
-            disabled={sealed}
-            sealed={sealed}
-          />
-        ))}
+        {items?.map((item, index) => {
+          return sealed && !item.selected ? null : (
+            <Item
+              key={index}
+              image={item.image}
+              selected={item.selected}
+              handleOpenImage={() => handleOpenImage(index)}
+              handleSelect={() => onSelect(item.id)}
+              description={item.description}
+              id={item.id}
+              disabled={sealed}
+              sealed={sealed}
+            />
+          );
+        })}
       </StyledCarouselContainer>
-      <StyledRow style={{ alignItems: 'center', gap: 6, paddingHorizontal: 24 }}>
+      <StyledRow
+        style={{
+          alignItems: 'center',
+          gap: 6,
+          paddingLeft: 12,
+        }}
+      >
         <LabeledSend
           onPress={onPress}
           status={sealed ? 'sent' : items.some((item) => item.selected) ? 'selected' : 'default'}

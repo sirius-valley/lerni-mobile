@@ -16,7 +16,7 @@ export const transformResponseBlock = (acc: any[], block: BubbleResponse) => {
       ...acc,
       [block.id]: {
         ...block,
-        options: block.options.reduce((acc: any, option: string) => {
+        options: block.options.reduce((acc: any, option: string, idx) => {
           const selected = getSelectedValue(block.value ?? '', option);
           typeof block.value === 'string' ? block.value?.replaceAll('"', '') === option : false;
           // Check if it has any value selected to sealed the block.
@@ -29,6 +29,7 @@ export const transformResponseBlock = (acc: any[], block: BubbleResponse) => {
               text: option,
               selected: block.value === '' ? undefined : selected,
               ...(block.type === 'carousel' && { image: option }),
+              ...(block.optionDescriptions && { description: block.optionDescriptions[idx] }),
             },
           ];
         }, []),

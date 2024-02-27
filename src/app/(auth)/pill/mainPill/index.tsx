@@ -59,7 +59,7 @@ const MainPill = () => {
   useEffect(() => {
     if (prevData !== undefined && pillCompleted !== prevData) {
       dispatch(api.util?.invalidateTags(['ME']));
-      setTimeout(() => animateBoxes(), 1250);
+      setTimeout(() => animateBoxes(), 1000);
     }
   }, [pillCompleted, prevData]);
 

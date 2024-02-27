@@ -10,7 +10,7 @@ import * as SecureStore from 'expo-secure-store';
 
 const baseQuery = fetchBaseQuery({
   baseUrl:
-    process.env.EXPO_PUBLIC_REACT_APP_BASE_URL_REMOTE ||
+    process.env.REACT_APP_BASE_URL ||
     process.env.EXPO_PUBLIC_REACT_APP_BASE_URL ||
     'http://localhost:3000/',
   prepareHeaders: async (headers) => {

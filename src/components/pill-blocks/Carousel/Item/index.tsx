@@ -77,9 +77,9 @@ const CarouselItem = ({
         />
       </StyledBox>
       <StyledRow style={{ gap: 8 }}>
-        {/* {sealed && ( */}
-        <Checkbox disabled={disabled} checked={selected ? true : false} onPress={handleSelect} />
-        {/* )} */}
+        {!sealed && (
+          <Checkbox disabled={disabled} checked={selected ? true : false} onPress={handleSelect} />
+        )}
         <StyledColumn style={{ maxHeight: 40, maxWidth: width * 0.9 }}>
           <StyledText style={{ color: theme.gray100 }} variant={'h4'}>
             {description}
