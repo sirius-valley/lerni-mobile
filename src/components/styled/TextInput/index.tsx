@@ -11,6 +11,7 @@ export interface TextInputProps {
   error?: boolean;
   onChangeText: (value: string) => void;
   onBlur?: () => void;
+  onFocus?: () => void;
   value: string;
   css?: CSSProperties;
   type?: 'password' | 'text';
@@ -28,6 +29,7 @@ export const TextInput = forwardRef<any, TextInputProps>(
       error = false,
       onChangeText,
       onBlur,
+      onFocus,
       value,
       css,
       type = 'text',
@@ -49,6 +51,7 @@ export const TextInput = forwardRef<any, TextInputProps>(
         value={value}
         onChangeText={(value: string) => !disabled && onChangeText(value)}
         onBlur={() => onBlur && onBlur()}
+        onFocus={() => onFocus && onFocus()}
         autoCapitalize="none"
         secureTextEntry={type === 'password'}
         multiline={multiline}
