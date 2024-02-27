@@ -1,11 +1,12 @@
 import React from 'react';
 import * as Progress from 'react-native-progress';
-import { StyledRow, StyledText } from '../../styled/styles';
+import { StyledBox, StyledRow, StyledText } from '../../styled/styles';
 import { useTheme } from 'styled-components';
 import LockIcon from '../../../../assets/icons/LockIcon';
-import { Platform } from 'react-native';
+import { Platform, Pressable } from 'react-native';
 import ChevronRightIcon from '../../../../assets/icons/ChevronRightIcon';
 import { EllipseIcon } from '../../../../assets/icons/EllipseIcon';
+import { useRouter } from 'expo-router';
 
 interface PillRowInterface {
   pillNumber: number;
@@ -13,10 +14,19 @@ interface PillRowInterface {
   pillName: string;
   duration: number;
   isLocked: boolean;
+  id: string;
 }
 
-const PillRow = ({ pillNumber, pillProgress, pillName, duration, isLocked }: PillRowInterface) => {
+const PillRow = ({
+  pillNumber,
+  pillProgress,
+  pillName,
+  duration,
+  isLocked,
+  id,
+}: PillRowInterface) => {
   const theme = useTheme();
+  const router = useRouter();
 
   return (
     <StyledRow
@@ -64,7 +74,11 @@ const PillRow = ({ pillNumber, pillProgress, pillName, duration, isLocked }: Pil
           </StyledText>
         </StyledRow>
       </StyledRow>
-      {!isLocked && pillProgress < 100 && <ChevronRightIcon color={theme.primary600} />}
+      {!isLocked && pillProgress < 100 && (
+        // <Pressable onPress={() => router.push(`/(auth)/pill/${id}`)}>
+          <ChevronRightIcon color={theme.primary600} />
+        // </Pressable>
+      )}
     </StyledRow>
   );
 };

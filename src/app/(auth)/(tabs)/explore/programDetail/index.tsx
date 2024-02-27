@@ -160,6 +160,7 @@ const ProgramDetail = () => {
                   pillNumber={idx + 1}
                   duration={pill.completionTimeMinutes}
                   isLocked={pill.isLocked}
+                  id={pill.id}
                 />
               </StyledBox>
             ))}
@@ -169,6 +170,7 @@ const ProgramDetail = () => {
               pillNumber={program.pills.length + 1}
               duration={program.questionnaire.completionTimeMinutes}
               isLocked={program.questionnaire.isLocked}
+              id={program.questionnaire.id}
             />
           </StyledColumn>
 
