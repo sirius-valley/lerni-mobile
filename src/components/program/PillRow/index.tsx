@@ -76,7 +76,7 @@ const PillRow = ({
       </StyledRow>
       {!isLocked && pillProgress < 100 && (
         // <Pressable onPress={() => router.push(`/(auth)/pill/${id}`)}>
-          <ChevronRightIcon color={theme.primary600} />
+        <ChevronRightIcon color={theme.primary600} />
         // </Pressable>
       )}
     </StyledRow>
