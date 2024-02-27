@@ -21,6 +21,8 @@ import LeaderboardRow from '../../../../../components/program/LeaderboardRow';
 import MessageIcon from '../../../../../../assets/icons/MessageIcon';
 import { useProgramByIdQuery } from '../../../../../redux/service/program.service';
 import ProgramSkeleton from './ProgramSkeleton';
+import { ThreeDots } from '../../../../../components/program/LeaderboardRow/ThreeDots';
+import ErrorDisplay from '../../../../../components/common/ErrorDisplay';
 
 interface ProgramDetailType {
   id: string;
@@ -44,8 +46,17 @@ interface ProgramDetailType {
       id: string;
       pillName: string;
       pillProgress: number;
+      completionTimeMinutes: number;
+      isLocked: boolean;
     },
   ];
+  questionnaire: {
+    id: string;
+    questionnaireName: string;
+    completionTimeMinutes: number;
+    questionnaireProgress: number;
+    isLocked: boolean;
+  }
 }
 
 const ProgramDetail = () => {
@@ -63,45 +74,18 @@ const ProgramDetail = () => {
     isError: boolean;
   };
 
-  const mockedProgram = {
-    id: Array.isArray(id) ? '' : id ?? '',
-    title: Array.isArray(id) ? 'Programa 1' : id ?? '',
-    // title: 'Programa 1',
-    imgUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/240px-React_Logo_SVG.svg.png',
-    status: 'in_progress' as Status,
-    progress: 0.32,
-    pillData: {
-      pillProgress: 0.32,
-      pillAmount: 5,
-      pillDuration: 1,
-      pillPoints: 24,
-    },
-  };
-
-  const mockedSubTitle = [
-    {
-      icon: <BulletListIcon />,
-      label: `${mockedProgram.pillData.pillAmount} pildoras`,
-    },
-    {
-      icon: <ClockIcon />,
-      label: `${mockedProgram.pillData.pillDuration} hora`,
-    },
-    {
-      icon: <RhombusIcon />,
-      label: `${mockedProgram.pillData.pillDuration} puntos`,
-    },
-  ];
-
   if (isLoading) {
     return <ProgramSkeleton />;
+  }
+
+  if (isError) {
+    return <ErrorDisplay type="404" />;
   }
 
   return (
     <ScrollView style={{ width: '100%' }} showsVerticalScrollIndicator={false}>
       <StyledColumn
-        css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '64px' }}
+        css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '12px' }}
       >
         <StyledRow>
           <Pressable onPress={() => router.back()} style={{ padding: 10 }}>
@@ -109,7 +93,11 @@ const ProgramDetail = () => {
           </Pressable>
         </StyledRow>
         <StyledColumn css={{ width: '100%', alignItems: 'center', gap: '8px' }}>
-          <ProgramImage status={mockedProgram.status} imgUrl={mockedProgram.imgUrl} size={150} />
+          <ProgramImage
+            status={program.progress > 0 ? 'in_progress' : 'not_started'}
+            imgUrl={program.icon}
+            size={150}
+          />
           <StyledText variant="h2" color="gray100">
             {program.programName}
           </StyledText>
@@ -169,12 +157,19 @@ const ProgramDetail = () => {
                 <PillRow
                   pillName={pill.pillName}
                   pillProgress={pill.pillProgress}
-                  pillNumber={idx}
-                  duration={10}
+                  pillNumber={idx + 1}
+                  duration={pill.completionTimeMinutes}
+                  isLocked={pill.isLocked}
                 />
-                <StyledLine css={{ marginTop: '8px' }} color="gray500" />
               </StyledBox>
             ))}
+            <PillRow
+            pillName={program.questionnaire.questionnaireName}
+            pillProgress={program.questionnaire.questionnaireProgress}
+            pillNumber={program.pills.length + 1}
+            duration={program.questionnaire.completionTimeMinutes}
+            isLocked={program.questionnaire.isLocked}
+            />
           </StyledColumn>
 
           <StyledColumn css={{ width: '100%', marginVertical: '16px' }}>
@@ -195,7 +190,13 @@ const ProgramDetail = () => {
               </StyledText>
             </StyledRow>
             {mockedLeaderboardRows.map((row, idx) => (
-              <LeaderboardRow {...row} key={idx} />
+              <React.Fragment key={idx}>
+                <LeaderboardRow {...row} />
+                {idx === 0 && mockedLeaderboardRows[idx + 1].position > row.position + 1 && (
+                  <ThreeDots />
+                )}
+                
+              </React.Fragment>
             ))}
           </StyledColumn>
 
