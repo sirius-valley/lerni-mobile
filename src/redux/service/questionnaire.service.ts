@@ -1,14 +1,20 @@
 import { api } from './api';
+import {
+  QuestionnaireBody,
+  QuestionnaireResponse,
+  QuestionnaireState,
+} from './types/questionnaire.response';
 
 export const questionnaireApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    questionnaireById: builder.query<any, { id: string }>({
-      query: (id) => ({
-        url: `questionnaire/${id}`,
+    questionnaireById: builder.query<QuestionnaireResponse, { id: string }>({
+      query: ({ id }) => ({
+        url: `/api/questionnaire/${id}`,
+
         method: 'GET',
       }),
     }),
-    answerQuestionnaire: builder.mutation<any, any>({
+    answerQuestionnaire: builder.mutation<QuestionnaireResponse, QuestionnaireBody>({
       query: (body) => ({
         url: `/api/questionnaire/answer`,
         method: 'POST',
@@ -18,4 +24,4 @@ export const questionnaireApi = api.injectEndpoints({
   }),
 });
 
-export const { useQuestionnaireByIdQuery } = questionnaireApi;
+export const { useQuestionnaireByIdQuery, useAnswerQuestionnaireMutation } = questionnaireApi;

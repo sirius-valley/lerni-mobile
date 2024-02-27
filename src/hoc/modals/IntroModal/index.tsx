@@ -1,10 +1,11 @@
 import React from 'react';
 import { Modal } from 'react-native';
-import { useLSelector } from '../../../redux/hooks';
+import { useLDispatch, useLSelector } from '../../../redux/hooks';
 import { StyledColumn, StyledText } from '../../../components/styled/styles';
 import { useTheme } from 'styled-components';
 import Button from '../../../components/styled/Button';
 import { useRouter } from 'expo-router';
+import { resetAllStates } from '../../../redux/store';
 
 interface IntroModalProps {
   handleOnClose: () => void;
@@ -16,6 +17,8 @@ const IntroModal = ({ handleOnClose }: IntroModalProps) => {
   const modalType = useLSelector((state) => state.utils.modalType);
   const open = !!modalType;
   const route = useRouter();
+  const dispatch = useLDispatch();
+  const handleLogout = () => dispatch(resetAllStates());
 
   const handleGoToIntroduction = () => {
     route.push('/(auth)/pill/introduction');
@@ -73,13 +76,13 @@ const IntroModal = ({ handleOnClose }: IntroModalProps) => {
             Ir a la introducción
           </Button>
           <Button
-            onPress={handleOnClose}
+            onPress={handleLogout}
             variant="ghost"
             css={{
               width: '100%',
             }}
           >
-            Más tarde
+            Cerrar sesión
           </Button>
         </StyledColumn>
       </StyledColumn>

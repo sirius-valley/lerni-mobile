@@ -15,6 +15,8 @@ export type BubbleType =
 export interface CommonBlockType {
   id: string;
   content?: string | string[] | number | number[] | boolean | boolean[];
+  correctAnswer?: string[];
+  pointsAwarded?: number;
 }
 
 export interface SingleChoiceBlockType extends CommonBlockType {

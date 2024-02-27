@@ -14,6 +14,7 @@ import { useMeQuery } from '../../../../redux/service/student.service';
 import { Status } from './utils';
 import { Dimensions, Pressable } from 'react-native';
 import ErrorDisplay from '../../../../components/common/ErrorDisplay';
+import Button from '../../../../components/styled/Button';
 
 const Page = () => {
   const router = useRouter();
@@ -70,6 +71,9 @@ const Page = () => {
               </StyledBox>
             </Pressable>
           </StyledRow>
+          <Button onPress={() => router.push('/(auth)/pill/questionnaire/questionnaireId')}>
+            Go to test
+          </Button>
           {isLoading ? (
             <SkeletonHome />
           ) : !data?.hasCompletedIntroduction ? (
@@ -233,7 +237,8 @@ export const inProgressMockedData: MockedDataItem[] = [
   {
     id: 'inprogress1',
     title: 'Programa en progreso 1',
-    imgUrl: 'https://media.discordapp.net/attachments/1163814783913562132/1205135747217100861/image.png?ex=65d74520&is=65c4d020&hm=cba5fd93c2bd2dae25e78fd4940674b2559fb95183fc0c030730370f6abc4039&=&format=webp&quality=lossless&width=220&height=220',
+    imgUrl:
+      'https://media.discordapp.net/attachments/1163814783913562132/1205135747217100861/image.png?ex=65d74520&is=65c4d020&hm=cba5fd93c2bd2dae25e78fd4940674b2559fb95183fc0c030730370f6abc4039&=&format=webp&quality=lossless&width=220&height=220',
     status: 'in_progress',
     progress: 0.67,
   },

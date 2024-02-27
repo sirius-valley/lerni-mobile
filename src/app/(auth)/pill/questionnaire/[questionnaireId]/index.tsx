@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PillMainContainer from '../../../../components/pill/PillMainContainer';
-import PillHeader from '../../../../components/pill/PillHeader';
-import { StyledBox, StyledColumn } from '../../../../components/styled/styles';
+import PillMainContainer from '../../../../../components/pill/PillMainContainer';
+import PillHeader from '../../../../../components/pill/PillHeader';
+import { StyledBox, StyledColumn } from '../../../../../components/styled/styles';
 import {
   Animated,
   Dimensions,
@@ -10,22 +10,31 @@ import {
   Platform,
   VirtualizedList,
 } from 'react-native';
-import { useLDispatch, useLSelector } from '../../../../redux/hooks';
-import { useQuestionnaireByIdQuery } from '../../../../redux/service/questionnaire.service';
-import { getQuestionnaireById } from '../../../../redux/slice/questionnaire.slice';
+import { useLDispatch, useLSelector } from '../../../../../redux/hooks';
+import { useQuestionnaireByIdQuery } from '../../../../../redux/service/questionnaire.service';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import usePrevious from '../../../../hooks/usePrevious';
-import { SuccessPill } from '../../../../components/common/Result/SuccessPill';
-import QuestionnaireRender from '../../../../components/pill/QuestionnaireRender';
+import usePrevious from '../../../../../hooks/usePrevious';
+import { SuccessPill } from '../../../../../components/common/Result/SuccessPill';
+import QuestionnaireRender from '../../../../../components/pill/QuestionnaireRender';
+import { QuestionnaireState } from '../../../../../redux/service/types/questionnaire.response';
+import { useLocalSearchParams } from 'expo-router';
+import { FailurePill } from '../../../../../components/common/Result/FailurePill';
 
-const index = () => {
-  const { data } = useQuestionnaireByIdQuery({ id: '01' });
-  const [show, setShow] = useState(false);
-
+const Questionnaire = () => {
+  const { questionnaireId } = useLocalSearchParams();
+  const { data } = useQuestionnaireByIdQuery(
+    { id: questionnaireId as string },
+    {
+      skip: !questionnaireId,
+    },
+  );
   const blocksIds = useLSelector((state) => state.questionnaire.blocksIds);
-  const pillTitle = useLSelector((state) => state.questionnaire.questionnaire?.pill.name);
-  const pillProgress = useLSelector((state) => state.questionnaire.questionnaire?.pill?.progress);
-  const pillCompleted = useLSelector((state) => state.questionnaire.questionnaire?.pill?.completed);
+  const pillProgress = useLSelector(
+    (state) => state.questionnaire?.questionnaire?.questionnaire.progress,
+  );
+  const pillCompleted = useLSelector(
+    (state) => state.questionnaire?.questionnaire?.questionnaire.questionnaireState,
+  );
 
   const virtualRef = useRef<VirtualizedList<unknown> | null>();
   const prevData = usePrevious<boolean>(pillCompleted);
@@ -34,16 +43,36 @@ const index = () => {
   const screenHeight = Dimensions.get('window').height - insets.top - insets.bottom - 40;
   const box1Height = useRef(new Animated.Value(0)).current;
   const box2Height = useRef(new Animated.Value(screenHeight)).current;
+  const [show, setShow] = useState<boolean>(false);
 
-  const dispatch = useLDispatch();
+  const animateBoxes = () => {
+    Animated.parallel([
+      Animated.timing(box1Height, {
+        toValue: screenHeight,
+        duration: 800,
+        useNativeDriver: false,
+      }),
+      Animated.timing(box2Height, {
+        toValue: 0,
+        duration: 800,
+        useNativeDriver: false,
+      }),
+    ]).start();
+    setShow(true);
+  };
 
   useEffect(() => {
-    dispatch(getQuestionnaireById('01'));
-  }, []);
+    if (
+      pillCompleted !== undefined &&
+      [QuestionnaireState.COMPLETED, QuestionnaireState.FAILED].includes(pillCompleted)
+    ) {
+      setTimeout(() => animateBoxes(), 850);
+    }
+  }, [pillCompleted]);
 
   return (
     <PillMainContainer backgroundColor="primary900">
-      <PillHeader title={pillTitle ?? ''} pillNumber={1} percentageDone={pillProgress ?? 0} />
+      <PillHeader title={'Cuestionario'} pillNumber={1} percentageDone={pillProgress ?? 0} />
       <StyledColumn css={{ flexGrow: 1 }}>
         <Animated.View
           style={{
@@ -96,7 +125,11 @@ const index = () => {
               height: screenHeight,
             }}
           >
-            <SuccessPill show={show} programName={'la introducción'} />
+            {pillCompleted === QuestionnaireState.COMPLETED ? (
+              <SuccessPill show={show} programName={'la introducción'} />
+            ) : (
+              <FailurePill />
+            )}
           </StyledBox>
         </Animated.View>
       </StyledColumn>
@@ -104,4 +137,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Questionnaire;

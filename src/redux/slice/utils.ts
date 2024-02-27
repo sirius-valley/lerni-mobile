@@ -1,7 +1,8 @@
 import { removeHtmlTags } from '../../utils/utils';
 import { BubbleResponse, ImagesOptions } from '../service/types/pill.response';
+import { BubbleResponseQuestionnaire } from '../service/types/questionnaire.response';
 
-export const transformResponseBlock = (acc: any[], block: BubbleResponse) => {
+export const transformResponseBlock = (acc: any[], block: BubbleResponseQuestionnaire) => {
   if (block?.content) {
     return {
       ...acc,
@@ -35,7 +36,10 @@ export const transformResponseBlock = (acc: any[], block: BubbleResponse) => {
   }
 };
 
-export const transformQuestionnaireResponseBlock = (acc: any[], block: BubbleResponse) => {
+export const transformQuestionnaireResponseBlock = (
+  acc: any[],
+  block: BubbleResponseQuestionnaire,
+) => {
   if (block?.content) {
     return {
       ...acc,
@@ -45,17 +49,30 @@ export const transformQuestionnaireResponseBlock = (acc: any[], block: BubbleRes
       },
     };
   } else if (block?.options) {
+    /*
+      options: string[];
+      value: string;
+      correct?: boolean;
+      pointsAwarded?: number;
+     */
     return {
       ...acc,
       [block.id]: {
         ...block,
+        pointsAwarded: block.pointsAwarded,
+        correctAnswer: block.correctAnswer,
         options: block.options.reduce((acc: any, option: string) => {
           return [
             ...acc,
             {
               id: option,
               text: option,
-              selected: block.value === '' ? false : block!.value === option,
+              selected:
+                typeof block.value === 'string'
+                  ? block.value === ''
+                    ? false
+                    : block!.value === option
+                  : (block.value as string[]).find((val) => val === option),
             },
           ];
         }, []),
