@@ -48,6 +48,25 @@ export const transformQuestionnaireResponseBlock = (
         content: removeHtmlTags(block.content),
       },
     };
+  } else if (block?.type === 'carousel' && block?.optionDescriptions) {
+    return {
+      ...acc,
+      [block.id]: {
+        ...block,
+        imgOptions: block.options?.reduce((acc: any, option: string, index: number) => {
+          return [
+            ...acc,
+            {
+              title: block?.optionDescriptions?.[index],
+              description: block?.optionDescriptions?.[index],
+              image: option,
+              id: `id-${Math.random().toString().slice(2, 8)}`,
+              selected: block.value === '' ? false : block!.value === option,
+            },
+          ];
+        }, []),
+      },
+    };
   } else if (block?.options) {
     /*
       options: string[];
@@ -60,7 +79,7 @@ export const transformQuestionnaireResponseBlock = (
       [block.id]: {
         ...block,
         pointsAwarded: block.pointsAwarded,
-        correctAnswer: block.correctAnswer,
+        correctAnswer: block.correctValue,
         options: block.options.reduce((acc: any, option: string) => {
           return [
             ...acc,
@@ -73,25 +92,6 @@ export const transformQuestionnaireResponseBlock = (
                     ? false
                     : block!.value === option
                   : (block.value as string[]).find((val) => val === option),
-            },
-          ];
-        }, []),
-      },
-    };
-  } else if (block?.imgOptions) {
-    return {
-      ...acc,
-      [block.id]: {
-        ...block,
-        imgOptions: block.imgOptions?.reduce((acc: any, option: ImagesOptions) => {
-          return [
-            ...acc,
-            {
-              title: option.title,
-              description: option.description,
-              image: option.image,
-              id: `id-${Math.random().toString().slice(2, 8)}`,
-              selected: block.value === '' ? false : block!.value === option.image,
             },
           ];
         }, []),

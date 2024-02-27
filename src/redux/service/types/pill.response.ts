@@ -4,7 +4,9 @@ export type BubbleResponse = {
   content?: string;
   options?: string[];
   imgOptions?: ImagesOptions[];
+  optionDescriptions?: string[];
   correctAnswer?: string[];
+  correct?: boolean;
   points?: number;
   value?: string | string[];
 };

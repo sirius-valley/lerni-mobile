@@ -17,6 +17,7 @@ export interface CommonBlockType {
   content?: string | string[] | number | number[] | boolean | boolean[];
   correctAnswer?: string[];
   pointsAwarded?: number;
+  correct?: boolean;
 }
 
 export interface SingleChoiceBlockType extends CommonBlockType {

@@ -219,7 +219,8 @@ export const questionnaireSlice = createSlice({
             lastBlock = {
               ...lastBlock,
               pointsAwarded: action.payload.questionnaire.pointsAwarded,
-              correctAnswer: action.payload.questionnaire.correct,
+              correctAnswer: action.payload.questionnaire.correctValue,
+              correct: action.payload.questionnaire.correct,
             };
             state.mapBlocks[lastQuestionId] = lastBlock;
           }

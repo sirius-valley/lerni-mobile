@@ -73,7 +73,7 @@ const QuestionnaireRender = ({ blockId, nextBlockId }: QuestionnaireRenderProps)
             onChange={(id) => handleSingleAnswer(id)}
             correctAnswers={block.correctAnswer}
             sealed={!(last === block.id)}
-            points={block.points ?? 0}
+            points={block?.pointsAwarded ?? 0}
             isSingleAnswer
           />
         );
@@ -84,9 +84,9 @@ const QuestionnaireRender = ({ blockId, nextBlockId }: QuestionnaireRenderProps)
             onSelect={handleImageSelection}
             onPress={() => handleSealedImageSelection(block.id)}
             sealed={!(last === block.id)}
-            correctAnswerId={block.correctAnswer[0]}
-            isImgSelectedCorrect={block.value === block.correctAnswer[0]}
-            points={block.points ?? 0}
+            correctAnswerId={block?.correctAnswer?.[0]}
+            isImgSelectedCorrect={block.value === block?.correctAnswer?.[0]}
+            points={block?.pointsAwarded}
           />
         );
     }

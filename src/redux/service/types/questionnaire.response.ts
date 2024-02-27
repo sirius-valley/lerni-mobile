@@ -1,7 +1,8 @@
 import { BubbleResponse } from './pill.response';
 
 export interface BubbleResponseQuestionnaire extends BubbleResponse {
-  correct?: string[];
+  correct?: boolean;
+  correctValue?: string[];
   pointsAwarded?: number;
 }
 
@@ -14,9 +15,10 @@ export enum QuestionnaireState {
 export type QuestionnaireResponse = {
   questionnaire: {
     questionnaireState: QuestionnaireState;
-    correct: string[];
     progress: number;
-    pointsAwarded: number;
+    correct?: boolean;
+    correctValue?: string[];
+    pointsAwarded?: number;
     bubbles: BubbleResponseQuestionnaire[];
   };
   teacher: {
