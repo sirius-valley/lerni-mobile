@@ -42,7 +42,7 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
       dispatch(setFreeTextQuestionId({ id: block.id }));
     }
   }, [block.type]);
-  console.log(JSON.stringify(block, null, 3));
+
   // We could add a useCallback to memorize this function. In the future, we can add this change and check that everything is working as expected
   const BubbleToRender = () => {
     switch (block.type) {
@@ -58,7 +58,11 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
       case 'image':
         return (
           <>
-            <ImageBubble key={'bubble-inner-' + block.id} url={block.value} user={user} />
+            <ImageBubble
+              key={'bubble-inner-' + block.id}
+              url={block.value || block.content}
+              user={user}
+            />
             {isLastBubbleSide && (
               <Avatar css={{ marginBottom: 16, marginTop: 8 }} uri={profProgram} />
             )}
@@ -67,7 +71,7 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
       case 'carousel':
         return (
           <Carousel
-            items={block.items}
+            items={block.options}
             onPress={handleCarousel}
             onSelect={(id) => handleSelectCarousel(id)}
             sealed={block.sealed || !(last === block.id)}

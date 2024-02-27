@@ -38,13 +38,13 @@ const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps)
       <StyledCarouselContainer
         horizontal
         contentContainerStyle={{
-          paddingHorizontal: 4,
+          paddingHorizontal: 12,
           gap: 24,
           alignItems: 'flex-end',
         }}
         showsHorizontalScrollIndicator={false}
       >
-        {items.map((item, index) => (
+        {items?.map((item, index) => (
           <Item
             key={index}
             image={item.image}

@@ -52,7 +52,7 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
     answer({
       pillId: pillDetails!.pill.id,
       questionId: blockDetails.id,
-      answer: blockDetails.items.reduce((acc: string[], item: any) => {
+      answer: blockDetails.options.reduce((acc: string[], item: any) => {
         if (item.selected) {
           return [...acc, item.id];
         } else {
