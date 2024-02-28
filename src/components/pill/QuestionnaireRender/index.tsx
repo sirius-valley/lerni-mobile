@@ -60,7 +60,7 @@ const QuestionnaireRender = ({ blockId, nextBlockId }: QuestionnaireRenderProps)
             options={block.options}
             onPress={() => handleSealedMultipleAnswer(block.id)}
             correctAnswers={block.correctAnswer}
-            points={block.points ?? 0}
+            points={block.pointsAwarded ?? 0}
             onChange={handleMultipleAnswer}
             sealed={!(last === block.id)}
           />
