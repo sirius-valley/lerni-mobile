@@ -187,7 +187,7 @@ const Page = () => {
                         ))}
                   </StyledRow>
                 </StyledColumn>
-              ) : (
+              ) : !programs.programsInProgress.length ? (
                 <StyledColumn css={{ gap: 8 }}>
                   <StyledRow
                     css={{
@@ -207,7 +207,7 @@ const Page = () => {
                     </StyledText>
                   </StyledBox>
                 </StyledColumn>
-              )}
+              ) : null}
 
               {programs?.programsCompleted.length && programs.programsCompleted.length ? (
                 <StyledColumn css={{ gap: 8 }}>
