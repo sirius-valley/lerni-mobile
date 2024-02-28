@@ -11,6 +11,7 @@ export const programApi = api.injectEndpoints({
       }),
     }),
     homePrograms: builder.query<ProgramsData, void>({
+      providesTags: ['Home'],
       query: () => ({
         url: 'api/program/home',
         method: 'GET',

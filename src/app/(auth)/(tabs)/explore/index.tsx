@@ -9,33 +9,18 @@ import SearchIcon from '../../../../../assets/icons/SearchIcon';
 import ProgramCard from '../../../../components/program/ProgramCard';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
-import SkeletonHome from '../../../../components/home/HomeSkeleton';
+import SkeletonHome from '../../../../components/explore/HomeSkeleton';
 import { useMeQuery } from '../../../../redux/service/student.service';
-import { Dimensions, Pressable } from 'react-native';
-import ErrorDisplay from '../../../../components/common/ErrorDisplay';
+import { Pressable } from 'react-native';
 import { useHomeProgramsQuery } from '../../../../redux/service/program.service';
 import { ProgramsData } from '../../../../redux/service/types/program.response';
+import ExploreRow from '../../../../components/explore/ExploreRow';
+import { useLSelector } from '../../../../redux/hooks';
 
 const Page = () => {
   const router = useRouter();
   const theme = useTheme();
   const { data, isLoading: meLoading } = useMeQuery();
-
-  const handleGoToProgram = (id: string) =>
-    router.push({
-      pathname: '(tabs)/explore/programDetail',
-      params: {
-        id,
-      },
-    });
-
-  const handleGoToPillDetail = (id: string) =>
-    router.push({
-      pathname: '(tabs)/explore/pillDetail',
-      params: {
-        id,
-      },
-    });
 
   const handleGoToSearchScreen = () =>
     router.push({
@@ -45,7 +30,7 @@ const Page = () => {
   const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
 
   const {
-    data: programs,
+    data: homePrograms,
     isLoading,
     isError,
   } = useHomeProgramsQuery() as {
@@ -53,6 +38,10 @@ const Page = () => {
     isLoading: boolean;
     isError: boolean;
   };
+
+  const { programsCompleted, programsInProgress, programsNotStarted } = useLSelector(
+    (state) => state.program,
+  );
 
   if (isLoading) {
     return <SkeletonHome />;
@@ -83,9 +72,7 @@ const Page = () => {
               </StyledBox>
             </Pressable>
           </StyledRow>
-          {isLoading ? (
-            <SkeletonHome />
-          ) : !data?.hasCompletedIntroduction ? (
+          {!data?.hasCompletedIntroduction ? (
             <ProgramCard
               id={'introduction'}
               title={'Introducción a la plataforma'}
@@ -93,167 +80,37 @@ const Page = () => {
               status={'not_started'}
               onPress={handleGoToIntroductionPill}
             />
-          ) : !programs.programsCompleted.length &&
-            !programs.programsInProgress.length &&
-            !programs.programsNotStarted.length ? (
-            <StyledColumn
-              css={{
-                justifyContent: 'center',
-                height: Dimensions.get('window').height - 250,
-              }}
-            >
-              <ErrorDisplay type="no-introduction" />
-            </StyledColumn>
-          ) : (
-            <StyledColumn css={{ gap: 24 }}>
-              {programs.programsInProgress && programs.programsInProgress.length ? (
-                <StyledColumn css={{ gap: 8 }}>
-                  <StyledRow
-                    css={{
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <StyledText variant="h3" css={{ color: theme.gray100 }}>
-                      {'En curso'}
-                    </StyledText>
-                    {programs.programsInProgress.length > 3 && (
-                      <Pressable onPress={() => alert('Ver más ')}>
-                        <StyledText
-                          css={{
-                            color: theme.gray300,
-                            textDecorationLine: 'underline',
-                          }}
-                        >
-                          {'Ver más'}
-                        </StyledText>
-                      </Pressable>
-                    )}
-                  </StyledRow>
-                  <StyledRow css={{ gap: 8, justifyContent: 'space-between' }}>
-                    {data?.hasCompletedIntroduction &&
-                      programs?.programsInProgress
-                        .slice(0, 3)
-                        .map(({ id, name, icon, progress }) => (
-                          <ProgramCard
-                            key={id}
-                            onPress={() => handleGoToProgram(id)}
-                            id={id}
-                            title={name}
-                            imgUrl={icon}
-                            status={'in_progress'}
-                            progress={progress}
-                          />
-                        ))}
-                  </StyledRow>
-                </StyledColumn>
-              ) : null}
+          ) : null}
+          <StyledColumn css={{ gap: 24 }}>
+            {data?.hasCompletedIntroduction && programsInProgress.length ? (
+              <ExploreRow
+                programs={programsInProgress}
+                hasIntroduction={data?.hasCompletedIntroduction ?? false}
+                title={'En curso'}
+                status={'in_progress'}
+              />
+            ) : null}
 
-              {programs?.programsNotStarted.length && programs.programsNotStarted.length ? (
-                <StyledColumn css={{ gap: 8 }}>
-                  <StyledRow
-                    css={{
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <StyledText variant="h3" css={{ color: theme.gray100 }}>
-                      {'Por empezar'}
-                    </StyledText>
-                    {programs.programsNotStarted.length > 3 && (
-                      <Pressable onPress={() => alert('Ver más ')}>
-                        <StyledText
-                          css={{
-                            color: theme.gray300,
-                            textDecorationLine: 'underline',
-                          }}
-                        >
-                          {'Ver más'}
-                        </StyledText>
-                      </Pressable>
-                    )}
-                  </StyledRow>
-                  <StyledRow css={{ gap: 8, justifyContent: 'space-between' }}>
-                    {data?.hasCompletedIntroduction &&
-                      programs?.programsNotStarted
-                        .slice(0, 3)
-                        .map(({ id, name, icon }) => (
-                          <ProgramCard
-                            key={id}
-                            onPress={() => handleGoToProgram(id)}
-                            id={id}
-                            title={name}
-                            imgUrl={icon}
-                            status={'not_started'}
-                          />
-                        ))}
-                  </StyledRow>
-                </StyledColumn>
-              ) : !programs.programsInProgress.length ? (
-                <StyledColumn css={{ gap: 8 }}>
-                  <StyledRow
-                    css={{
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <StyledText variant="h3" css={{ color: theme.gray100 }}>
-                      {'Por empezar'}
-                    </StyledText>
-                  </StyledRow>
-                  <StyledBox
-                    css={{ padding: '32px 0px', justifyContent: 'center', alignItems: 'center' }}
-                  >
-                    <StyledText variant="body2" color="primary200">
-                      {'Aún no tienes programas asignados'}
-                    </StyledText>
-                  </StyledBox>
-                </StyledColumn>
-              ) : null}
+            {programsNotStarted ||
+            (programsCompleted && !programsInProgress) ||
+            (!programsCompleted && programsInProgress) ? (
+              <ExploreRow
+                programs={programsNotStarted}
+                title={'Por empezar'}
+                status={'not_started'}
+                hasIntroduction={data?.hasCompletedIntroduction ?? false}
+              />
+            ) : null}
 
-              {programs?.programsCompleted.length && programs.programsCompleted.length ? (
-                <StyledColumn css={{ gap: 8 }}>
-                  <StyledRow
-                    css={{
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <StyledText variant="h3" css={{ color: theme.gray100 }}>
-                      {'Finalizados'}
-                    </StyledText>
-                    {programs.programsCompleted.length > 3 && (
-                      <Pressable onPress={() => alert('Ver más ')}>
-                        <StyledText
-                          css={{
-                            color: theme.gray300,
-                            textDecorationLine: 'underline',
-                          }}
-                        >
-                          {'Ver más'}
-                        </StyledText>
-                      </Pressable>
-                    )}
-                  </StyledRow>
-                  <StyledRow css={{ gap: 8, justifyContent: 'space-between' }}>
-                    {data?.hasCompletedIntroduction &&
-                      programs?.programsCompleted
-                        .slice(0, 3)
-                        .map(({ id, name, icon }) => (
-                          <ProgramCard
-                            key={id}
-                            onPress={() => handleGoToProgram(id)}
-                            id={id}
-                            title={name}
-                            imgUrl={icon}
-                            status={'completed'}
-                          />
-                        ))}
-                  </StyledRow>
-                </StyledColumn>
-              ) : null}
-            </StyledColumn>
-          )}
+            {data?.hasCompletedIntroduction && programsCompleted.length ? (
+              <ExploreRow
+                programs={programsCompleted}
+                status={'completed'}
+                hasIntroduction={data?.hasCompletedIntroduction ?? false}
+                title={'Finalizados'}
+              />
+            ) : null}
+          </StyledColumn>
         </StyledColumn>
       </ScrollView>
     </StyledBox>
