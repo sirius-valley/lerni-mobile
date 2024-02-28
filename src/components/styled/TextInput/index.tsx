@@ -19,7 +19,6 @@ export interface TextInputProps extends ComponentProps<typeof TextInputNative> {
   multiline?: boolean;
   scrollEnabled?: boolean;
   maxLength?: number;
-  onFocus?: () => void;
 }
 
 export const TextInput = forwardRef<any, TextInputProps>(
@@ -38,7 +37,6 @@ export const TextInput = forwardRef<any, TextInputProps>(
       multiline = false,
       scrollEnabled = true,
       maxLength,
-      onFocus,
     }: TextInputProps,
     ref: any,
   ) => {
@@ -61,7 +59,6 @@ export const TextInput = forwardRef<any, TextInputProps>(
         scrollEnabled={scrollEnabled}
         maxLength={maxLength}
         ref={ref}
-        onFocus={onFocus}
       />
     );
   },
