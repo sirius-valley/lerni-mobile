@@ -3,6 +3,7 @@ export type BubbleResponse = {
   type: 'text' | 'single-choice' | 'multiple-choice' | 'carousel' | 'free-text';
   content?: string;
   options?: string[];
+  optionDescriptions?: string[];
   imgOptions?: ImagesOptions[];
   correctAnswer?: string[];
   points?: number;

@@ -46,7 +46,7 @@ export interface CarouselBlockType extends CommonBlockType {
   type: 'carousel';
   sealed: boolean;
   multiple: boolean;
-  items: {
+  options: {
     id: string;
     description: string;
     image: string;
@@ -163,14 +163,14 @@ export const pillSlice = createSlice({
         sealed: true,
       };
     },
-    setSelectCarousel: (state, payload) => {
-      const { id, value } = payload.payload;
+    setSelectCarousel: (state, action) => {
+      const { id, value } = action.payload;
       const block: CarouselBlockType = state.mapBlocks[id] as CarouselBlockType;
 
       if (block.type === 'carousel' && !block.sealed) {
         state.mapBlocks[id] = {
           ...block,
-          items: block.items.map((item) => {
+          options: block.options.map((item) => {
             if (item.id === value) {
               return {
                 ...item,
@@ -189,7 +189,7 @@ export const pillSlice = createSlice({
 
       state.mapBlocks[id] = {
         ...block,
-        items: block.items.map((item) => {
+        options: block.options.map((item) => {
           if (item.selected === undefined) {
             return {
               ...item,
@@ -217,6 +217,14 @@ export const pillSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addMatcher(pillsApi.endpoints.pillById.matchFulfilled, (state, action) => {
+        state.mapBlocks = action.payload.pill.bubbles.reduce((acc: any, block) => {
+          state.blocksIds = [...state.blocksIds, block.id];
+          return transformResponseBlock(acc, block);
+        }, {});
+        state.last = action.payload.pill.bubbles[action.payload.pill.bubbles.length - 1].id;
+        state.pill = action.payload;
+      })
       .addMatcher(pillsApi.endpoints.getIntroductionPill.matchFulfilled, (state, action) => {
         state.mapBlocks = action.payload.pill.bubbles.reduce((acc: any, block) => {
           state.blocksIds = [...state.blocksIds, block.id];

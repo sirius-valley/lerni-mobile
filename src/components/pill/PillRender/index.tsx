@@ -58,7 +58,11 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
       case 'image':
         return (
           <>
-            <ImageBubble key={'bubble-inner-' + block.id} url={block.value} user={user} />
+            <ImageBubble
+              key={'bubble-inner-' + block.id}
+              url={block.value || block.content}
+              user={user}
+            />
             {isLastBubbleSide && (
               <Avatar css={{ marginBottom: 16, marginTop: 8 }} uri={profProgram} />
             )}
@@ -67,10 +71,10 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
       case 'carousel':
         return (
           <Carousel
-            items={block.items}
+            items={block.options}
             onPress={handleCarousel}
             onSelect={(id) => handleSelectCarousel(id)}
-            sealed={block.sealed}
+            sealed={block.sealed || !(last === block.id)}
           />
         );
       case 'multiple-choice':
@@ -80,7 +84,7 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
             options={block.options}
             onPress={handleMultipleAnswer}
             onChange={(id) => handleSelectMultipleAnswer(id)}
-            sealed={block.sealed}
+            sealed={block.sealed || !(last === block.id)}
           />
         );
       case 'single-choice':
@@ -89,7 +93,7 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
             key={'bubble-inner-' + block.id}
             options={block.options}
             onPress={(id) => handleSingleAnswer(id)}
-            sealed={!(last === block.id)}
+            sealed={block.sealed || !(last === block.id)}
           />
         );
       case 'free-text':

@@ -1,5 +1,5 @@
-import React from 'react';
-import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import React, { useRef } from 'react';
+import { KeyboardAvoidingView, ScrollView, Platform, Dimensions } from 'react-native';
 import { StyledBox } from '../../styled/styles';
 import { useTheme } from 'styled-components/native';
 import { ThemeColors } from '../../../utils/theme';
@@ -11,6 +11,7 @@ interface MainContainerInterface {
 
 const MainContainer = ({ children, backgroundColor }: MainContainerInterface) => {
   const theme = useTheme();
+  const virtualRef = useRef<ScrollView | null>(null);
   return (
     <StyledBox
       css={{
@@ -23,8 +24,20 @@ const MainContainer = ({ children, backgroundColor }: MainContainerInterface) =>
         enabled
         style={{ height: '100%' }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={10}
+        onTouchEnd={() => {
+          setTimeout(() => {
+            virtualRef?.current?.scrollToEnd();
+          }, 100);
+        }}
       >
-        <ScrollView>{children}</ScrollView>
+        <ScrollView
+          ref={(ref) => {
+            virtualRef.current = ref;
+          }}
+        >
+          {children}
+        </ScrollView>
       </KeyboardAvoidingView>
     </StyledBox>
   );
