@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useGetIntroductionPillQuery } from '../../../../redux/service/pills.service';
+import { usePillByIdQuery } from '../../../../redux/service/pills.service';
 import { useLDispatch, useLSelector } from '../../../../redux/hooks';
 import {
   Animated,
@@ -19,15 +19,17 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import usePrevious from '../../../../hooks/usePrevious';
 import { api } from '../../../../redux/service/api';
 import SkeletonPill from '../../../../components/pill/SkeletonPill';
+import { useLocalSearchParams } from 'expo-router';
 
-const Pill = () => {
-  const { data, isLoading: isLoadingPill, refetch } = useGetIntroductionPillQuery();
+const MainPill = () => {
+  const { id } = useLocalSearchParams();
+  const { isLoading: isLoadingPill } = usePillByIdQuery({ id: typeof id === 'string' ? id : '' });
   const blocksIds = useLSelector((state) => state.pill.blocksIds);
   const pillTitle = useLSelector((state) => state.pill.pill?.pill?.name);
   const pillProgress = useLSelector((state) => state.pill.pill?.pill?.progress);
-
   const pillCompleted = useLSelector((state) => state.pill.pill?.pill?.completed);
   const dispatch = useLDispatch();
+
   const virtualRef = useRef<VirtualizedList<unknown> | null>();
   const prevData = usePrevious<boolean>(pillCompleted);
 
@@ -57,13 +59,12 @@ const Pill = () => {
   useEffect(() => {
     if (prevData !== undefined && pillCompleted !== prevData) {
       dispatch(api.util?.invalidateTags(['ME']));
-      setTimeout(() => animateBoxes(), 1250);
+      setTimeout(() => animateBoxes(), 1000);
     }
   }, [pillCompleted, prevData]);
 
   useEffect(() => {
-    if (!isLoadingPill && blocksIds.length === 0)
-      dispatch(api.util?.invalidateTags(['Introduction']));
+    if (!isLoadingPill && blocksIds.length === 0) dispatch(api.util?.invalidateTags(['MainPill']));
   }, [blocksIds]);
 
   if (isLoadingPill) return <SkeletonPill />;
@@ -109,9 +110,7 @@ const Pill = () => {
               getItem={(data, index) => data[index]}
               keyExtractor={(item, index) => index.toString()}
             />
-            <FreeTextAnswer
-              scrollToEnd={() => setTimeout(() => virtualRef?.current?.scrollToEnd(), 250)}
-            />
+            <FreeTextAnswer />
           </KeyboardAvoidingView>
         </Animated.View>
         <Animated.View
@@ -128,10 +127,8 @@ const Pill = () => {
           >
             <SuccessPill
               show={show}
-              programName={'la introducción'}
-              actionButtonLabel={'Ir al inicio'}
-              hasConfeti
-              winsPoints
+              programName={`terminaste la pildora ${pillTitle}`}
+              iconType="handsup"
             />
           </StyledBox>
         </Animated.View>
@@ -140,4 +137,4 @@ const Pill = () => {
   );
 };
 
-export default Pill;
+export default MainPill;

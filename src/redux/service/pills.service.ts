@@ -1,12 +1,16 @@
 import { api } from './api';
 import { PillAnswerBody, PillResponse } from './types/pill.response';
 
+interface PillByIdParams {
+  id: string;
+}
+
 export const pillsApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    pillById: builder.query<any, any>({
-      query: (id) => ({
-        // MOCKED
-        url: `pill/${id}`,
+    pillById: builder.query<PillResponse, PillByIdParams>({
+      providesTags: ['MainPill'],
+      query: ({ id }) => ({
+        url: `api/pill/${id}`,
         method: 'GET',
       }),
     }),

@@ -96,7 +96,7 @@ const index = () => {
               height: screenHeight,
             }}
           >
-            <SuccessPill show={show} programName={'la introducción'} />
+            <SuccessPill show={show} programName={'el cuestionario'} hasConfeti winsPoints />
           </StyledBox>
         </Animated.View>
       </StyledColumn>
