@@ -187,7 +187,23 @@ const Page = () => {
                         ))}
                   </StyledRow>
                 </StyledColumn>
-              ) : null}
+              ) : (
+                <StyledColumn css={{ gap: 8 }}>
+                <StyledRow
+                 css={{
+                   justifyContent: 'space-between',
+                   alignItems: 'center',
+                 }}
+               >
+                 <StyledText variant="h3" css={{ color: theme.gray100 }}>
+                   {'Por empezar'}
+                 </StyledText>
+                 </StyledRow>
+                 <StyledBox css={{padding: '32px 0px', justifyContent: 'center', alignItems: 'center' }}>
+                   <StyledText variant='body2' color='primary200'>{'Aún no tienes programas asignados'}</StyledText>
+                 </StyledBox>
+             </StyledColumn>
+              )}
 
               {programs?.programsCompleted.length && programs.programsCompleted.length ? (
                 <StyledColumn css={{ gap: 8 }}>
