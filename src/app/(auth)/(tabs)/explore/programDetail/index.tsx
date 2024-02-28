@@ -1,8 +1,9 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   StyledBox,
   StyledColumn,
+  StyledLine,
   StyledRow,
   StyledText,
 } from '../../../../../components/styled/styles';
@@ -18,51 +19,45 @@ import PillRow from '../../../../../components/program/PillRow';
 import { mockedLeaderboardRows, mockedPills, Status } from '../utils';
 import LeaderboardRow from '../../../../../components/program/LeaderboardRow';
 import MessageIcon from '../../../../../../assets/icons/MessageIcon';
-import { inProgressMockedData, MockedDataItem } from '..';
+import { useProgramByIdQuery } from '../../../../../redux/service/program.service';
+import ProgramSkeleton from './ProgramSkeleton';
 import { ThreeDots } from '../../../../../components/program/LeaderboardRow/ThreeDots';
+import ErrorDisplay from '../../../../../components/common/ErrorDisplay';
+import { ProgramResponseType } from '../../../../../redux/service/types/program.response';
 
 const ProgramDetail = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
-  const programs = inProgressMockedData;
-  const [program, setProgram] = useState<MockedDataItem | undefined>(undefined);
   const theme = useTheme();
 
-  useEffect(() => {
-    setProgram(programs.find((mappedProgram) => mappedProgram.id === id));
-  }, [id]);
-
-  const mockedProgram = {
-    id: program?.id,
-    title: program?.title,
-    imgUrl: program?.imgUrl ? program?.imgUrl : 'https://reactnative.dev/img/logo-og.png',
-    status: 'in_progress' as Status,
-    progress: program?.progress,
-    pillData: {
-      pillProgress: program?.progress,
-      pillAmount: 5,
-      pillDuration: 1,
-      pillPoints: 24,
-    },
+  const {
+    data: program,
+    isLoading,
+    isError,
+  } = useProgramByIdQuery(id) as {
+    data: ProgramResponseType;
+    isLoading: boolean;
+    isError: boolean;
   };
 
-  const mockedSubTitle = [
-    {
-      icon: <BulletListIcon />,
-      label: `${mockedProgram.pillData.pillAmount} pildoras`,
-    },
-    {
-      icon: <ClockIcon />,
-      label: `${mockedProgram.pillData.pillDuration} hora`,
-    },
-    {
-      icon: <RhombusIcon />,
-      label: `${mockedProgram.pillData.pillDuration} puntos`,
-    },
-  ];
+  const handleGoToPillDetail = (id: string) =>
+    router.push({
+      pathname: '(tabs)/explore/pillDetail',
+      params: {
+        id,
+      },
+    });
+
+  if (isLoading) {
+    return <ProgramSkeleton />;
+  }
+
+  if (isError) {
+    return <ErrorDisplay type="404" />;
+  }
 
   return (
-    <ScrollView style={{ width: '100%' }} scrollIndicatorInsets={{ right: -30 }}>
+    <ScrollView style={{ width: '100%' }} showsVerticalScrollIndicator={false}>
       <StyledColumn
         css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '12px' }}
       >
@@ -72,44 +67,58 @@ const ProgramDetail = () => {
           </Pressable>
         </StyledRow>
         <StyledColumn css={{ width: '100%', alignItems: 'center', gap: '8px' }}>
-          <ProgramImage status={mockedProgram.status} imgUrl={mockedProgram.imgUrl} size={150} />
+          <ProgramImage
+            status={program.progress > 0 ? 'in_progress' : 'not_started'}
+            imgUrl={program.icon}
+            size={150}
+          />
           <StyledText variant="h2" color="gray100">
-            {mockedProgram.title}
+            {program.programName}
           </StyledText>
           <StyledText variant="body1" color="gray400">
-            Profesor/Autor
+            {program.teacher.lastname}, {program.teacher.name}
           </StyledText>
           <StyledBox css={{ width: '90%' }}>
             <Progress.Bar
               unfilledColor={theme.gray600}
               color={theme.primary400}
               height={8}
-              progress={mockedProgram.pillData.pillProgress}
+              progress={program.progress / 100}
               borderWidth={0}
               width={null}
               borderRadius={20}
             />
           </StyledBox>
 
-          <StyledRow css={{ justifyContent: 'space-evenly', width: '90%' }}>
-            {mockedSubTitle.map((subTitle, idx) => (
-              <StyledRow key={idx} css={{ gap: '4px', alignItems: 'center' }}>
-                {subTitle.icon}
-                <StyledText variant="body3" color="gray400">
-                  {subTitle.label}
-                </StyledText>
-              </StyledRow>
-            ))}
+          <StyledRow css={{ justifyContent: 'space-evenly', width: '90%', gap: 32 }}>
+            <StyledRow css={{ gap: '4px', alignItems: 'center' }}>
+              <BulletListIcon size={14} color={theme.primary500} />
+              <StyledText variant="body3" color="gray400">
+                {program.pillCount} {program.pillCount > 1 ? 'píldoras' : 'píldora'}
+              </StyledText>
+            </StyledRow>
+            <StyledRow css={{ gap: '4px', alignItems: 'center' }}>
+              <ClockIcon size={14} color={theme.primary500} />
+              <StyledText variant="body3" color="gray400">
+                {program.estimatedHours} {program.estimatedHours > 1 ? 'horas' : 'hora'}
+              </StyledText>
+            </StyledRow>
+            <StyledRow css={{ gap: '4px', alignItems: 'center' }}>
+              <RhombusIcon size={14} color={theme.primary500} />
+              <StyledText variant="body3" color="gray400">
+                {program.points} puntos
+              </StyledText>
+            </StyledRow>
           </StyledRow>
 
-          <StyledColumn css={{ gap: '8px', marginTop: '16px' }}>
+          <StyledColumn
+            css={{ gap: '8px', marginTop: '16px', justifyContent: 'flex-start', width: '100%' }}
+          >
             <StyledText variant="h3" color="gray100">
               Descripcion del programa
             </StyledText>
             <StyledText variant="body1" color="gray100">
-              Descripción lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis
-              ullamcorper mauris, vitae commodo dui efficitur non. Fusce efficitur pulvinar diam vel
-              dictum.
+              {program.programDescription}
             </StyledText>
           </StyledColumn>
 
@@ -117,10 +126,28 @@ const ProgramDetail = () => {
             <StyledText color="gray100" variant="h3">
               Pildoras
             </StyledText>
-
-            {mockedPills.map((pill, idx) => (
-              <PillRow {...pill} key={idx} />
+            {program.pills?.map((pill, idx) => (
+              <Pressable key={idx} onPress={() => handleGoToPillDetail(pill.id)}>
+                <StyledBox>
+                  <PillRow
+                    pillName={pill.pillName}
+                    pillProgress={pill.pillProgress}
+                    pillNumber={idx + 1}
+                    duration={pill.completionTimeMinutes}
+                    isLocked={pill.isLocked}
+                    id={pill.id}
+                  />
+                </StyledBox>
+              </Pressable>
             ))}
+            <PillRow
+              pillName={program.questionnaire.questionnaireName}
+              pillProgress={program.questionnaire.questionnaireProgress}
+              pillNumber={program.pills.length + 1}
+              duration={program.questionnaire.completionTimeMinutes}
+              isLocked={program.questionnaire.isLocked}
+              id={program.questionnaire.id}
+            />
           </StyledColumn>
 
           <StyledColumn css={{ width: '100%', marginVertical: '16px' }}>
@@ -140,14 +167,14 @@ const ProgramDetail = () => {
                 Ver todo
               </StyledText>
             </StyledRow>
-            <LeaderboardRow {...mockedLeaderboardRows[0]} />
-            <ThreeDots />
-            <LeaderboardRow {...mockedLeaderboardRows[1]} />
-            <LeaderboardRow {...mockedLeaderboardRows[2]} />
-            <LeaderboardRow {...mockedLeaderboardRows[3]} />
-            {/* {mockedLeaderboardRows.map((row, idx) => (
-              <LeaderboardRow {...row} key={idx} />
-            ))} */}
+            {mockedLeaderboardRows.map((row, idx) => (
+              <React.Fragment key={idx}>
+                <LeaderboardRow {...row} />
+                {idx === 0 && mockedLeaderboardRows[idx + 1].position > row.position + 1 && (
+                  <ThreeDots />
+                )}
+              </React.Fragment>
+            ))}
           </StyledColumn>
 
           <StyledColumn
