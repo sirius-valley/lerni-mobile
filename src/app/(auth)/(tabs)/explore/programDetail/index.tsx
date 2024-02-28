@@ -23,41 +23,7 @@ import { useProgramByIdQuery } from '../../../../../redux/service/program.servic
 import ProgramSkeleton from './ProgramSkeleton';
 import { ThreeDots } from '../../../../../components/program/LeaderboardRow/ThreeDots';
 import ErrorDisplay from '../../../../../components/common/ErrorDisplay';
-
-interface ProgramDetailType {
-  id: string;
-  programName: string;
-  teacher: {
-    id: string;
-    name: string;
-    lastname: string;
-    profession: string;
-    image: string;
-  };
-  progress: number;
-  pillCount: number;
-  icon: string;
-  estimatedHours: number;
-  points: number;
-  programDescription: string;
-  programObjectives: string[];
-  pills: [
-    {
-      id: string;
-      pillName: string;
-      pillProgress: number;
-      completionTimeMinutes: number;
-      isLocked: boolean;
-    },
-  ];
-  questionnaire: {
-    id: string;
-    questionnaireName: string;
-    completionTimeMinutes: number;
-    questionnaireProgress: number;
-    isLocked: boolean;
-  };
-}
+import { ProgramResponseType } from '../../../../../redux/service/types/program.response';
 
 const ProgramDetail = () => {
   const router = useRouter();
@@ -69,10 +35,18 @@ const ProgramDetail = () => {
     isLoading,
     isError,
   } = useProgramByIdQuery(id) as {
-    data: ProgramDetailType;
+    data: ProgramResponseType;
     isLoading: boolean;
     isError: boolean;
   };
+
+  const handleGoToPillDetail = (id: string) =>
+    router.push({
+      pathname: '(tabs)/explore/pillDetail',
+      params: {
+        id,
+      },
+    });
 
   if (isLoading) {
     return <ProgramSkeleton />;
@@ -109,7 +83,7 @@ const ProgramDetail = () => {
               unfilledColor={theme.gray600}
               color={theme.primary400}
               height={8}
-              progress={program.progress}
+              progress={program.progress / 100}
               borderWidth={0}
               width={null}
               borderRadius={20}
@@ -153,16 +127,18 @@ const ProgramDetail = () => {
               Pildoras
             </StyledText>
             {program.pills?.map((pill, idx) => (
-              <StyledBox key={idx}>
-                <PillRow
-                  pillName={pill.pillName}
-                  pillProgress={pill.pillProgress}
-                  pillNumber={idx + 1}
-                  duration={pill.completionTimeMinutes}
-                  isLocked={pill.isLocked}
-                  id={pill.id}
-                />
-              </StyledBox>
+              <Pressable key={idx} onPress={() => handleGoToPillDetail(pill.id)}>
+                <StyledBox>
+                  <PillRow
+                    pillName={pill.pillName}
+                    pillProgress={pill.pillProgress}
+                    pillNumber={idx + 1}
+                    duration={pill.completionTimeMinutes}
+                    isLocked={pill.isLocked}
+                    id={pill.id}
+                  />
+                </StyledBox>
+              </Pressable>
             ))}
             <PillRow
               pillName={program.questionnaire.questionnaireName}
