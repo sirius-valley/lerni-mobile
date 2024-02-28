@@ -5,11 +5,17 @@ export const homeApi = api.injectEndpoints({
     programEnrolled: builder.query({
       query: () => ({ url: '/home', method: 'GET' }),
     }),
+    search: builder.query({
+      query: ({ page, filter, search }) => ({
+        url: `/search?page=${page}&filter=${filter}&search=${search}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useProgramEnrolledQuery } = homeApi;
+export const { useProgramEnrolledQuery, useSearchQuery } = homeApi;
 
 export const {
-  endpoints: { programEnrolled },
+  endpoints: { programEnrolled, search },
 } = homeApi;

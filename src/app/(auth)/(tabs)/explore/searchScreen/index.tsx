@@ -1,21 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { StyledColumn, StyledRow, StyledText } from '../../../../../components/styled/styles';
+import {
+  StyledBox,
+  StyledColumn,
+  StyledRow,
+  StyledText,
+} from '../../../../../components/styled/styles';
 import SearchBar from '../../../../../components/common/SearchBar';
-import { Pressable, ScrollView } from 'react-native';
+import { FlatList, Pressable, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import QuickFilter from '../../../../../components/search/QuickFilter';
-import { mockedSearchResults, quickFilters } from '../utils';
-import SearchItem from '../../../../../components/search/SearchItem';
+import { mockedSearchResultsWithPagination, quickFilters } from '../utils';
+import SearchItem, {
+  SearchResultStatus,
+  SearchResultType,
+} from '../../../../../components/search/SearchItem';
 import SearchScreenSkeleton from '../../../../../components/search/SearchScreenSkeleton';
+import { useSearchQuery } from '../../../../../redux/service/home.service';
 import ErrorDisplay from '../../../../../components/common/ErrorDisplay';
+
+interface SearchResult {
+  id: string;
+  type: SearchResultType;
+  title: string;
+  description: string;
+  imgUrl: string;
+  status: SearchResultStatus;
+  progress?: number;
+}
 
 const SearchScreen = () => {
   const [searchValue, setSearchValue] = useState('');
   const [filterValue, setFilterValue] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchedValues, setSearchedValues] = useState<SearchResult[]>([]);
   const [quickFilterSelected, setQuickFilterSelected] = useState(quickFilters[0]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
+
+  // const { data, refetch, error, isLoading } = useSearchQuery({
+  //   page: currentPage,
+  //   filter: filterValue,
+  //   search: searchValue,
+  // });
 
   // DEBOUNCE
   // For now, it filters by title.
@@ -34,12 +62,27 @@ const SearchScreen = () => {
 
   const handleCancelButton = () => router.back();
 
-  const filteredValues = mockedSearchResults
-    .filter((result) => result.title.toLowerCase().includes(filterValue))
-    .filter((result) => {
-      if (!quickFilterSelected.type) return true;
-      return result.type === quickFilterSelected.type;
+  const filteredValues = mockedSearchResultsWithPagination[currentPage]
+    ? mockedSearchResultsWithPagination[currentPage]?.data
+        .filter((result) => result.title.toLowerCase().includes(filterValue))
+        .filter((result) => {
+          if (!quickFilterSelected.type) return true;
+          return result.type === quickFilterSelected.type;
+        })
+    : [];
+  const handleEndReached = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  // when the endpoint is finished, change to refetch function, we'll use that and delete useEffect
+  useEffect(() => {
+    setSearchedValues((prevResult) => {
+      if (filteredValues.length === 0) {
+        return prevResult;
+      }
+      return [...prevResult, ...filteredValues] as SearchResult[];
     });
+  }, [currentPage]);
 
   return (
     <StyledColumn
@@ -101,23 +144,23 @@ const SearchScreen = () => {
         {isLoading ? (
           <SearchScreenSkeleton />
         ) : (
-          <StyledColumn
-            css={{
-              gap: '16px',
-            }}
-          >
-            {filteredValues.map((result) => (
+          <FlatList
+            contentContainerStyle={{ gap: 16 }}
+            data={searchedValues}
+            onEndReached={handleEndReached}
+            ListFooterComponent={() => <StyledBox>{loading && <SearchScreenSkeleton />}</StyledBox>}
+            renderItem={(data) => (
               <SearchItem
-                key={result.id}
-                type={result.type}
-                title={result.title}
-                description={result.description}
-                status={result?.status}
-                progress={result?.progress}
-                imgUrl={result?.imgUrl}
+                key={data.item.id}
+                type={data.item.type}
+                title={data.item.title}
+                description={data.item.description}
+                status={data?.item.status}
+                progress={data?.item.progress}
+                imgUrl={data?.item.imgUrl}
               />
-            ))}
-          </StyledColumn>
+            )}
+          />
         )}
         {filteredValues.length === 0 && (
           <StyledColumn
