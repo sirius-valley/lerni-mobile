@@ -7,18 +7,39 @@ import RhombusIcon from '../../../../../assets/icons/RhombusIcon';
 import { useTheme } from 'styled-components/native';
 import React, { useEffect, useRef } from 'react';
 import ConfettiCannon from 'react-native-confetti-cannon';
+import HandsUpIcon from '../../../../../assets/icons/HandsUpIcon';
 
 interface SuccessPillProps {
   show: boolean;
   programName: string;
+  hasConfeti?: boolean;
+  iconType?: 'confeti' | 'handsup';
+  winsPoints?: boolean;
+  actionButtonLabel?: string;
 }
 
-export const SuccessPill = ({ show, programName }: SuccessPillProps) => {
+export const SuccessPill = ({
+  show,
+  programName,
+  hasConfeti = false,
+  iconType = 'confeti',
+  winsPoints = false,
+  actionButtonLabel = 'Siguiente',
+}: SuccessPillProps) => {
   const theme = useTheme();
   const router = useRouter();
+  const shouldRenderConfeti = hasConfeti && show;
   const ref = useRef<any>();
+
   const icon = () => {
-    return <CongratulationsIcon size={150} />;
+    switch (iconType) {
+      case 'confeti':
+        return <CongratulationsIcon size={150} />;
+      case 'handsup':
+        return <HandsUpIcon size={150} />;
+      default:
+        return null;
+    }
   };
 
   const title = 'Felicidades!';
@@ -26,7 +47,7 @@ export const SuccessPill = ({ show, programName }: SuccessPillProps) => {
   const footer = () => {
     return (
       <StyledBox style={{ minWidth: '90%' }}>
-        <Button onPress={() => router.push('explore')}>Siguiente</Button>
+        <Button onPress={() => router.push('explore')}>{actionButtonLabel}</Button>
       </StyledBox>
     );
   };
@@ -37,21 +58,23 @@ export const SuccessPill = ({ show, programName }: SuccessPillProps) => {
         <StyledText variant="body2" style={{ color: theme.gray50 }}>
           Terminaste {programName}!
         </StyledText>
-        <StyledRow style={{ alignContent: 'center', justifyContent: 'center', gap: 8 }}>
-          <StyledText variant={'body3'} style={{ color: theme.gray400 }}>
-            Ganaste
-          </StyledText>
-          <RhombusIcon size={12} />
-          <StyledText variant={'body3'} style={{ color: theme.gray400 }}>
-            5 Puntos!
-          </StyledText>
-        </StyledRow>
+        {winsPoints && (
+          <StyledRow style={{ alignContent: 'center', justifyContent: 'center', gap: 8 }}>
+            <StyledText variant={'body3'} style={{ color: theme.gray400 }}>
+              Ganaste
+            </StyledText>
+            <RhombusIcon size={12} />
+            <StyledText variant={'body3'} style={{ color: theme.gray400 }}>
+              5 Puntos!
+            </StyledText>
+          </StyledRow>
+        )}
       </StyledColumn>
     );
   };
 
   useEffect(() => {
-    if (show) {
+    if (shouldRenderConfeti) {
       setTimeout(() => {
         ref.current.start();
       }, 500);
@@ -61,7 +84,7 @@ export const SuccessPill = ({ show, programName }: SuccessPillProps) => {
   return (
     <>
       <Result icon={icon} title={title} footer={footer} content={content} />
-      {show && (
+      {shouldRenderConfeti && (
         <ConfettiCannon count={150} origin={{ x: -10, y: 0 }} ref={ref} autoStart={false} fadeOut />
       )}
     </>

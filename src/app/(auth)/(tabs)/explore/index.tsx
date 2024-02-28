@@ -29,6 +29,14 @@ const Page = () => {
       },
     });
 
+  const handleGoToPillDetail = (id: string) =>
+    router.push({
+      pathname: '(tabs)/explore/pillDetail',
+      params: {
+        id,
+      },
+    });
+
   const handleGoToSearchScreen = () =>
     router.push({
       pathname: '(tabs)/explore/searchScreen',
