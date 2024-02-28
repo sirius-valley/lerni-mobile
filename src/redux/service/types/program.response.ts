@@ -34,3 +34,16 @@ export type ProgramResponseType = {
 };
 
 export type ProgramIdType = string | string[] | undefined;
+
+export interface Program {
+  id: string;
+  name: string;
+  icon: string;
+  progress: number;
+}
+
+export interface ProgramsData {
+  programsCompleted: Program[];
+  programsInProgress: Program[];
+  programsNotStarted: Program[];
+}
