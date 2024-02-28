@@ -93,7 +93,9 @@ const Page = () => {
               status={'not_started'}
               onPress={handleGoToIntroductionPill}
             />
-          ) : !programs ? (
+          ) : !programs.programsCompleted.length &&
+            !programs.programsInProgress.length &&
+            !programs.programsNotStarted.length ? (
             <StyledColumn
               css={{
                 justifyContent: 'center',
