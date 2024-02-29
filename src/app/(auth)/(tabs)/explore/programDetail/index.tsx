@@ -40,9 +40,9 @@ const ProgramDetail = () => {
     isError: boolean;
   };
 
-  const handleGoToPillDetail = (id: string) =>
+  const handleGoToPill = (id: string) =>
     router.push({
-      pathname: '(tabs)/explore/pillDetail',
+      pathname: 'pill/mainPill',
       params: {
         id,
       },
@@ -62,14 +62,16 @@ const ProgramDetail = () => {
         css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '12px' }}
       >
         <StyledRow>
-          <Pressable onPress={() => router.back()} style={{ padding: 10 }}>
+          <Pressable onPress={() => router.replace('(tabs)/explore')} style={{ padding: 10 }}>
             <BackArrow />
           </Pressable>
         </StyledRow>
         <StyledColumn css={{ width: '100%', alignItems: 'center', gap: '8px' }}>
           <ProgramImage
             status={program.progress > 0 ? 'in_progress' : 'not_started'}
-            imgUrl={program.icon}
+            imgUrl={
+              'https://img.freepik.com/vector-premium/estetoscopio-icono-moderno-fondo-verde-estilo-plano-urgencia-larga-sombra-ilustracion-vectorial_494516-895.jpg?w=2000'
+            }
             size={150}
           />
           <StyledText variant="h2" color="gray100">
@@ -127,7 +129,7 @@ const ProgramDetail = () => {
               Pildoras
             </StyledText>
             {program.pills?.map((pill, idx) => (
-              <Pressable key={idx} onPress={() => handleGoToPillDetail(pill.id)}>
+              <Pressable key={idx} onPress={() => handleGoToPill(pill.id)}>
                 <StyledBox>
                   <PillRow
                     pillName={pill.pillName}
