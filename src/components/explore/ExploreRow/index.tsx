@@ -28,6 +28,8 @@ const ExploreRow = ({ programs, status, hasIntroduction, title }: ExploreRowProp
 
   const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
 
+  console.log(hasIntroduction);
+
   return (
     <StyledColumn css={{ gap: 8 }}>
       <StyledRow
@@ -53,7 +55,7 @@ const ExploreRow = ({ programs, status, hasIntroduction, title }: ExploreRowProp
             </Pressable>
           ))}
       </StyledRow>
-      {!programs.length && status === 'not_started' ? (
+      {!programs.length && status === 'not_started' && hasIntroduction ? (
         <StyledBox css={{ padding: '32px 0px', justifyContent: 'center', alignItems: 'center' }}>
           <StyledText variant="body2" color="primary200">
             {'Aún no tienes programas asignados'}
