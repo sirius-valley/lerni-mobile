@@ -1,9 +1,12 @@
 import { StyledCarouselContainer } from './styles';
 import Item from './Item';
 import { StyledBox, StyledColumn, StyledRow } from '../../styled/styles';
-import React from 'react';
+import React, { useState } from 'react';
 import useZoomImage from '../../../hooks/useZoomImage';
 import { LabeledSend } from '../../bubbles/LabeledSend';
+import usePill from '../../../hooks/usePill';
+import { useLSelector } from '../../../redux/hooks';
+import { CarouselBlockType } from '../../../redux/slice/pill.slice';
 
 type CarouselItem = {
   id: string;
@@ -13,17 +16,52 @@ type CarouselItem = {
 };
 
 interface CarouselProps {
-  items: CarouselItem[];
-  multiple?: boolean;
-  onSelect: (id: string) => void;
-  onPress: () => void;
-  sealed: boolean;
+  blockId: string;
+  nextBlockId: string;
+  // items: CarouselItem[];
+  // multiple?: boolean;
+  // onSelect: (id: string) => void;
+  // onPress: () => void;
+  // sealed: boolean;
 }
 
-const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps) => {
+const Carousel = ({
+  blockId,
+  nextBlockId,
+  // items, multiple, onSelect, onPress, sealed
+}: CarouselProps) => {
+  const {
+    block,
+    handleCarousel,
+    // handleSelectCarousel,
+  } = usePill(blockId, { nextBlockId }) as {
+    block: CarouselBlockType;
+    handleCarousel: (values: CarouselBlockType) => void;
+    // handleSelectCarousel: (answerId: string) => void;
+  };
+  const [values, setValues] = useState(block);
+
+  const handleSelect = (answerId: string) => {
+    setValues((prev) => ({
+      ...prev,
+      options: prev.options.map((option) => {
+        if (option.id === answerId) {
+          return {
+            ...option,
+            selected: true,
+          };
+        }
+        return option;
+      }),
+    }));
+  };
+
+  const last = useLSelector((state) => state.pill.last);
+  const sealed = block.sealed || !(last === block.id);
+
   const { ZoomImageComponent, handleOpenImage } = useZoomImage({
     images:
-      items?.map((item) => ({
+      block.options?.map((item) => ({
         url: item.image,
       })) ?? [],
   });
@@ -45,14 +83,14 @@ const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps)
         }}
         showsHorizontalScrollIndicator={false}
       >
-        {items?.map((item, index) => {
+        {values.options?.map((item, index) => {
           return sealed && !item.selected ? null : (
             <Item
               key={index}
               image={item.image}
-              selected={item.selected}
+              selected={!!item.selected}
               handleOpenImage={() => handleOpenImage(index)}
-              handleSelect={() => onSelect(item.id)}
+              handleSelect={() => handleSelect(item.id)}
               description={item.description}
               id={item.id}
               disabled={sealed}
@@ -69,8 +107,10 @@ const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps)
         }}
       >
         <LabeledSend
-          onPress={onPress}
-          status={sealed ? 'sent' : items.some((item) => item.selected) ? 'selected' : 'default'}
+          onPress={() => handleCarousel(values)}
+          status={
+            sealed ? 'sent' : values.options.some((item) => item.selected) ? 'selected' : 'default'
+          }
         />
       </StyledRow>
       <ZoomImageComponent />

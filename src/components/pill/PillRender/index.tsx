@@ -25,8 +25,6 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
     handleSingleAnswer,
     handleMultipleAnswer,
     handleSelectMultipleAnswer,
-    handleCarousel,
-    handleSelectCarousel,
     handleSendAnswer,
     handleFreeTextAnswer,
   } = usePill(blockId, { nextBlockId });
@@ -71,10 +69,12 @@ const PillRender = ({ blockId, nextBlockId }: PillRenderProps) => {
       case 'carousel':
         return (
           <Carousel
-            items={block.options}
-            onPress={handleCarousel}
-            onSelect={(id) => handleSelectCarousel(id)}
-            sealed={block.sealed || !(last === block.id)}
+            blockId={blockId}
+            nextBlockId={nextBlockId ?? ''}
+            // items={block.options}
+            // onPress={handleCarousel}
+            // onSelect={(id) => handleSelectCarousel(id)}
+            // sealed={block.sealed || !(last === block.id)}
           />
         );
       case 'multiple-choice':

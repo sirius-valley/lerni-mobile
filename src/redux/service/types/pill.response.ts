@@ -34,7 +34,7 @@ export type PillResponse = {
 export type PillAnswerBody = {
   pillId: string;
   questionId: string;
-  answer: string;
+  answer: string | string[];
 };
 
 export type ImagesOptions = {

@@ -46,10 +46,10 @@ const Page = () => {
 
   const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
 
-  // useEffect(() => {
-  //   handleGoToPillDetail('pillId');
-  //   handleGoToProgram('programId');
-  // }, []);
+  useEffect(() => {
+    handleGoToPillDetail('pillId');
+    // handleGoToProgram('programId');
+  }, []);
 
   if (meLoading) {
     return <SkeletonHome />;
