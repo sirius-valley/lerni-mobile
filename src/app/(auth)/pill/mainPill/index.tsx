@@ -59,6 +59,7 @@ const MainPill = () => {
   useEffect(() => {
     if (prevData !== undefined && pillCompleted !== prevData) {
       dispatch(api.util?.invalidateTags(['ME']));
+      dispatch(api.util?.invalidateTags(['Home']));
       setTimeout(() => animateBoxes(), 1000);
     }
   }, [pillCompleted, prevData]);
@@ -110,7 +111,6 @@ const MainPill = () => {
               getItem={(data, index) => data[index]}
               keyExtractor={(item, index) => index.toString()}
             />
-            <FreeTextAnswer />
           </KeyboardAvoidingView>
         </Animated.View>
         <Animated.View

@@ -4,7 +4,7 @@ import { StyledBox, StyledColumn, StyledText } from '../../styled/styles';
 import * as Progress from 'react-native-progress';
 import { Status } from '../../../app/(auth)/(tabs)/explore/utils';
 import ProgramImage from '../ProgramImage';
-import { Pressable } from 'react-native';
+import { Dimensions, Pressable } from 'react-native';
 
 interface ProgramCardProps {
   id: string;
@@ -32,12 +32,17 @@ const ProgramCard = ({
   const theme = useTheme();
   const handleOnPress = () => onPress && onPress();
 
+  const screenWidth = Dimensions.get('screen').width;
+  const baseSize = 109;
+  const scaleFactor = screenWidth / 400;
+  const adjustedSize = baseSize * scaleFactor;
+
   return (
     <Pressable key={id} onPress={handleOnPress}>
       <StyledColumn
         css={{
-          width: imgSize,
-          minHeight: imgSize + (title ? 36 : 0),
+          width: adjustedSize,
+          minHeight: adjustedSize + (title ? 36 : 0),
           gap: title ? 6 : 3,
           alignItems: 'center',
         }}
@@ -45,7 +50,7 @@ const ProgramCard = ({
         <ProgramImage
           status={status}
           imgUrl={imgUrl}
-          size={imgSize}
+          size={adjustedSize}
           transparentOnLocked={transparentOnLocked}
           iconSize={statusIconSize}
         />

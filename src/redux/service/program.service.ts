@@ -1,3 +1,4 @@
+import { ProgramsData } from '../../redux/service/types/program.response';
 import { api } from './api';
 import { ProgramIdType, ProgramResponseType } from './types/program.response';
 
@@ -9,7 +10,14 @@ export const programApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    homePrograms: builder.query<ProgramsData, void>({
+      providesTags: ['Home'],
+      query: () => ({
+        url: 'api/program/home',
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useProgramByIdQuery } = programApi;
+export const { useProgramByIdQuery, useHomeProgramsQuery, useLazyHomeProgramsQuery } = programApi;
