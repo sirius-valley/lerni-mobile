@@ -111,7 +111,6 @@ const MainPill = () => {
               getItem={(data, index) => data[index]}
               keyExtractor={(item, index) => index.toString()}
             />
-            <FreeTextAnswer />
           </KeyboardAvoidingView>
         </Animated.View>
         <Animated.View

@@ -17,7 +17,6 @@ interface ExploreRowProps {
 const ExploreRow = ({ programs, status, hasIntroduction, title }: ExploreRowProps) => {
   const router = useRouter();
   const theme = useTheme();
-  console.log(router.canGoBack());
 
   const handleGoToProgram = (id: string) =>
     router.push({
@@ -59,7 +58,7 @@ const ExploreRow = ({ programs, status, hasIntroduction, title }: ExploreRowProp
         </StyledBox>
       ) : (
         <StyledRow css={{ gap: 8, justifyContent: 'space-between' }}>
-          {programs.slice(0, 3).map(({ id, name, icon }) => (
+          {programs.slice(0, 3).map(({ id, name, icon, progress }) => (
             <ProgramCard
               key={id}
               onPress={hasIntroduction ? () => handleGoToProgram(id) : () => null}
@@ -70,6 +69,7 @@ const ExploreRow = ({ programs, status, hasIntroduction, title }: ExploreRowProp
               }
               status={!hasIntroduction ? 'locked' : status}
               transparentOnLocked={!hasIntroduction ? true : false}
+              progress={progress}
             />
           ))}
         </StyledRow>

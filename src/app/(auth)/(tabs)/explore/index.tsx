@@ -13,14 +13,17 @@ import SkeletonHome from '../../../../components/explore/HomeSkeleton';
 import { useMeQuery } from '../../../../redux/service/student.service';
 import { Pressable } from 'react-native';
 import { useHomeProgramsQuery } from '../../../../redux/service/program.service';
-import { ProgramsData } from '../../../../redux/service/types/program.response';
 import ExploreRow from '../../../../components/explore/ExploreRow';
 import { useLSelector } from '../../../../redux/hooks';
 
 const Page = () => {
   const router = useRouter();
   const theme = useTheme();
-  const { data, isLoading: meLoading } = useMeQuery();
+  const { data } = useMeQuery();
+  const { isLoading } = useHomeProgramsQuery();
+  const { programsCompleted, programsInProgress, programsNotStarted } = useLSelector(
+    (state) => state.program,
+  );
 
   const handleGoToSearchScreen = () =>
     router.push({
@@ -28,20 +31,6 @@ const Page = () => {
     });
 
   const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
-
-  const {
-    data: homePrograms,
-    isLoading,
-    isError,
-  } = useHomeProgramsQuery() as {
-    data: ProgramsData;
-    isLoading: boolean;
-    isError: boolean;
-  };
-
-  const { programsCompleted, programsInProgress, programsNotStarted } = useLSelector(
-    (state) => state.program,
-  );
 
   if (isLoading) {
     return <SkeletonHome />;
