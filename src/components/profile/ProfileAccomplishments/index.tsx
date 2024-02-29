@@ -1,8 +1,7 @@
 import { useTheme } from 'styled-components/native';
-import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../styled/styles';
+import { StyledColumn, StyledRow, StyledText } from '../../styled/styles';
 import { ScrollView } from 'react-native';
-import { Avatar } from '../../common/Avatar';
-import { borderRadius } from 'polished';
+import Avatar from '../../common/Avatar';
 
 interface Accomplishment {
   image: string;

@@ -1,8 +1,7 @@
-import { View, Text } from 'react-native';
 import React from 'react';
 import TextBubble from '../../bubbles/TextBubble';
 import ImageBubble from '../../bubbles/ImageBubble';
-import { Avatar } from '../../common/Avatar';
+import Avatar from '../../common/Avatar';
 import { MessageContainer } from '../../bubbles/ChatBubble/styles';
 import useQuestionnaire from '../../../hooks/useQuestionnaire';
 import { useLSelector } from '../../../redux/hooks';
