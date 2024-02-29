@@ -28,8 +28,6 @@ const ExploreRow = ({ programs, status, hasIntroduction, title }: ExploreRowProp
 
   const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
 
-  console.log(hasIntroduction);
-
   return (
     <StyledColumn css={{ gap: 8 }}>
       <StyledRow
