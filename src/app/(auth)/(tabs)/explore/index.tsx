@@ -44,7 +44,7 @@ const Page = () => {
         paddingTop: 20,
       }}
     >
-      <ScrollView scrollIndicatorInsets={{ right: -30 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <StyledColumn css={{ gap: 24, flexGrow: 1 }}>
           <StyledRow
             css={{
@@ -61,15 +61,6 @@ const Page = () => {
               </StyledBox>
             </Pressable>
           </StyledRow>
-          {!data?.hasCompletedIntroduction ? (
-            <ProgramCard
-              id={'introduction'}
-              title={'Introducción a la plataforma'}
-              imgUrl={'https://lerni-images-2024.s3.amazonaws.com/introduction_image.png'}
-              status={'not_started'}
-              onPress={handleGoToIntroductionPill}
-            />
-          ) : null}
           <StyledColumn css={{ gap: 24 }}>
             {data?.hasCompletedIntroduction && programsInProgress.length ? (
               <ExploreRow

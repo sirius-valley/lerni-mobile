@@ -26,6 +26,8 @@ const ExploreRow = ({ programs, status, hasIntroduction, title }: ExploreRowProp
       },
     });
 
+  const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
+
   return (
     <StyledColumn css={{ gap: 8 }}>
       <StyledRow
@@ -37,18 +39,19 @@ const ExploreRow = ({ programs, status, hasIntroduction, title }: ExploreRowProp
         <StyledText variant="h3" css={{ color: theme.gray100 }}>
           {title}
         </StyledText>
-        {programs.length > 3 && (
-          <Pressable onPress={() => alert('Ver más ')}>
-            <StyledText
-              css={{
-                color: theme.gray300,
-                textDecorationLine: 'underline',
-              }}
-            >
-              {'Ver más'}
-            </StyledText>
-          </Pressable>
-        )}
+        {programs.length > 3 ||
+          (!hasIntroduction && programs.length > 2 && (
+            <Pressable onPress={() => alert('Ver más ')}>
+              <StyledText
+                css={{
+                  color: theme.gray300,
+                  textDecorationLine: 'underline',
+                }}
+              >
+                {'Ver más'}
+              </StyledText>
+            </Pressable>
+          ))}
       </StyledRow>
       {!programs.length && status === 'not_started' ? (
         <StyledBox css={{ padding: '32px 0px', justifyContent: 'center', alignItems: 'center' }}>
@@ -57,8 +60,23 @@ const ExploreRow = ({ programs, status, hasIntroduction, title }: ExploreRowProp
           </StyledText>
         </StyledBox>
       ) : (
-        <StyledRow css={{ gap: 8, justifyContent: 'space-between' }}>
-          {programs.slice(0, 3).map(({ id, name, icon, progress }) => (
+        <StyledRow
+          css={{
+            gap: 8,
+            width: '100%',
+            justifyContent: programs.length > 2 ? 'space-between' : 'flex-start',
+          }}
+        >
+          {!hasIntroduction ? (
+            <ProgramCard
+              id={'introduction'}
+              title={'Introducción a la plataforma'}
+              imgUrl={'https://lerni-images-2024.s3.amazonaws.com/introduction_image.png'}
+              status={'not_started'}
+              onPress={handleGoToIntroductionPill}
+            />
+          ) : null}
+          {programs.slice(0, hasIntroduction ? 3 : 2).map(({ id, name, icon, progress }) => (
             <ProgramCard
               key={id}
               onPress={hasIntroduction ? () => handleGoToProgram(id) : () => null}
