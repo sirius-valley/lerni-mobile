@@ -1,14 +1,16 @@
 import { api } from './api';
+import { SearchQueryParams, SearchResponse } from './types/home.response';
 
 export const homeApi = api.injectEndpoints({
   endpoints: (builder) => ({
     programEnrolled: builder.query({
       query: () => ({ url: '/home', method: 'GET' }),
     }),
-    search: builder.query({
-      query: ({ page, filter, search }) => ({
-        url: `/search?page=${page}&filter=${filter}&search=${search}`,
+    search: builder.query<SearchResponse, { page?: string; filter?: string; search?: string }>({
+      query: ({ page, filter, search }: SearchQueryParams) => ({
+        url: `/api/search`,
         method: 'GET',
+        params: { page, filter, search },
       }),
     }),
   }),
