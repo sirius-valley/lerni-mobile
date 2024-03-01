@@ -48,6 +48,14 @@ const ProgramDetail = () => {
       },
     });
 
+  const handleGoToQuestionnaire = (id: string) =>
+    router.push({
+      pathname: 'pill/testQuestionnaire',
+      params: {
+        id,
+      },
+    });
+
   if (isLoading) {
     return <ProgramSkeleton />;
   }
@@ -142,14 +150,16 @@ const ProgramDetail = () => {
                 </StyledBox>
               </Pressable>
             ))}
-            <PillRow
-              pillName={program.questionnaire.questionnaireName}
-              pillProgress={program.questionnaire.questionnaireProgress}
-              pillNumber={program.pills.length + 1}
-              duration={program.questionnaire.completionTimeMinutes}
-              isLocked={program.questionnaire.isLocked}
-              id={program.questionnaire.id}
-            />
+            <Pressable onPress={() => handleGoToQuestionnaire(program.questionnaire.id)}>
+              <PillRow
+                pillName={program.questionnaire.questionnaireName}
+                pillProgress={program.questionnaire.questionnaireProgress}
+                pillNumber={program.pills.length + 1}
+                duration={program.questionnaire.completionTimeMinutes}
+                isLocked={program.questionnaire.isLocked}
+                id={program.questionnaire.id}
+              />
+            </Pressable>
           </StyledColumn>
 
           <StyledColumn css={{ width: '100%', marginVertical: '16px' }}>

@@ -1,6 +1,5 @@
-import { useLDispatch, useLSelector } from '../../../../redux/hooks';
 import TextBubble from '../../../bubbles/TextBubble';
-import React, { memo, useEffect, useMemo } from 'react';
+import React from 'react';
 import Avatar from '../../../common/Avatar';
 import ImageBubble from '../../../bubbles/ImageBubble';
 import MultipleAnswer from '../../../bubbles/MultipleAnswer';

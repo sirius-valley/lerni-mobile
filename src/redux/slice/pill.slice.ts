@@ -52,6 +52,11 @@ export interface CarouselBlockType extends CommonBlockType {
     image: string;
     selected?: boolean | string;
   }[];
+  optionDescriptions?: string[];
+  imgOptions?: ImagesOptions[];
+  correctAnswer?: string[];
+  points?: number;
+  value?: string | string[];
 }
 
 export interface TextBlockType extends CommonBlockType {

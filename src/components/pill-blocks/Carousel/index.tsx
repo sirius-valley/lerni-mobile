@@ -1,6 +1,6 @@
 import { StyledCarouselContainer } from './styles';
 import Item from './Item';
-import { StyledBox, StyledColumn, StyledRow } from '../../styled/styles';
+import { StyledColumn, StyledRow } from '../../styled/styles';
 import React, { useState } from 'react';
 import useZoomImage from '../../../hooks/useZoomImage';
 import { LabeledSend } from '../../bubbles/LabeledSend';
@@ -8,38 +8,26 @@ import usePill from '../../../hooks/usePill';
 import { useLSelector } from '../../../redux/hooks';
 import { CarouselBlockType } from '../../../redux/slice/pill.slice';
 
-type CarouselItem = {
-  id: string;
-  description: string;
-  image: string;
-  selected?: boolean;
-};
-
 interface CarouselProps {
   blockId: string;
   nextBlockId: string;
-  // items: CarouselItem[];
-  // multiple?: boolean;
-  // onSelect: (id: string) => void;
-  // onPress: () => void;
-  // sealed: boolean;
 }
 
-const Carousel = ({
-  blockId,
-  nextBlockId,
-  // items, multiple, onSelect, onPress, sealed
-}: CarouselProps) => {
-  const {
-    block,
-    handleCarousel,
-    // handleSelectCarousel,
-  } = usePill(blockId, { nextBlockId }) as {
+const Carousel = ({ blockId, nextBlockId }: CarouselProps) => {
+  const { block, handleCarousel } = usePill(blockId, { nextBlockId }) as {
     block: CarouselBlockType;
     handleCarousel: (values: CarouselBlockType) => void;
-    // handleSelectCarousel: (answerId: string) => void;
   };
   const [values, setValues] = useState(block);
+  const last = useLSelector((state) => state.pill.last);
+  const sealed = block.sealed || !(last === block.id);
+
+  const { ZoomImageComponent, handleOpenImage } = useZoomImage({
+    images:
+      block.options?.map((item) => ({
+        url: item.image,
+      })) ?? [],
+  });
 
   const handleSelect = (answerId: string) => {
     setValues((prev) => ({
@@ -55,16 +43,6 @@ const Carousel = ({
       }),
     }));
   };
-
-  const last = useLSelector((state) => state.pill.last);
-  const sealed = block.sealed || !(last === block.id);
-
-  const { ZoomImageComponent, handleOpenImage } = useZoomImage({
-    images:
-      block.options?.map((item) => ({
-        url: item.image,
-      })) ?? [],
-  });
 
   return (
     <StyledColumn
