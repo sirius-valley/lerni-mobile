@@ -12,7 +12,6 @@ import {
 import PillMainContainer from '../../../../components/pill/PillMainContainer';
 import PillHeader from '../../../../components/pill/PillHeader';
 import PillRender from '../../../../components/pill/PillRender';
-import FreeTextAnswer from '../../../../components/bubbles/FreeTextAnswer';
 import { StyledBox, StyledColumn } from '../../../../components/styled/styles';
 import { SuccessPill } from '../../../../components/common/Result/SuccessPill';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

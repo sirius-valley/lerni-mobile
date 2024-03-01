@@ -7,11 +7,11 @@ import {
   StyledText,
 } from '../../../../../components/styled/styles';
 import BackArrow from '../../../../../../assets/icons/BackArrow';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Pressable, ScrollView } from 'react-native';
 import { useTheme } from 'styled-components';
 import { ChatBubble } from '../../../../../components/bubbles/ChatBubble';
 import * as Progress from 'react-native-progress';
-import { Avatar } from '../../../../../components/common/Avatar';
+import Avatar from '../../../../../components/common/Avatar';
 import PillSkeleton from './PillSkeleton';
 import Button from '../../../../../components/styled/Button';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

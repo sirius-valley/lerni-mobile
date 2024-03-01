@@ -52,6 +52,11 @@ export interface CarouselBlockType extends CommonBlockType {
     image: string;
     selected?: boolean | string;
   }[];
+  optionDescriptions?: string[];
+  imgOptions?: ImagesOptions[];
+  correctAnswer?: string[];
+  points?: number;
+  value?: string | string[];
 }
 
 export interface TextBlockType extends CommonBlockType {
@@ -106,8 +111,8 @@ export const pillSlice = createSlice({
   name: 'pillSlice',
   initialState,
   reducers: {
-    setSingleAnswer: (state, payload) => {
-      const { id, value } = payload.payload;
+    setSingleAnswer: (state, action) => {
+      const { id, value } = action.payload;
       const block: SingleChoiceBlockType = state.mapBlocks[id] as SingleChoiceBlockType;
       state.mapBlocks[id] = {
         ...block,
@@ -125,8 +130,8 @@ export const pillSlice = createSlice({
         }),
       };
     },
-    setSelectMultipleAnswer: (state, payload) => {
-      const { id, value } = payload.payload;
+    setSelectMultipleAnswer: (state, action) => {
+      const { id, value } = action.payload;
       const block: MultipleChoiceBlockType = state.mapBlocks[id] as MultipleChoiceBlockType;
 
       if (block.type === 'multiple-choice' && !block.sealed) {
@@ -144,8 +149,8 @@ export const pillSlice = createSlice({
         };
       }
     },
-    setMultipleAnswer: (state, payload) => {
-      const { id } = payload.payload;
+    setMultipleAnswer: (state, action) => {
+      const { id } = action.payload;
       const block: MultipleChoiceBlockType = state.mapBlocks[id] as MultipleChoiceBlockType;
 
       state.mapBlocks[id] = {
@@ -183,14 +188,15 @@ export const pillSlice = createSlice({
         };
       }
     },
-    setCarousel: (state, payload) => {
-      const { id } = payload.payload;
+    setCarousel: (state, action) => {
+      const { carouselBlockDetails }: Record<string, CarouselBlockType> = action.payload;
+      const id = carouselBlockDetails.id;
       const block: CarouselBlockType = state.mapBlocks[id] as CarouselBlockType;
 
       state.mapBlocks[id] = {
         ...block,
-        options: block.options.map((item) => {
-          if (item.selected === undefined) {
+        options: carouselBlockDetails.options.map((item) => {
+          if (!item.selected) {
             return {
               ...item,
               selected: false,
@@ -202,16 +208,16 @@ export const pillSlice = createSlice({
         sealed: true,
       };
     },
-    setFreeTextAnswer: (state, payload) => {
-      const { id, value } = payload.payload;
+    setFreeTextAnswer: (state, action) => {
+      const { id, value } = action.payload;
       const block = state.mapBlocks[id];
       state.mapBlocks[id] = {
         ...block,
         content: value,
       };
     },
-    setFreeTextQuestionId: (state, payload) => {
-      const { id } = payload.payload;
+    setFreeTextQuestionId: (state, action) => {
+      const { id } = action.payload;
       state.freeTextQuestionId = id;
     },
   },

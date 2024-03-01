@@ -5,7 +5,7 @@ import {
   nextQuestion,
   setSingleAnswer,
   sendMultipleAnswer,
-  handleImageSelectionChange,
+  // handleImageSelectionChange,
   sendImageSelected,
 } from '../redux/slice/questionnaire.slice';
 import {
@@ -13,6 +13,7 @@ import {
   getQuestionnaireById,
   getQuestionnaireTypeByID,
 } from '../redux/slice/questionnaire.slice';
+import { CarouselBlockType } from '../redux/slice/pill.slice';
 
 interface useVirtualizedPillArgs {
   nextBlockId?: string;
@@ -43,12 +44,8 @@ const useQuestionnaire = (questionId: string, { nextBlockId }: useVirtualizedPil
     }, 500);
   };
 
-  const handleImageSelection = (answerId: string) => {
-    dispatch(handleImageSelectionChange({ id: questionId, value: answerId }));
-  };
-
-  const handleSealedImageSelection = (answerId: string) => {
-    dispatch(sendImageSelected({ id: answerId }));
+  const handleSealedImageSelection = (carouselBlock: CarouselBlockType) => {
+    dispatch(sendImageSelected({ carouselBlock }));
     setTimeout(() => {
       dispatch(nextQuestion({}));
     }, 500);
@@ -60,7 +57,7 @@ const useQuestionnaire = (questionId: string, { nextBlockId }: useVirtualizedPil
     handleSingleAnswer,
     handleMultipleAnswer,
     handleSealedMultipleAnswer,
-    handleImageSelection,
+    // handleImageSelection,
     handleSealedImageSelection,
   };
 };

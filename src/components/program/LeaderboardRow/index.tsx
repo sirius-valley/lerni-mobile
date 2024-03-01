@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyledBox, StyledRow, StyledText } from '../../styled/styles';
-import { Avatar } from '../../common/Avatar';
+import Avatar from '../../common/Avatar';
 import RhombusIcon from '../../../../assets/icons/RhombusIcon';
 import { StyledLeaderboardRowContainer } from './styles';
 import { useTheme } from 'styled-components/native';

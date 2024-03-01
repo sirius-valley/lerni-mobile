@@ -6,7 +6,6 @@ import {
 } from '../../../../components/styled/styles';
 import { useTheme } from 'styled-components';
 import SearchIcon from '../../../../../assets/icons/SearchIcon';
-import ProgramCard from '../../../../components/program/ProgramCard';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
 import SkeletonHome from '../../../../components/explore/HomeSkeleton';

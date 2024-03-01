@@ -106,39 +106,14 @@ export const questionnaireSlice = createSlice({
         };
       }
     },
-    handleImageSelectionChange: (state, action) => {
-      const { id, value } = action.payload;
-      const block = state.mapBlocks[id];
-
-      if (block.type === 'carousel') {
-        state.mapBlocks[id] = {
-          ...block,
-          imgOptions: block.imgOptions?.map((option) => {
-            return {
-              ...option,
-              selected: option.id === value ? true : false,
-            };
-          }),
-        };
-      }
-    },
     sendImageSelected: (state, action) => {
-      const { id } = action.payload;
-      const block: ImageBlockType = state.mapBlocks[id] as ImageBlockType;
-
-      let value = '';
-
-      if (block.type === 'carousel') {
-        block.imgOptions?.forEach((option) => {
-          if (option.selected && block.correctAnswer?.includes(option.image)) value = option.image;
-        });
-
-        state.mapBlocks[id] = {
-          ...block,
-          points: value ? 5 : 0,
-          value: value,
-        };
-      }
+      const { carouselBlock } = action.payload;
+      state.mapBlocks[carouselBlock.id] = {
+        ...state.mapBlocks,
+        ...carouselBlock,
+        points: 5,
+        value: carouselBlock.correctAnswer[0] ?? '',
+      };
     },
     nextQuestion: (state, action) => {
       if (state.mapBlocks[state.last ?? '']?.type === 'single-choice') {
@@ -211,7 +186,6 @@ export const {
   nextQuestion,
   handleMultipleAnswerChange,
   sendMultipleAnswer,
-  handleImageSelectionChange,
   sendImageSelected,
 } = questionnaireSlice.actions;
 

@@ -1,32 +1,45 @@
 import { StyledCarouselContainer } from './styles';
 import Item from './Item';
-import { StyledBox, StyledColumn, StyledRow } from '../../styled/styles';
-import React from 'react';
+import { StyledColumn, StyledRow } from '../../styled/styles';
+import React, { useState } from 'react';
 import useZoomImage from '../../../hooks/useZoomImage';
 import { LabeledSend } from '../../bubbles/LabeledSend';
-
-type CarouselItem = {
-  id: string;
-  description: string;
-  image: string;
-  selected?: boolean;
-};
+import usePill from '../../../hooks/usePill';
+import { useLSelector } from '../../../redux/hooks';
+import { CarouselBlockType } from '../../../redux/slice/pill.slice';
 
 interface CarouselProps {
-  items: CarouselItem[];
-  multiple?: boolean;
-  onSelect: (id: string) => void;
-  onPress: () => void;
-  sealed: boolean;
+  blockId: string;
+  nextBlockId: string;
 }
 
-const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps) => {
+const Carousel = ({ blockId, nextBlockId }: CarouselProps) => {
+  const { block, handleCarousel } = usePill(blockId, { nextBlockId }) as {
+    block: CarouselBlockType;
+    handleCarousel: (values: CarouselBlockType) => void;
+  };
+  const [values, setValues] = useState(block);
+  const last = useLSelector((state) => state.pill.last);
+  const sealed = block.sealed || !(last === block.id);
+
   const { ZoomImageComponent, handleOpenImage } = useZoomImage({
     images:
-      items?.map((item) => ({
+      block.options?.map((item) => ({
         url: item.image,
       })) ?? [],
   });
+
+  const handleSelect = (answerId: string) => {
+    setValues((prev) => ({
+      ...prev,
+      options: prev.options.map((option) => {
+        return {
+          ...option,
+          selected: option.id === answerId ? !option.selected : !!option.selected,
+        };
+      }),
+    }));
+  };
 
   return (
     <StyledColumn
@@ -45,14 +58,14 @@ const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps)
         }}
         showsHorizontalScrollIndicator={false}
       >
-        {items?.map((item, index) => {
+        {values.options?.map((item, index) => {
           return sealed && !item.selected ? null : (
             <Item
               key={index}
               image={item.image}
-              selected={item.selected}
+              selected={!!item.selected}
               handleOpenImage={() => handleOpenImage(index)}
-              handleSelect={() => onSelect(item.id)}
+              handleSelect={() => handleSelect(item.id)}
               description={item.description}
               id={item.id}
               disabled={sealed}
@@ -69,8 +82,10 @@ const Carousel = ({ items, multiple, onSelect, onPress, sealed }: CarouselProps)
         }}
       >
         <LabeledSend
-          onPress={onPress}
-          status={sealed ? 'sent' : items.some((item) => item.selected) ? 'selected' : 'default'}
+          onPress={() => handleCarousel(values)}
+          status={
+            sealed ? 'sent' : values.options.some((item) => item.selected) ? 'selected' : 'default'
+          }
         />
       </StyledRow>
       <ZoomImageComponent />
