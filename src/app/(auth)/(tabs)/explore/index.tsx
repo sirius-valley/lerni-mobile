@@ -18,7 +18,7 @@ import { useLSelector } from '../../../../redux/hooks';
 const Page = () => {
   const router = useRouter();
   const theme = useTheme();
-  const { data } = useMeQuery();
+  const { data, isLoading: meLoading } = useMeQuery();
   const { isLoading } = useHomeProgramsQuery();
   const { programsCompleted, programsInProgress, programsNotStarted } = useLSelector(
     (state) => state.program,
@@ -29,7 +29,9 @@ const Page = () => {
       pathname: '(tabs)/explore/searchScreen',
     });
 
-  if (isLoading) {
+  const handleGoToIntroductionPill = () => router.push('/(auth)/pill/introduction');
+
+  if (isLoading || meLoading) {
     return <SkeletonHome />;
   }
 
