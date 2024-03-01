@@ -33,13 +33,10 @@ const Carousel = ({ blockId, nextBlockId }: CarouselProps) => {
     setValues((prev) => ({
       ...prev,
       options: prev.options.map((option) => {
-        if (option.id === answerId) {
-          return {
-            ...option,
-            selected: true,
-          };
-        }
-        return option;
+        return {
+          ...option,
+          selected: option.id === answerId ? !option.selected : !!option.selected,
+        };
       }),
     }));
   };
