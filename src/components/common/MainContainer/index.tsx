@@ -22,10 +22,10 @@ const MainContainer = ({ children, backgroundColor }: MainContainerInterface) =>
     >
       <KeyboardAvoidingView
         enabled
-        style={{ height: '100%' }}
+        style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={10}
-        onTouchEnd={() => {
+        onLayout={() => {
           setTimeout(() => {
             virtualRef?.current?.scrollToEnd();
           }, 100);
