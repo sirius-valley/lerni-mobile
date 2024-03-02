@@ -46,8 +46,8 @@ export type ImagesOptions = {
 };
 
 export type FeedbackBody = {
-  id: string;
+  vote: 'up' | 'down';
+  programId: string;
   content: string;
-  feedback: 'like' | 'dislike';
-  public: boolean;
+  privacy: 'public' | 'private';
 };

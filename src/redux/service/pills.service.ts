@@ -28,13 +28,6 @@ export const pillsApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
-    feedback: builder.mutation<void, FeedbackBody>({
-      query: (body) => ({
-        url: `/api/pill/feedback`,
-        method: 'POST',
-        body: body,
-      }),
-    }),
   }),
 });
 
@@ -44,7 +37,4 @@ export const {
 
   // introduction
   useGetIntroductionPillQuery,
-
-  // Feedback
-  useFeedbackMutation,
 } = pillsApi;

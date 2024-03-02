@@ -14,7 +14,7 @@ import LikeIcon from '../../../../assets/icons/LikeIcon';
 import DislikeIcon from '../../../../assets/icons/DislikeIcon';
 import FeedbackButton from './components/FeedbackButton';
 import Button from '../../../components/styled/Button';
-import { useFeedbackMutation } from '../../../redux/service/pills.service';
+import { useFeedbackMutation } from '../../../redux/service/program.service';
 
 interface FeedbackModalProps extends ModalProps {}
 
@@ -30,10 +30,10 @@ const FeedbackModal = ({ handleOnClose }: FeedbackModalProps) => {
   const [send, { isLoading }] = useFeedbackMutation();
   const handleSend = () => {
     send({
-      feedback: feedback.like ? 'like' : 'dislike',
-      public: publicOpinion,
+      vote: feedback.like ? 'up' : 'down',
+      privacy: publicOpinion ? 'public' : 'private',
       content: text,
-      id: '',
+      programId: '',
     });
   };
   return (
