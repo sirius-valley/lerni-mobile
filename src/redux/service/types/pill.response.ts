@@ -44,3 +44,10 @@ export type ImagesOptions = {
   id?: string;
   selected?: boolean;
 };
+
+export type FeedbackBody = {
+  id: string;
+  content: string;
+  feedback: 'like' | 'dislike';
+  public: boolean;
+};

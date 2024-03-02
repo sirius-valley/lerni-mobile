@@ -1,5 +1,5 @@
 import { api } from './api';
-import { PillAnswerBody, PillResponse } from './types/pill.response';
+import { FeedbackBody, PillAnswerBody, PillResponse } from './types/pill.response';
 
 interface PillByIdParams {
   id: string;
@@ -28,6 +28,13 @@ export const pillsApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    feedback: builder.mutation<void, FeedbackBody>({
+      query: (body) => ({
+        url: `/api/pill/feedback`,
+        method: 'POST',
+        body: body,
+      }),
+    }),
   }),
 });
 
@@ -37,4 +44,7 @@ export const {
 
   // introduction
   useGetIntroductionPillQuery,
+
+  // Feedback
+  useFeedbackMutation,
 } = pillsApi;

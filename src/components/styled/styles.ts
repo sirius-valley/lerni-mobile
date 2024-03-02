@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, View, Text } from 'react-native';
+import { Image, SafeAreaView, View, Text, TextInput } from 'react-native';
 import styled, { css as styledComponent } from 'styled-components';
 import { CSSProperties } from '../../utils/utils';
 import { ThemeColors } from '../../utils/theme';
@@ -53,5 +53,13 @@ export const StyledLine = styled(View)<StyledLine>`
   border-bottom-width: 1px;
   border-style: solid;
   border-color: ${(props) => (props.color ? props.theme[props.color] : props.theme.primary900)};
+  ${({ css }) => css && styledComponent(css)};
+`;
+
+export const StyledTextArea = styled(TextInput)<StyledPropertiesInterface>`
+  border: 1px;
+  border-style: dashed;
+  border-color: ${(props) => props.theme.primary600};
+  padding: 12px 6px;
   ${({ css }) => css && styledComponent(css)};
 `;
