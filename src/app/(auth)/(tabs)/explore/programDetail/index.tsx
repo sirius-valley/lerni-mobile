@@ -1,29 +1,20 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useEffect } from 'react';
-import {
-  StyledBox,
-  StyledColumn,
-  StyledLine,
-  StyledRow,
-  StyledText,
-} from '../../../../../components/styled/styles';
-import BackArrow from '../../../../../../assets/icons/BackArrow';
+import React from 'react';
+import { StyledColumn, StyledRow, StyledText } from '../../../../../components/styled/styles';
 import { Pressable, ScrollView } from 'react-native';
-import ProgramImage from '../../../../../components/program/ProgramImage';
-import * as Progress from 'react-native-progress';
 import { useTheme } from 'styled-components';
 import RhombusIcon from '../../../../../../assets/icons/RhombusIcon';
-import BulletListIcon from '../../../../../../assets/icons/BulletListIcon';
 import ClockIcon from '../../../../../../assets/icons/ClockIcon';
-import PillRow from '../../../../../components/program/PillRow';
-import { mockedLeaderboardRows, mockedPills, Status } from '../utils';
-import LeaderboardRow from '../../../../../components/program/LeaderboardRow';
 import MessageIcon from '../../../../../../assets/icons/MessageIcon';
 import { useProgramByIdQuery } from '../../../../../redux/service/program.service';
 import ProgramSkeleton from './ProgramSkeleton';
-import { ThreeDots } from '../../../../../components/program/LeaderboardRow/ThreeDots';
 import ErrorDisplay from '../../../../../components/common/ErrorDisplay';
 import { ProgramResponseType } from '../../../../../redux/service/types/program.response';
+import PillsSection from './components/PillsSection';
+import LeaderboardSection from './components/LeaderboardSection';
+import HeaderProgram from './components/HeaderProgram';
+import Avatar from '../../../../../components/common/Avatar';
+import PillIcon from '../../../../../../assets/icons/PillIcon';
 
 const ProgramDetail = () => {
   const router = useRouter();
@@ -40,22 +31,6 @@ const ProgramDetail = () => {
     isError: boolean;
   };
 
-  const handleGoToPill = (id: string) =>
-    router.push({
-      pathname: 'pill/mainPill',
-      params: {
-        id,
-      },
-    });
-
-  const handleGoToQuestionnaire = (id: string) =>
-    router.push({
-      pathname: 'pill/testQuestionnaire',
-      params: {
-        id,
-      },
-    });
-
   if (isLoading) {
     return <ProgramSkeleton />;
   }
@@ -64,151 +39,109 @@ const ProgramDetail = () => {
     return <ErrorDisplay type="404" />;
   }
 
+  const getNextPillOrQuestionnaireId = (
+    pills: ProgramResponseType['pills'],
+    questionnaire: ProgramResponseType['questionnaire'],
+  ): {
+    type: 'questionnaire' | 'pill';
+    id: string;
+  } => {
+    const nextPill = pills.find((pill) => pill.pillProgress !== 100);
+    if (nextPill) {
+      return { type: 'pill', id: nextPill.id };
+    }
+    return { type: 'questionnaire', id: questionnaire.id };
+  };
+
   return (
     <ScrollView style={{ width: '100%' }} showsVerticalScrollIndicator={false}>
+      <HeaderProgram
+        imgURL={program.icon}
+        progress={program.progress}
+        nextPillId={
+          program.progress !== 100
+            ? getNextPillOrQuestionnaireId(program.pills, program.questionnaire)
+            : undefined
+        }
+      />
       <StyledColumn
-        css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '12px' }}
+        css={{
+          flex: 1,
+          justifyContent: 'flex-start',
+          height: '100%',
+          paddingBottom: '12px',
+          paddingHorizontal: 24,
+          width: '100%',
+          alignItems: 'center',
+          gap: 32,
+        }}
       >
-        <StyledRow>
-          <Pressable onPress={() => router.replace('(tabs)/explore')} style={{ padding: 10 }}>
-            <BackArrow />
-          </Pressable>
-        </StyledRow>
-        <StyledColumn css={{ width: '100%', alignItems: 'center', gap: '8px' }}>
-          <ProgramImage
-            status={program.progress > 0 ? 'in_progress' : 'not_started'}
-            imgUrl={
-              'https://img.freepik.com/vector-premium/estetoscopio-icono-moderno-fondo-verde-estilo-plano-urgencia-larga-sombra-ilustracion-vectorial_494516-895.jpg?w=2000'
-            }
-            size={150}
-          />
-          <StyledText variant="h2" color="gray100">
+        <StyledColumn css={{ gap: 8, marginTop: 40, width: '100%' }}>
+          <StyledText variant="h1" color="gray100">
             {program.programName}
           </StyledText>
-          <StyledText variant="body1" color="gray400">
-            {program.teacher.lastname}, {program.teacher.name}
-          </StyledText>
-          <StyledBox css={{ width: '90%' }}>
-            <Progress.Bar
-              unfilledColor={theme.gray600}
-              color={theme.primary400}
-              height={8}
-              progress={program.progress / 100}
-              borderWidth={0}
-              width={null}
-              borderRadius={20}
-            />
-          </StyledBox>
+          <StyledRow css={{ gap: 6 }}>
+            <Avatar size={20} uri={program.teacher.image} />
+            <StyledText variant="body1" color="gray400">
+              {program.teacher.lastname} {program.teacher.name}
+            </StyledText>
+          </StyledRow>
+        </StyledColumn>
 
-          <StyledRow css={{ justifyContent: 'space-evenly', width: '90%', gap: 32 }}>
+        <StyledColumn
+          css={{ gap: 16, marginTop: '16px', justifyContent: 'flex-start', width: '100%' }}
+        >
+          <StyledRow css={{ width: '90%', gap: 32 }}>
             <StyledRow css={{ gap: '4px', alignItems: 'center' }}>
-              <BulletListIcon size={14} color={theme.primary500} />
-              <StyledText variant="body3" color="gray400">
+              <PillIcon size={14} color={theme.primary500} />
+              <StyledText variant="body3" color="white">
                 {program.pillCount} {program.pillCount > 1 ? 'píldoras' : 'píldora'}
               </StyledText>
             </StyledRow>
             <StyledRow css={{ gap: '4px', alignItems: 'center' }}>
               <ClockIcon size={14} color={theme.primary500} />
-              <StyledText variant="body3" color="gray400">
+              <StyledText variant="body3" color="white">
                 {program.estimatedHours} {program.estimatedHours > 1 ? 'horas' : 'hora'}
               </StyledText>
             </StyledRow>
             <StyledRow css={{ gap: '4px', alignItems: 'center' }}>
               <RhombusIcon size={14} color={theme.primary500} />
-              <StyledText variant="body3" color="gray400">
+              <StyledText variant="body3" color="white">
                 {program.points} puntos
               </StyledText>
             </StyledRow>
           </StyledRow>
+          <StyledText variant="body1" color="gray100">
+            {program.programDescription}
+            Descripción lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis
+            ullamcorper mauris, vitae commodo dui efficitur non. Fusce efficitur pulvinar diam vel
+            dictum.
+          </StyledText>
+        </StyledColumn>
 
-          <StyledColumn
-            css={{ gap: '8px', marginTop: '16px', justifyContent: 'flex-start', width: '100%' }}
-          >
-            <StyledText variant="h3" color="gray100">
-              Descripcion del programa
+        <PillsSection pills={program.pills} questionnaire={program.questionnaire} />
+
+        <LeaderboardSection leaderboard={program.leaderBoard} />
+
+        <StyledColumn
+          css={{
+            marginTop: '8px',
+            marginBottom: '48px',
+            gap: '8px',
+            alignItems: 'center',
+          }}
+        >
+          <MessageIcon size={24} />
+
+          <Pressable onPress={() => router.push('/explore/comments')}>
+            <StyledText
+              variant="body2"
+              color="primary500"
+              css={{ textDecorationLine: 'underline' }}
+            >
+              Ver comentarios sobre el programa
             </StyledText>
-            <StyledText variant="body1" color="gray100">
-              {program.programDescription}
-            </StyledText>
-          </StyledColumn>
-
-          <StyledColumn css={{ gap: '8px', width: '100%', marginTop: '16px' }}>
-            <StyledText color="gray100" variant="h3">
-              Pildoras
-            </StyledText>
-            {program.pills?.map((pill, idx) => (
-              <Pressable key={idx} onPress={() => handleGoToPill(pill.id)}>
-                <StyledBox>
-                  <PillRow
-                    pillName={pill.pillName}
-                    pillProgress={pill.pillProgress}
-                    pillNumber={idx + 1}
-                    duration={pill.completionTimeMinutes}
-                    isLocked={pill.isLocked}
-                    id={pill.id}
-                  />
-                </StyledBox>
-              </Pressable>
-            ))}
-            <Pressable onPress={() => handleGoToQuestionnaire(program.questionnaire.id)}>
-              <PillRow
-                pillName={program.questionnaire.questionnaireName}
-                pillProgress={program.questionnaire.questionnaireProgress}
-                pillNumber={program.pills.length + 1}
-                duration={program.questionnaire.completionTimeMinutes}
-                isLocked={program.questionnaire.isLocked}
-                id={program.questionnaire.id}
-              />
-            </Pressable>
-          </StyledColumn>
-
-          <StyledColumn css={{ width: '100%', marginVertical: '16px' }}>
-            <StyledRow css={{ justifyContent: 'space-between', alignItems: 'center' }}>
-              <StyledText variant="h3" color="white" css={{ marginBottom: '16px' }}>
-                Leaderboard
-              </StyledText>
-              <StyledText
-                variant="body3"
-                color="white"
-                css={{
-                  textDecoration: 'underline',
-                  marginBottom: '16px',
-                  textDecorationColor: theme.white,
-                }}
-              >
-                Ver todo
-              </StyledText>
-            </StyledRow>
-            {mockedLeaderboardRows.map((row, idx) => (
-              <React.Fragment key={idx}>
-                <LeaderboardRow {...row} />
-                {idx === 0 && mockedLeaderboardRows[idx + 1].position > row.position + 1 && (
-                  <ThreeDots />
-                )}
-              </React.Fragment>
-            ))}
-          </StyledColumn>
-
-          <StyledColumn
-            css={{
-              marginTop: '8px',
-              marginBottom: '48px',
-              gap: '8px',
-              alignItems: 'center',
-            }}
-          >
-            <MessageIcon size={24} />
-
-            <Pressable onPress={() => router.push('/explore/comments')}>
-              <StyledText
-                variant="body2"
-                color="primary500"
-                css={{ textDecorationLine: 'underline' }}
-              >
-                Ver comentarios sobre el programa
-              </StyledText>
-            </Pressable>
-          </StyledColumn>
+          </Pressable>
         </StyledColumn>
       </StyledColumn>
     </ScrollView>

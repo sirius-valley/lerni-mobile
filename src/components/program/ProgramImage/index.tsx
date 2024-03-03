@@ -24,7 +24,11 @@ const ProgramImage = ({
   const theme = useTheme();
   return (
     <StyledBox css={{ opacity: transparentOnLocked && status === 'locked' ? 0.3 : 1 }}>
-      <Image style={{ width: size, height: size, borderRadius: 6 }} source={{ uri: imgUrl }} />
+      <Image
+        style={{ width: size, height: size, borderRadius: 6 }}
+        source={{ uri: imgUrl }}
+        loadingIndicatorSource={require('../../../../assets/backgroundProgramImage.png')}
+      />
       {status === 'completed' && (
         <StyledBox css={{ position: 'absolute', bottom: 2, right: 2 }}>
           <CheckIcon size={iconSize} />

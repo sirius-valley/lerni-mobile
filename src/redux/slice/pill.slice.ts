@@ -1,8 +1,9 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import store, { RootState } from '../store';
 import { pillsApi } from '../service/pills.service';
 import { ImagesOptions, PillResponse } from '../service/types/pill.response';
 import { transformResponseBlock } from './utils';
+import { api } from '../service/api';
 
 export type BubbleType =
   | 'free-text'

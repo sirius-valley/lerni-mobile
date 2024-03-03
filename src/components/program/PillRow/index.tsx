@@ -7,6 +7,7 @@ import { Platform, Pressable } from 'react-native';
 import ChevronRightIcon from '../../../../assets/icons/ChevronRightIcon';
 import { EllipseIcon } from '../../../../assets/icons/EllipseIcon';
 import { useRouter } from 'expo-router';
+import QuestionnaireIcon from '../../../../assets/icons/QuestionnaireIcon';
 
 interface PillRowInterface {
   pillNumber: number;
@@ -15,6 +16,7 @@ interface PillRowInterface {
   duration: number;
   isLocked: boolean;
   id: string;
+  isQuestionnaire?: boolean;
 }
 
 const PillRow = ({
@@ -23,6 +25,7 @@ const PillRow = ({
   pillName,
   duration,
   isLocked,
+  isQuestionnaire = false,
   id,
 }: PillRowInterface) => {
   const theme = useTheme();
@@ -42,7 +45,9 @@ const PillRow = ({
     >
       <StyledRow css={{ alignItems: 'center', gap: 8, justifyContent: 'flex-start', width: '90%' }}>
         <StyledRow css={{ width: '10%', justifyContent: 'center' }}>
-          {!isLocked ? (
+          {isQuestionnaire ? (
+            <QuestionnaireIcon color={isLocked ? theme.gray600 : theme.primary500} />
+          ) : !isLocked ? (
             <Progress.Circle
               size={30}
               borderWidth={0}

@@ -1,4 +1,4 @@
-import { Redirect, Slot } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 import { withModal } from '../../hoc/withModal';
 import { useLDispatch, useLSelector } from '../../redux/hooks';
 import { useEffect } from 'react';
@@ -16,7 +16,13 @@ export const Layout = () => {
     return <Redirect href={'/(app)/login'} />;
   }
 
-  return <Slot />;
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false,
+      }}
+    />
+  );
 };
 
 export default withModal(Layout);

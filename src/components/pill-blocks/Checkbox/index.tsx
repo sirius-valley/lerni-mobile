@@ -7,9 +7,10 @@ interface CheckboxProps {
   checked: boolean;
   onPress: () => void;
   disabled: boolean;
+  isSingle?: boolean;
 }
 
-const Checkbox = ({ checked, onPress, disabled }: CheckboxProps) => {
+const Checkbox = ({ checked, onPress, disabled, isSingle = false }: CheckboxProps) => {
   const theme = useTheme();
   return (
     <Pressable onPress={onPress} disabled={disabled}>
@@ -19,7 +20,7 @@ const Checkbox = ({ checked, onPress, disabled }: CheckboxProps) => {
           borderWidth: 2,
           borderStyle: 'solid',
           borderColor: theme.primary500,
-          borderRadius: 8,
+          borderRadius: isSingle ? 200 : 8,
           width: 42,
           height: 42,
           display: 'flex',

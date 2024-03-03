@@ -31,6 +31,24 @@ export type ProgramResponseType = {
     questionnaireProgress: number;
     isLocked: boolean;
   };
+  leaderBoard: {
+    up: {
+      id: string;
+      studentId: string;
+      profileImage: string;
+      rank: number;
+      fullName: string;
+      points: number;
+    }[];
+    down: {
+      id: string;
+      studentId: string;
+      profileImage: string;
+      rank: number;
+      fullName: string;
+      points: number;
+    }[];
+  };
 };
 
 export type ProgramIdType = string | string[] | undefined;

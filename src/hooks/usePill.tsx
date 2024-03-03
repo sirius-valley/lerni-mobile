@@ -54,13 +54,7 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
     answer({
       pillId: pillDetails!.pill.id,
       questionId: carouselBlockDetails.id,
-      answer: carouselBlockDetails.options.reduce((acc: string[], item: any) => {
-        if (item.selected) {
-          return [...acc, item.id];
-        } else {
-          return acc;
-        }
-      }, []),
+      answer: carouselBlockDetails.options.find((item) => item.selected)!.id,
     });
     dispatch(setCarousel({ carouselBlockDetails }));
   };

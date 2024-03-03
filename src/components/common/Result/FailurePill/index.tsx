@@ -27,7 +27,7 @@ export const FailurePill = () => {
   const content = () => {
     return (
       <StyledColumn style={{ alignItems: 'center' }}>
-        <StyledText style={{ color: theme.gray50, textAlign: 'center' }}>
+        <StyledText style={{ color: theme.gray400, textAlign: 'center' }}>
           Hasta Einstein tropezó antes de triunfar. {'\n'}
           No te desanimes. En dos días, {'\n'} otra oportunidad.
         </StyledText>

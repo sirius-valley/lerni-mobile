@@ -55,7 +55,7 @@ export const SuccessPill = ({
   const content = () => {
     return (
       <StyledColumn style={{ gap: 8, alignItems: 'center' }}>
-        <StyledText variant="body2" style={{ color: theme.gray50 }}>
+        <StyledText variant="body2" style={{ color: theme.gray400 }}>
           Terminaste {programName}!
         </StyledText>
         {winsPoints && (

@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, View, Text, TextInput } from 'react-native';
+import { Image, SafeAreaView, View, Text, TextInput, Pressable } from 'react-native';
 import styled, { css as styledComponent } from 'styled-components';
 import { CSSProperties } from '../../utils/utils';
 import { ThemeColors } from '../../utils/theme';
@@ -61,5 +61,9 @@ export const StyledTextArea = styled(TextInput)<StyledPropertiesInterface>`
   border-style: dashed;
   border-color: ${(props) => props.theme.primary600};
   padding: 12px 6px;
+  ${({ css }) => css && styledComponent(css)};
+`;
+
+export const StyledPressable = styled(Pressable)<StyledPropertiesInterface>`
   ${({ css }) => css && styledComponent(css)};
 `;

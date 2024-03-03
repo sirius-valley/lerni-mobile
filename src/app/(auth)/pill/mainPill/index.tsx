@@ -103,7 +103,7 @@ const MainPill = () => {
               onContentSizeChange={(comp) =>
                 setTimeout(() => {
                   virtualRef?.current?.scrollToEnd();
-                }, 250)
+                }, 350)
               }
               data={blocksIds}
               getItemCount={() => blocksIds.length}

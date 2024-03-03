@@ -33,20 +33,27 @@ const Carousel = ({ blockId, nextBlockId }: CarouselProps) => {
     setValues((prev) => ({
       ...prev,
       options: prev.options.map((option) => {
-        return {
-          ...option,
-          selected: option.id === answerId ? !option.selected : !!option.selected,
-        };
+        if (option.id === answerId) {
+          return {
+            ...option,
+            selected: !option.selected,
+          };
+        } else {
+          return {
+            ...option,
+            selected: false,
+          };
+        }
       }),
     }));
   };
-
   return (
     <StyledColumn
       style={{
         alignItems: 'flex-end',
         gap: 12,
         paddingLeft: 24,
+        backgroundColor: 'red',
       }}
     >
       <StyledCarouselContainer

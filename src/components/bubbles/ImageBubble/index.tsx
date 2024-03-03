@@ -26,6 +26,7 @@ const ImageBubble = ({ user, url }: ImageBubbleProps) => {
           height: 200,
           width: 300,
         }}
+        loadingIndicatorSource={require('../../../../assets/backgroundProgramImage.png')}
       />
       <ZoomImageComponent />
     </StyledColumn>

@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from 'react-native';
+import { Pressable } from 'react-native';
 import React from 'react';
 import { Program } from '../../../redux/service/types/program.response';
 import { Status } from '../../../app/(auth)/(tabs)/explore/utils';
@@ -55,7 +55,7 @@ const ExploreRow = ({ programs, status, hasIntroduction, title }: ExploreRowProp
       </StyledRow>
       {!programs.length && status === 'not_started' && hasIntroduction ? (
         <StyledBox css={{ padding: '32px 0px', justifyContent: 'center', alignItems: 'center' }}>
-          <StyledText variant="body2" color="primary200">
+          <StyledText variant="body2" color="primary700">
             {'Aún no tienes programas asignados'}
           </StyledText>
         </StyledBox>
@@ -82,9 +82,7 @@ const ExploreRow = ({ programs, status, hasIntroduction, title }: ExploreRowProp
               onPress={hasIntroduction ? () => handleGoToProgram(id) : () => null}
               id={id}
               title={name}
-              imgUrl={
-                'https://img.freepik.com/vector-premium/estetoscopio-icono-moderno-fondo-verde-estilo-plano-urgencia-larga-sombra-ilustracion-vectorial_494516-895.jpg?w=2000'
-              }
+              imgUrl={icon}
               status={!hasIntroduction ? 'locked' : status}
               transparentOnLocked={!hasIntroduction ? true : false}
               progress={progress}

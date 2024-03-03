@@ -28,6 +28,16 @@ export const programApi = api.injectEndpoints({
   }),
 });
 
+export const updatePillById = (newPill: { id: string; percentage: number }, programId: string) =>
+  api.util.updateQueryData('programById', programId, (draftPosts: ProgramResponseType) => {
+    return {
+      ...draftPosts,
+      pills: draftPosts!.pills.map((pill) =>
+        pill.id === newPill.id ? { ...pill, pillProgress: newPill.percentage } : pill,
+      ),
+    };
+  });
+
 export const {
   useProgramByIdQuery,
   useHomeProgramsQuery,

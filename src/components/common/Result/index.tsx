@@ -26,38 +26,36 @@ export const Result = ({
         backgroundColor: theme.primary800,
         padding: 24,
         paddingTop: 32,
+        paddingBottom: 90,
+        width: '100%',
       }}
     >
-      <StyledBox css={{ alignItems: 'center', justifyContent: 'center', marginBottom: 40 }}>
-        <Icon />
-      </StyledBox>
       <StyledColumn
         style={{
           justifyContent: 'center',
           alignItems: 'center',
           gap: 16,
+          height: '100%',
         }}
       >
+        <StyledBox css={{ alignItems: 'center', justifyContent: 'center', marginBottom: 40 }}>
+          <Icon />
+        </StyledBox>
         <StyledColumn style={{ gap: 16, justifyContent: 'center', alignItems: 'center' }}>
-          <StyledText variant="h1" style={{ color: theme.gray50 }}>
+          <StyledText variant="h1" style={{ color: theme.white }}>
             {Title}
           </StyledText>
           <Content />
         </StyledColumn>
       </StyledColumn>
-      <StyledBox
+      <StyledColumn
         css={{
-          position: 'absolute',
-          bottom: 0,
-          display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
           gap: '16px',
-          paddingBottom: '90px',
         }}
       >
         <Footer />
-      </StyledBox>
+      </StyledColumn>
     </StyledColumn>
   );
 };
