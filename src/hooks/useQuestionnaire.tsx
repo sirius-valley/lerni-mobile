@@ -10,6 +10,7 @@ import {
 } from '../redux/slice/questionnaire.slice';
 import { useAnswerQuestionnaireMutation } from '../redux/service/questionnaire.service';
 import { useLocalSearchParams } from 'expo-router';
+import { CarouselBlockType } from '../redux/slice/pill.slice';
 
 interface useVirtualizedPillArgs {
   nextBlockId?: string;
@@ -66,7 +67,7 @@ const useQuestionnaire = (questionId: string, { nextBlockId }: useVirtualizedPil
     handleSingleAnswer,
     handleMultipleAnswer,
     handleSealedMultipleAnswer,
-    handleImageSelection,
+    // handleImageSelection,
     handleSealedImageSelection,
   };
 };

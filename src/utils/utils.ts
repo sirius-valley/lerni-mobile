@@ -44,6 +44,7 @@ export const removeHtmlTags = (inputString: string) => {
 
 export enum ModalTypeEnum {
   INTRO_MODAL = 'INTRO_MODAL',
+  FEEDBACK_MODAL = 'FEEDBACK_MODAL',
 }
 
 export const getTokenFromSecureStore = async (dispatch: Dispatch, callback?: () => void) => {

@@ -4,6 +4,7 @@ import authReducer from './slice/auth.slice';
 import studentReducer from './slice/student.slice';
 import utilsReducer from './slice/utils.slice';
 import pillReducer from './slice/pill.slice';
+import programReducer from './slice/program.slice';
 import questionnaireReducer from './slice/questionnaire.slice';
 import { persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,6 +17,7 @@ const reducers = combineReducers({
   student: studentReducer,
   pill: pillReducer,
   questionnaire: questionnaireReducer,
+  program: programReducer,
 });
 
 const persistConfig = {

@@ -3,6 +3,7 @@ export type BubbleResponse = {
   type: 'text' | 'single-choice' | 'multiple-choice' | 'carousel' | 'free-text';
   content?: string;
   options?: string[];
+  optionDescriptions?: string[];
   imgOptions?: ImagesOptions[];
   optionDescriptions?: string[];
   correctAnswer?: string[];
@@ -35,7 +36,7 @@ export type PillResponse = {
 export type PillAnswerBody = {
   pillId: string;
   questionId: string;
-  answer: string;
+  answer: string | string[];
 };
 
 export type ImagesOptions = {
@@ -44,4 +45,11 @@ export type ImagesOptions = {
   image: string;
   id?: string;
   selected?: boolean;
+};
+
+export type FeedbackBody = {
+  vote: 'up' | 'down';
+  programId: string;
+  content: string;
+  privacy: 'public' | 'private';
 };

@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../styled/styles';
 import { useTheme } from 'styled-components';
 import * as Progress from 'react-native-progress';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { CancelIcon } from '../../../../assets/icons/CancelIcon';
 import { useRouter } from 'expo-router';
+import { useLDispatch, useLSelector } from '../../../redux/hooks';
+import { updatePillById } from '../../../redux/service/program.service';
+import { Pressable } from 'react-native';
 
 export interface PillHeaderProps {
   title: string;
@@ -15,6 +18,21 @@ export interface PillHeaderProps {
 const PillHeader = ({ title, pillNumber, percentageDone }: PillHeaderProps) => {
   const theme = useTheme();
   const router = useRouter();
+  const dispatch = useLDispatch();
+  const programId = useLSelector((state) => state.program.id);
+  const pillId = useLSelector((state) => state.pill?.pill?.pill.id);
+
+  useEffect(() => {
+    dispatch(
+      updatePillById(
+        {
+          id: pillId!,
+          percentage: percentageDone,
+        },
+        programId!,
+      ),
+    );
+  }, [percentageDone]);
 
   return (
     <StyledRow
@@ -62,9 +80,13 @@ const PillHeader = ({ title, pillNumber, percentageDone }: PillHeaderProps) => {
                 {title}
               </StyledText>
             </StyledRow>
-            <TouchableOpacity onPress={() => router.replace('/(auth)/(tabs)/explore')}>
+            <Pressable
+              onPress={() => {
+                router.back();
+              }}
+            >
               <CancelIcon color={theme.gray500} size={24} />
-            </TouchableOpacity>
+            </Pressable>
           </StyledRow>
         </StyledRow>
         <StyledBox

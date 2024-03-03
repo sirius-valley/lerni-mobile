@@ -2,7 +2,7 @@ import { useTheme } from 'styled-components/native';
 import { MessageProps } from '../../../utils/constants';
 import { StyledText } from '../../styled/styles';
 import { MessageContainer, TextBubbleContainer } from './styles';
-import { Avatar } from '../../common/Avatar';
+import Avatar from '../../common/Avatar';
 import ImageBubble from '../ImageBubble';
 
 export const ChatBubble = ({

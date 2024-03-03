@@ -1,8 +1,9 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import store, { RootState } from '../store';
 import { pillsApi } from '../service/pills.service';
 import { ImagesOptions, PillResponse } from '../service/types/pill.response';
 import { transformResponseBlock } from './utils';
+import { api } from '../service/api';
 
 export type BubbleType =
   | 'free-text'
@@ -49,12 +50,17 @@ export interface CarouselBlockType extends CommonBlockType {
   type: 'carousel';
   sealed: boolean;
   multiple: boolean;
-  items: {
+  options: {
     id: string;
     description: string;
     image: string;
     selected?: boolean | string;
   }[];
+  optionDescriptions?: string[];
+  imgOptions?: ImagesOptions[];
+  correctAnswer?: string[];
+  points?: number;
+  value?: string | string[];
 }
 
 export interface TextBlockType extends CommonBlockType {
@@ -109,8 +115,8 @@ export const pillSlice = createSlice({
   name: 'pillSlice',
   initialState,
   reducers: {
-    setSingleAnswer: (state, payload) => {
-      const { id, value } = payload.payload;
+    setSingleAnswer: (state, action) => {
+      const { id, value } = action.payload;
       const block: SingleChoiceBlockType = state.mapBlocks[id] as SingleChoiceBlockType;
       state.mapBlocks[id] = {
         ...block,
@@ -128,8 +134,8 @@ export const pillSlice = createSlice({
         }),
       };
     },
-    setSelectMultipleAnswer: (state, payload) => {
-      const { id, value } = payload.payload;
+    setSelectMultipleAnswer: (state, action) => {
+      const { id, value } = action.payload;
       const block: MultipleChoiceBlockType = state.mapBlocks[id] as MultipleChoiceBlockType;
 
       if (block.type === 'multiple-choice' && !block.sealed) {
@@ -147,8 +153,8 @@ export const pillSlice = createSlice({
         };
       }
     },
-    setMultipleAnswer: (state, payload) => {
-      const { id } = payload.payload;
+    setMultipleAnswer: (state, action) => {
+      const { id } = action.payload;
       const block: MultipleChoiceBlockType = state.mapBlocks[id] as MultipleChoiceBlockType;
 
       state.mapBlocks[id] = {
@@ -166,14 +172,14 @@ export const pillSlice = createSlice({
         sealed: true,
       };
     },
-    setSelectCarousel: (state, payload) => {
-      const { id, value } = payload.payload;
+    setSelectCarousel: (state, action) => {
+      const { id, value } = action.payload;
       const block: CarouselBlockType = state.mapBlocks[id] as CarouselBlockType;
 
       if (block.type === 'carousel' && !block.sealed) {
         state.mapBlocks[id] = {
           ...block,
-          items: block.items.map((item) => {
+          options: block.options.map((item) => {
             if (item.id === value) {
               return {
                 ...item,
@@ -186,14 +192,15 @@ export const pillSlice = createSlice({
         };
       }
     },
-    setCarousel: (state, payload) => {
-      const { id } = payload.payload;
+    setCarousel: (state, action) => {
+      const { carouselBlockDetails }: Record<string, CarouselBlockType> = action.payload;
+      const id = carouselBlockDetails.id;
       const block: CarouselBlockType = state.mapBlocks[id] as CarouselBlockType;
 
       state.mapBlocks[id] = {
         ...block,
-        items: block.items.map((item) => {
-          if (item.selected === undefined) {
+        options: carouselBlockDetails.options.map((item) => {
+          if (!item.selected) {
             return {
               ...item,
               selected: false,
@@ -205,21 +212,29 @@ export const pillSlice = createSlice({
         sealed: true,
       };
     },
-    setFreeTextAnswer: (state, payload) => {
-      const { id, value } = payload.payload;
+    setFreeTextAnswer: (state, action) => {
+      const { id, value } = action.payload;
       const block = state.mapBlocks[id];
       state.mapBlocks[id] = {
         ...block,
         content: value,
       };
     },
-    setFreeTextQuestionId: (state, payload) => {
-      const { id } = payload.payload;
+    setFreeTextQuestionId: (state, action) => {
+      const { id } = action.payload;
       state.freeTextQuestionId = id;
     },
   },
   extraReducers: (builder) => {
     builder
+      .addMatcher(pillsApi.endpoints.pillById.matchFulfilled, (state, action) => {
+        state.mapBlocks = action.payload.pill.bubbles.reduce((acc: any, block) => {
+          state.blocksIds = [...state.blocksIds, block.id];
+          return transformResponseBlock(acc, block);
+        }, {});
+        state.last = action.payload.pill.bubbles[action.payload.pill.bubbles.length - 1].id;
+        state.pill = action.payload;
+      })
       .addMatcher(pillsApi.endpoints.getIntroductionPill.matchFulfilled, (state, action) => {
         state.mapBlocks = action.payload.pill.bubbles.reduce((acc: any, block) => {
           state.blocksIds = [...state.blocksIds, block.id];

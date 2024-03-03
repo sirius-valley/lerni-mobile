@@ -47,6 +47,6 @@ const baseQueryInterceptor: BaseQueryFn<string | FetchArgs, unknown, CustomError
 export const api = createApi({
   reducerPath: 'generalApi',
   baseQuery: baseQueryInterceptor,
-  tagTypes: ['ME', 'Introduction'],
+  tagTypes: ['ME', 'Introduction', 'MainPill', 'Home'],
   endpoints: () => ({}),
 });

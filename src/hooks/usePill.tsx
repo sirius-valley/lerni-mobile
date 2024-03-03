@@ -1,5 +1,7 @@
 import { useLDispatch, useLSelector } from '../redux/hooks';
 import {
+  BlockType,
+  CarouselBlockType,
   getPillByID,
   getPillTypeByID,
   setCarousel,
@@ -48,19 +50,13 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
     dispatch(setSelectMultipleAnswer({ id: questionId, value: answerId }));
   };
 
-  const handleCarousel = () => {
+  const handleCarousel = (carouselBlockDetails: CarouselBlockType) => {
     answer({
       pillId: pillDetails!.pill.id,
-      questionId: blockDetails.id,
-      answer: blockDetails.items.reduce((acc: string[], item: any) => {
-        if (item.selected) {
-          return [...acc, item.id];
-        } else {
-          return acc;
-        }
-      }, []),
+      questionId: carouselBlockDetails.id,
+      answer: carouselBlockDetails.options.find((item) => item.selected)!.id,
     });
-    dispatch(setCarousel({ id: questionId }));
+    dispatch(setCarousel({ carouselBlockDetails }));
   };
 
   const handleSelectCarousel = (answerId: string) => {

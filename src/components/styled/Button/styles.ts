@@ -35,7 +35,7 @@ const getButtonStyles = (theme: DefaultTheme): StyleByOptionsProps => {
       [ButtonState.DISABLED]: {
         border: 'none',
         backgroundColor: rgba(theme.primary500, 0.2),
-        color: theme.blue500,
+        color: rgba(theme.blue500, 0.2),
       },
     },
     dark: {

@@ -1,11 +1,5 @@
-import {
-  StyledBox,
-  StyledColumn,
-  StyledRow,
-  StyledText,
-} from '../../../../components/styled/styles';
+import { StyledColumn, StyledRow, StyledText } from '../../../../components/styled/styles';
 import { useDispatch } from 'react-redux';
-import { Avatar } from '../../../../components/common/Avatar';
 import { useTheme } from 'styled-components';
 import { LogoutIcon } from '../../../../../assets/icons/LogoutIcon';
 import { Pressable } from 'react-native';

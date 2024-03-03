@@ -1,5 +1,5 @@
 import { StyledCarouselItemContainer, StyledImageCarousel } from './styles';
-import { Pressable } from 'react-native';
+import { Dimensions, Pressable } from 'react-native';
 import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../../styled/styles';
 import { useState } from 'react';
 import Checkbox from '../../Checkbox';
@@ -29,7 +29,6 @@ const CarouselItem = ({
   sealed,
 }: CarouselItemProps) => {
   const theme = useTheme();
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const { width, height } = useImageDimensions(image);
 
   return (
@@ -70,15 +69,21 @@ const CarouselItem = ({
         <StyledImageCarousel
           source={{ uri: image }}
           css={{
-            width: width,
+            width: width === 0 ? Dimensions.get('window').width * 0.85 : width,
             height: height,
-            borderRadius: sealed ? '8px 8px 2px 8px' : dimensions.height < 58 ? 0 : 8,
+            borderRadius: sealed ? '8px 8px 2px 8px' : height < 58 ? 0 : '8px 8px 8px 8px',
           }}
+          loadingIndicatorSource={require('../../../../../assets/backgroundProgramImage.png')}
         />
       </StyledBox>
       <StyledRow style={{ gap: 8 }}>
         {!sealed && (
-          <Checkbox disabled={disabled} checked={selected ? true : false} onPress={handleSelect} />
+          <Checkbox
+            disabled={disabled}
+            checked={selected ? true : false}
+            onPress={handleSelect}
+            isSingle
+          />
         )}
         <StyledColumn style={{ maxHeight: 40, maxWidth: width * 0.9 }}>
           <StyledText style={{ color: theme.gray100 }} variant={'h4'}>

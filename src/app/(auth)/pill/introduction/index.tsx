@@ -126,7 +126,13 @@ const Pill = () => {
               height: screenHeight,
             }}
           >
-            <SuccessPill show={show} programName={'la introducción'} />
+            <SuccessPill
+              show={show}
+              programName={'la introducción'}
+              actionButtonLabel={'Ir al inicio'}
+              hasConfeti
+              winsPoints
+            />
           </StyledBox>
         </Animated.View>
       </StyledColumn>

@@ -12,13 +12,13 @@ export interface TextInputProps extends ComponentProps<typeof TextInputNative> {
   error?: boolean;
   onChangeText: (value: string) => void;
   onBlur?: () => void;
+  onFocus?: () => void;
   value: string;
   css?: CSSProperties;
   type?: 'password' | 'text';
   multiline?: boolean;
   scrollEnabled?: boolean;
   maxLength?: number;
-  onFocus?: () => void;
 }
 
 export const TextInput = forwardRef<any, TextInputProps>(
@@ -30,13 +30,13 @@ export const TextInput = forwardRef<any, TextInputProps>(
       error = false,
       onChangeText,
       onBlur,
+      onFocus,
       value,
       css,
       type = 'text',
       multiline = false,
       scrollEnabled = true,
       maxLength,
-      onFocus,
     }: TextInputProps,
     ref: any,
   ) => {
@@ -52,13 +52,13 @@ export const TextInput = forwardRef<any, TextInputProps>(
         value={value}
         onChangeText={(value: string) => !disabled && onChangeText(value)}
         onBlur={() => onBlur && onBlur()}
+        onFocus={() => onFocus && onFocus()}
         autoCapitalize="none"
         secureTextEntry={type === 'password'}
         multiline={multiline}
         scrollEnabled={scrollEnabled}
         maxLength={maxLength}
         ref={ref}
-        onFocus={onFocus}
       />
     );
   },

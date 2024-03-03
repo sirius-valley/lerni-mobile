@@ -1,4 +1,4 @@
-import { Avatar } from '../../common/Avatar';
+import Avatar from '../../common/Avatar';
 import { StyledRow, StyledText } from '../../styled/styles';
 import { StyledCommentBubble } from './styles';
 import { useGetNameColor } from '../../../hooks/useGetNameColor';

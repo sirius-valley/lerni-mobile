@@ -1,7 +1,7 @@
-import { CSSObject } from 'styled-components';
 import { StyledImage } from '../../styled/styles';
 import { CSSProperties } from '../../../utils/utils';
 import { DefaultProfile } from '../../../../assets/DefaultProfile';
+import { memo } from 'react';
 
 interface AvatarProps {
   uri?: string;
@@ -10,7 +10,7 @@ interface AvatarProps {
   css?: CSSProperties;
 }
 
-export const Avatar = ({ uri, size = 28, borderRadius = 50, css = {} }: AvatarProps) => {
+const Avatar = ({ uri, size = 28, borderRadius = 50, css = {} }: AvatarProps) => {
   if (!uri) {
     return <DefaultProfile size={size} css={css} />;
   }
@@ -24,3 +24,5 @@ export const Avatar = ({ uri, size = 28, borderRadius = 50, css = {} }: AvatarPr
     />
   );
 };
+
+export default memo(Avatar, (prev, next) => prev.uri === next.uri);

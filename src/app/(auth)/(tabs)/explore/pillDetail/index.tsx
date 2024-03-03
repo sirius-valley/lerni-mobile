@@ -7,11 +7,11 @@ import {
   StyledText,
 } from '../../../../../components/styled/styles';
 import BackArrow from '../../../../../../assets/icons/BackArrow';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Pressable, ScrollView } from 'react-native';
 import { useTheme } from 'styled-components';
 import { ChatBubble } from '../../../../../components/bubbles/ChatBubble';
 import * as Progress from 'react-native-progress';
-import { Avatar } from '../../../../../components/common/Avatar';
+import Avatar from '../../../../../components/common/Avatar';
 import PillSkeleton from './PillSkeleton';
 import Button from '../../../../../components/styled/Button';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -24,6 +24,14 @@ const PillDetail = () => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
 
+  const handleBeginPill = () =>
+    router.push({
+      pathname: 'pill/mainPill',
+      params: {
+        id,
+      },
+    });
+
   const isLoading = false;
 
   if (isLoading)
@@ -32,13 +40,13 @@ const PillDetail = () => {
         <PillSkeleton />
       </StyledColumn>
     );
+
   return (
     <>
-      <ScrollView
-        style={{ width: '100%', height: '100%', paddingHorizontal: 12 }}
-        scrollIndicatorInsets={{ right: -30 }}
-      >
-        <StyledColumn css={{ flex: 1, justifyContent: 'flex-start', height: '100%' }}>
+      <ScrollView style={{ width: '100%', height: '100%' }} showsVerticalScrollIndicator={false}>
+        <StyledColumn
+          css={{ flex: 1, justifyContent: 'flex-start', height: '100%', paddingBottom: '64px' }}
+        >
           <StyledColumn
             css={{
               gap: 16,
@@ -193,16 +201,16 @@ const PillDetail = () => {
       <StyledRow
         css={{
           position: 'absolute',
-          bottom: insets.bottom - 24,
+          bottom: insets.bottom + 12,
+          left: insets.left + 24,
           width: '100%',
           height: '42px',
-          marginLeft: 12,
         }}
       >
         <Button
           disabled={!mockedPillDetail.introductionDone}
           variant="primary"
-          onPress={() => alert('to be defined')}
+          onPress={handleBeginPill}
           css={{
             width: '100%',
             height: '100%',

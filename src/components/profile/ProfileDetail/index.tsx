@@ -1,5 +1,5 @@
 import { useTheme } from 'styled-components/native';
-import { Avatar } from '../../common/Avatar';
+import Avatar from '../../common/Avatar';
 import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../styled/styles';
 import { MeResponse } from '../../../redux/service/types/student.response';
 import { CareerIcon } from '../../../../assets/icons/CareerIcon';

@@ -126,7 +126,7 @@ const Questionnaire = () => {
             }}
           >
             {pillCompleted === QuestionnaireState.COMPLETED ? (
-              <SuccessPill show={show} programName={'la introducción'} />
+              <SuccessPill show={show} programName={'el cuestionario'} hasConfeti winsPoints />
             ) : (
               <FailurePill />
             )}
