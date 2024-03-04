@@ -38,6 +38,16 @@ const RegisterScreen = () => {
   const dispatch = useLDispatch();
   const goToLoginScreen = () => router.replace('/(app)/login');
 
+  const backIcon = () => {
+    return (
+      <Pressable onPress={goToLoginScreen}>
+        <StyledBox css={{ justifyContent: 'flex-start', paddingTop: 72, marginLeft: 24 }}>
+          <ChevronLeftIcon color={theme.primary950} size={20} />
+        </StyledBox>
+      </Pressable>
+    );
+  };
+
   useEffect(() => {
     if (error) {
       const customError = error as CustomError;
@@ -46,12 +56,7 @@ const RegisterScreen = () => {
   }, [error]);
 
   return (
-    <MainContainer backgroundColor="primary500">
-      <Pressable onPress={goToLoginScreen}>
-        <StyledBox css={{ justifyContent: 'flex-start', paddingTop: 72, marginLeft: 24 }}>
-          <ChevronLeftIcon color={theme.primary950} size={20} />
-        </StyledBox>
-      </Pressable>
+    <MainContainer backgroundColor="primary500" BackIcon={backIcon}>
       <StyledColumn css={{ alignItems: 'center', paddingTop: '30%' }}>
         <LerniMainIcon />
         <StyledText variant="h2" css={{ marginTop: '20%' }}>
