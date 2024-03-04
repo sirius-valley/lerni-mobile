@@ -1,10 +1,5 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-import {
-  BlockType,
-  ImageBlockType,
-  MultipleChoiceBlockType,
-  SingleChoiceBlockType,
-} from './pill.slice';
+import { BlockType, MultipleChoiceBlockType, SingleChoiceBlockType } from './pill.slice';
 import { transformQuestionnaireResponseBlock } from './utils';
 import { RootState } from '../store';
 import { questionnaireApi } from '../service/questionnaire.service';
@@ -30,17 +25,6 @@ export const questionnaireSlice = createSlice({
   name: 'questionnaireSlice',
   initialState,
   reducers: {
-    // getQuestionnaireById: (state, action) => {
-    //   state.mapBlocks = questionnaireResponseMockedData.pill.bubbles.reduce((acc: any, block) => {
-    //     state.blocksIds = [...state.blocksIds, block.id];
-    //     return transformQuestionnaireResponseBlock(acc, block);
-    //   }, {});
-    //   state.last =
-    //     questionnaireResponseMockedData.pill.bubbles[
-    //       questionnaireResponseMockedData.pill.bubbles.length - 1
-    //     ].id;
-    //   state.questionnaire = questionnaireResponseMockedData;
-    // },
     setSingleAnswer: (state, action) => {
       const { id, value } = action.payload;
       const block: SingleChoiceBlockType = state.mapBlocks[id] as SingleChoiceBlockType;
@@ -101,77 +85,6 @@ export const questionnaireSlice = createSlice({
         };
       }
     },
-    handleImageSelectionChange: (state, action) => {
-      const { id, value } = action.payload;
-      const block = state.mapBlocks[id];
-
-      // if (block.type === 'carousel') {
-      //   state.mapBlocks[id] = {
-      //     ...block,
-      //     imgOptions: block.imgOptions?.map((option) => {
-      //       return {
-      //         ...option,
-      //         selected: option.id === value ? true : false,
-      //       };
-      //     }),
-      //   };
-      // }
-    },
-    sendImageSelected: (state, action) => {
-      const paylou = action.payload;
-      // REMOVE THIS REDUCER
-      // state.mapBlocks[carouselBlock.id] = {
-      //   ...state.mapBlocks,
-      //   ...carouselBlock,
-      //   points: 5,
-      //   value: carouselBlock.correctAnswer[0] ?? '',
-      // };
-    },
-    // nextQuestion: (state, action) => {
-    //   if (state.mapBlocks[state.last ?? '']?.type === 'single-choice') {
-    //     const mappedValues = questionnaireMultipleMessage.map((q) => ({
-    //       ...q,
-    //       id: `${Math.random()}`,
-    //     }));
-    //     const newBlocks = mappedValues.reduce((acc: any, block) => {
-    //       state.blocksIds = [...state.blocksIds, block.id];
-    //       return transformQuestionnaireResponseBlock(acc, block);
-    //     }, {});
-    //     state.mapBlocks = {
-    //       ...state.mapBlocks,
-    //       ...newBlocks,
-    //     };
-    //     state.last = mappedValues[mappedValues.length - 1].id;
-    //     state.questionnaire?.pill.bubbles.concat(questionnaireEndMessage);
-    //   } else if (state.mapBlocks[state.last ?? '']?.type === 'multiple-choice') {
-    //     const mappedValues = questionnaireImgSelectionMessage.map((q) => ({
-    //       ...q,
-    //       id: `${Math.random()}`,
-    //     }));
-    //     const newBlocks = mappedValues.reduce((acc: any, block) => {
-    //       state.blocksIds = [...state.blocksIds, block.id];
-    //       return transformQuestionnaireResponseBlock(acc, block);
-    //     }, {});
-    //     state.mapBlocks = {
-    //       ...state.mapBlocks,
-    //       ...newBlocks,
-    //     };
-    //     state.last = mappedValues[mappedValues.length - 1].id;
-    //     state.questionnaire?.pill.bubbles.concat(questionnaireEndMessage);
-    //   } else {
-    //     const mappedValues = questionnaireEndMessage.map((q) => ({ ...q, id: `${Math.random()}` }));
-    //     const newBlocks = mappedValues.reduce((acc: any, block) => {
-    //       state.blocksIds = [...state.blocksIds, block.id];
-    //       return transformQuestionnaireResponseBlock(acc, block);
-    //     }, {});
-    //     state.mapBlocks = {
-    //       ...state.mapBlocks,
-    //       ...newBlocks,
-    //     };
-    //     state.last = mappedValues[mappedValues.length - 1].id;
-    //     state.questionnaire?.pill.bubbles.concat(questionnaireEndMessage);
-    //   }
-    // },
   },
   extraReducers: (builder) => {
     builder
@@ -237,14 +150,7 @@ export const getQuestionnaireTypeByID = createSelector(
   },
 );
 
-export const {
-  // getQuestionnaireById,
-  setSingleAnswer,
-  handleImageSelectionChange,
-  // nextQuestion,
-  handleMultipleAnswerChange,
-  sendMultipleAnswer,
-  sendImageSelected,
-} = questionnaireSlice.actions;
+export const { setSingleAnswer, handleMultipleAnswerChange, sendMultipleAnswer } =
+  questionnaireSlice.actions;
 
 export default questionnaireSlice.reducer;

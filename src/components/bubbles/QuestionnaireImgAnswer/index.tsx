@@ -8,16 +8,7 @@ import CheckIcon from '../../../../assets/icons/CheckIcon';
 import MultiplyIcon from '../../../../assets/icons/MultiplyIcon';
 import PointsDisplay from '../PointsDisplay';
 import useQuestionnaire from '../../../hooks/useQuestionnaire';
-import { CarouselBlockType } from '../../../redux/slice/pill.slice';
 import { useLSelector } from '../../../redux/hooks';
-
-type QuestionnaireImgAnswerItem = {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  selected?: boolean;
-};
 
 interface QuestionnaireImgAnswerProps {
   blockId: string;
@@ -25,7 +16,7 @@ interface QuestionnaireImgAnswerProps {
 }
 
 const QuestionnaireImgAnswer = ({ blockId, nextBlockId }: QuestionnaireImgAnswerProps) => {
-  const { block, handleSealedImageSelection, handleCarousel } = useQuestionnaire(blockId, {
+  const { block, handleCarousel } = useQuestionnaire(blockId, {
     nextBlockId,
   });
   const [values, setValues] = useState(block);

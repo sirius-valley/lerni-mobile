@@ -74,6 +74,7 @@ export const transformQuestionnaireResponseBlock = (
             },
           ];
         }, []),
+        ...(block.value && { sealed: true }),
       },
     };
   } else if (block?.options) {
