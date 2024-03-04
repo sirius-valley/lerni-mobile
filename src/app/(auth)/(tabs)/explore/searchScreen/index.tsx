@@ -9,7 +9,7 @@ import SearchBar from '../../../../../components/common/SearchBar';
 import { FlatList, Pressable, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import QuickFilter from '../../../../../components/search/QuickFilter';
-import { mockedSearchResultsWithPagination, quickFilters } from '../utils';
+import { quickFilters } from '../utils';
 import SearchItem, {
   SearchResultStatus,
   SearchResultType,
@@ -17,7 +17,6 @@ import SearchItem, {
 import SearchScreenSkeleton from '../../../../../components/search/SearchScreenSkeleton';
 import { useSearchQuery } from '../../../../../redux/service/home.service';
 import ErrorDisplay from '../../../../../components/common/ErrorDisplay';
-import Button from '../../../../../components/styled/Button';
 
 interface SearchResult {
   id: string;
@@ -36,61 +35,59 @@ export interface SearchbarQueryParams {
 }
 const SearchScreen = () => {
   const [searchValue, setSearchValue] = useState('');
-  const [filterValue, setFilterValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [searchedValues, setSearchedValues] = useState<SearchResult[]>([]);
   const [quickFilterSelected, setQuickFilterSelected] = useState(quickFilters[0]);
-  const [currentPage, setCurrentPage] = useState('0');
+  const [currentPage, setCurrentPage] = useState('1');
   const [loading, setLoading] = useState(false);
   const [params, setParams] = useState<SearchbarQueryParams>({});
-  const [resultsToShow, setResultsToShow] = useState<SearchResult[]>();
 
   const router = useRouter();
 
-  const { data, refetch, error, isLoading: loadingQuery } = useSearchQuery(params);
-
-  // cuando se typea un input, la navbar no tiene que subirse
-
-  // DEBOUNCE
-  // For now, it filters by title.
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setFilterValue(searchValue.toLowerCase());
-    }, 500);
-    return () => clearTimeout(timeout);
-  }, [searchValue]);
+  const { data, refetch, error, isLoading: loadingQuery, isSuccess } = useSearchQuery(params);
+  const [resultsToShow, setResultsToShow] = useState<any[]>();
 
   useEffect(() => {
-    refetch();
-  }, [params]);
+    if (!params?.page) setResultsToShow(data?.results);
+    else
+      setResultsToShow((prevResult) => {
+        if (data?.results) {
+          if (prevResult === undefined) return [...data.results];
+          else return [...prevResult, ...data.results] as SearchResult[];
+        } else {
+          return prevResult;
+        }
+      });
+  }, [data]);
+
   useEffect(() => {
     if (!searchValue) {
-      setParams((prevParams: SearchbarQueryParams) => {
+      setParams(() => {
         const newParams = {};
 
         return newParams;
       });
     } else {
-      setParams((prevParams) => {
+      setParams(() => {
         const newParams = { search: searchValue };
         return newParams;
       });
     }
+    refetch();
   }, [searchValue]);
 
   useEffect(() => {
-    if (filterValue === 'Todo') {
+    if (quickFilterSelected.type === '') {
       setParams(() => {
         const newParams = {};
         return newParams;
       });
     } else {
       setParams(() => {
-        const newParams = { filter: filterValue };
+        const newParams = { filter: quickFilterSelected.type };
         return newParams;
       });
     }
-  }, [filterValue]);
+  }, [quickFilterSelected.type]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -98,47 +95,20 @@ const SearchScreen = () => {
     }, 1000);
   }, []);
 
+  useEffect(() => {
+    setParams((prevParams) => {
+      const newParams = { ...prevParams, page: currentPage };
+      return newParams;
+    });
+
+    refetch();
+  }, [currentPage]);
+
   const handleCancelButton = () => router.back();
 
-  // const filteredValues = mockedSearchResultsWithPagination[currentPage]
-  //   ? mockedSearchResultsWithPagination[currentPage]?.data
-  //       .filter((result) => result.title.toLowerCase().includes(filterValue))
-  //       .filter((result) => {
-  //         if (!quickFilterSelected.type) return true;
-  //         return result.type === quickFilterSelected.type;
-  //       })
-  //   : [];
   const handleEndReached = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-
-    // setResultsToShow((prevResult) => {
-    //   if (data?.results) return [...prevResult, ...data?.results] as SearchResult[];
-    // });
+    setCurrentPage((prevPage) => String(Number(prevPage) + 1));
   };
-
-  // when the endpoint is finished, change to refetch function, we'll use that and delete useEffect
-  // useEffect(() => {
-  //   setSearchedValues((prevResult) => {
-  //     if (filteredValues.length === 0) {
-  //       return prevResult;
-  //     }
-  //     return [...prevResult, ...filteredValues] as SearchResult[];
-  //   });
-  // }, [currentPage]);
-  // useEffect(() => {
-  //   if (searchedValues.length > 0) {
-  //     const filteredSearch = searchedValues
-  //       .filter((result) => result.title.toLowerCase().includes(filterValue))
-  //       .filter((result) => {
-  //         if (!quickFilterSelected.type) return true;
-  //         return result.type === quickFilterSelected.type;
-  //       });
-  //     setSearchedValues(filteredSearch);
-  //   }
-  //   if (searchValue.length === 0) {
-  //     // refetch => con estado inicial (sin paginas, sin filtros)
-  //   }
-  // }, [searchValue, filterValue, quickFilterSelected]);
 
   return (
     <StyledColumn
@@ -155,8 +125,6 @@ const SearchScreen = () => {
           gap: '8px',
         }}
       >
-        <Button onPress={() => console.log(data)}>fetch</Button>
-        <Button onPress={refetch}>refetch</Button>
         <SearchBar
           value={searchValue}
           placeholder="Cursos, temáticas, profesionales"
@@ -201,7 +169,7 @@ const SearchScreen = () => {
 
       {isLoading ? (
         <SearchScreenSkeleton />
-      ) : (
+      ) : resultsToShow ? (
         <FlatList
           contentContainerStyle={{ gap: 16 }}
           data={resultsToShow}
@@ -210,24 +178,17 @@ const SearchScreen = () => {
           renderItem={(data) => (
             <SearchItem
               key={data.item.id}
-              type={data.item.type}
-              title={data.item.title}
+              type={data.item.searchType}
+              title={data.item.name}
               description={data.item.description}
-              status={data?.item.status}
-              progress={data?.item.progress}
-              imgUrl={data?.item.imgUrl}
+              status={data?.item?.status}
+              progress={data?.item?.progress}
+              imgUrl={data?.item?.imgUrl}
             />
           )}
         />
-      )}
-      {searchedValues.length === 0 && (
-        <StyledColumn
-          css={{
-            paddingTop: '30%',
-          }}
-        >
-          <ErrorDisplay type="no-results" />
-        </StyledColumn>
+      ) : (
+        <ErrorDisplay type="no-results" />
       )}
     </StyledColumn>
   );
