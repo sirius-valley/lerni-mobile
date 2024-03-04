@@ -76,20 +76,6 @@ const SearchScreen = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    if (quickFilterSelected.type === '') {
-      setParams(() => {
-        const newParams = {};
-        return newParams;
-      });
-    } else {
-      setParams(() => {
-        const newParams = { filter: quickFilterSelected.type };
-        return newParams;
-      });
-    }
-  }, [quickFilterSelected.type]);
-
-  useEffect(() => {
     setTimeout(() => {
       // setIsLoading(false);
     }, 1000);
@@ -169,7 +155,7 @@ const SearchScreen = () => {
 
       {isLoading ? (
         <SearchScreenSkeleton />
-      ) : resultsToShow ? (
+      ) : resultsToShow && resultsToShow?.length > 0 ? (
         <FlatList
           contentContainerStyle={{ gap: 16 }}
           data={resultsToShow}
@@ -181,9 +167,9 @@ const SearchScreen = () => {
               type={data.item.searchType}
               title={data.item.name}
               description={data.item.description}
-              status={data?.item?.status}
-              progress={data?.item?.progress}
-              imgUrl={data?.item?.imgUrl}
+              status={data?.item.status}
+              progress={data?.item.progress}
+              imgUrl={data?.item.imgUrl}
             />
           )}
         />
