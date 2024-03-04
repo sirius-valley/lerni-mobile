@@ -71,7 +71,7 @@ const LoginScreen = () => {
                   onChangeText={handleChange('email')}
                   placeholder="Email"
                   onBlur={() => handleBlur('email')}
-                  error={!!errors.email && touched.email}
+                  error={false}
                   disabled={isLoading}
                   css={{
                     width: '100%',
@@ -83,7 +83,7 @@ const LoginScreen = () => {
                     onChangeText={handleChange('password')}
                     placeholder="Contraseña"
                     onBlur={() => handleBlur('password')}
-                    error={!!errors.password}
+                    error={false}
                     type="password"
                     disabled={isLoading}
                     css={{

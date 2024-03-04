@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import LerniMainIcon from '../../../../assets/icons/LerniMainIcon';
 import MainContainer from '../../../components/common/MainContainer';
-import { StyledColumn, StyledText } from '../../../components/styled/styles';
+import { StyledBox, StyledColumn, StyledText } from '../../../components/styled/styles';
 import { TextInput } from '../../../components/styled/TextInput';
 import Button from '../../../components/styled/Button';
 import { Formik } from 'formik';
@@ -12,6 +12,9 @@ import { useRegisterMutation } from '../../../redux/service/auth.service';
 import { useLDispatch } from '../../../redux/hooks';
 import { showToast } from '../../../redux/slice/utils.slice';
 import { CustomError } from '../../../redux/service/api';
+import ChevronLeftIcon from '../../../../assets/icons/ChevronLeftIcon';
+import { Pressable } from 'react-native';
+import { useTheme } from 'styled-components/native';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -30,9 +33,20 @@ const SignupSchema = Yup.object().shape({
 const RegisterScreen = () => {
   const [register, { isLoading, error }] = useRegisterMutation();
   const router = useRouter();
+  const theme = useTheme();
 
   const dispatch = useLDispatch();
   const goToLoginScreen = () => router.replace('/(app)/login');
+
+  const backIcon = () => {
+    return (
+      <Pressable onPress={goToLoginScreen}>
+        <StyledBox css={{ justifyContent: 'flex-start', paddingTop: 72, marginLeft: 24 }}>
+          <ChevronLeftIcon color={theme.primary950} size={20} />
+        </StyledBox>
+      </Pressable>
+    );
+  };
 
   useEffect(() => {
     if (error) {
@@ -42,10 +56,10 @@ const RegisterScreen = () => {
   }, [error]);
 
   return (
-    <MainContainer backgroundColor="primary500">
-      <StyledColumn css={{ alignItems: 'center', paddingTop: '50%' }}>
+    <MainContainer backgroundColor="primary500" BackIcon={backIcon}>
+      <StyledColumn css={{ alignItems: 'center', paddingTop: '30%' }}>
         <LerniMainIcon />
-        <StyledText variant="h2" css={{ marginTop: '14%' }}>
+        <StyledText variant="h2" css={{ marginTop: '20%' }}>
           Crear cuenta
         </StyledText>
         <StyledColumn
@@ -78,7 +92,7 @@ const RegisterScreen = () => {
                   onChangeText={handleChange('password')}
                   placeholder="Contraseña"
                   onBlur={() => handleBlur('password')}
-                  error={!!errors.password}
+                  error={false}
                   type="password"
                   disabled={isLoading}
                   css={{
@@ -107,9 +121,6 @@ const RegisterScreen = () => {
               </>
             )}
           </Formik>
-          <StyledText css={{ textDecorationLine: 'underline' }} onPress={goToLoginScreen}>
-            volver
-          </StyledText>
         </StyledColumn>
       </StyledColumn>
     </MainContainer>
