@@ -72,7 +72,23 @@ const SearchScreen = () => {
         return newParams;
       });
     }
-    refetch();
+
+    const timeout = setTimeout(() => {
+      if (!searchValue) {
+        setParams(() => {
+          const newParams = {};
+
+          return newParams;
+        });
+      } else {
+        setParams(() => {
+          const newParams = { search: searchValue };
+          return newParams;
+        });
+      }
+      refetch();
+    }, 500);
+    return () => clearTimeout(timeout);
   }, [searchValue]);
 
   useEffect(() => {
