@@ -64,11 +64,12 @@ const Questionnaire = () => {
   useEffect(() => {
     if (
       pillCompleted !== undefined &&
+      prevData !== undefined &&
       [QuestionnaireState.COMPLETED, QuestionnaireState.FAILED].includes(pillCompleted)
     ) {
       setTimeout(() => animateBoxes(), 850);
     }
-  }, [pillCompleted]);
+  }, [pillCompleted, prevData]);
 
   return (
     <PillMainContainer backgroundColor="primary900">

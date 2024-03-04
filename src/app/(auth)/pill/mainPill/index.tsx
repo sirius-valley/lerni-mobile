@@ -19,6 +19,7 @@ import usePrevious from '../../../../hooks/usePrevious';
 import { api } from '../../../../redux/service/api';
 import SkeletonPill from '../../../../components/pill/SkeletonPill';
 import { useLocalSearchParams } from 'expo-router';
+import { cleanPill } from '../../../../redux/slice/pill.slice';
 
 const MainPill = () => {
   const { id } = useLocalSearchParams();
@@ -66,6 +67,12 @@ const MainPill = () => {
   useEffect(() => {
     if (!isLoadingPill && blocksIds.length === 0) dispatch(api.util?.invalidateTags(['MainPill']));
   }, [blocksIds]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(cleanPill());
+    };
+  }, []);
 
   if (isLoadingPill) return <SkeletonPill />;
 

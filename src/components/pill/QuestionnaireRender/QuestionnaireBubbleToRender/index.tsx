@@ -59,7 +59,7 @@ const QuestionnaireBubbleToRender = ({
           options={block.options}
           onPress={() => handleSealedMultipleAnswer(block.id)}
           correctAnswers={block.correctAnswer}
-          points={block.points ?? 0}
+          points={block?.pointsAwarded ?? 0}
           onChange={handleMultipleAnswer}
           sealed={!(last === block.id)}
         />
@@ -72,24 +72,12 @@ const QuestionnaireBubbleToRender = ({
           onChange={(id) => handleSingleAnswer(id)}
           correctAnswers={block.correctAnswer}
           sealed={!(last === block.id)}
-          points={block.points ?? 0}
+          points={block?.pointsAwarded ?? 0}
           isSingleAnswer
         />
       );
     case 'carousel':
-      return (
-        <QuestionnaireImgAnswer
-          blockId={blockId}
-          nextBlockId={nextBlockId}
-          // items={block.imgOptions}
-          // onSelect={handleImageSelection}
-          // onPress={() => handleSealedImageSelection(block.id)}
-          // sealed={!(last === block.id)}
-          // correctAnswerId={block.correctAnswer[0]}
-          // isImgSelectedCorrect={block.value === block.correctAnswer[0]}
-          // points={block.points ?? 0}
-        />
-      );
+      return <QuestionnaireImgAnswer blockId={blockId} nextBlockId={nextBlockId} />;
   }
 };
 

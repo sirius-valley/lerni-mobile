@@ -36,7 +36,7 @@ const PillRow = ({
       css={{
         alignItems: 'center',
         gap: '8px',
-        minHeight: 48,
+        height: 48,
         padding: 12,
         borderRadius: 40,
         backgroundColor: !isLocked ? theme.primary800 : theme.gray800,
@@ -49,7 +49,7 @@ const PillRow = ({
             <QuestionnaireIcon color={isLocked ? theme.gray600 : theme.primary500} />
           ) : !isLocked ? (
             <Progress.Circle
-              size={30}
+              size={28}
               borderWidth={0}
               unfilledColor={theme.gray600}
               color={theme.primary500}
@@ -57,10 +57,9 @@ const PillRow = ({
               showsText={true}
               formatText={() => pillNumber}
               textStyle={{
-                fontSize: Platform.OS === 'ios' ? 18 : 16,
+                fontSize: 14,
                 color: 'white',
                 fontWeight: '600',
-                marginBottom: 6,
               }}
               animated={false}
               thickness={3.6}

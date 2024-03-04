@@ -1,9 +1,8 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-import store, { RootState } from '../store';
+import { RootState } from '../store';
 import { pillsApi } from '../service/pills.service';
 import { ImagesOptions, PillResponse } from '../service/types/pill.response';
 import { transformResponseBlock } from './utils';
-import { api } from '../service/api';
 
 export type BubbleType =
   | 'free-text'
@@ -20,6 +19,9 @@ export interface CommonBlockType {
   pointsAwarded?: number;
   correct?: boolean;
 }
+
+export const ProfessorBubble = ['text', 'image'];
+export const StudentBubble = ['single-choice', 'multiple-choice', 'carousel'];
 
 export interface SingleChoiceBlockType extends CommonBlockType {
   type: 'single-choice';
@@ -224,6 +226,13 @@ export const pillSlice = createSlice({
       const { id } = action.payload;
       state.freeTextQuestionId = id;
     },
+    cleanPill: (state) => {
+      state.blocksIds = [];
+      state.mapBlocks = {};
+      state.last = undefined;
+      state.freeTextQuestionId = undefined;
+      state.pill = undefined;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -291,6 +300,7 @@ export const {
   setSelectCarousel,
   setFreeTextAnswer,
   setFreeTextQuestionId,
+  cleanPill,
 } = pillSlice.actions;
 
 export default pillSlice.reducer;

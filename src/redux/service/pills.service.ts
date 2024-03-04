@@ -20,6 +20,7 @@ export const pillsApi = api.injectEndpoints({
         method: 'POST',
         body: body,
       }),
+      invalidatesTags: ['Home'],
     }),
     getIntroductionPill: builder.query<PillResponse, void>({
       providesTags: ['Introduction'],

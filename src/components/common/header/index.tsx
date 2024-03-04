@@ -1,6 +1,6 @@
 import { useTheme } from 'styled-components/native';
 import ChevronLeftIcon from '../../../../assets/icons/ChevronLeftIcon';
-import { StyledBox, StyledLine, StyledRow, StyledText } from '../../styled/styles';
+import { StyledBox, StyledLine, StyledPressable, StyledRow, StyledText } from '../../styled/styles';
 import { Pressable } from 'react-native';
 
 interface HeaderProps {
@@ -16,16 +16,19 @@ export const Header = ({ title, onPress }: HeaderProps) => {
         style={{
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 24,
+          gap: 4,
           paddingTop: 6,
           paddingBottom: 6,
           paddingLeft: 2,
           paddingRight: 2,
         }}
       >
-        <Pressable onPress={onPress}>
+        <StyledPressable
+          onPress={onPress}
+          css={{ height: 40, width: 40, display: 'flex', paddingLeft: 8, justifyContent: 'center' }}
+        >
           <ChevronLeftIcon color={theme.gray400} />
-        </Pressable>
+        </StyledPressable>
         <StyledText
           style={{
             fontSize: 16,
@@ -37,7 +40,6 @@ export const Header = ({ title, onPress }: HeaderProps) => {
           {title}
         </StyledText>
       </StyledRow>
-      <StyledLine color="gray400" />
     </StyledBox>
   );
 };

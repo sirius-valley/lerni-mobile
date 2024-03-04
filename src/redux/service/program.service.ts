@@ -1,4 +1,8 @@
-import { ProgramsData } from '../../redux/service/types/program.response';
+import {
+  Comment,
+  LeaderboardStudent,
+  ProgramsData,
+} from '../../redux/service/types/program.response';
 import { api } from './api';
 import { ProgramIdType, ProgramResponseType } from './types/program.response';
 import { FeedbackBody } from './types/pill.response';
@@ -25,10 +29,17 @@ export const programApi = api.injectEndpoints({
         body: body,
       }),
     }),
+    comments: builder.query<Comment[], string>({
+      query: (id: string) => ({ url: `/api/program/${id}/comments`, method: 'GET' }),
+    }),
+    leaderboard: builder.query<LeaderboardStudent[], string>({
+      query: (id: string) => ({ url: `/api/program/leaderboard/${id}`, method: 'GET' }),
+    }),
   }),
 });
 
 export const updatePillById = (newPill: { id: string; percentage: number }, programId: string) =>
+  // @ts-ignore
   api.util.updateQueryData('programById', programId, (draftPosts: ProgramResponseType) => {
     return {
       ...draftPosts,
@@ -44,4 +55,10 @@ export const {
   useLazyHomeProgramsQuery,
   // Feedback
   useFeedbackMutation,
+
+  // comment
+  useCommentsQuery,
+
+  // leaderboard
+  useLeaderboardQuery,
 } = programApi;

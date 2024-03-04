@@ -20,6 +20,7 @@ export const questionnaireApi = api.injectEndpoints({
         method: 'POST',
         body: body,
       }),
+      invalidatesTags: ['Home'],
     }),
   }),
 });

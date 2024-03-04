@@ -118,13 +118,14 @@ export const questionnaireSlice = createSlice({
       // }
     },
     sendImageSelected: (state, action) => {
-      const { carouselBlock } = action.payload;
-      state.mapBlocks[carouselBlock.id] = {
-        ...state.mapBlocks,
-        ...carouselBlock,
-        points: 5,
-        value: carouselBlock.correctAnswer[0] ?? '',
-      };
+      const paylou = action.payload;
+      // REMOVE THIS REDUCER
+      // state.mapBlocks[carouselBlock.id] = {
+      //   ...state.mapBlocks,
+      //   ...carouselBlock,
+      //   points: 5,
+      //   value: carouselBlock.correctAnswer[0] ?? '',
+      // };
     },
     // nextQuestion: (state, action) => {
     //   if (state.mapBlocks[state.last ?? '']?.type === 'single-choice') {
@@ -239,6 +240,7 @@ export const getQuestionnaireTypeByID = createSelector(
 export const {
   // getQuestionnaireById,
   setSingleAnswer,
+  handleImageSelectionChange,
   // nextQuestion,
   handleMultipleAnswerChange,
   sendMultipleAnswer,

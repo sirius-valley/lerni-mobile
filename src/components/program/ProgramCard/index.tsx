@@ -63,6 +63,8 @@ const ProgramCard = ({
               opacity: status === 'locked' ? 0.3 : 1,
               textAlign: 'center',
             }}
+            ellipsizeMode="tail"
+            numberOfLines={2}
           >
             {title}
           </StyledText>

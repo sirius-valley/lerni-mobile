@@ -22,35 +22,17 @@ type QuestionnaireImgAnswerItem = {
 interface QuestionnaireImgAnswerProps {
   blockId: string;
   nextBlockId: string;
-  // items: QuestionnaireImgAnswerItem[];
-  // onSelect: (id: string) => void;
-  // onPress: () => void;
-  // sealed: boolean;
-  // correctAnswerId: string;
-  // isImgSelectedCorrect: boolean;
-  // points?: number;
 }
 
-const QuestionnaireImgAnswer = ({
-  blockId,
-  nextBlockId,
-  // items,
-  // onSelect,
-  // onPress,
-  // sealed,
-  // correctAnswerId,
-  // isImgSelectedCorrect,
-  // points,
-}: QuestionnaireImgAnswerProps) => {
-  const { block, handleSealedImageSelection } = useQuestionnaire(blockId, { nextBlockId }) as {
-    block: CarouselBlockType;
-    handleSealedImageSelection: (carouselBlock: CarouselBlockType) => void;
-  };
+const QuestionnaireImgAnswer = ({ blockId, nextBlockId }: QuestionnaireImgAnswerProps) => {
+  const { block, handleSealedImageSelection, handleCarousel } = useQuestionnaire(blockId, {
+    nextBlockId,
+  });
   const [values, setValues] = useState(block);
 
   const { ZoomImageComponent, handleOpenImage } = useZoomImage({
     images:
-      block.options?.map((item) => ({
+      block.options?.map((item: any) => ({
         url: item.image,
       })) ?? [],
   });
@@ -61,9 +43,9 @@ const QuestionnaireImgAnswer = ({
   const isImgSelectedCorrect = values.value === block.correctAnswer?.[0];
 
   const handleSelect = (answerId: string) => {
-    setValues((prev) => ({
+    setValues((prev: any) => ({
       ...prev,
-      imgOptions: prev.imgOptions?.map((option) => {
+      imgOptions: prev.imgOptions?.map((option: any) => {
         return {
           ...option,
           selected: option.id === answerId ? true : false,
@@ -88,7 +70,7 @@ const QuestionnaireImgAnswer = ({
       }}
     >
       <StyledContainer
-        horizontal={sealed ? false : true}
+        horizontal={!sealed}
         contentContainerStyle={{
           paddingLeft: 8,
           paddingRight: 24,
@@ -97,7 +79,7 @@ const QuestionnaireImgAnswer = ({
         }}
         showsHorizontalScrollIndicator={false}
       >
-        {values.imgOptions?.map((item, index) => {
+        {values.imgOptions?.map((item: any, index: any) => {
           return (
             <StyledColumn key={item.id} css={{ alignItems: 'flex-end' }}>
               <StyledRow css={{ gap: '8px' }}>
@@ -123,9 +105,11 @@ const QuestionnaireImgAnswer = ({
       {!sealed && (
         <StyledRow style={{ alignItems: 'center', gap: 6, paddingHorizontal: 24 }}>
           <LabeledSend
-            onPress={() => handleSealedImageSelection(values)}
+            onPress={() => handleCarousel(values)}
             status={
-              values.imgOptions?.some((item) => item.selected) ? 'selected' : 'one_selection_only'
+              values.imgOptions?.some((item: any) => item.selected)
+                ? 'selected'
+                : 'one_selection_only'
             }
           />
         </StyledRow>

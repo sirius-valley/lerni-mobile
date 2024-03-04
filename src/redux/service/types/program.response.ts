@@ -51,6 +51,27 @@ export type ProgramResponseType = {
   };
 };
 
+export type Comment = {
+  id: string;
+  content: string;
+  student: {
+    id: string;
+    name: string;
+    lastname: string;
+    image: string;
+  };
+  createdAt: string;
+};
+
+export type LeaderboardStudent = {
+  id: string;
+  studentId: string;
+  profileImage: string;
+  rank: number;
+  fullName: string;
+  points: number;
+};
+
 export type ProgramIdType = string | string[] | undefined;
 
 export interface Program {

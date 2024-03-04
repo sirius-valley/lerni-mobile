@@ -23,10 +23,7 @@ const PillsSection = ({ pills, questionnaire }: PillsSectionProps) => {
 
   const handleGoToQuestionnaire = (id: string) =>
     router.push({
-      pathname: 'pill/testQuestionnaire',
-      params: {
-        id,
-      },
+      pathname: `pill/questionnaire/${id}`,
     });
 
   return (

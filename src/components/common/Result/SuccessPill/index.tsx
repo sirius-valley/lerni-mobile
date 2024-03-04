@@ -47,7 +47,7 @@ export const SuccessPill = ({
   const footer = () => {
     return (
       <StyledBox style={{ minWidth: '90%' }}>
-        <Button onPress={() => router.push('explore')}>{actionButtonLabel}</Button>
+        <Button onPress={() => router.back()}>{actionButtonLabel}</Button>
       </StyledBox>
     );
   };

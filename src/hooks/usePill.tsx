@@ -55,8 +55,9 @@ const usePill = (questionId: string, { nextBlockId }: useVirtualizedPillArgs) =>
       pillId: pillDetails!.pill.id,
       questionId: carouselBlockDetails.id,
       answer: carouselBlockDetails.options.find((item) => item.selected)!.id,
+    }).then(() => {
+      dispatch(setCarousel({ carouselBlockDetails }));
     });
-    dispatch(setCarousel({ carouselBlockDetails }));
   };
 
   const handleSelectCarousel = (answerId: string) => {

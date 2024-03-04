@@ -133,7 +133,7 @@ const ProgramDetail = () => {
         >
           <MessageIcon size={24} />
 
-          <Pressable onPress={() => router.push('/explore/comments')}>
+          <Pressable onPress={() => router.push(`/explore/comments/${id}`)}>
             <StyledText
               variant="body2"
               color="primary500"

@@ -10,7 +10,7 @@ import {
 } from '../redux/slice/questionnaire.slice';
 import { useAnswerQuestionnaireMutation } from '../redux/service/questionnaire.service';
 import { useLocalSearchParams } from 'expo-router';
-import { CarouselBlockType } from '../redux/slice/pill.slice';
+import { CarouselBlockType, setCarousel } from '../redux/slice/pill.slice';
 
 interface useVirtualizedPillArgs {
   nextBlockId?: string;
@@ -60,6 +60,23 @@ const useQuestionnaire = (questionId: string, { nextBlockId }: useVirtualizedPil
   const handleSealedImageSelection = (answerId: string) => {
     dispatch(sendImageSelected({ id: answerId }));
   };
+  const handleCarousel = (carouselBlockDetails: any) => {
+    /*
+    imgOptions: prev.imgOptions?.map((option:any) => {
+        return {
+          ...option,
+          selected: option.id === answerId ? true : false,
+        };
+      }),
+     */
+    answer({
+      questionnaireId: questionnaireId as string,
+      questionId: blockDetails.id,
+      answer: carouselBlockDetails.imgOptions.find((item: any) => item.selected)!.image,
+    }).then(() => {
+      dispatch(setCarousel({ carouselBlockDetails }));
+    });
+  };
 
   return {
     block: blockDetails,
@@ -68,6 +85,7 @@ const useQuestionnaire = (questionId: string, { nextBlockId }: useVirtualizedPil
     handleMultipleAnswer,
     handleSealedMultipleAnswer,
     // handleImageSelection,
+    handleCarousel,
     handleSealedImageSelection,
   };
 };

@@ -4,32 +4,34 @@ import Avatar from '../../common/Avatar';
 import RhombusIcon from '../../../../assets/icons/RhombusIcon';
 import { StyledLeaderboardRowContainer } from './styles';
 import { useTheme } from 'styled-components/native';
+import { useMeQuery } from '../../../redux/service/student.service';
 
 interface LeaderboardRowInterface {
-  imgUrl?: string;
+  studentId: string;
+  profileImage?: string;
   fullName: string;
-  position: number;
+  rank: number;
   points: number;
-  belongsToCurrentUser?: boolean;
 }
 
 const LeaderboardRow = ({
-  imgUrl,
+  studentId,
+  profileImage,
   fullName,
-  position,
+  rank,
   points,
-  belongsToCurrentUser = false,
 }: LeaderboardRowInterface) => {
   const theme = useTheme();
+  const { data: me } = useMeQuery();
   return (
-    <StyledLeaderboardRowContainer belongsToOwner={belongsToCurrentUser}>
+    <StyledLeaderboardRowContainer belongsToOwner={studentId === me?.id}>
       <StyledRow css={{ gap: 8, alignItems: 'center', justifyContent: 'flex-start', width: '83%' }}>
         <StyledBox css={{ justifyContent: 'center', padddingVertical: 11, paddingHorizontal: 8 }}>
           <StyledText variant="h2" style={{ color: theme.gray100 }}>
-            {position}
+            {rank}
           </StyledText>
         </StyledBox>
-        <Avatar uri={imgUrl ? imgUrl : undefined} size={48} />
+        <Avatar uri={profileImage} size={48} />
         <StyledText variant="h3" color="gray100" css={{ width: '52%', fontSize: '14px' }}>
           {fullName}
         </StyledText>

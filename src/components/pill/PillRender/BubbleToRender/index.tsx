@@ -1,35 +1,41 @@
 import TextBubble from '../../../bubbles/TextBubble';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Avatar from '../../../common/Avatar';
 import ImageBubble from '../../../bubbles/ImageBubble';
 import MultipleAnswer from '../../../bubbles/MultipleAnswer';
 import usePill from '../../../../hooks/usePill';
 import SingleAnswer from '../../../bubbles/SingleAnswer';
 import Carousel from '../../../pill-blocks/Carousel';
+import { ProfessorBubble, setFreeTextQuestionId } from '../../../../redux/slice/pill.slice';
+import { useLDispatch, useLSelector } from '../../../../redux/hooks';
 
 type UserType = 'professor' | 'student';
 
 interface BubbleToRenderProps {
-  isLastBubbleSide: boolean;
-  profProgram: string;
-  user: UserType;
   blockId: string;
   nextBlockId: string;
-  last: string;
 }
 
-const BubbleToRender = ({
-  isLastBubbleSide,
-  profProgram,
-  user,
-  blockId,
-  nextBlockId,
-  last,
-}: BubbleToRenderProps) => {
-  const { block, handleSingleAnswer, handleMultipleAnswer, handleSelectMultipleAnswer } = usePill(
-    blockId,
-    { nextBlockId },
-  );
+const BubbleToRender = ({ blockId, nextBlockId }: BubbleToRenderProps) => {
+  const {
+    block,
+    handleSingleAnswer,
+    handleMultipleAnswer,
+    handleSelectMultipleAnswer,
+    nextBlockType,
+  } = usePill(blockId, { nextBlockId });
+  const dispatch = useLDispatch();
+  const last = useLSelector((state) => state.pill.last);
+  const user = ProfessorBubble.includes(block.type) ? 'professor' : 'student';
+  const nextBlockUser = ProfessorBubble.includes(nextBlockType) ? 'professor' : 'student';
+  const profProgram = useLSelector((state) => state.pill?.pill?.teacher?.image);
+  const isLastBubbleSide = user !== nextBlockUser;
+
+  useEffect(() => {
+    if (block.type === 'free-text' && last === block.id) {
+      dispatch(setFreeTextQuestionId({ id: block.id }));
+    }
+  }, [block.type]);
 
   switch (block.type) {
     case 'text':

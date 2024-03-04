@@ -76,14 +76,14 @@ const CarouselItem = ({
           css={{
             width: width - 40,
             height: height,
-            borderRadius: sealed ? '8px 8px 2px 8px' : dimensions.height < 58 ? 0 : 8,
+            borderRadius: sealed ? '8px 8px 2px 8px' : height < 58 ? 0 : 8,
             opacity: hasOpacity ? 0.4 : 1,
           }}
         />
       </StyledBox>
       <StyledRow style={{ gap: 8 }}>
         {!sealed && (
-          <Checkbox disabled={disabled} checked={selected ? true : false} onPress={handleSelect} />
+          <Checkbox disabled={disabled} checked={!!selected} onPress={handleSelect} isSingle />
         )}
         <StyledColumn style={{ maxHeight: 40, maxWidth: width * 0.9 }}>
           <StyledText color={'gray100'} css={{ opacity: hasOpacity ? 0.4 : 1 }} variant={'h4'}>

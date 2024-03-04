@@ -53,7 +53,6 @@ const Carousel = ({ blockId, nextBlockId }: CarouselProps) => {
         alignItems: 'flex-end',
         gap: 12,
         paddingLeft: 24,
-        backgroundColor: 'red',
       }}
     >
       <StyledCarouselContainer
