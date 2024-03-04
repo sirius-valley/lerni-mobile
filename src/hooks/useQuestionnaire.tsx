@@ -2,15 +2,12 @@ import { useLDispatch, useLSelector } from '../redux/hooks';
 import {
   getQuestionnaireByID,
   getQuestionnaireTypeByID,
-  handleImageSelectionChange,
   handleMultipleAnswerChange,
-  sendImageSelected,
-  sendMultipleAnswer,
   setSingleAnswer,
 } from '../redux/slice/questionnaire.slice';
 import { useAnswerQuestionnaireMutation } from '../redux/service/questionnaire.service';
 import { useLocalSearchParams } from 'expo-router';
-import { CarouselBlockType, setCarousel } from '../redux/slice/pill.slice';
+import { setCarousel } from '../redux/slice/pill.slice';
 
 interface useVirtualizedPillArgs {
   nextBlockId?: string;
@@ -53,22 +50,7 @@ const useQuestionnaire = (questionId: string, { nextBlockId }: useVirtualizedPil
     });
   };
 
-  const handleImageSelection = (answerId: string) => {
-    dispatch(handleImageSelectionChange({ id: questionId, value: answerId }));
-  };
-
-  const handleSealedImageSelection = (answerId: string) => {
-    dispatch(sendImageSelected({ id: answerId }));
-  };
   const handleCarousel = (carouselBlockDetails: any) => {
-    /*
-    imgOptions: prev.imgOptions?.map((option:any) => {
-        return {
-          ...option,
-          selected: option.id === answerId ? true : false,
-        };
-      }),
-     */
     answer({
       questionnaireId: questionnaireId as string,
       questionId: blockDetails.id,
@@ -84,9 +66,7 @@ const useQuestionnaire = (questionId: string, { nextBlockId }: useVirtualizedPil
     handleSingleAnswer,
     handleMultipleAnswer,
     handleSealedMultipleAnswer,
-    // handleImageSelection,
     handleCarousel,
-    handleSealedImageSelection,
   };
 };
 
