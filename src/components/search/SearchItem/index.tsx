@@ -74,7 +74,7 @@ const SearchItem = ({
           <StyledText variant="h4" color={'white'}>
             {title}
           </StyledText>
-          <StyledText variant="body2" color={'gray200'}>
+          <StyledText numberOfLines={4} variant="body2" color={'gray200'}>
             {description}
           </StyledText>
         </StyledColumn>
