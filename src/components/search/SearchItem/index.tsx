@@ -3,6 +3,7 @@ import { StyledColumn, StyledRow, StyledText } from '../../styled/styles';
 import * as Progress from 'react-native-progress';
 import { useTheme } from 'styled-components';
 import ProgramCard from '../../program/ProgramCard';
+import { Pressable } from 'react-native';
 
 export type SearchResultType = 'program' | 'pill' | 'professionals';
 export type SearchResultStatus = 'in_progress' | 'not_started' | 'completed' | 'locked';
@@ -58,25 +59,27 @@ const SearchItem = ({
     );
 
   return (
-    <StyledRow
-      css={{
-        width: '100%',
-        height: '100px',
-        gap: '8px',
-        padding: '4px',
-        alignItems: 'center',
-      }}
-    >
-      {renderImage()}
-      <StyledColumn css={{ width: '70%', height: '87px', gap: '4px' }}>
-        <StyledText variant="h4" color={'white'}>
-          {title}
-        </StyledText>
-        <StyledText variant="body2" color={'gray200'}>
-          {description}
-        </StyledText>
-      </StyledColumn>
-    </StyledRow>
+    <Pressable onPress={() => alert('pressed')}>
+      <StyledRow
+        css={{
+          width: '100%',
+          height: '100px',
+          gap: '8px',
+          padding: '4px',
+          alignItems: 'center',
+        }}
+      >
+        {renderImage()}
+        <StyledColumn css={{ width: '70%', height: '87px', gap: '4px' }}>
+          <StyledText variant="h4" color={'white'}>
+            {title}
+          </StyledText>
+          <StyledText variant="body2" color={'gray200'}>
+            {description}
+          </StyledText>
+        </StyledColumn>
+      </StyledRow>
+    </Pressable>
   );
 };
 
