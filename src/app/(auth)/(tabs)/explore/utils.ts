@@ -264,6 +264,7 @@ export const mockedSearchResults = [
     status: 'locked' as SearchResultStatus,
   },
 ];
+
 interface ProfessorMessageType {
   type: 'image' | 'text';
   user: UserTypes;

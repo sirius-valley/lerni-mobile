@@ -27,6 +27,7 @@ const TabsLayout = () => {
   return (
     <Tabs
       screenOptions={{
+        tabBarHideOnKeyboard: true,
         headerShown: false,
         tabBarStyle: {
           backgroundColor: theme.primary800,
@@ -38,6 +39,7 @@ const TabsLayout = () => {
           paddingTop: 8,
           paddingBottom: insets.bottom,
           borderTopWidth: 0,
+          position: 'absolute',
         },
       }}
     >

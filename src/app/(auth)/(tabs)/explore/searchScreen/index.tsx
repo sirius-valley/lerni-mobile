@@ -1,27 +1,92 @@
 import React, { useEffect, useState } from 'react';
-import { StyledColumn, StyledRow, StyledText } from '../../../../../components/styled/styles';
+import {
+  StyledBox,
+  StyledColumn,
+  StyledRow,
+  StyledText,
+} from '../../../../../components/styled/styles';
 import SearchBar from '../../../../../components/common/SearchBar';
-import { Pressable, ScrollView } from 'react-native';
+import { FlatList, Pressable, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import QuickFilter from '../../../../../components/search/QuickFilter';
-import { mockedSearchResults, quickFilters } from '../utils';
-import SearchItem from '../../../../../components/search/SearchItem';
+import { quickFilters } from '../utils';
+import SearchItem, {
+  SearchResultStatus,
+  SearchResultType,
+} from '../../../../../components/search/SearchItem';
 import SearchScreenSkeleton from '../../../../../components/search/SearchScreenSkeleton';
+import { useSearchQuery } from '../../../../../redux/service/home.service';
 import ErrorDisplay from '../../../../../components/common/ErrorDisplay';
 
+interface SearchResult {
+  id: string;
+  type: SearchResultType;
+  title: string;
+  description: string;
+  imgUrl: string;
+  status: SearchResultStatus;
+  progress?: number;
+}
+
+export interface SearchbarQueryParams {
+  page?: string;
+  filter?: string;
+  search?: string;
+}
 const SearchScreen = () => {
   const [searchValue, setSearchValue] = useState('');
-  const [filterValue, setFilterValue] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [quickFilterSelected, setQuickFilterSelected] = useState(quickFilters[0]);
+  const [currentPage, setCurrentPage] = useState('1');
+  const [loading, setLoading] = useState(false);
+  const [params, setParams] = useState<SearchbarQueryParams>({});
 
   const router = useRouter();
 
-  // DEBOUNCE
-  // For now, it filters by title.
+  const { data, refetch, error, isLoading: loadingQuery, isSuccess } = useSearchQuery(params);
+  const [resultsToShow, setResultsToShow] = useState<any[]>();
+
   useEffect(() => {
+    if (!params?.page) setResultsToShow(data?.results);
+    else
+      setResultsToShow((prevResult) => {
+        if (data?.results) {
+          if (prevResult === undefined) return [...data.results];
+          else return [...prevResult, ...data.results] as SearchResult[];
+        } else {
+          return prevResult;
+        }
+      });
+  }, [data]);
+
+  useEffect(() => {
+    if (!searchValue) {
+      setParams(() => {
+        const newParams = {};
+
+        return newParams;
+      });
+    } else {
+      setParams(() => {
+        const newParams = { search: searchValue };
+        return newParams;
+      });
+    }
+
     const timeout = setTimeout(() => {
-      setFilterValue(searchValue.toLowerCase());
+      if (!searchValue) {
+        setParams(() => {
+          const newParams = {};
+
+          return newParams;
+        });
+      } else {
+        setParams(() => {
+          const newParams = { search: searchValue };
+          return newParams;
+        });
+      }
+      refetch();
     }, 500);
     return () => clearTimeout(timeout);
   }, [searchValue]);
@@ -32,14 +97,20 @@ const SearchScreen = () => {
     }, 1000);
   }, []);
 
+  useEffect(() => {
+    setParams((prevParams) => {
+      const newParams = { ...prevParams, page: currentPage };
+      return newParams;
+    });
+
+    refetch();
+  }, [currentPage]);
+
   const handleCancelButton = () => router.back();
 
-  const filteredValues = mockedSearchResults
-    .filter((result) => result.title.toLowerCase().includes(filterValue))
-    .filter((result) => {
-      if (!quickFilterSelected.type) return true;
-      return result.type === quickFilterSelected.type;
-    });
+  const handleEndReached = () => {
+    setCurrentPage((prevPage) => String(Number(prevPage) + 1));
+  };
 
   return (
     <StyledColumn
@@ -62,6 +133,7 @@ const SearchScreen = () => {
           onChangeText={(value) => setSearchValue(value)}
           onCancelPress={() => setSearchValue('')}
         />
+
         <Pressable
           style={{
             height: '100%',
@@ -97,38 +169,38 @@ const SearchScreen = () => {
         </ScrollView>
       </StyledRow>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {isLoading ? (
-          <SearchScreenSkeleton />
-        ) : (
-          <StyledColumn
-            css={{
-              gap: '16px',
-            }}
-          >
-            {filteredValues.map((result) => (
-              <SearchItem
-                key={result.id}
-                type={result.type}
-                title={result.title}
-                description={result.description}
-                status={result?.status}
-                progress={result?.progress}
-                imgUrl={result?.imgUrl}
-              />
-            ))}
-          </StyledColumn>
-        )}
-        {filteredValues.length === 0 && (
-          <StyledColumn
-            css={{
-              paddingTop: '30%',
-            }}
-          >
-            <ErrorDisplay type="no-results" />
-          </StyledColumn>
-        )}
-      </ScrollView>
+      {isLoading ? (
+        <SearchScreenSkeleton />
+      ) : resultsToShow && resultsToShow?.length > 0 ? (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ gap: 16 }}
+          data={resultsToShow}
+          onEndReached={handleEndReached}
+          ListFooterComponent={() => <StyledBox>{loading && <SearchScreenSkeleton />}</StyledBox>}
+          renderItem={(data) => (
+            <SearchItem
+              key={data.item.id}
+              type={data.item.searchType}
+              title={data.item.name}
+              description={data.item.description}
+              status={data?.item.status}
+              progress={data?.item.progress}
+              imgUrl={data?.item.imgUrl}
+            />
+          )}
+        />
+      ) : (
+        <StyledColumn
+          style={{
+            height: 500,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ErrorDisplay type="no-results" />
+        </StyledColumn>
+      )}
     </StyledColumn>
   );
 };
