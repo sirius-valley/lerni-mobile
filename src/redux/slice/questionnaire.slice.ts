@@ -1,5 +1,10 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-import { BlockType, MultipleChoiceBlockType, SingleChoiceBlockType } from './pill.slice';
+import {
+  BlockType,
+  CarouselBlockType,
+  MultipleChoiceBlockType,
+  SingleChoiceBlockType,
+} from './pill.slice';
 import { transformQuestionnaireResponseBlock } from './utils';
 import { RootState } from '../store';
 import { questionnaireApi } from '../service/questionnaire.service';
@@ -85,6 +90,26 @@ export const questionnaireSlice = createSlice({
         };
       }
     },
+    setCarousel: (state, action) => {
+      const { carouselBlockDetails }: Record<string, CarouselBlockType> = action.payload;
+      const id = carouselBlockDetails.id;
+      const block: CarouselBlockType = state.mapBlocks[id] as CarouselBlockType;
+
+      state.mapBlocks[id] = {
+        ...block,
+        imgOptions: carouselBlockDetails.imgOptions?.map((item) => {
+          if (!item.selected) {
+            return {
+              ...item,
+              selected: false,
+            };
+          } else {
+            return item;
+          }
+        }),
+        sealed: true,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -128,7 +153,7 @@ export const questionnaireSlice = createSlice({
 
           // Set properties to the answered bubble
           let lastBlock = state.mapBlocks[lastQuestionId];
-          if (['single-choice', 'multiple-choice'].includes(lastBlock.type)) {
+          if (['single-choice', 'multiple-choice', 'carousel'].includes(lastBlock.type)) {
             lastBlock = {
               ...lastBlock,
               pointsAwarded: action.payload.questionnaire.pointsAwarded,
@@ -158,7 +183,7 @@ export const getQuestionnaireTypeByID = createSelector(
   },
 );
 
-export const { setSingleAnswer, handleMultipleAnswerChange, sendMultipleAnswer } =
+export const { setSingleAnswer, handleMultipleAnswerChange, sendMultipleAnswer, setCarousel } =
   questionnaireSlice.actions;
 
 export default questionnaireSlice.reducer;

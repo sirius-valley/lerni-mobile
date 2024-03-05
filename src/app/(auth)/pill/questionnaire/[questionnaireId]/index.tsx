@@ -10,7 +10,7 @@ import {
   Platform,
   VirtualizedList,
 } from 'react-native';
-import { useLDispatch, useLSelector } from '../../../../../redux/hooks';
+import { useLSelector } from '../../../../../redux/hooks';
 import { useQuestionnaireByIdQuery } from '../../../../../redux/service/questionnaire.service';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import usePrevious from '../../../../../hooks/usePrevious';
@@ -28,6 +28,7 @@ const Questionnaire = () => {
       skip: !questionnaireId,
     },
   );
+
   const blocksIds = useLSelector((state) => state.questionnaire.blocksIds);
   const pillProgress = useLSelector(
     (state) => state.questionnaire?.questionnaire?.questionnaire.progress,
@@ -67,7 +68,9 @@ const Questionnaire = () => {
       prevData !== undefined &&
       [QuestionnaireState.COMPLETED, QuestionnaireState.FAILED].includes(pillCompleted)
     ) {
-      setTimeout(() => animateBoxes(), 850);
+      setTimeout(() => {
+        animateBoxes();
+      }, 850);
     }
   }, [pillCompleted, prevData]);
 

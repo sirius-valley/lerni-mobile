@@ -7,7 +7,7 @@ import {
 } from '../redux/slice/questionnaire.slice';
 import { useAnswerQuestionnaireMutation } from '../redux/service/questionnaire.service';
 import { useLocalSearchParams } from 'expo-router';
-import { setCarousel } from '../redux/slice/pill.slice';
+import { setCarousel } from '../redux/slice/questionnaire.slice';
 
 interface useVirtualizedPillArgs {
   nextBlockId?: string;
