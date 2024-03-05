@@ -26,6 +26,7 @@ export const StudentBubble = ['single-choice', 'multiple-choice', 'carousel'];
 export interface SingleChoiceBlockType extends CommonBlockType {
   type: 'single-choice';
   content?: string[];
+  sealed?: boolean;
   options: {
     id: string;
     text: string;
