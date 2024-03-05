@@ -97,6 +97,14 @@ export const questionnaireSlice = createSlice({
           action.payload.questionnaire.bubbles[action.payload.questionnaire.bubbles.length - 1].id;
         state.questionnaire = action.payload;
       })
+      .addMatcher(questionnaireApi.endpoints.answerQuestionnaire.matchPending, (state, action) => {
+        const lastQuestionId = state.last as string;
+        const lastBlock = state.mapBlocks[lastQuestionId];
+        state.mapBlocks[lastQuestionId] = {
+          ...lastBlock,
+          sealed: true,
+        };
+      })
       .addMatcher(
         questionnaireApi.endpoints.answerQuestionnaire.matchFulfilled,
         (state, action) => {
