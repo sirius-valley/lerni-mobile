@@ -46,6 +46,7 @@ const HeaderProgram = ({ imgURL, progress, nextPillId }: HeaderProgramProps) => 
       <StyledBox css={{ position: 'relative' }}>
         <StyledImage
           source={{ uri: imgURL }}
+          defaultSource={{ uri: imgURL }}
           style={{ width: '100%', height: 190 }}
           loadingIndicatorSource={require('../../../../../../../../assets/backgroundProgramImage.png')}
         />

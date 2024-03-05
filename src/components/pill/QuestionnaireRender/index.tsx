@@ -4,6 +4,7 @@ import { MessageContainer } from '../../bubbles/ChatBubble/styles';
 import useQuestionnaire from '../../../hooks/useQuestionnaire';
 import { useLSelector } from '../../../redux/hooks';
 import QuestionnaireBubbleToRender from './QuestionnaireBubbleToRender';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 const ProfessorBubble = ['text', 'image'];
 
@@ -22,20 +23,22 @@ const QuestionnaireRender = ({ blockId, nextBlockId }: QuestionnaireRenderProps)
   const profProgram = useLSelector((state) => state.questionnaire?.questionnaire?.teacher?.image);
 
   return (
-    <MessageContainer
-      key={'bubble-' + block.id}
-      user={ProfessorBubble.includes(block.type) ? 'professor' : 'student'}
-      css={{ marginBottom: ProfessorBubble.includes(block.type) ? 4 : 16 }}
-    >
-      <QuestionnaireBubbleToRender
-        isLastBubbleSide={isLastBubbleSide}
-        profProgram={profProgram ?? ''}
-        user={user}
-        blockId={blockId}
-        nextBlockId={nextBlockId ?? ''}
-        last={last ?? ''}
-      />
-    </MessageContainer>
+    <Animated.View entering={FadeInDown.delay(last === block.id ? 600 : 300)}>
+      <MessageContainer
+        key={'bubble-' + block.id}
+        user={ProfessorBubble.includes(block.type) ? 'professor' : 'student'}
+        css={{ marginBottom: ProfessorBubble.includes(block.type) ? 4 : 16 }}
+      >
+        <QuestionnaireBubbleToRender
+          isLastBubbleSide={isLastBubbleSide}
+          profProgram={profProgram ?? ''}
+          user={user}
+          blockId={blockId}
+          nextBlockId={nextBlockId ?? ''}
+          last={last ?? ''}
+        />
+      </MessageContainer>
+    </Animated.View>
   );
 };
 
