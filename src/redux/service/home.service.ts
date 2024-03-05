@@ -6,7 +6,7 @@ export const homeApi = api.injectEndpoints({
     programEnrolled: builder.query({
       query: () => ({ url: '/home', method: 'GET' }),
     }),
-    search: builder.query<SearchResponse, { page?: string; filter?: string; search?: string }>({
+    search: builder.query<SearchResponse, SearchQueryParams>({
       query: ({ page, filter, search }: SearchQueryParams) => ({
         url: `/api/search`,
         method: 'GET',

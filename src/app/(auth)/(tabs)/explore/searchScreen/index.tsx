@@ -173,6 +173,7 @@ const SearchScreen = () => {
         <SearchScreenSkeleton />
       ) : resultsToShow && resultsToShow?.length > 0 ? (
         <FlatList
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={{ gap: 16 }}
           data={resultsToShow}
           onEndReached={handleEndReached}
@@ -190,7 +191,15 @@ const SearchScreen = () => {
           )}
         />
       ) : (
-        <ErrorDisplay type="no-results" />
+        <StyledColumn
+          style={{
+            height: 500,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ErrorDisplay type="no-results" />
+        </StyledColumn>
       )}
     </StyledColumn>
   );
