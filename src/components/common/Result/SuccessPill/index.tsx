@@ -16,6 +16,7 @@ interface SuccessPillProps {
   iconType?: 'confeti' | 'handsup';
   winsPoints?: boolean;
   actionButtonLabel?: string;
+  callbackAction: () => void;
 }
 
 export const SuccessPill = ({
@@ -25,6 +26,7 @@ export const SuccessPill = ({
   iconType = 'confeti',
   winsPoints = false,
   actionButtonLabel = 'Siguiente',
+  callbackAction,
 }: SuccessPillProps) => {
   const theme = useTheme();
   const router = useRouter();
@@ -47,7 +49,7 @@ export const SuccessPill = ({
   const footer = () => {
     return (
       <StyledBox style={{ minWidth: '90%' }}>
-        <Button onPress={() => router.back()}>{actionButtonLabel}</Button>
+        <Button onPress={callbackAction}>{actionButtonLabel}</Button>
       </StyledBox>
     );
   };

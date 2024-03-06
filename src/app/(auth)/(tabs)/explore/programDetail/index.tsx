@@ -69,7 +69,7 @@ const ProgramDetail = () => {
           flex: 1,
           justifyContent: 'flex-start',
           height: '100%',
-          paddingBottom: '12px',
+          paddingBottom: 120,
           paddingHorizontal: 24,
           width: '100%',
           alignItems: 'center',

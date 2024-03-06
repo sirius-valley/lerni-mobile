@@ -18,7 +18,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import usePrevious from '../../../../hooks/usePrevious';
 import { api } from '../../../../redux/service/api';
 import SkeletonPill from '../../../../components/pill/SkeletonPill';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { cleanPill } from '../../../../redux/slice/pill.slice';
 
 const MainPill = () => {
@@ -37,6 +37,8 @@ const MainPill = () => {
   const screenHeight = Dimensions.get('window').height - insets.top - insets.bottom - 40;
   const box1Height = useRef(new Animated.Value(0)).current;
   const box2Height = useRef(new Animated.Value(screenHeight)).current;
+
+  const route = useRouter();
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -135,6 +137,7 @@ const MainPill = () => {
               show={show}
               programName={`terminaste la pildora ${pillTitle}`}
               iconType="handsup"
+              callbackAction={route.back}
             />
           </StyledBox>
         </Animated.View>

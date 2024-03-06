@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ProgramsData } from '../service/types/program.response';
 import { programApi } from '../service/program.service';
+import { pillSlice } from './pill.slice';
 
 interface initialStateType extends ProgramsData {
   id?: string;
@@ -17,7 +18,11 @@ const initialState: initialStateType = {
 export const programSlice = createSlice({
   name: 'programSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    setProgramId: (state, action) => {
+      state.id = action.payload.id;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher(programApi.endpoints.homePrograms.matchFulfilled, (state, action) => {
@@ -30,5 +35,7 @@ export const programSlice = createSlice({
       });
   },
 });
+
+export const { setProgramId } = programSlice.actions;
 
 export default programSlice.reducer;

@@ -19,6 +19,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import usePrevious from '../../../../hooks/usePrevious';
 import { api } from '../../../../redux/service/api';
 import SkeletonPill from '../../../../components/pill/SkeletonPill';
+import { useRouter } from 'expo-router';
 
 const Pill = () => {
   const { data, isLoading: isLoadingPill, refetch } = useGetIntroductionPillQuery();
@@ -35,6 +36,8 @@ const Pill = () => {
   const screenHeight = Dimensions.get('window').height - insets.top - insets.bottom - 40;
   const box1Height = useRef(new Animated.Value(0)).current;
   const box2Height = useRef(new Animated.Value(screenHeight)).current;
+
+  const route = useRouter();
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -132,6 +135,7 @@ const Pill = () => {
               actionButtonLabel={'Ir al inicio'}
               hasConfeti
               winsPoints
+              callbackAction={route.back}
             />
           </StyledBox>
         </Animated.View>

@@ -33,10 +33,7 @@ const HeaderProgram = ({ imgURL, progress, nextPillId }: HeaderProgramProps) => 
       });
     } else {
       router.push({
-        pathname: '/(auth)/questionnaire/questionnaireDetail',
-        params: {
-          id: nextPillId?.id,
-        },
+        pathname: `/(auth)/pill/questionnaire/${nextPillId?.id}`,
       });
     }
   };

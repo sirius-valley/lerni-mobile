@@ -14,6 +14,7 @@ export const programApi = api.injectEndpoints({
         url: `api/program/${id}`,
         method: 'GET',
       }),
+      providesTags: (result, error, arg) => [{ type: 'ProgramById', id: result!.id }],
     }),
     homePrograms: builder.query<ProgramsData, void>({
       providesTags: ['Home'],
@@ -41,11 +42,17 @@ export const programApi = api.injectEndpoints({
 export const updatePillById = (newPill: { id: string; percentage: number }, programId: string) =>
   // @ts-ignore
   api.util.updateQueryData('programById', programId, (draftPosts: ProgramResponseType) => {
+    const newPills = draftPosts!.pills.map((pill) =>
+      pill.id === newPill.id ? { ...pill, pillProgress: newPill.percentage } : pill,
+    );
+    const isQuestionnaireAvailable = newPills.find((pill) => pill.pillProgress !== 100);
     return {
       ...draftPosts,
-      pills: draftPosts!.pills.map((pill) =>
-        pill.id === newPill.id ? { ...pill, pillProgress: newPill.percentage } : pill,
-      ),
+      pills: newPills,
+      questionnaire: {
+        ...draftPosts.questionnaire,
+        isLocked: !!isQuestionnaireAvailable,
+      },
     };
   });
 
