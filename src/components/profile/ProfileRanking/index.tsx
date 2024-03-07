@@ -34,7 +34,7 @@ export const ProfileRanking = () => {
           <StyledRow style={{ gap: 8, alignItems: 'center' }}>
             <RhombusIcon size={18} />
             <StyledText variant="h1" style={{ color: theme.white }}>
-              {'700 Puntos'}
+              {'5 Puntos'}
             </StyledText>
           </StyledRow>
         </StyledColumn>
@@ -52,7 +52,7 @@ export const ProfileRanking = () => {
           }}
         >
           <StyledText style={{ color: theme.primary650, fontFamily: 'Roboto-Bold', fontSize: 14 }}>
-            {'Posicion #10'}
+            {'Posicion #1846'}
           </StyledText>
         </StyledBox>
       </StyledColumn>
