@@ -15,7 +15,12 @@ const PillsSection = ({ pills, questionnaire }: PillsSectionProps) => {
   const router = useRouter();
 
   const questionnaireUnlockTime = useLSelector((state) => state.program.questionnaireUnlockTime);
-  const isQuestionnaireLocked = !!questionnaireUnlockTime;
+
+  const isQuestionnaireLocked = () => {
+    if (questionnaire.isLocked) return true;
+    if (questionnaireUnlockTime) return true;
+    return false;
+  };
 
   const handleGoToPill = (id: string) =>
     router.push({
@@ -26,7 +31,7 @@ const PillsSection = ({ pills, questionnaire }: PillsSectionProps) => {
     });
 
   const handleGoToQuestionnaire = (id: string) => {
-    if (isQuestionnaireLocked) return null;
+    if (isQuestionnaireLocked()) return null;
     router.push({
       pathname: `pill/questionnaire/${id}`,
     });
@@ -57,7 +62,7 @@ const PillsSection = ({ pills, questionnaire }: PillsSectionProps) => {
           pillProgress={questionnaire.questionnaireProgress}
           pillNumber={0}
           duration={questionnaire.completionTimeMinutes}
-          isLocked={isQuestionnaireLocked}
+          isLocked={isQuestionnaireLocked()}
           unlockTime={questionnaireUnlockTime}
           id={questionnaire.id}
           isQuestionnaire

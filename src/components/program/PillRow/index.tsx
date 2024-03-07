@@ -40,6 +40,7 @@ const PillRow = ({
     expiryTimestamp: unlockTime ? new Date(unlockTime) : new Date(),
     onExpire: () => isQuestionnaire && unlockQuestionnaireDispatch(),
   });
+
   useEffect(() => {
     if (unlockTime) restart(new Date(unlockTime));
   }, [unlockTime]);
@@ -85,7 +86,7 @@ const PillRow = ({
           <StyledText
             variant="body2"
             color={!isLocked ? 'gray100' : 'gray600'}
-            css={{ width: isRunning ? '35%' : '' }}
+            css={{ width: isRunning && !!unlockTime ? '35%' : '' }}
           >
             {pillName}
           </StyledText>
@@ -93,7 +94,7 @@ const PillRow = ({
           <StyledText variant="body3" color={!isLocked ? 'primary600' : 'gray600'}>
             {duration} min
           </StyledText>
-          {isRunning && (
+          {isRunning && !!unlockTime && (
             <StyledText variant="body2" color={!isLocked ? 'gray100' : 'gray600'}>
               Disponible en {hours < 10 ? `0${hours}` : hours}:
               {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}hs
