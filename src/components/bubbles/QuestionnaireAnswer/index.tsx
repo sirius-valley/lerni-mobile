@@ -38,7 +38,7 @@ const QuestionnaireMultipleAnswer = ({
   };
 
   const renderStatusIcon = (text: string, selected: boolean) => {
-    if (selected && sealed) {
+    if (selected && sealed && correctAnswers) {
       const isCorrect = correctAnswers?.includes(text);
       return isCorrect ? <CheckIcon /> : <MultiplyIcon />;
     }

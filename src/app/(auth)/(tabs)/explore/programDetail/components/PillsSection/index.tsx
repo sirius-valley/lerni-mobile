@@ -42,7 +42,7 @@ const PillsSection = ({ pills, questionnaire }: PillsSectionProps) => {
           <StyledBox>
             <PillRow
               pillName={pill.pillName}
-              pillProgress={pill.pillProgress}
+              pillProgress={pill.pillProgress / 100}
               pillNumber={idx + 1}
               duration={pill.completionTimeMinutes}
               isLocked={pill.isLocked}
