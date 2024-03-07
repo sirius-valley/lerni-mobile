@@ -25,6 +25,9 @@ export const programSlice = createSlice({
     setProgramId: (state, action) => {
       state.id = action.payload.id;
     },
+    unlockQuestionnaire: (state) => {
+      state.questionnaireUnlockTime = '';
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -48,6 +51,6 @@ export const programSlice = createSlice({
   },
 });
 
-export const { setProgramId } = programSlice.actions;
+export const { setProgramId, unlockQuestionnaire } = programSlice.actions;
 
 export default programSlice.reducer;

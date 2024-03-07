@@ -5,7 +5,6 @@ import React from 'react';
 import { ProgramResponseType } from '../../../../../../../redux/service/types/program.response';
 import { useRouter } from 'expo-router';
 import { useLSelector } from '../../../../../../../redux/hooks';
-import { QuestionnaireState } from '../../../../../../../redux/service/types/questionnaire.response';
 
 interface PillsSectionProps {
   pills: ProgramResponseType['pills'];
@@ -15,15 +14,8 @@ interface PillsSectionProps {
 const PillsSection = ({ pills, questionnaire }: PillsSectionProps) => {
   const router = useRouter();
 
-  const questionnaireAnswerData = useLSelector(
-    (state) => state.questionnaire.questionnaire?.questionnaire,
-  );
   const questionnaireUnlockTime = useLSelector((state) => state.program.questionnaireUnlockTime);
-
-  const isQuestionnaireLocked =
-    questionnaire.isLocked ||
-    !!questionnaireUnlockTime ||
-    questionnaireAnswerData?.questionnaireState === QuestionnaireState.FAILED;
+  const isQuestionnaireLocked = !!questionnaireUnlockTime;
 
   const handleGoToPill = (id: string) =>
     router.push({
@@ -66,7 +58,7 @@ const PillsSection = ({ pills, questionnaire }: PillsSectionProps) => {
           pillNumber={0}
           duration={questionnaire.completionTimeMinutes}
           isLocked={isQuestionnaireLocked}
-          unlockTime={questionnaireAnswerData?.unlockTime}
+          unlockTime={questionnaireUnlockTime}
           id={questionnaire.id}
           isQuestionnaire
         />
