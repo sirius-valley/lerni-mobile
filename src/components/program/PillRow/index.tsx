@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Progress from 'react-native-progress';
 import { StyledRow, StyledText } from '../../styled/styles';
 import { useTheme } from 'styled-components';
@@ -36,10 +36,13 @@ const PillRow = ({
 
   const unlockQuestionnaireDispatch = () => dispatch(unlockQuestionnaire());
 
-  const { seconds, minutes, hours, isRunning } = useTimer({
+  const { seconds, minutes, hours, isRunning, restart } = useTimer({
     expiryTimestamp: unlockTime ? new Date(unlockTime) : new Date(),
     onExpire: () => isQuestionnaire && unlockQuestionnaireDispatch(),
   });
+  useEffect(() => {
+    if (unlockTime) restart(new Date(unlockTime));
+  }, [unlockTime]);
 
   return (
     <StyledRow
