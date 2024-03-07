@@ -2,9 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import { ProgramsData } from '../service/types/program.response';
 import { programApi } from '../service/program.service';
 import { pillSlice } from './pill.slice';
+import { questionnaireApi } from '../service/questionnaire.service';
 
 interface initialStateType extends ProgramsData {
   id?: string;
+  questionnaireUnlockTime: string;
 }
 
 const initialState: initialStateType = {
@@ -13,6 +15,7 @@ const initialState: initialStateType = {
   programsInProgress: [],
   programsNotStarted: [],
   id: undefined,
+  questionnaireUnlockTime: '',
 };
 
 export const programSlice = createSlice({
@@ -21,6 +24,9 @@ export const programSlice = createSlice({
   reducers: {
     setProgramId: (state, action) => {
       state.id = action.payload.id;
+    },
+    unlockQuestionnaire: (state) => {
+      state.questionnaireUnlockTime = '';
     },
   },
   extraReducers: (builder) => {
@@ -32,10 +38,19 @@ export const programSlice = createSlice({
       })
       .addMatcher(programApi.endpoints.programById.matchFulfilled, (state, action) => {
         state.id = action.payload.id;
-      });
+        state.questionnaireUnlockTime = action.payload.questionnaire.lockedUntil ?? '';
+      })
+      .addMatcher(
+        questionnaireApi.endpoints.answerQuestionnaire.matchFulfilled,
+        (state, action) => {
+          if (action.payload.questionnaire?.unlockTime) {
+            state.questionnaireUnlockTime = action.payload.questionnaire?.unlockTime ?? '';
+          }
+        },
+      );
   },
 });
 
-export const { setProgramId } = programSlice.actions;
+export const { setProgramId, unlockQuestionnaire } = programSlice.actions;
 
 export default programSlice.reducer;

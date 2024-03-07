@@ -4,6 +4,7 @@ import PillRow from '../../../../../../../components/program/PillRow';
 import React from 'react';
 import { ProgramResponseType } from '../../../../../../../redux/service/types/program.response';
 import { useRouter } from 'expo-router';
+import { useLSelector } from '../../../../../../../redux/hooks';
 
 interface PillsSectionProps {
   pills: ProgramResponseType['pills'];
@@ -13,6 +14,9 @@ interface PillsSectionProps {
 const PillsSection = ({ pills, questionnaire }: PillsSectionProps) => {
   const router = useRouter();
 
+  const questionnaireUnlockTime = useLSelector((state) => state.program.questionnaireUnlockTime);
+  const isQuestionnaireLocked = !!questionnaireUnlockTime;
+
   const handleGoToPill = (id: string) =>
     router.push({
       pathname: 'pill/mainPill',
@@ -21,10 +25,12 @@ const PillsSection = ({ pills, questionnaire }: PillsSectionProps) => {
       },
     });
 
-  const handleGoToQuestionnaire = (id: string) =>
+  const handleGoToQuestionnaire = (id: string) => {
+    if (isQuestionnaireLocked) return null;
     router.push({
       pathname: `pill/questionnaire/${id}`,
     });
+  };
 
   return (
     <StyledColumn css={{ gap: '8px', width: '100%', marginTop: '16px' }}>
@@ -51,7 +57,8 @@ const PillsSection = ({ pills, questionnaire }: PillsSectionProps) => {
           pillProgress={questionnaire.questionnaireProgress}
           pillNumber={0}
           duration={questionnaire.completionTimeMinutes}
-          isLocked={questionnaire.isLocked}
+          isLocked={isQuestionnaireLocked}
+          unlockTime={questionnaireUnlockTime}
           id={questionnaire.id}
           isQuestionnaire
         />
