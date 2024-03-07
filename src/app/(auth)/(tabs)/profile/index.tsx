@@ -17,7 +17,7 @@ export default function Page() {
   const { data: profile, error, isLoading, isError } = useMeQuery();
   const handleLogout = () => dispatch(resetAllStates());
   const accomplishments = mockedProfileAccomplishments;
-  
+
   return (
     <StyledColumn
       css={{

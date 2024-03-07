@@ -61,9 +61,18 @@ const Page = () => {
               </StyledBox>
             </Pressable>
           </StyledRow>
-          {data?.hasCompletedIntroduction && !programsCompleted.length && !programsInProgress.length && !programsNotStarted.length ? (
+          {data?.hasCompletedIntroduction &&
+          !programsCompleted.length &&
+          !programsInProgress.length &&
+          !programsNotStarted.length ? (
             <StyledBox
-              css={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100%', paddingTop: '35%' }}
+              css={{
+                display: 'flex',
+                justifyContent: 'center',
+                width: '100%',
+                height: '100%',
+                paddingTop: '35%',
+              }}
             >
               <ErrorDisplay type="no-introduction" />
             </StyledBox>

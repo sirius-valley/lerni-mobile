@@ -56,6 +56,19 @@ export const updatePillById = (newPill: { id: string; percentage: number }, prog
     };
   });
 
+export const unlockQuestionnaireById = (programId: string) =>
+  // @ts-ignore
+  api.util.updateQueryData('programById', programId, (draftPosts: ProgramResponseType) => {
+    return {
+      ...draftPosts,
+      questionnaire: {
+        ...draftPosts.questionnaire,
+        isLocked: false,
+        lockedUntil: undefined,
+      },
+    };
+  });
+
 export const {
   useProgramByIdQuery,
   useHomeProgramsQuery,

@@ -84,7 +84,7 @@ const Pill = () => {
           <KeyboardAvoidingView
             enabled
             style={{ height: '100%' }}
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 75}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 75}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           >
             <VirtualizedList
@@ -100,7 +100,8 @@ const Pill = () => {
               )}
               contentContainerStyle={{
                 paddingHorizontal: 24,
-                padding: 24,
+                paddingTop: 24,
+                paddingBottom: 32,
               }}
               onContentSizeChange={(comp) =>
                 setTimeout(() => {
