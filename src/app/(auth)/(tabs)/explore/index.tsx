@@ -14,12 +14,13 @@ import { Pressable } from 'react-native';
 import { useHomeProgramsQuery } from '../../../../redux/service/program.service';
 import ExploreRow from '../../../../components/explore/ExploreRow';
 import { useLSelector } from '../../../../redux/hooks';
+import ErrorDisplay from '../../../../components/common/ErrorDisplay';
 
 const Page = () => {
   const router = useRouter();
   const theme = useTheme();
   const { data, isLoading: meLoading } = useMeQuery();
-  const { isLoading } = useHomeProgramsQuery();
+  const { isLoading, isError } = useHomeProgramsQuery();
   const { programsCompleted, programsInProgress, programsNotStarted } = useLSelector(
     (state) => state.program,
   );
@@ -60,36 +61,44 @@ const Page = () => {
               </StyledBox>
             </Pressable>
           </StyledRow>
-          <StyledColumn css={{ gap: 24 }}>
-            {data?.hasCompletedIntroduction && programsInProgress.length ? (
-              <ExploreRow
-                programs={programsInProgress}
-                hasIntroduction={data?.hasCompletedIntroduction ?? false}
-                title={'En curso'}
-                status={'in_progress'}
-              />
-            ) : null}
+          {data?.hasCompletedIntroduction && !programsCompleted.length && !programsInProgress.length && !programsNotStarted.length ? (
+            <StyledBox
+              css={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100%', paddingTop: '35%' }}
+            >
+              <ErrorDisplay type="no-introduction" />
+            </StyledBox>
+          ) : (
+            <StyledColumn css={{ gap: 24 }}>
+              {data?.hasCompletedIntroduction && programsInProgress.length ? (
+                <ExploreRow
+                  programs={programsInProgress}
+                  hasIntroduction={data?.hasCompletedIntroduction ?? false}
+                  title={'En curso'}
+                  status={'in_progress'}
+                />
+              ) : null}
 
-            {programsNotStarted ||
-            (programsCompleted && !programsInProgress) ||
-            (!programsCompleted && programsInProgress) ? (
-              <ExploreRow
-                programs={programsNotStarted}
-                title={'Por empezar'}
-                status={'not_started'}
-                hasIntroduction={data?.hasCompletedIntroduction ?? false}
-              />
-            ) : null}
+              {programsNotStarted ||
+              (programsCompleted && !programsInProgress) ||
+              (!programsCompleted && programsInProgress) ? (
+                <ExploreRow
+                  programs={programsNotStarted}
+                  title={'Por empezar'}
+                  status={'not_started'}
+                  hasIntroduction={data?.hasCompletedIntroduction ?? false}
+                />
+              ) : null}
 
-            {data?.hasCompletedIntroduction && programsCompleted.length ? (
-              <ExploreRow
-                programs={programsCompleted}
-                status={'completed'}
-                hasIntroduction={data?.hasCompletedIntroduction ?? false}
-                title={'Finalizados'}
-              />
-            ) : null}
-          </StyledColumn>
+              {data?.hasCompletedIntroduction && programsCompleted.length ? (
+                <ExploreRow
+                  programs={programsCompleted}
+                  status={'completed'}
+                  hasIntroduction={data?.hasCompletedIntroduction ?? false}
+                  title={'Finalizados'}
+                />
+              ) : null}
+            </StyledColumn>
+          )}
         </StyledColumn>
       </ScrollView>
     </StyledBox>
