@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Progress from 'react-native-progress';
-import { StyledBox, StyledRow, StyledText } from '../../styled/styles';
+import { StyledRow, StyledText } from '../../styled/styles';
 import { useTheme } from 'styled-components';
 import LockIcon from '../../../../assets/icons/LockIcon';
-import { Platform, Pressable } from 'react-native';
 import ChevronRightIcon from '../../../../assets/icons/ChevronRightIcon';
 import { EllipseIcon } from '../../../../assets/icons/EllipseIcon';
-import { useRouter } from 'expo-router';
 import QuestionnaireIcon from '../../../../assets/icons/QuestionnaireIcon';
+import { useTimer } from 'react-timer-hook';
+import { useLDispatch } from '../../../redux/hooks';
+import { unlockQuestionnaire } from '../../../redux/slice/program.slice';
 
 interface PillRowInterface {
   pillNumber: number;
@@ -15,6 +16,7 @@ interface PillRowInterface {
   pillName: string;
   duration: number;
   isLocked: boolean;
+  unlockTime?: string;
   id: string;
   isQuestionnaire?: boolean;
 }
@@ -25,11 +27,23 @@ const PillRow = ({
   pillName,
   duration,
   isLocked,
+  unlockTime,
   isQuestionnaire = false,
   id,
 }: PillRowInterface) => {
   const theme = useTheme();
-  const router = useRouter();
+  const dispatch = useLDispatch();
+
+  const unlockQuestionnaireDispatch = () => dispatch(unlockQuestionnaire());
+
+  const { seconds, minutes, hours, isRunning, restart } = useTimer({
+    expiryTimestamp: unlockTime ? new Date(unlockTime) : new Date(),
+    onExpire: () => isQuestionnaire && unlockQuestionnaireDispatch(),
+  });
+
+  useEffect(() => {
+    if (unlockTime) restart(new Date(unlockTime));
+  }, [unlockTime]);
 
   return (
     <StyledRow
@@ -69,13 +83,23 @@ const PillRow = ({
           )}
         </StyledRow>
         <StyledRow css={{ alignItems: 'center', gap: 4, width: '75%' }}>
-          <StyledText variant="body2" color={!isLocked ? 'gray100' : 'gray600'}>
+          <StyledText
+            variant="body2"
+            color={!isLocked ? 'gray100' : 'gray600'}
+            css={{ width: isRunning && !!unlockTime ? '35%' : '' }}
+          >
             {pillName}
           </StyledText>
           <EllipseIcon size={4} color={!isLocked ? theme.gray100 : theme.gray500} />
           <StyledText variant="body3" color={!isLocked ? 'primary600' : 'gray600'}>
             {duration} min
           </StyledText>
+          {isRunning && !!unlockTime && (
+            <StyledText variant="body2" color={!isLocked ? 'gray100' : 'gray600'}>
+              Disponible en {hours < 10 ? `0${hours}` : hours}:
+              {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}hs
+            </StyledText>
+          )}
         </StyledRow>
       </StyledRow>
       {!isLocked && <ChevronRightIcon color={theme.primary600} />}

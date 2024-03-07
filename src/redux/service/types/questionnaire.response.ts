@@ -19,6 +19,7 @@ export type QuestionnaireResponse = {
     correct?: boolean;
     correctValue?: string[];
     pointsAwarded?: number;
+    unlockTime?: string;
     bubbles: BubbleResponseQuestionnaire[];
   };
   teacher: {

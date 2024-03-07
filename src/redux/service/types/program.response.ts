@@ -30,6 +30,7 @@ export type ProgramResponseType = {
     completionTimeMinutes: number;
     questionnaireProgress: number;
     isLocked: boolean;
+    lockedUntil?: string;
   };
   leaderBoard: {
     up: {

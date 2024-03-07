@@ -85,7 +85,7 @@ const ExploreRow = ({ programs, status, hasIntroduction, title }: ExploreRowProp
               imgUrl={icon}
               status={!hasIntroduction ? 'locked' : status}
               transparentOnLocked={!hasIntroduction ? true : false}
-              progress={progress}
+              progress={progress / 100}
             />
           ))}
         </StyledRow>
