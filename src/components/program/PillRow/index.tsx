@@ -15,6 +15,7 @@ interface PillRowInterface {
   pillName: string;
   duration: number;
   isLocked: boolean;
+  unlockTime?: string;
   id: string;
   isQuestionnaire?: boolean;
 }
@@ -25,6 +26,7 @@ const PillRow = ({
   pillName,
   duration,
   isLocked,
+  unlockTime,
   isQuestionnaire = false,
   id,
 }: PillRowInterface) => {
