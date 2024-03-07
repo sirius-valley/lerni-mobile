@@ -47,23 +47,6 @@ const RegisterScreen = () => {
     setTimeout(() => virtualRef?.current?.scrollToEnd(), 150);
   };
 
-  // const BackIcon = () => {
-  //   return (
-  //     <Pressable
-  //       onPress={goToLoginScreen}
-  //       style={{
-  //         display: 'flex',
-  //         marginLeft: '5%',
-  //         width: 22,
-  //         alignItems: 'center',
-  //         justifyContent: 'center',
-  //       }}
-  //     >
-  //       <ChevronLeftIcon color={theme.primary950} size={20} />
-  //     </Pressable>
-  //   );
-  // };
-
   useEffect(() => {
     if (error) {
       const customError = error as CustomError;
@@ -97,9 +80,9 @@ const RegisterScreen = () => {
             virtualRef.current = ref;
           }}
         >
-          <StyledColumn css={{ alignItems: 'center', paddingTop: '30%' }}>
+          <StyledColumn css={{ alignItems: 'center', paddingTop: '50%' }}>
             <LerniMainIcon />
-            <StyledText variant="h2" css={{ marginTop: '20%' }}>
+            <StyledText variant="h2" css={{ marginTop: '14%' }}>
               Crear cuenta
             </StyledText>
             <StyledColumn
