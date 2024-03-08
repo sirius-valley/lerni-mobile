@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyledColumn, StyledRow, StyledText } from '../../styled/styles';
+import { StyledColumn, StyledPressable, StyledRow, StyledText } from '../../styled/styles';
 import * as Progress from 'react-native-progress';
 import { useTheme } from 'styled-components';
 import ProgramCard from '../../program/ProgramCard';
 import { Pressable } from 'react-native';
+import ProgramImage from '../../program/ProgramImage';
 
 export type SearchResultType = 'program' | 'pill' | 'professionals';
 export type SearchResultStatus = 'in_progress' | 'not_started' | 'completed' | 'locked';
@@ -15,9 +16,11 @@ interface SearchItemInterface {
   status?: SearchResultStatus;
   progress?: number;
   imgUrl?: string;
+  id: string;
 }
 
 const SearchItem = ({
+  id,
   type,
   title,
   description,
@@ -26,6 +29,8 @@ const SearchItem = ({
   imgUrl,
 }: SearchItemInterface) => {
   const theme = useTheme();
+
+  if (type === 'pill') return null;
 
   const renderImage = () =>
     type === 'pill' ? (
@@ -38,7 +43,7 @@ const SearchItem = ({
         showsText={true}
         formatText={() => 1}
         textStyle={{
-          fontSize: 24,
+          fontSize: 28,
           fontFamily: 'Roboto-Bold',
           color: 'white',
           marginBottom: 6,
@@ -47,19 +52,11 @@ const SearchItem = ({
         thickness={3.6}
       />
     ) : (
-      <ProgramCard
-        id="asd"
-        imgUrl={imgUrl ?? ''}
-        imgSize={92}
-        status={status}
-        progress={progress}
-        transparentOnLocked={false}
-        statusIconSize={status === 'completed' ? 15 : 13}
-      />
+      <ProgramImage imgUrl={imgUrl} size={92} status={'not_started'} />
     );
 
   return (
-    <Pressable onPress={() => alert('pressed')}>
+    <StyledPressable onPress={() => alert('pressed')} css={{ backgroundColor: 'red' }}>
       <StyledRow
         css={{
           width: '100%',
@@ -70,8 +67,8 @@ const SearchItem = ({
         }}
       >
         {renderImage()}
-        <StyledColumn css={{ width: '70%', height: '87px', gap: '4px' }}>
-          <StyledText variant="h4" color={'white'}>
+        <StyledColumn css={{ flex: 1, gap: '4px', height: '100%' }}>
+          <StyledText variant="h4" color={'white'} css={{ maxHeight: 19 }} numberOfLines={1}>
             {title}
           </StyledText>
           <StyledText numberOfLines={4} variant="body2" color={'gray200'}>
@@ -79,7 +76,7 @@ const SearchItem = ({
           </StyledText>
         </StyledColumn>
       </StyledRow>
-    </Pressable>
+    </StyledPressable>
   );
 };
 

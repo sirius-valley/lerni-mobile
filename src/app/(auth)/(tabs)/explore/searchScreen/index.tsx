@@ -149,25 +149,25 @@ const SearchScreen = () => {
         </Pressable>
       </StyledRow>
 
-      <StyledRow
-        css={{
-          width: '100%',
-        }}
-      >
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <StyledRow css={{ gap: '8px' }}>
-            {quickFilters.map((filter) => (
-              <QuickFilter
-                key={filter.id}
-                onPress={() => setQuickFilterSelected(filter)}
-                selected={filter.id === quickFilterSelected.id}
-              >
-                {filter.label}
-              </QuickFilter>
-            ))}
-          </StyledRow>
-        </ScrollView>
-      </StyledRow>
+      {/*<StyledRow*/}
+      {/*  css={{*/}
+      {/*    width: '100%',*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <ScrollView horizontal showsHorizontalScrollIndicator={false}>*/}
+      {/*    <StyledRow css={{ gap: '8px' }}>*/}
+      {/*      {quickFilters.map((filter) => (*/}
+      {/*        <QuickFilter*/}
+      {/*          key={filter.id}*/}
+      {/*          onPress={() => setQuickFilterSelected(filter)}*/}
+      {/*          selected={filter.id === quickFilterSelected.id}*/}
+      {/*        >*/}
+      {/*          {filter.label}*/}
+      {/*        </QuickFilter>*/}
+      {/*      ))}*/}
+      {/*    </StyledRow>*/}
+      {/*  </ScrollView>*/}
+      {/*</StyledRow>*/}
 
       {isLoading ? (
         <SearchScreenSkeleton />
@@ -180,13 +180,14 @@ const SearchScreen = () => {
           ListFooterComponent={() => <StyledBox>{loading && <SearchScreenSkeleton />}</StyledBox>}
           renderItem={(data) => (
             <SearchItem
+              id={data.item.id}
               key={data.item.id}
               type={data.item.searchType}
               title={data.item.name}
               description={data.item.description}
               status={data?.item.status}
               progress={data?.item.progress}
-              imgUrl={data?.item.imgUrl}
+              imgUrl={data?.item.icon}
             />
           )}
         />

@@ -2,7 +2,11 @@ import { useTheme } from 'styled-components/native';
 import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../styled/styles';
 import RhombusIcon from '../../../../assets/icons/RhombusIcon';
 
-export const ProfileRanking = () => {
+interface ProfileRankingProps {
+  points: number;
+}
+
+export const ProfileRanking = ({ points }: ProfileRankingProps) => {
   const theme = useTheme();
 
   return (
@@ -34,7 +38,7 @@ export const ProfileRanking = () => {
           <StyledRow style={{ gap: 8, alignItems: 'center' }}>
             <RhombusIcon size={18} />
             <StyledText variant="h1" style={{ color: theme.white }}>
-              {'5 Puntos'}
+              {points + ' Puntos'}
             </StyledText>
           </StyledRow>
         </StyledColumn>

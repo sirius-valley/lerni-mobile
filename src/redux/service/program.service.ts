@@ -46,12 +46,30 @@ export const updatePillById = (newPill: { id: string; percentage: number }, prog
       pill.id === newPill.id ? { ...pill, pillProgress: newPill.percentage } : pill,
     );
     const isQuestionnaireAvailable = newPills.find((pill) => pill.pillProgress !== 100);
+    const PillsOrQuestionnariesCompleted =
+      (newPills.filter((pill) => pill.pillProgress === 100)?.length ?? 0) +
+      (draftPosts.questionnaire?.questionnaireProgress === 100 ? 1 : 0);
+    // console.log(JSON.stringify(draftPosts),newPills.filter((pill)=>pill.pillProgress === 100)?.length,draftPosts.questionnaire?.questionnaireProgress === 100,newPills?.length + 1)
+
     return {
       ...draftPosts,
+      progress: (PillsOrQuestionnariesCompleted / (newPills?.length + 1)) * 100,
       pills: newPills,
       questionnaire: {
         ...draftPosts.questionnaire,
         isLocked: !!isQuestionnaireAvailable,
+      },
+    };
+  });
+
+export const updateQuestionnaireByProgramId = (percentage: number, programId: string) =>
+  // @ts-ignore
+  api.util.updateQueryData('programById', programId, (draftPosts: ProgramResponseType) => {
+    return {
+      ...draftPosts,
+      questionnaire: {
+        ...draftPosts.questionnaire,
+        questionnaireProgress: percentage,
       },
     };
   });

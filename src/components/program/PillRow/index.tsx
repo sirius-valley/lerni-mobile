@@ -42,6 +42,7 @@ const PillRow = ({
   };
 
   const { seconds, minutes, hours, isRunning, restart } = useTimer({
+    autoStart: false,
     expiryTimestamp: unlockTime ? new Date(unlockTime) : new Date(),
     onExpire: () => isQuestionnaire && unlockQuestionnaireDispatch(),
   });

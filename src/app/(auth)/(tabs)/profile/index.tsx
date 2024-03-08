@@ -16,7 +16,6 @@ export default function Page() {
   const theme = useTheme();
   const { data: profile, error, isLoading, isError } = useMeQuery();
   const handleLogout = () => dispatch(resetAllStates());
-  const accomplishments = mockedProfileAccomplishments;
 
   return (
     <StyledColumn
@@ -51,10 +50,8 @@ export default function Page() {
               name={profile.name}
               lastname={profile.lastname}
               profession={profile.profession}
-              id={profile.id}
-              hasCompletedIntroduction={profile.hasCompletedIntroduction}
             />
-            <ProfileRanking />
+            <ProfileRanking points={profile.points} />
             {/* <ProfileAccomplishments accomplishments={accomplishments} /> */}
           </StyledColumn>
         )}
