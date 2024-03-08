@@ -27,7 +27,6 @@ const ProgramImage = ({
         css={{ width: size, height: size, borderRadius: 6 }}
         source={{ uri: imgUrl ?? undefined }}
         defaultSource={{ uri: imgUrl ?? undefined }}
-        loadingIndicatorSource={require('../../../../assets/backgroundProgramImage.png')}
       />
       {status === 'completed' && (
         <StyledBox css={{ position: 'absolute', bottom: 2, right: 2 }}>

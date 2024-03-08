@@ -135,7 +135,7 @@ const Pill = () => {
               programName={'la introducción'}
               actionButtonLabel={'Ir al inicio'}
               hasConfeti
-              winsPoints
+              winsPoints={undefined}
               callbackAction={route.back}
             />
           </StyledBox>

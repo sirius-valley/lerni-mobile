@@ -2,9 +2,8 @@ import React from 'react';
 import { StyledColumn, StyledPressable, StyledRow, StyledText } from '../../styled/styles';
 import * as Progress from 'react-native-progress';
 import { useTheme } from 'styled-components';
-import ProgramCard from '../../program/ProgramCard';
-import { Pressable } from 'react-native';
 import ProgramImage from '../../program/ProgramImage';
+import { useRouter } from 'expo-router';
 
 export type SearchResultType = 'program' | 'pill' | 'professionals';
 export type SearchResultStatus = 'in_progress' | 'not_started' | 'completed' | 'locked';
@@ -29,6 +28,7 @@ const SearchItem = ({
   imgUrl,
 }: SearchItemInterface) => {
   const theme = useTheme();
+  const router = useRouter();
 
   if (type === 'pill') return null;
 
@@ -55,8 +55,16 @@ const SearchItem = ({
       <ProgramImage imgUrl={imgUrl} size={92} status={'not_started'} />
     );
 
+  const handleGoToProgram = (id: string) =>
+    router.push({
+      pathname: '(tabs)/explore/programDetail',
+      params: {
+        id,
+      },
+    });
+
   return (
-    <StyledPressable onPress={() => alert('pressed')}>
+    <StyledPressable onPress={() => handleGoToProgram(id)}>
       <StyledRow
         css={{
           width: '100%',

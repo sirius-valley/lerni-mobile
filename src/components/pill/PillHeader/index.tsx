@@ -15,10 +15,15 @@ export interface PillHeaderProps {
   title: string;
   pillNumber: number;
   percentageDone: number;
-  isQuestionnaire: boolean;
+  isQuestionnaire?: boolean;
 }
 
-const PillHeader = ({ title, pillNumber, percentageDone, isQuestionnaire }: PillHeaderProps) => {
+const PillHeader = ({
+  title,
+  pillNumber,
+  percentageDone,
+  isQuestionnaire = false,
+}: PillHeaderProps) => {
   const theme = useTheme();
   const router = useRouter();
   const dispatch = useLDispatch();
