@@ -56,7 +56,7 @@ const SearchItem = ({
     );
 
   return (
-    <StyledPressable onPress={() => alert('pressed')} css={{ backgroundColor: 'red' }}>
+    <StyledPressable onPress={() => alert('pressed')}>
       <StyledRow
         css={{
           width: '100%',
