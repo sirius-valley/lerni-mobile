@@ -30,7 +30,11 @@ export const ProfileDetail = ({ image, name, lastname, career, profession, city 
             >
               <ProfessionIcon size={24} />
             </StyledBox>
-            <StyledText css={{ color: theme.gray100 }} variant="body2">
+            <StyledText
+              css={{ color: theme.gray100, width: 220 }}
+              variant="body2"
+              numberOfLines={2}
+            >
               {profession}
             </StyledText>
           </StyledRow>
@@ -47,7 +51,7 @@ export const ProfileDetail = ({ image, name, lastname, career, profession, city 
             >
               <CareerIcon size={24} />
             </StyledBox>
-            <StyledText css={{ color: theme.gray100 }} variant="body2">
+            <StyledText css={{ color: theme.gray100 }} variant="body2" numberOfLines={2}>
               {career}
             </StyledText>
           </StyledRow>
