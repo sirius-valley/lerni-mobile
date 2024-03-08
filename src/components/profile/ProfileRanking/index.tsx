@@ -6,7 +6,7 @@ interface ProfileRankingProps {
   points: number;
 }
 
-export const ProfileRanking = ({ points }: ProfileRankingProps) => {
+export const ProfileRanking = ({ points = 0 }: ProfileRankingProps) => {
   const theme = useTheme();
 
   return (
