@@ -113,9 +113,6 @@ const ProgramDetail = () => {
           </StyledRow>
           <StyledText variant="body1" color="gray100">
             {program.programDescription}
-            Descripción lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis
-            ullamcorper mauris, vitae commodo dui efficitur non. Fusce efficitur pulvinar diam vel
-            dictum.
           </StyledText>
         </StyledColumn>
 

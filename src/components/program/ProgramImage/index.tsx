@@ -6,7 +6,7 @@ import LockIcon from '../../../../assets/icons/LockIcon';
 import { useTheme } from 'styled-components';
 
 interface ProgramImage {
-  imgUrl: string;
+  imgUrl?: string;
   size?: number;
   status: Status;
   transparentOnLocked?: boolean;
@@ -25,9 +25,8 @@ const ProgramImage = ({
     <StyledBox css={{ opacity: transparentOnLocked && status === 'locked' ? 0.3 : 1 }}>
       <StyledImage
         css={{ width: size, height: size, borderRadius: 6 }}
-        source={{ uri: imgUrl }}
-        defaultSource={{ uri: imgUrl }}
-        loadingIndicatorSource={require('../../../../assets/backgroundProgramImage.png')}
+        source={{ uri: imgUrl ?? undefined }}
+        defaultSource={{ uri: imgUrl ?? undefined }}
       />
       {status === 'completed' && (
         <StyledBox css={{ position: 'absolute', bottom: 2, right: 2 }}>

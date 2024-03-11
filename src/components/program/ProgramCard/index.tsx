@@ -10,7 +10,7 @@ import Animated, { FadeIn } from 'react-native-reanimated';
 interface ProgramCardProps {
   id: string;
   title?: string;
-  imgUrl: string;
+  imgUrl?: string;
   imgSize?: number;
   status: Status;
   transparentOnLocked?: boolean;
@@ -52,7 +52,7 @@ const ProgramCard = ({
           <ProgramImage
             status={status}
             imgUrl={imgUrl}
-            size={adjustedSize}
+            size={imgSize ?? adjustedSize}
             transparentOnLocked={transparentOnLocked}
             iconSize={statusIconSize}
           />

@@ -40,7 +40,7 @@ const FeedbackModal = ({ handleOnClose }: FeedbackModalProps) => {
       vote: feedback.like ? 'up' : 'down',
       privacy: publicOpinion ? 'public' : 'private',
       content: text,
-      programId: 'programId',
+      programId: programId!,
     })
       .then((res) => {
         dispatch(showToast({ type: 'success', text: 'Se agregó tu opinión con éxito!' }));

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import LerniMainIcon from '../../../../assets/icons/LerniMainIcon';
-import { StyledBox, StyledColumn, StyledText } from '../../../components/styled/styles';
+import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../../components/styled/styles';
 import { TextInput } from '../../../components/styled/TextInput';
 import Button from '../../../components/styled/Button';
 import { Formik } from 'formik';
@@ -12,7 +12,7 @@ import { useLDispatch } from '../../../redux/hooks';
 import { showToast } from '../../../redux/slice/utils.slice';
 import { CustomError } from '../../../redux/service/api';
 import ChevronLeftIcon from '../../../../assets/icons/ChevronLeftIcon';
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { useKeyboard } from '@react-native-community/hooks';
 
@@ -141,19 +141,21 @@ const RegisterScreen = () => {
                     >
                       Crear cuenta
                     </Button>
-                    <Button
-                      onPress={goToLoginScreen}
-                      variant={'primary'}
-                      loading={isLoading}
-                      css={{
-                        backgroundColor: 'transparent',
-                        alignItems: 'center'
-                      }}
-                      icon={ChevronLeftIcon}
-                      iconColor="primary950"
+                    <StyledRow
+                      css={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}
                     >
-                      {<StyledText variant='body2' css={{color: theme.primary950, alignContent: 'center'}}>Ya tengo cuenta</StyledText>}
-                    </Button>
+                      <Pressable onPress={goToLoginScreen}>
+                        <StyledText
+                          css={{
+                            textDecorationLine: 'underline',
+                            color: theme.primary950,
+                            alignContent: 'center',
+                          }}
+                        >
+                          Ya tengo cuenta
+                        </StyledText>
+                      </Pressable>
+                    </StyledRow>
                   </>
                 )}
               </Formik>

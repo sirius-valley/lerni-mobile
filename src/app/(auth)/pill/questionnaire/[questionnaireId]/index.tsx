@@ -34,6 +34,7 @@ const Questionnaire = () => {
 
   const dispatch = useLDispatch();
   const programId = useLSelector((state) => state.program.id);
+  const pointsTotal = useLSelector((state) => state.questionnaire.totalPointsAwarded);
 
   const blocksIds = useLSelector((state) => state.questionnaire.blocksIds);
   const pillProgress = useLSelector(
@@ -84,7 +85,12 @@ const Questionnaire = () => {
 
   return (
     <PillMainContainer backgroundColor="primary900">
-      <PillHeader title={'Cuestionario'} pillNumber={1} percentageDone={pillProgress ?? 0} />
+      <PillHeader
+        title={'Cuestionario'}
+        pillNumber={1}
+        percentageDone={pillProgress ?? 0}
+        isQuestionnaire
+      />
       <StyledColumn css={{ flexGrow: 1 }}>
         <Animated.View
           style={{
@@ -143,14 +149,15 @@ const Questionnaire = () => {
                 programName={'el cuestionario'}
                 callbackAction={() => {
                   route.push('/(auth)/(tabs)/explore');
+                  dispatch(api.util?.invalidateTags(['ME']));
                   dispatch(api.util?.invalidateTags([{ type: 'ProgramById', id: programId }]));
                   dispatch(setModalOpen({ modalType: ModalTypeEnum.FEEDBACK_MODAL }));
                 }}
                 hasConfeti
-                winsPoints
+                winsPoints={pointsTotal}
               />
             ) : (
-              <FailurePill />
+              <FailurePill callback={() => dispatch(api.util?.invalidateTags(['Questionnaire']))} />
             )}
           </StyledBox>
         </Animated.View>
