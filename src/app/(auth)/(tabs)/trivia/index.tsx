@@ -1,9 +1,13 @@
-import CustomError from '../../../../components/common/ErrorDisplay/CustomError';
-import WIPIllustration from '../../../../../assets/icons/WIPIllustration';
-import { StyledColumn } from '../../../../components/styled/styles';
-import { LoadingVersus } from '../../../../components/trivia/LoadingVersus';
+import { useRouter } from 'expo-router';
+import { useEffect } from 'react';
 
 export default function Page() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push('/(auth)/triviaScreen');
+  }, []);
+
   return (
     // <CustomError
     //   Icon={WIPIllustration}
@@ -11,7 +15,6 @@ export default function Page() {
     //   content={'El contenido que querés acceder \n no esta disponible ahora.'}
     //   buttonText={'Ir a Explorar'}
     // />
-    <StyledColumn>
-    </StyledColumn>
+    <></>
   );
 }
