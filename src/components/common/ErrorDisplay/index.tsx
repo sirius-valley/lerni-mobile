@@ -3,12 +3,23 @@ import CustomError from './CustomError';
 import { GhostIcon } from '../../../../assets/icons/GhostIcon';
 import NoResults from '../../../../assets/icons/NoResults';
 import ShipIllustration from '../../../../assets/icons/ShipIllustration';
+import WIPIllustration from '../../../../assets/icons/WIPIllustration';
 
-interface ErrorDisplayInterface {
-  type: '404' | '505' | 'no-results' | 'no-introduction';
-}
+type ErrorDisplayType = '404' | '505' | 'no-results' | 'no-introduction' | 'in-progress';
 
-const errorsAvailable = {
+interface ErrorsAvailableInterface
+  extends Record<
+    ErrorDisplayType,
+    {
+      Icon: React.FunctionComponent;
+      title: string;
+      content: string;
+      hasActionButton?: boolean;
+      buttonText?: string;
+    }
+  > {}
+
+const errorsAvailable: ErrorsAvailableInterface = {
   '404': {
     title: 'Página no encontrada',
     content: 'Lo sentimos, no pudimos encontrar lo que estás buscando',
@@ -33,7 +44,18 @@ const errorsAvailable = {
     Icon: ShipIllustration,
     hasActionButton: false,
   },
+  'in-progress': {
+    Icon: WIPIllustration,
+    title: 'Página en construcción',
+    content: 'El contenido que querés acceder \n no esta disponible ahora.',
+    hasActionButton: true,
+    buttonText: 'Ir a Explorar',
+  },
 };
+
+interface ErrorDisplayInterface {
+  type: ErrorDisplayType;
+}
 
 const ErrorDisplay = ({ type }: ErrorDisplayInterface) => {
   return (
@@ -42,6 +64,7 @@ const ErrorDisplay = ({ type }: ErrorDisplayInterface) => {
       title={errorsAvailable[type].title}
       content={errorsAvailable[type].content}
       hasActionButton={errorsAvailable[type].hasActionButton}
+      buttonText={errorsAvailable[type].buttonText}
     />
   );
 };

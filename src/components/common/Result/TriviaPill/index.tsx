@@ -23,8 +23,9 @@ export const TriviaPill = () => {
 
   const handleOnPress = () => {
     router.push('explore');
-    dispatch(setModalOpen(ModalTypeEnum.FEEDBACK_MODAL));
+    dispatch(setModalOpen({ modalType: ModalTypeEnum.FEEDBACK_MODAL }));
   };
+
   const footer = () => {
     return (
       <StyledBox style={{ minWidth: '90%', gap: 16 }}>
