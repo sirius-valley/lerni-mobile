@@ -30,7 +30,7 @@ const QuestionnaireImgAnswer = ({ blockId, nextBlockId }: QuestionnaireImgAnswer
   const last = useLSelector((state) => state.questionnaire.last);
   const sealed = block.sealed || !(last === block.id);
 
-  const correctAnswerId = block.correctAnswer?.[0] ?? '';
+  const correctValue = block.correctAnswer?.[0] ?? '';
   const isImgSelectedCorrect = values.value === block.correctAnswer?.[0];
 
   const handleSelect = (answerId: string) => {
@@ -45,9 +45,9 @@ const QuestionnaireImgAnswer = ({ blockId, nextBlockId }: QuestionnaireImgAnswer
     }));
   };
 
-  const renderStatusIcon = (id: string, selected: boolean) => {
-    if (selected && sealed) {
-      const isCorrect = correctAnswerId === id;
+  const renderStatusIcon = (image: string, selected: boolean) => {
+    if (selected && sealed && block?.correctAnswer) {
+      const isCorrect = correctValue === image;
       return isCorrect ? <CheckIcon /> : <MultiplyIcon />;
     }
     return null;
@@ -88,7 +88,7 @@ const QuestionnaireImgAnswer = ({ blockId, nextBlockId }: QuestionnaireImgAnswer
                 />
                 {renderStatusIcon(item.image, !!item?.selected)}
               </StyledRow>
-              {sealed && item.selected && <PointsDisplay points={block.points ?? 0} />}
+              {sealed && item.selected && <PointsDisplay points={block.pointsAwarded ?? 0} />}
             </StyledColumn>
           );
         })}

@@ -19,6 +19,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import usePrevious from '../../../../hooks/usePrevious';
 import { api } from '../../../../redux/service/api';
 import SkeletonPill from '../../../../components/pill/SkeletonPill';
+import { useRouter } from 'expo-router';
 
 const Pill = () => {
   const { data, isLoading: isLoadingPill, refetch } = useGetIntroductionPillQuery();
@@ -35,6 +36,8 @@ const Pill = () => {
   const screenHeight = Dimensions.get('window').height - insets.top - insets.bottom - 40;
   const box1Height = useRef(new Animated.Value(0)).current;
   const box2Height = useRef(new Animated.Value(screenHeight)).current;
+
+  const route = useRouter();
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -81,7 +84,7 @@ const Pill = () => {
           <KeyboardAvoidingView
             enabled
             style={{ height: '100%' }}
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 75}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 75}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           >
             <VirtualizedList
@@ -97,7 +100,8 @@ const Pill = () => {
               )}
               contentContainerStyle={{
                 paddingHorizontal: 24,
-                padding: 24,
+                paddingTop: 24,
+                paddingBottom: 32,
               }}
               onContentSizeChange={(comp) =>
                 setTimeout(() => {
@@ -131,7 +135,8 @@ const Pill = () => {
               programName={'la introducción'}
               actionButtonLabel={'Ir al inicio'}
               hasConfeti
-              winsPoints
+              winsPoints={undefined}
+              callbackAction={route.back}
             />
           </StyledBox>
         </Animated.View>

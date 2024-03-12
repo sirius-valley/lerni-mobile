@@ -37,7 +37,7 @@ const Page = () => {
           }, 250);
         }}
         scrollIndicatorInsets={{ right: -30 }}
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={{ flexGrow: 1, gap: 8 }}
       >
         {comments?.map((comment) => (
           <CommentBubble

@@ -5,7 +5,7 @@ import IntroModal from './modals/IntroModal';
 import { closeModal } from '../redux/slice/utils.slice';
 import { BlurView } from 'expo-blur';
 import FeedbackModal from './modals/FeedbackModal';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export const withModal = (Component: FunctionComponent) => (props: any) => {
@@ -32,18 +32,31 @@ export const withModal = (Component: FunctionComponent) => (props: any) => {
         style={{ flex: 1, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
         intensity={10}
       >
-        <KeyboardAvoidingView
-          enabled
-          style={{ height: '100%' }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={10}
-        >
-          <ScrollView
-            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}
+        <Pressable onPress={handleOnClose}>
+          <KeyboardAvoidingView
+            enabled
+            style={{ height: '100%', zIndex: 3 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={10}
           >
-            {renderModal()}
-          </ScrollView>
-        </KeyboardAvoidingView>
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              keyboardShouldPersistTaps="handled"
+            >
+              <Pressable
+                onPress={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                {renderModal()}
+              </Pressable>
+            </ScrollView>
+          </KeyboardAvoidingView>
+        </Pressable>
       </BlurView>
     );
   };

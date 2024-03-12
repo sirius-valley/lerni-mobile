@@ -24,14 +24,8 @@ const QuestionnaireBubbleToRender = ({
   nextBlockId,
   last,
 }: QuestionnaireBubbleToRenderProps) => {
-  const {
-    block,
-    handleSingleAnswer,
-    handleMultipleAnswer,
-    handleSealedMultipleAnswer,
-    // handleImageSelection,
-    // handleSealedImageSelection,
-  } = useQuestionnaire(blockId, { nextBlockId });
+  const { block, handleSingleAnswer, handleMultipleAnswer, handleSealedMultipleAnswer } =
+    useQuestionnaire(blockId, { nextBlockId });
 
   switch (block.type) {
     case 'text':
@@ -61,7 +55,7 @@ const QuestionnaireBubbleToRender = ({
           correctAnswers={block.correctAnswer}
           points={block?.pointsAwarded ?? 0}
           onChange={handleMultipleAnswer}
-          sealed={!(last === block.id)}
+          sealed={block.sealed || !(last === block.id)}
         />
       );
     case 'single-choice':
@@ -71,7 +65,7 @@ const QuestionnaireBubbleToRender = ({
           options={block.options}
           onChange={(id) => handleSingleAnswer(id)}
           correctAnswers={block.correctAnswer}
-          sealed={!(last === block.id)}
+          sealed={block.sealed || !(last === block.id)}
           points={block?.pointsAwarded ?? 0}
           isSingleAnswer
         />

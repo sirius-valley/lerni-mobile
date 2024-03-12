@@ -14,8 +14,9 @@ interface SuccessPillProps {
   programName: string;
   hasConfeti?: boolean;
   iconType?: 'confeti' | 'handsup';
-  winsPoints?: boolean;
+  winsPoints?: number;
   actionButtonLabel?: string;
+  callbackAction: () => void;
 }
 
 export const SuccessPill = ({
@@ -23,11 +24,11 @@ export const SuccessPill = ({
   programName,
   hasConfeti = false,
   iconType = 'confeti',
-  winsPoints = false,
+  winsPoints = 0,
   actionButtonLabel = 'Siguiente',
+  callbackAction,
 }: SuccessPillProps) => {
   const theme = useTheme();
-  const router = useRouter();
   const shouldRenderConfeti = hasConfeti && show;
   const ref = useRef<any>();
 
@@ -47,7 +48,7 @@ export const SuccessPill = ({
   const footer = () => {
     return (
       <StyledBox style={{ minWidth: '90%' }}>
-        <Button onPress={() => router.back()}>{actionButtonLabel}</Button>
+        <Button onPress={callbackAction}>{actionButtonLabel}</Button>
       </StyledBox>
     );
   };
@@ -58,14 +59,14 @@ export const SuccessPill = ({
         <StyledText variant="body2" style={{ color: theme.gray400 }}>
           Terminaste {programName}!
         </StyledText>
-        {winsPoints && (
+        {!!winsPoints && (
           <StyledRow style={{ alignContent: 'center', justifyContent: 'center', gap: 8 }}>
             <StyledText variant={'body3'} style={{ color: theme.gray400 }}>
               Ganaste
             </StyledText>
             <RhombusIcon size={12} />
             <StyledText variant={'body3'} style={{ color: theme.gray400 }}>
-              5 Puntos!
+              {winsPoints} Puntos!
             </StyledText>
           </StyledRow>
         )}

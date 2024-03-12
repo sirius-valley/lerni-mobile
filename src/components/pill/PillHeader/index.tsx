@@ -2,20 +2,28 @@ import React, { useEffect } from 'react';
 import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../styled/styles';
 import { useTheme } from 'styled-components';
 import * as Progress from 'react-native-progress';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { CancelIcon } from '../../../../assets/icons/CancelIcon';
 import { useRouter } from 'expo-router';
 import { useLDispatch, useLSelector } from '../../../redux/hooks';
-import { updatePillById } from '../../../redux/service/program.service';
+import {
+  updatePillById,
+  updateQuestionnaireByProgramId,
+} from '../../../redux/service/program.service';
 import { Pressable } from 'react-native';
 
 export interface PillHeaderProps {
   title: string;
   pillNumber: number;
   percentageDone: number;
+  isQuestionnaire?: boolean;
 }
 
-const PillHeader = ({ title, pillNumber, percentageDone }: PillHeaderProps) => {
+const PillHeader = ({
+  title,
+  pillNumber,
+  percentageDone,
+  isQuestionnaire = false,
+}: PillHeaderProps) => {
   const theme = useTheme();
   const router = useRouter();
   const dispatch = useLDispatch();
@@ -23,15 +31,19 @@ const PillHeader = ({ title, pillNumber, percentageDone }: PillHeaderProps) => {
   const pillId = useLSelector((state) => state.pill?.pill?.pill.id);
 
   useEffect(() => {
-    dispatch(
-      updatePillById(
-        {
-          id: pillId!,
-          percentage: percentageDone,
-        },
-        programId!,
-      ),
-    );
+    if (isQuestionnaire) {
+      dispatch(updateQuestionnaireByProgramId(percentageDone, programId!));
+    } else {
+      dispatch(
+        updatePillById(
+          {
+            id: pillId!,
+            percentage: percentageDone,
+          },
+          programId!,
+        ),
+      );
+    }
   }, [percentageDone]);
 
   return (

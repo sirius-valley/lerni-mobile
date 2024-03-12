@@ -1,13 +1,12 @@
-import { Image } from 'react-native';
 import React from 'react';
-import { StyledBox } from '../../styled/styles';
+import { StyledBox, StyledImage, StyledImageAnimated } from '../../styled/styles';
 import CheckIcon from '../../../../assets/icons/CheckIcon';
 import { Status } from '../../../app/(auth)/(tabs)/explore/utils';
 import LockIcon from '../../../../assets/icons/LockIcon';
 import { useTheme } from 'styled-components';
 
 interface ProgramImage {
-  imgUrl: string;
+  imgUrl?: string;
   size?: number;
   status: Status;
   transparentOnLocked?: boolean;
@@ -24,10 +23,10 @@ const ProgramImage = ({
   const theme = useTheme();
   return (
     <StyledBox css={{ opacity: transparentOnLocked && status === 'locked' ? 0.3 : 1 }}>
-      <Image
-        style={{ width: size, height: size, borderRadius: 6 }}
-        source={{ uri: imgUrl }}
-        loadingIndicatorSource={require('../../../../assets/backgroundProgramImage.png')}
+      <StyledImage
+        css={{ width: size, height: size, borderRadius: 6 }}
+        source={{ uri: imgUrl ?? undefined }}
+        defaultSource={{ uri: imgUrl ?? undefined }}
       />
       {status === 'completed' && (
         <StyledBox css={{ position: 'absolute', bottom: 2, right: 2 }}>

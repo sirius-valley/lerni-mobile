@@ -1,18 +1,14 @@
 import { api } from './api';
-import {
-  QuestionnaireBody,
-  QuestionnaireResponse,
-  QuestionnaireState,
-} from './types/questionnaire.response';
+import { QuestionnaireBody, QuestionnaireResponse } from './types/questionnaire.response';
 
 export const questionnaireApi = api.injectEndpoints({
   endpoints: (builder) => ({
     questionnaireById: builder.query<QuestionnaireResponse, { id: string }>({
       query: ({ id }) => ({
         url: `/api/questionnaire/${id}`,
-
         method: 'GET',
       }),
+      providesTags: ['Questionnaire'],
     }),
     answerQuestionnaire: builder.mutation<QuestionnaireResponse, QuestionnaireBody>({
       query: (body) => ({
