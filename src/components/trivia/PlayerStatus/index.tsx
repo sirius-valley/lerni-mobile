@@ -42,7 +42,7 @@ const PlayerStatus = ({
         padding: side === 'left' ? '14px 0px 12px 16px' : '14px 16px 12px 0px',
         width: adjustedSize,
         borderRadius: side === 'right' ? '0 12px 12px 0' : '12px 0 0 12px',
-        backgroundColor: side === 'right' ? theme.primary650 : theme.primary700,
+        backgroundColor: side === 'right' ? theme.primary700 : theme.primary650,
         alignItems: side === 'left' ? 'flex-start' : 'flex-end',
       }}
     >
