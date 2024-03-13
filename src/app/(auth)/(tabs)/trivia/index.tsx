@@ -1,18 +1,13 @@
+import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
-import WIPIllustration from '../../../../../assets/icons/WIPIllustration';
-import CustomError from '../../../../components/common/ErrorDisplay/CustomError';
 import ErrorDisplay from '../../../../components/common/ErrorDisplay';
 
 export default function Page() {
+  const router = useRouter();
 
-  useEffect
+  useEffect(() => {
+    router.push('/(auth)/triviaScreen');
+  }, []);
 
-  return (
-    <CustomError
-      Icon={WIPIllustration}
-      title={'Página en construcción'}
-      content={'El contenido que querés acceder \n no esta disponible ahora.'}
-      buttonText={'Ir a Explorar'}
-    />
-  );
+  return <ErrorDisplay type="in-progress" />
 }

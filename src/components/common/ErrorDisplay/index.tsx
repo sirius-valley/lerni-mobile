@@ -3,9 +3,10 @@ import CustomError from './CustomError';
 import { GhostIcon } from '../../../../assets/icons/GhostIcon';
 import NoResults from '../../../../assets/icons/NoResults';
 import ShipIllustration from '../../../../assets/icons/ShipIllustration';
+import WIPIllustration from '../../../../assets/icons/WIPIllustration';
 
 interface ErrorDisplayInterface {
-  type: '404' | '505' | 'no-results' | 'no-introduction';
+  type: '404' | '505' | 'no-results' | 'no-introduction' | 'in-progress';
 }
 
 const errorsAvailable = {
@@ -32,6 +33,13 @@ const errorsAvailable = {
     content: 'Todavía no tienes ningún programa \n asignado. Intenta de nuevo más tarde',
     Icon: ShipIllustration,
     hasActionButton: false,
+  },
+  'in-progress': {
+    Icon: WIPIllustration,
+    title: 'Página en construcción',
+    content: 'El contenido que querés acceder \n no esta disponible ahora.',
+    hasActionButton: true,
+    buttonText: 'Ir a Explorar',
   },
 };
 
