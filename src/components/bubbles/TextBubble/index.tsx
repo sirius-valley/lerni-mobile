@@ -17,6 +17,7 @@ const TextBubble = ({ user, content }: TextBubbleProps) => {
         variant="body2"
         style={{
           color: `${user === 'professor' ? theme.white : theme.primary800}`,
+          lineHeight: 20,
         }}
       >
         {content}

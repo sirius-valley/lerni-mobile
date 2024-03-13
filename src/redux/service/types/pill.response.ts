@@ -5,7 +5,6 @@ export type BubbleResponse = {
   options?: string[];
   optionDescriptions?: string[];
   imgOptions?: ImagesOptions[];
-  optionDescriptions?: string[];
   correctAnswer?: string[];
   correct?: boolean;
   points?: number;

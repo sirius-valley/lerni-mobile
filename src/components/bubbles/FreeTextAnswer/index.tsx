@@ -3,6 +3,7 @@ import FreeTextBubble from '../../common/FreeTextBubble';
 import { useLSelector } from '../../../redux/hooks';
 import { StyledBox } from '../../styled/styles';
 import usePill from '../../../hooks/usePill';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface FreeTextAnswerProps {
   scrollToEnd: () => void;
@@ -11,7 +12,7 @@ interface FreeTextAnswerProps {
 const FreeTextAnswer = ({ scrollToEnd }: FreeTextAnswerProps) => {
   const freeTextQuestionId = useLSelector((state) => state.pill.freeTextQuestionId);
   const { block, handleSendAnswer, handleFreeTextAnswer } = usePill(freeTextQuestionId ?? '', {});
-
+  const insets = useSafeAreaInsets();
   const handleSend = () => {
     handleSendAnswer(block?.content);
   };
@@ -23,7 +24,7 @@ const FreeTextAnswer = ({ scrollToEnd }: FreeTextAnswerProps) => {
         paddingTop: 12,
         paddingLeft: 24,
         paddingRight: 24,
-        paddingBottom: 8,
+        paddingBottom: insets.bottom,
       }}
     >
       <FreeTextBubble

@@ -9,6 +9,7 @@ import { transformQuestionnaireResponseBlock } from './utils';
 import { RootState } from '../store';
 import { questionnaireApi } from '../service/questionnaire.service';
 import { QuestionnaireResponse } from '../service/types/questionnaire.response';
+import { number } from 'yup';
 
 interface InitialStateQuestionnaireType {
   blocksIds: string[];
@@ -16,6 +17,7 @@ interface InitialStateQuestionnaireType {
   last: string | undefined;
   freeTextQuestionId?: string;
   questionnaire?: QuestionnaireResponse;
+  totalPointsAwarded: number;
 }
 
 const initialState: InitialStateQuestionnaireType = {
@@ -24,6 +26,7 @@ const initialState: InitialStateQuestionnaireType = {
   last: undefined,
   freeTextQuestionId: undefined,
   questionnaire: undefined,
+  totalPointsAwarded: 0,
 };
 
 export const questionnaireSlice = createSlice({
@@ -118,6 +121,10 @@ export const questionnaireSlice = createSlice({
           state.blocksIds = [...state.blocksIds, block.id];
           return transformQuestionnaireResponseBlock(acc, block);
         }, {});
+        state.totalPointsAwarded = action.payload.questionnaire.bubbles.reduce(
+          (acc, curr, index) => acc + (curr?.pointsAwarded ?? 0),
+          0,
+        );
         state.last =
           action.payload.questionnaire.bubbles[action.payload.questionnaire.bubbles.length - 1].id;
         state.questionnaire = action.payload;
@@ -154,6 +161,9 @@ export const questionnaireSlice = createSlice({
           // Set properties to the answered bubble
           let lastBlock = state.mapBlocks[lastQuestionId];
           if (['single-choice', 'multiple-choice', 'carousel'].includes(lastBlock.type)) {
+            state.totalPointsAwarded =
+              state.totalPointsAwarded + (action.payload?.questionnaire?.pointsAwarded ?? 0);
+
             lastBlock = {
               ...lastBlock,
               pointsAwarded: action.payload.questionnaire.pointsAwarded,

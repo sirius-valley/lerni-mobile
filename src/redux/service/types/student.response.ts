@@ -7,4 +7,5 @@ export type MeResponse = {
   career: string;
   image: string;
   hasCompletedIntroduction: boolean;
+  points: number;
 };

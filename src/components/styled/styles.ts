@@ -2,6 +2,7 @@ import { Image, SafeAreaView, View, Text, TextInput, Pressable } from 'react-nat
 import styled, { css as styledComponent } from 'styled-components';
 import { CSSProperties } from '../../utils/utils';
 import { ThemeColors } from '../../utils/theme';
+import Animated from 'react-native-reanimated';
 
 export interface StyledPropertiesInterface {
   css?: CSSProperties;
@@ -25,6 +26,10 @@ export const StyledText = styled(Text)<StyledTextInterface>`
 `;
 
 export const StyledImage = styled(Image)<StyledPropertiesInterface>`
+  ${({ css }) => css && styledComponent(css)};
+`;
+
+export const StyledImageAnimated = styled(Animated.Image)<StyledPropertiesInterface>`
   ${({ css }) => css && styledComponent(css)};
 `;
 

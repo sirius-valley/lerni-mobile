@@ -20,6 +20,7 @@ const MainContainer = ({ children, backgroundColor }: MainContainerInterface) =>
         width: '100%',
         height: '100%',
         paddingTop: inset.top + 24,
+        paddingBottom: 100,
       }}
     >
       {children}

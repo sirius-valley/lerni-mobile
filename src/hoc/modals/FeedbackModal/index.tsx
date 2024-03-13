@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ModalProps } from '../interfaces';
 import { StyledModal } from '../styles';
 import {
@@ -15,6 +15,11 @@ import DislikeIcon from '../../../../assets/icons/DislikeIcon';
 import FeedbackButton from './components/FeedbackButton';
 import Button from '../../../components/styled/Button';
 import { useFeedbackMutation } from '../../../redux/service/program.service';
+import { closeModal, setModalOpen, showToast } from '../../../redux/slice/utils.slice';
+import { ModalTypeEnum } from '../../../utils/utils';
+import { useLDispatch, useLSelector } from '../../../redux/hooks';
+import { setProgramId } from '../../../redux/slice/program.slice';
+import { set } from 'husky';
 
 interface FeedbackModalProps extends ModalProps {}
 
@@ -26,6 +31,8 @@ const FeedbackModal = ({ handleOnClose }: FeedbackModalProps) => {
   });
   const [publicOpinion, setPublicOpinion] = useState<boolean>(true);
   const [text, setText] = useState<string>('');
+  const dispatch = useLDispatch();
+  const programId = useLSelector((state) => state.program.id);
 
   const [send, { isLoading }] = useFeedbackMutation();
   const handleSend = () => {
@@ -33,9 +40,22 @@ const FeedbackModal = ({ handleOnClose }: FeedbackModalProps) => {
       vote: feedback.like ? 'up' : 'down',
       privacy: publicOpinion ? 'public' : 'private',
       content: text,
-      programId: '',
-    });
+      programId: programId!,
+    })
+      .then((res) => {
+        dispatch(showToast({ type: 'success', text: 'Se agregó tu opinión con éxito!' }));
+        dispatch(closeModal());
+      })
+      .catch((e) => {
+        dispatch(showToast({ type: 'error', text: 'Ha ocurrido un error. Intente denuevo' }));
+      });
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(setProgramId({ id: undefined }));
+    };
+  }, []);
   return (
     <StyledModal css={{ alignItems: 'center', gap: 16 }}>
       <StyledColumn
