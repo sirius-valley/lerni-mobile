@@ -1,5 +1,3 @@
-import CustomError from '../../../../components/common/ErrorDisplay/CustomError';
-import WIPIllustration from '../../../../../assets/icons/WIPIllustration';
 import { ScrollView } from 'react-native';
 import { StyledColumn, StyledRow, StyledText } from '../../../../components/styled/styles';
 import { useTheme } from 'styled-components/native';
@@ -9,7 +7,7 @@ import AnswerButton from '../../../../components/trivia/AnswerButton';
 import useTrivia from '../../../../hooks/useTrivia';
 import { useEffect, useState } from 'react';
 
-export default function Page() {
+const battle = () => {
   const { currentQuestion, currentOptions, handleSendAnswer, handleChange } = useTrivia();
 
   const handleAnswer = (answer: string) => {
@@ -32,16 +30,9 @@ export default function Page() {
   }, [contdown, currentQuestion]);
 
   return (
-    // <CustomError
-    //   Icon={WIPIllustration}
-    //   title={'Página en construcción'}
-    //   content={'El contenido que querés acceder \n no esta disponible ahora.'}
-    //   buttonText={'Ir a Explorar'}
-    // />
     <ScrollView
       contentContainerStyle={{
         gap: 24,
-        paddingBottom: 24,
       }}
       showsVerticalScrollIndicator={false}
     >
@@ -72,4 +63,6 @@ export default function Page() {
       </StyledColumn>
     </ScrollView>
   );
-}
+};
+
+export default battle;
