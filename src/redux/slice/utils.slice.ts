@@ -29,7 +29,7 @@ export const utilsSlice = createSlice({
       state.modalType = action.payload?.modalType;
     },
     closeModal: (state) => {
-      return initialState;
+      state.modalType = undefined;
     },
   },
 });

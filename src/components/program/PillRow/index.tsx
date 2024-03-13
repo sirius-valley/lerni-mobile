@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Progress from 'react-native-progress';
-import { StyledBox, StyledRow, StyledText } from '../../styled/styles';
+import { StyledRow, StyledText } from '../../styled/styles';
 import { useTheme } from 'styled-components';
 import LockIcon from '../../../../assets/icons/LockIcon';
-import { Platform, Pressable } from 'react-native';
 import ChevronRightIcon from '../../../../assets/icons/ChevronRightIcon';
 import { EllipseIcon } from '../../../../assets/icons/EllipseIcon';
-import { useRouter } from 'expo-router';
 import QuestionnaireIcon from '../../../../assets/icons/QuestionnaireIcon';
+import { useTimer } from 'react-timer-hook';
+import { useLDispatch, useLSelector } from '../../../redux/hooks';
+import { unlockQuestionnaire } from '../../../redux/slice/program.slice';
+import { unlockQuestionnaireById } from '../../../redux/service/program.service';
 
 interface PillRowInterface {
   pillNumber: number;
@@ -15,6 +17,7 @@ interface PillRowInterface {
   pillName: string;
   duration: number;
   isLocked: boolean;
+  unlockTime?: string;
   id: string;
   isQuestionnaire?: boolean;
 }
@@ -25,11 +28,28 @@ const PillRow = ({
   pillName,
   duration,
   isLocked,
+  unlockTime,
   isQuestionnaire = false,
   id,
 }: PillRowInterface) => {
   const theme = useTheme();
-  const router = useRouter();
+  const dispatch = useLDispatch();
+  const programId = useLSelector((state) => state.program.id);
+
+  const unlockQuestionnaireDispatch = () => {
+    dispatch(unlockQuestionnaireById(programId!));
+    dispatch(unlockQuestionnaire());
+  };
+
+  const { seconds, minutes, hours, isRunning, restart } = useTimer({
+    autoStart: false,
+    expiryTimestamp: unlockTime ? new Date(unlockTime) : new Date(),
+    onExpire: () => isQuestionnaire && unlockQuestionnaireDispatch(),
+  });
+
+  useEffect(() => {
+    if (unlockTime) restart(new Date(unlockTime));
+  }, [unlockTime]);
 
   return (
     <StyledRow
@@ -43,7 +63,7 @@ const PillRow = ({
         justifyContent: 'space-between',
       }}
     >
-      <StyledRow css={{ alignItems: 'center', gap: 8, justifyContent: 'flex-start', width: '90%' }}>
+      <StyledRow css={{ alignItems: 'center', gap: 8, justifyContent: 'flex-start', flex: 1 }}>
         <StyledRow css={{ width: '10%', justifyContent: 'center' }}>
           {isQuestionnaire ? (
             <QuestionnaireIcon color={isLocked ? theme.gray600 : theme.primary500} />
@@ -68,14 +88,29 @@ const PillRow = ({
             <LockIcon />
           )}
         </StyledRow>
-        <StyledRow css={{ alignItems: 'center', gap: 4, width: '75%' }}>
-          <StyledText variant="body2" color={!isLocked ? 'gray100' : 'gray600'}>
-            {pillName}
-          </StyledText>
-          <EllipseIcon size={4} color={!isLocked ? theme.gray100 : theme.gray500} />
-          <StyledText variant="body3" color={!isLocked ? 'primary600' : 'gray600'}>
-            {duration} min
-          </StyledText>
+        <StyledRow css={{ alignItems: 'center', flex: 1, justifyContent: 'space-between' }}>
+          <StyledRow css={{ alignItems: 'center', gap: 4 }}>
+            <StyledText variant="body2" color={!isLocked ? 'gray100' : 'gray600'}>
+              {isQuestionnaire ? 'Cuestionario' : pillName}
+            </StyledText>
+            <EllipseIcon size={4} color={!isLocked ? theme.gray100 : theme.gray500} />
+            <StyledText variant="body3" color={!isLocked ? 'primary600' : 'gray600'}>
+              {duration} min
+            </StyledText>
+          </StyledRow>
+          <StyledRow css={{ alignItems: 'center', gap: 4, paddingRight: 8 }}>
+            {isRunning && !!unlockTime && (
+              <>
+                <StyledText variant="body3" color={'gray500'}>
+                  Disponible en
+                </StyledText>
+                <StyledText variant="body3" color={'gray500'} css={{ fontFamily: 'Roboto-Bold' }}>
+                  {hours < 10 ? `0${hours}` : hours}:{minutes < 10 ? `0${minutes}` : minutes}:
+                  {seconds < 10 ? `0${seconds}` : seconds}hs
+                </StyledText>
+              </>
+            )}
+          </StyledRow>
         </StyledRow>
       </StyledRow>
       {!isLocked && <ChevronRightIcon color={theme.primary600} />}

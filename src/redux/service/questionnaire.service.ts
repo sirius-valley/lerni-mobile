@@ -8,6 +8,7 @@ export const questionnaireApi = api.injectEndpoints({
         url: `/api/questionnaire/${id}`,
         method: 'GET',
       }),
+      providesTags: ['Questionnaire'],
     }),
     answerQuestionnaire: builder.mutation<QuestionnaireResponse, QuestionnaireBody>({
       query: (body) => ({

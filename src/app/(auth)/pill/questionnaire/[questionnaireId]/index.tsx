@@ -10,15 +10,18 @@ import {
   Platform,
   VirtualizedList,
 } from 'react-native';
-import { useLSelector } from '../../../../../redux/hooks';
+import { useLDispatch, useLSelector } from '../../../../../redux/hooks';
 import { useQuestionnaireByIdQuery } from '../../../../../redux/service/questionnaire.service';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import usePrevious from '../../../../../hooks/usePrevious';
 import { SuccessPill } from '../../../../../components/common/Result/SuccessPill';
 import QuestionnaireRender from '../../../../../components/pill/QuestionnaireRender';
 import { QuestionnaireState } from '../../../../../redux/service/types/questionnaire.response';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { FailurePill } from '../../../../../components/common/Result/FailurePill';
+import { setModalOpen } from '../../../../../redux/slice/utils.slice';
+import { ModalTypeEnum } from '../../../../../utils/utils';
+import { api } from '../../../../../redux/service/api';
 
 const Questionnaire = () => {
   const { questionnaireId } = useLocalSearchParams();
@@ -29,6 +32,10 @@ const Questionnaire = () => {
     },
   );
 
+  const dispatch = useLDispatch();
+  const programId = useLSelector((state) => state.program.id);
+  const pointsTotal = useLSelector((state) => state.questionnaire.totalPointsAwarded);
+
   const blocksIds = useLSelector((state) => state.questionnaire.blocksIds);
   const pillProgress = useLSelector(
     (state) => state.questionnaire?.questionnaire?.questionnaire.progress,
@@ -36,6 +43,8 @@ const Questionnaire = () => {
   const pillCompleted = useLSelector(
     (state) => state.questionnaire?.questionnaire?.questionnaire.questionnaireState,
   );
+
+  const route = useRouter();
 
   const virtualRef = useRef<VirtualizedList<unknown> | null>();
   const prevData = usePrevious<boolean>(pillCompleted);
@@ -76,7 +85,12 @@ const Questionnaire = () => {
 
   return (
     <PillMainContainer backgroundColor="primary900">
-      <PillHeader title={'Cuestionario'} pillNumber={1} percentageDone={pillProgress ?? 0} />
+      <PillHeader
+        title={'Cuestionario'}
+        pillNumber={1}
+        percentageDone={pillProgress ?? 0}
+        isQuestionnaire
+      />
       <StyledColumn css={{ flexGrow: 1 }}>
         <Animated.View
           style={{
@@ -130,9 +144,20 @@ const Questionnaire = () => {
             }}
           >
             {pillCompleted === QuestionnaireState.COMPLETED ? (
-              <SuccessPill show={show} programName={'el cuestionario'} hasConfeti winsPoints />
+              <SuccessPill
+                show={show}
+                programName={'el cuestionario'}
+                callbackAction={() => {
+                  route.push('/(auth)/(tabs)/explore');
+                  dispatch(api.util?.invalidateTags(['ME']));
+                  dispatch(api.util?.invalidateTags([{ type: 'ProgramById', id: programId }]));
+                  dispatch(setModalOpen({ modalType: ModalTypeEnum.FEEDBACK_MODAL }));
+                }}
+                hasConfeti
+                winsPoints={pointsTotal}
+              />
             ) : (
-              <FailurePill />
+              <FailurePill callback={() => dispatch(api.util?.invalidateTags(['Questionnaire']))} />
             )}
           </StyledBox>
         </Animated.View>

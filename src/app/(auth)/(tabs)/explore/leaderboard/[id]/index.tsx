@@ -21,7 +21,7 @@ const Leaderboard = () => {
     <StyledColumn
       css={{ gap: 16, marginBottom: 60, width: '100%', height: '100%', paddingTop: 20 }}
     >
-      <Header title="Comentarios" onPress={handleOnPress} />
+      <Header title="Leaderboard" onPress={handleOnPress} />
       <ScrollView
         ref={scrollViewRef}
         onContentSizeChange={() => {

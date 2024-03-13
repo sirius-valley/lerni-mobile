@@ -14,6 +14,7 @@ export const programApi = api.injectEndpoints({
         url: `api/program/${id}`,
         method: 'GET',
       }),
+      providesTags: (result, error, arg) => [{ type: 'ProgramById', id: result!.id }],
     }),
     homePrograms: builder.query<ProgramsData, void>({
       providesTags: ['Home'],
@@ -41,11 +42,48 @@ export const programApi = api.injectEndpoints({
 export const updatePillById = (newPill: { id: string; percentage: number }, programId: string) =>
   // @ts-ignore
   api.util.updateQueryData('programById', programId, (draftPosts: ProgramResponseType) => {
+    const newPills = draftPosts!.pills.map((pill) =>
+      pill.id === newPill.id ? { ...pill, pillProgress: newPill.percentage } : pill,
+    );
+    const isQuestionnaireAvailable = newPills.find((pill) => pill.pillProgress !== 100);
+    const PillsOrQuestionnariesCompleted =
+      (newPills.filter((pill) => pill.pillProgress === 100)?.length ?? 0) +
+      (draftPosts.questionnaire?.questionnaireProgress === 100 ? 1 : 0);
+    // console.log(JSON.stringify(draftPosts),newPills.filter((pill)=>pill.pillProgress === 100)?.length,draftPosts.questionnaire?.questionnaireProgress === 100,newPills?.length + 1)
+
     return {
       ...draftPosts,
-      pills: draftPosts!.pills.map((pill) =>
-        pill.id === newPill.id ? { ...pill, pillProgress: newPill.percentage } : pill,
-      ),
+      progress: (PillsOrQuestionnariesCompleted / (newPills?.length + 1)) * 100,
+      pills: newPills,
+      questionnaire: {
+        ...draftPosts.questionnaire,
+        isLocked: !!isQuestionnaireAvailable,
+      },
+    };
+  });
+
+export const updateQuestionnaireByProgramId = (percentage: number, programId: string) =>
+  // @ts-ignore
+  api.util.updateQueryData('programById', programId, (draftPosts: ProgramResponseType) => {
+    return {
+      ...draftPosts,
+      questionnaire: {
+        ...draftPosts.questionnaire,
+        questionnaireProgress: percentage,
+      },
+    };
+  });
+
+export const unlockQuestionnaireById = (programId: string) =>
+  // @ts-ignore
+  api.util.updateQueryData('programById', programId, (draftPosts: ProgramResponseType) => {
+    return {
+      ...draftPosts,
+      questionnaire: {
+        ...draftPosts.questionnaire,
+        isLocked: false,
+        lockedUntil: undefined,
+      },
     };
   });
 
