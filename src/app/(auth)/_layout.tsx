@@ -20,6 +20,7 @@ export const Layout = () => {
     <Stack
       screenOptions={{
         headerShown: false,
+        animation: 'none',
       }}
     />
   );
