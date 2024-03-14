@@ -2,6 +2,7 @@ import { useAnswerTriviaMutation, useTriviaByIdQuery } from '../redux/service/tr
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { TriviaQuestion } from '../redux/service/types/trivia.response';
+import usePrevious from './usePrevious';
 
 const useTrivia = () => {
   const { triviaId } = useLocalSearchParams();
@@ -50,15 +51,11 @@ const useTrivia = () => {
   const [index, setIndex] = useState<number>(0);
 
   const handleUpdateAnswer = (id: string, answer: string) => {
-    console.log(id, answer, trivia);
     const newTrivia = [...trivia];
-    console.log(newTrivia);
     const questionIndex = newTrivia.findIndex((question) => question.id === id);
-    console.log(questionIndex);
     newTrivia[questionIndex].userAnswer = answer;
     setTrivia(newTrivia);
   };
-  console.log(trivia);
 
   const handleSendAnswer = () => {
     const lastBubble = trivia[trivia.length - 1];
@@ -69,17 +66,12 @@ const useTrivia = () => {
         answer: lastBubble.userAnswer,
       };
       answerQuestion(body).then((response) => {
-        console.log(response);
-
         if ('data' in response) {
-          console.log('success');
           setTrivia([...trivia, response.data]);
           setIndex(index + 1);
         } else if ('error' in response) {
-          console.log('error');
           const newTrivia = [...trivia].splice(0, -1);
           const lastQuestion = trivia[trivia.length - 1];
-          console.log(newTrivia, lastQuestion);
           setTimeout(() => {
             // newTrivia = [
             //     ...newTrivia,
@@ -137,6 +129,7 @@ const useTrivia = () => {
     currentOptions: trivia[index]?.answers,
     handleChange: handleUpdateAnswer,
     handleSendAnswer,
+    trivia,
   };
 };
 

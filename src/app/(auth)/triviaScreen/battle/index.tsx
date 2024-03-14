@@ -1,33 +1,33 @@
+import { useState } from 'react';
 import { ScrollView } from 'react-native';
-import { StyledColumn, StyledRow, StyledText } from '../../../../components/styled/styles';
 import { useTheme } from 'styled-components/native';
+import {
+  StyledBox,
+  StyledColumn,
+  StyledRow,
+  StyledText,
+} from '../../../../components/styled/styles';
+import AnswerButton from '../../../../components/trivia/AnswerButton';
+import { Countdown } from '../../../../components/trivia/Countdown';
 import PlayersHeader from '../../../../components/trivia/PlayersHeader';
 import Question from '../../../../components/trivia/Question';
-import AnswerButton from '../../../../components/trivia/AnswerButton';
 import useTrivia from '../../../../hooks/useTrivia';
-import { useEffect, useState } from 'react';
 
 const battle = () => {
   const { currentQuestion, currentOptions, handleSendAnswer, handleChange } = useTrivia();
+  const [loading, setLoading] = useState(false);
+  const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const theme = useTheme();
 
   const handleAnswer = (answer: string) => {
     handleChange(currentQuestion.id, answer);
     handleSendAnswer();
-    console.log('enviado', currentQuestion, answer);
-  };
 
-  const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  const theme = useTheme();
-  const [contdown, setContdown] = useState(20);
-  useEffect(() => {
-    if (contdown === 0) {
-      setContdown(20);
-    } else if (contdown > 0) {
-      setTimeout(() => {
-        setContdown(contdown - 1);
-      }, 1000);
-    }
-  }, [contdown, currentQuestion]);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
 
   return (
     <ScrollView
@@ -41,16 +41,21 @@ const battle = () => {
           <StyledText css={{ color: theme.white }} variant={'body1'}>
             {`Ronda ${Number(currentQuestion.id) + 1}/${questions.length} `}
           </StyledText>
-          <StyledText css={{ color: theme.primary500 }} variant={'h2'}>
-            {`${contdown}''`}
-          </StyledText>
+          <StyledBox
+            css={{
+              height: 23,
+            }}
+          >
+            {!loading && <Countdown time={20} handleTimeout={handleAnswer} />}
+          </StyledBox>
         </StyledRow>
         <PlayersHeader />
         <Question question={currentQuestion.question} />
       </StyledColumn>
       <StyledColumn css={{ gap: 16 }}>
-        {currentOptions.map((option) => (
+        {currentOptions.map((option, idx) => (
           <AnswerButton
+            key={idx}
             answer={option.text}
             onPress={handleAnswer}
             selected={

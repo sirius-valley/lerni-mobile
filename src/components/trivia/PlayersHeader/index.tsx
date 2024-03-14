@@ -1,7 +1,10 @@
 import BoltIcon from '../../../../assets/icons/BoltIcon';
+import { VSIcon } from '../../../../assets/icons/VSIcon';
+import useTrivia from '../../../hooks/useTrivia';
 import { StyledBox, StyledRow, StyledText } from '../../styled/styles';
 import PlayerStatus from '../PlayerStatus';
 const PlayersHeader = () => {
+  const { opponent } = useTrivia();
   return (
     <StyledRow css={{ position: 'relative', justifyContent: 'center', width: '100%' }}>
       <PlayerStatus
@@ -55,11 +58,9 @@ const PlayersHeader = () => {
             id: '1',
           },
         ]}
-        firstName={'Nombre'}
-        lastName={'Estudiante'}
-        imgUrl={
-          'https://media.discordapp.net/attachments/411201278031560708/1124484301401116773/peron20color.png?ex=65b4429d&is=65a1cd9d&hm=48acf6cfeb3d75dd6a313bb64a5d921b33eaff8de3873406372ad6f9257fd95c&=&format=webp&quality=lossless&width=904&height=922'
-        }
+        firstName={'Mono'}
+        lastName={'Ing. Informática'}
+        imgUrl={undefined}
         side={'left'}
       />
       <StyledBox
@@ -74,17 +75,17 @@ const PlayersHeader = () => {
       >
         <StyledBox>
           <BoltIcon size={47} />
-          <StyledText
-            variant={'h2'}
+          <StyledBox
             css={{
-              color: 'white',
-              fontStyle: 'italic',
-              left: '3%',
-              bottom: '48%',
+              width: 24,
+              height: 24,
+              zIndex: 3,
+              left: '3.5%',
+              bottom: '50%',
             }}
           >
-            VS
-          </StyledText>
+            <VSIcon size={24} />
+          </StyledBox>
         </StyledBox>
       </StyledBox>
       <PlayerStatus
@@ -138,9 +139,9 @@ const PlayersHeader = () => {
             id: '1',
           },
         ]}
-        firstName={undefined}
-        lastName={undefined}
-        imgUrl={undefined}
+        firstName={opponent?.firstName}
+        lastName={opponent?.lastName}
+        imgUrl={opponent?.imgUrl}
         side={'right'}
       />
     </StyledRow>
