@@ -1,5 +1,5 @@
 import { api } from './api';
-import { Trivia, TriviaQuestion } from './types/trivia.response';
+import { Trivia, TriviaAnswerResponse, TriviaQuestion } from './types/trivia.response';
 
 export const triviaApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,12 +10,8 @@ export const triviaApi = api.injectEndpoints({
       }),
     }),
     answerTrivia: builder.mutation<
-      TriviaQuestion,
-      {
-        triviaId: string | string[];
-        questionId: string;
-        answer: string;
-      }
+      TriviaAnswerResponse,
+      { triviaId: string; questionId: string; answer: string }
     >({
       query: (body) => ({
         url: `trivia/answer`,

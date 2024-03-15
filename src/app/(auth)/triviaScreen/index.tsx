@@ -6,8 +6,13 @@ const Page = () => {
   const router = useRouter();
 
   setTimeout(() => {
-    router.push('/(auth)/triviaScreen/battle');
-  }, 3000);
+    router.push({
+      pathname: '/(auth)/triviaScreen/battle',
+      params: {
+        triviaId: 'triviaId01',
+      },
+    });
+  }, 100);
 
   return (
     <StyledColumn style={{ width: '100%', height: '100%' }}>

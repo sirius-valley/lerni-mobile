@@ -13,7 +13,7 @@ export const Layout = () => {
         contentStyle: {
           flex: 1,
           backgroundColor: theme.primary900,
-          paddingTop: insets.top + 60,
+          paddingTop: insets.top + 30,
           paddingBottom: 80,
           paddingHorizontal: 24,
         },

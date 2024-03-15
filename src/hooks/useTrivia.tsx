@@ -2,9 +2,12 @@ import { useAnswerTriviaMutation, useTriviaByIdQuery } from '../redux/service/tr
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { TriviaQuestion } from '../redux/service/types/trivia.response';
+import { useLSelector } from '../redux/hooks';
 
 const useTrivia = () => {
   const { triviaId } = useLocalSearchParams();
+  const isTriviaIdAString = typeof triviaId === 'string';
+  const trivia = useLSelector((state) => state.trivia.trivia);
   const {
     data: triviaData,
     error: triviaError,
@@ -21,121 +24,31 @@ const useTrivia = () => {
     { data: answerData, error: answerError, isLoading: answerLoading, isSuccess: answerSuccess },
   ] = useAnswerTriviaMutation();
 
-  const [trivia, setTrivia] = useState<TriviaQuestion[]>([
-    {
-      id: '0',
-      question: '¿Cuál es la capital de Argentina?',
-      answers: [
-        {
-          text: 'Buenos Aires',
-          id: '1',
-        },
-        {
-          text: 'Córdoba',
-          id: '2',
-        },
-        {
-          text: 'Rosario',
-          id: '3',
-        },
-        {
-          text: 'Mendoza',
-          id: '4',
-        },
-      ],
-      userAnswer: undefined,
-    },
-  ]);
-
-  const [index, setIndex] = useState<number>(0);
-
-  const handleUpdateAnswer = (id: string, answer: string) => {
-    console.log(id, answer, trivia);
-    const newTrivia = [...trivia];
-    console.log(newTrivia);
-    const questionIndex = newTrivia.findIndex((question) => question.id === id);
-    console.log(questionIndex);
-    newTrivia[questionIndex].userAnswer = answer;
-    setTrivia(newTrivia);
-  };
-  console.log(trivia);
-
-  const handleSendAnswer = () => {
-    const lastBubble = trivia[trivia.length - 1];
-    if (lastBubble.userAnswer) {
+  const handleSendAnswer = (questionId: string, answer: string) => {
+    if (isTriviaIdAString) {
       const body = {
-        triviaId: triviaId!,
-        questionId: lastBubble.id,
-        answer: lastBubble.userAnswer,
+        triviaId: triviaId,
+        questionId: questionId,
+        answer: answer,
       };
-      answerQuestion(body).then((response) => {
-        console.log(response);
-
-        if ('data' in response) {
-          console.log('success');
-          setTrivia([...trivia, response.data]);
-          setIndex(index + 1);
-        } else if ('error' in response) {
-          console.log('error');
-          const newTrivia = [...trivia].splice(0, -1);
-          const lastQuestion = trivia[trivia.length - 1];
-          console.log(newTrivia, lastQuestion);
-          setTimeout(() => {
-            // newTrivia = [
-            //     ...newTrivia,
-            //     {
-            //         ...lastQuestion,
-            //         userAnswer: undefined,
-            //
-            //     }
-            // ]
-            // setTrivia(newTrivia);
-            setTrivia([
-              ...trivia,
-              {
-                id: String(index + 1),
-                question: '¿Cuál es la capital de Argentina?' + index,
-                answers: [
-                  {
-                    text: 'Buenos Aires',
-                    id: '1',
-                  },
-                  {
-                    text: 'Córdoba',
-                    id: '2',
-                  },
-                  {
-                    text: 'Rosario',
-                    id: '3',
-                  },
-                  {
-                    text: 'Mendoza',
-                    id: '4',
-                  },
-                ],
-                userAnswer: undefined,
-              },
-            ]);
-            setIndex(index + 1);
-          }, 2000);
-        }
-      });
+      answerQuestion(body);
     }
   };
 
-  useEffect(() => {
-    triviaSuccess && setTrivia(triviaData?.questions);
-  }, [triviaSuccess]);
+  // useEffect(() => {
+  //   triviaSuccess && setTrivia(triviaData?.questions);
+  // }, [triviaSuccess]);
 
   return {
     opponent: triviaData?.opponent,
     currentQuestion: {
-      question: trivia[index]?.question,
-      id: trivia[index]?.id,
-      answer: trivia[index]?.userAnswer,
+      id: trivia?.questions[trivia.questions.length - 1]?.id,
+      question: trivia?.questions[trivia.questions.length - 1]?.question,
+      answer: trivia?.questions[trivia.questions.length - 1]?.userAnswer,
+      correctOption: trivia?.questions[trivia.questions.length - 1]?.correctOption,
+      status: trivia?.questions[trivia.questions.length - 1]?.status,
     },
-    currentOptions: trivia[index]?.answers,
-    handleChange: handleUpdateAnswer,
+    currentOptions: trivia?.questions[trivia.questions.length - 1]?.options,
     handleSendAnswer,
   };
 };

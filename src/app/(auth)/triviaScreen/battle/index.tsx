@@ -1,5 +1,9 @@
-import { ScrollView } from 'react-native';
-import { StyledColumn, StyledRow, StyledText } from '../../../../components/styled/styles';
+import {
+  StyledBox,
+  StyledColumn,
+  StyledRow,
+  StyledText,
+} from '../../../../components/styled/styles';
 import { useTheme } from 'styled-components/native';
 import PlayersHeader from '../../../../components/trivia/PlayersHeader';
 import Question from '../../../../components/trivia/Question';
@@ -8,33 +12,49 @@ import useTrivia from '../../../../hooks/useTrivia';
 import { useEffect, useState } from 'react';
 
 const battle = () => {
-  const { currentQuestion, currentOptions, handleSendAnswer, handleChange } = useTrivia();
+  const { currentQuestion, currentOptions, handleSendAnswer } = useTrivia();
+  const [countdown, setCountdown] = useState(20);
+  const [fakeLoading, setFakeLoading] = useState(false);
+  const theme = useTheme();
 
   const handleAnswer = (answer: string) => {
-    handleChange(currentQuestion.id, answer);
-    handleSendAnswer();
-    console.log('enviado', currentQuestion, answer);
+    handleSendAnswer(currentQuestion?.id ?? '', answer);
+    setFakeLoading(true);
+  };
+
+  const getQuestionStatus = () => {
+    if (fakeLoading) return 'loading';
+    if (countdown === 0) return 'timeout';
+    if (currentQuestion.status === 'Won') return 'correct';
+    if (currentQuestion.status === 'Lost') return 'incorrect';
+    return 'default';
   };
 
   const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  const theme = useTheme();
-  const [contdown, setContdown] = useState(20);
+
   useEffect(() => {
-    if (contdown === 0) {
-      setContdown(20);
-    } else if (contdown > 0) {
+    if (currentQuestion.answer)
       setTimeout(() => {
-        setContdown(contdown - 1);
-      }, 1000);
-    }
-  }, [contdown, currentQuestion]);
+        setFakeLoading(false);
+      }, 1500);
+  }, [currentQuestion]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (countdown > 0) setCountdown(countdown - 1);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [countdown, currentQuestion]);
+
+  useEffect(() => {
+    if (countdown === 0) handleAnswer('timeout');
+  }, [countdown]);
 
   return (
-    <ScrollView
-      contentContainerStyle={{
+    <StyledBox
+      css={{
         gap: 24,
       }}
-      showsVerticalScrollIndicator={false}
     >
       <StyledColumn css={{ gap: 32 }}>
         <StyledRow css={{ justifyContent: 'space-between' }}>
@@ -42,26 +62,37 @@ const battle = () => {
             {`Ronda ${Number(currentQuestion.id) + 1}/${questions.length} `}
           </StyledText>
           <StyledText css={{ color: theme.primary500 }} variant={'h2'}>
-            {`${contdown}''`}
+            {`${countdown}''`}
           </StyledText>
         </StyledRow>
         <PlayersHeader />
-        <Question question={currentQuestion.question} />
+        <Question
+          question={currentQuestion.question ?? ''}
+          loading={fakeLoading}
+          status={getQuestionStatus()}
+        />
       </StyledColumn>
       <StyledColumn css={{ gap: 16 }}>
-        {currentOptions.map((option) => (
+        {currentOptions?.map((option) => (
           <AnswerButton
-            answer={option.text}
+            key={option}
+            answer={option}
             onPress={handleAnswer}
             selected={
-              typeof currentQuestion.answer === 'string'
-                ? currentQuestion.answer === option.text
-                : undefined
+              typeof currentQuestion.answer === 'string' && currentQuestion.answer === option
             }
+            correctAnswer={currentQuestion.correctOption}
+            selectedIsWrong={
+              typeof currentQuestion.answer === 'string' &&
+              currentQuestion.answer !== currentQuestion.correctOption &&
+              currentQuestion.answer === option
+            }
+            loading={fakeLoading}
+            showCorrect={countdown === 0}
           />
         ))}
       </StyledColumn>
-    </ScrollView>
+    </StyledBox>
   );
 };
 

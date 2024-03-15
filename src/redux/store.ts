@@ -6,6 +6,7 @@ import utilsReducer from './slice/utils.slice';
 import pillReducer from './slice/pill.slice';
 import programReducer from './slice/program.slice';
 import questionnaireReducer from './slice/questionnaire.slice';
+import triviaReducer from './slice/trivia.slice';
 import { persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
@@ -18,6 +19,7 @@ const reducers = combineReducers({
   pill: pillReducer,
   questionnaire: questionnaireReducer,
   program: programReducer,
+  trivia: triviaReducer,
 });
 
 const persistConfig = {

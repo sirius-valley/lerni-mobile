@@ -9,5 +9,5 @@ export default function Page() {
     router.push('/(auth)/triviaScreen');
   }, []);
 
-  return <ErrorDisplay type="in-progress" />
+  return <ErrorDisplay type="in-progress" />;
 }
