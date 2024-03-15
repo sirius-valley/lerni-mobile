@@ -1,15 +1,16 @@
+import { useEffect, useState } from 'react';
+import { useTheme } from 'styled-components/native';
 import {
   StyledBox,
   StyledColumn,
   StyledRow,
   StyledText,
 } from '../../../../components/styled/styles';
-import { useTheme } from 'styled-components/native';
+import AnswerButton from '../../../../components/trivia/AnswerButton';
+import { Countdown } from '../../../../components/trivia/Countdown';
 import PlayersHeader from '../../../../components/trivia/PlayersHeader';
 import Question from '../../../../components/trivia/Question';
-import AnswerButton from '../../../../components/trivia/AnswerButton';
 import useTrivia from '../../../../hooks/useTrivia';
-import { useEffect, useState } from 'react';
 
 const battle = () => {
   const { currentQuestion, currentOptions, handleSendAnswer } = useTrivia();
@@ -61,9 +62,13 @@ const battle = () => {
           <StyledText css={{ color: theme.white }} variant={'body1'}>
             {`Ronda ${Number(currentQuestion.id) + 1}/${questions.length} `}
           </StyledText>
-          <StyledText css={{ color: theme.primary500 }} variant={'h2'}>
-            {`${countdown}''`}
-          </StyledText>
+          <StyledBox
+            css={{
+              height: 23,
+            }}
+          >
+            {!fakeLoading && <Countdown time={20} handleTimeout={handleAnswer} />}
+          </StyledBox>
         </StyledRow>
         <PlayersHeader />
         <Question
@@ -73,9 +78,9 @@ const battle = () => {
         />
       </StyledColumn>
       <StyledColumn css={{ gap: 16 }}>
-        {currentOptions?.map((option) => (
+        {currentOptions?.map((option, idx) => (
           <AnswerButton
-            key={option}
+            key={idx}
             answer={option}
             onPress={handleAnswer}
             selected={

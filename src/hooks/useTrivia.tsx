@@ -3,6 +3,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { TriviaQuestion } from '../redux/service/types/trivia.response';
 import { useLSelector } from '../redux/hooks';
+import usePrevious from './usePrevious';
 
 const useTrivia = () => {
   const { triviaId } = useLocalSearchParams();
@@ -50,6 +51,7 @@ const useTrivia = () => {
     },
     currentOptions: trivia?.questions[trivia.questions.length - 1]?.options,
     handleSendAnswer,
+    trivia,
   };
 };
 

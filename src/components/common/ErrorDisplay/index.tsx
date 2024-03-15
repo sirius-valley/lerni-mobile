@@ -5,11 +5,21 @@ import NoResults from '../../../../assets/icons/NoResults';
 import ShipIllustration from '../../../../assets/icons/ShipIllustration';
 import WIPIllustration from '../../../../assets/icons/WIPIllustration';
 
-interface ErrorDisplayInterface {
-  type: '404' | '505' | 'no-results' | 'no-introduction' | 'in-progress';
-}
+type ErrorDisplayType = '404' | '505' | 'no-results' | 'no-introduction' | 'in-progress';
 
-const errorsAvailable = {
+interface ErrorsAvailableInterface
+  extends Record<
+    ErrorDisplayType,
+    {
+      Icon: React.FunctionComponent;
+      title: string;
+      content: string;
+      hasActionButton?: boolean;
+      buttonText?: string;
+    }
+  > {}
+
+const errorsAvailable: ErrorsAvailableInterface = {
   '404': {
     title: 'Página no encontrada',
     content: 'Lo sentimos, no pudimos encontrar lo que estás buscando',
@@ -43,6 +53,10 @@ const errorsAvailable = {
   },
 };
 
+interface ErrorDisplayInterface {
+  type: ErrorDisplayType;
+}
+
 const ErrorDisplay = ({ type }: ErrorDisplayInterface) => {
   return (
     <CustomError
@@ -50,6 +64,7 @@ const ErrorDisplay = ({ type }: ErrorDisplayInterface) => {
       title={errorsAvailable[type].title}
       content={errorsAvailable[type].content}
       hasActionButton={errorsAvailable[type].hasActionButton}
+      buttonText={errorsAvailable[type].buttonText}
     />
   );
 };

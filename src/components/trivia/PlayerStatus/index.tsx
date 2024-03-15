@@ -12,13 +12,11 @@ export type User = {
   lastName?: string;
   imgUrl?: string;
   id?: string;
-  // email: string;
   job?: string;
   studies?: string;
-  // place: string;
 };
 
-type PlayerStatusProps = Pick<User, 'firstName' | 'lastName' | 'imgUrl'> & {
+type PlayerStatusProps = Pick<User, 'firstName' | 'lastName' | 'imgUrl' | 'job' | 'studies'> & {
   points: { id: string; correct?: boolean }[];
   side: 'left' | 'right';
 };
@@ -26,6 +24,8 @@ const PlayerStatus = ({
   firstName,
   lastName,
   imgUrl = undefined,
+  job,
+  studies,
   points,
   side,
 }: PlayerStatusProps) => {
@@ -42,12 +42,12 @@ const PlayerStatus = ({
         padding: side === 'left' ? '14px 0px 12px 16px' : '14px 16px 12px 0px',
         width: adjustedSize,
         borderRadius: side === 'right' ? '0 12px 12px 0' : '12px 0 0 12px',
-        backgroundColor: side === 'right' ? theme.primary650 : theme.primary700,
+        backgroundColor: side === 'right' ? theme.primary700 : theme.primary650,
         alignItems: side === 'left' ? 'flex-start' : 'flex-end',
       }}
     >
       <StyledRow css={{ gap: 8, flexDirection: side === 'right' ? 'row-reverse' : 'row' }}>
-        <Avatar uri={undefined} size={50} />
+        <Avatar uri={imgUrl} size={50} />
         <StyledColumn
           css={{
             justifyContent: 'center',
@@ -58,7 +58,7 @@ const PlayerStatus = ({
             {firstName ?? 'Oponente'}
           </StyledText>
           <StyledText variant={'body3'} css={{ color: theme.gray100 }}>
-            {lastName ?? 'al azar'}
+            {job ?? studies ?? lastName ?? 'al azar'}
           </StyledText>
         </StyledColumn>
       </StyledRow>
