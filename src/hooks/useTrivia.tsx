@@ -1,9 +1,6 @@
 import { useAnswerTriviaMutation, useTriviaByIdQuery } from '../redux/service/trivia.service';
 import { useLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { TriviaQuestion } from '../redux/service/types/trivia.response';
 import { useLSelector } from '../redux/hooks';
-import usePrevious from './usePrevious';
 
 const useTrivia = () => {
   const { triviaId } = useLocalSearchParams();
@@ -35,10 +32,6 @@ const useTrivia = () => {
       answerQuestion(body);
     }
   };
-
-  // useEffect(() => {
-  //   triviaSuccess && setTrivia(triviaData?.questions);
-  // }, [triviaSuccess]);
 
   return {
     opponent: triviaData?.opponent,

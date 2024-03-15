@@ -10,7 +10,6 @@ interface VersusContainerProps {
 export const VersusContainer = ({ children }: VersusContainerProps) => {
   const theme = useTheme();
   const { width } = Dimensions.get('window');
-  console.log(width);
 
   return (
     <StyledBox
