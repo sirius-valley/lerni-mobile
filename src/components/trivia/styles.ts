@@ -5,8 +5,8 @@ import { Dimensions } from 'react-native';
 export const StyledTriangle = styled(StyledBox)`
   ${({ theme }) =>
     styledComponent({
-      borderTopWidth: Dimensions.get('window').height,
-      borderRightWidth: Dimensions.get('window').width,
+      borderTopWidth: Dimensions.get('screen').height,
+      borderRightWidth: Dimensions.get('screen').width,
       borderBottomWidth: 0,
       borderLeftWidth: 0,
       borderTopColor: 'transparent',

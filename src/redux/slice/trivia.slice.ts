@@ -30,10 +30,18 @@ const initialState: InitialStateTriviaType = {
 export const triviaSlice = createSlice({
   name: 'triviaSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    restartAnswer: (state) => {
+      if (Array.isArray(state.trivia?.questions)) {
+        state.trivia.questions[0].userAnswer = undefined;
+        state.trivia.questions[0].status = 'In Progress';
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addMatcher(triviaApi.endpoints.answerTrivia.matchPending, (state, action) => {
-      const { answer } = action.meta.arg.originalArgs;
+      const { answer, ...rest } = action.meta.arg.originalArgs;
+      console.log('slice: ', answer, rest);
       if (Array.isArray(state.trivia?.questions)) {
         const correctOption = 'Buenos Aires';
         const questionsLength = state.trivia.questions.length;
@@ -46,5 +54,7 @@ export const triviaSlice = createSlice({
     });
   },
 });
+
+export const { restartAnswer } = triviaSlice.actions;
 
 export default triviaSlice.reducer;

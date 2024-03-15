@@ -25,7 +25,7 @@ const Page = () => {
           triviaId: 'triviaId01',
         },
       });
-    }, 2850);
+    }, 100);
   }, []);
 
   return (

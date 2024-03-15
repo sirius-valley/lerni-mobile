@@ -1,9 +1,13 @@
 import { useAnswerTriviaMutation, useTriviaByIdQuery } from '../redux/service/trivia.service';
 import { useLocalSearchParams } from 'expo-router';
-import { useLSelector } from '../redux/hooks';
+import { useLDispatch, useLSelector } from '../redux/hooks';
+import { useEffect, useState } from 'react';
+import { restartAnswer } from '../redux/slice/trivia.slice';
 
 const useTrivia = () => {
+  const dispatch = useLDispatch();
   const { triviaId } = useLocalSearchParams();
+  const [currentQuestionTimesup, setCurrentQuestionTimesup] = useState(false);
   const isTriviaIdAString = typeof triviaId === 'string';
   const trivia = useLSelector((state) => state.trivia.trivia);
   const {
@@ -23,6 +27,9 @@ const useTrivia = () => {
   ] = useAnswerTriviaMutation();
 
   const handleSendAnswer = (questionId: string, answer: string) => {
+    if (answer === 'timeout') {
+      setCurrentQuestionTimesup(true);
+    }
     if (isTriviaIdAString) {
       const body = {
         triviaId: triviaId,
@@ -33,6 +40,14 @@ const useTrivia = () => {
     }
   };
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (currentQuestionTimesup) dispatch(restartAnswer());
+      setCurrentQuestionTimesup(false);
+    }, 3000);
+    return () => clearTimeout(timeout);
+  }, [currentQuestionTimesup]);
+
   return {
     opponent: triviaData?.opponent,
     currentQuestion: {
@@ -41,6 +56,7 @@ const useTrivia = () => {
       answer: trivia?.questions[trivia.questions.length - 1]?.userAnswer,
       correctOption: trivia?.questions[trivia.questions.length - 1]?.correctOption,
       status: trivia?.questions[trivia.questions.length - 1]?.status,
+      timesup: currentQuestionTimesup,
     },
     currentOptions: trivia?.questions[trivia.questions.length - 1]?.options,
     handleSendAnswer,

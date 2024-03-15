@@ -1,5 +1,5 @@
 import { StyledBox, StyledRow, StyledText } from '../../styled/styles';
-import { Image, View } from 'react-native';
+import { Image } from 'react-native';
 import React from 'react';
 import { useTheme } from 'styled-components';
 import Spinner from '../../common/Spinner';
@@ -59,7 +59,7 @@ const Question = ({ question, loading, status }: QuestionProps) => {
             alignItems: 'center',
           }}
         >
-          {loading && <Spinner color={theme.primary600} />}
+          {status === 'loading' && <Spinner color={theme.primary600} />}
           {renderEndingMessage()}
         </StyledRow>
       </TriviaQuestionContainer>

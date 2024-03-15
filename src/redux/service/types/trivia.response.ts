@@ -1,4 +1,4 @@
-export type TriviaAnswerResponseStatus = 'Won' | 'Lost' | 'In Progress' | 'Waiting';
+export type TriviaAnswerResponseStatus = 'Won' | 'Lost' | 'In Progress' | 'Waiting' | 'timeout';
 
 export type TriviaQuestion = {
   id: string;

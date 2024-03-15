@@ -14,23 +14,24 @@ import useTrivia from '../../../../hooks/useTrivia';
 
 const battle = () => {
   const { currentQuestion, currentOptions, handleSendAnswer } = useTrivia();
-  const [countdown, setCountdown] = useState(20);
   const [fakeLoading, setFakeLoading] = useState(false);
+  const [startTimer, setStartTimer] = useState(false);
   const theme = useTheme();
 
   const handleAnswer = (answer: string) => {
     handleSendAnswer(currentQuestion?.id ?? '', answer);
+    setStartTimer(false);
     setFakeLoading(true);
   };
 
   const getQuestionStatus = () => {
     if (fakeLoading) return 'loading';
-    if (countdown === 0) return 'timeout';
+    if (currentQuestion.timesup) return 'timeout';
     if (currentQuestion.status === 'Won') return 'correct';
     if (currentQuestion.status === 'Lost') return 'incorrect';
     return 'default';
   };
-
+  console.log(JSON.stringify(currentQuestion, null, 3));
   const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   useEffect(() => {
@@ -41,15 +42,8 @@ const battle = () => {
   }, [currentQuestion]);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (countdown > 0) setCountdown(countdown - 1);
-    }, 1000);
-    return () => clearTimeout(timeout);
-  }, [countdown, currentQuestion]);
-
-  useEffect(() => {
-    if (countdown === 0) handleAnswer('timeout');
-  }, [countdown]);
+    if (!currentQuestion.timesup) setStartTimer(true);
+  }, [currentQuestion]);
 
   return (
     <StyledBox
@@ -67,7 +61,7 @@ const battle = () => {
               height: 23,
             }}
           >
-            {!fakeLoading && <Countdown time={20} handleTimeout={handleAnswer} />}
+            {!fakeLoading && startTimer && <Countdown time={3} handleTimeout={handleAnswer} />}
           </StyledBox>
         </StyledRow>
         <PlayersHeader />
@@ -93,7 +87,7 @@ const battle = () => {
               currentQuestion.answer === option
             }
             loading={fakeLoading}
-            showCorrect={countdown === 0}
+            showCorrect={currentQuestion.timesup}
           />
         ))}
       </StyledColumn>
