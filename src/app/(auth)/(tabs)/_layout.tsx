@@ -1,6 +1,5 @@
-import React from 'react';
 import { Redirect, Tabs } from 'expo-router';
-import { bottomTabs } from './bottomTabs';
+import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from 'styled-components';
 import TabItem from '../../../components/tab/TabItem';
@@ -8,6 +7,7 @@ import { useLDispatch, useLSelector } from '../../../redux/hooks';
 import { useMeQuery } from '../../../redux/service/student.service';
 import { setModalOpen } from '../../../redux/slice/utils.slice';
 import { ModalTypeEnum } from '../../../utils/utils';
+import { bottomTabs } from './bottomTabs';
 
 const TabsLayout = () => {
   const insets = useSafeAreaInsets();
@@ -26,6 +26,7 @@ const TabsLayout = () => {
   };
   return (
     <Tabs
+      sceneContainerStyle={{ backgroundColor: theme.primary900 }}
       screenOptions={{
         tabBarHideOnKeyboard: true,
         headerShown: false,
