@@ -60,7 +60,7 @@ const battle = () => {
               height: 23,
             }}
           >
-            {!fakeLoading && startTimer && <Countdown time={7} handleTimeout={handleAnswer} />}
+            {!fakeLoading && startTimer && <Countdown time={20} handleTimeout={handleAnswer} />}
           </StyledBox>
         </StyledRow>
         <PlayersHeader />
