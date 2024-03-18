@@ -31,7 +31,6 @@ const battle = () => {
     if (currentQuestion.status === 'Lost') return 'incorrect';
     return 'default';
   };
-  console.log(JSON.stringify(currentQuestion, null, 3));
   const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   useEffect(() => {
@@ -42,7 +41,7 @@ const battle = () => {
   }, [currentQuestion]);
 
   useEffect(() => {
-    if (!currentQuestion.timesup) setStartTimer(true);
+    if (!currentQuestion.timesup && !currentQuestion.answer) setStartTimer(true);
   }, [currentQuestion]);
 
   return (
@@ -61,7 +60,7 @@ const battle = () => {
               height: 23,
             }}
           >
-            {!fakeLoading && startTimer && <Countdown time={3} handleTimeout={handleAnswer} />}
+            {!fakeLoading && startTimer && <Countdown time={7} handleTimeout={handleAnswer} />}
           </StyledBox>
         </StyledRow>
         <PlayersHeader />
@@ -87,7 +86,7 @@ const battle = () => {
               currentQuestion.answer === option
             }
             loading={fakeLoading}
-            showCorrect={currentQuestion.timesup}
+            showCorrect={currentQuestion.timesup || !!currentQuestion.answer}
           />
         ))}
       </StyledColumn>

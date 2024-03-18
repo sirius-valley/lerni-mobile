@@ -22,6 +22,8 @@ const AnswerButton = ({
   showCorrect,
 }: AnswerButtonProps) => {
   const theme = useTheme();
+  const isComponentSealed = loading || selected || showCorrect;
+
   const getStatus = () => {
     if (selectedIsWrong && !loading) return 'wrong';
     if (
@@ -34,7 +36,7 @@ const AnswerButton = ({
   };
 
   return (
-    <Pressable onPress={() => !loading && onPress(answer)}>
+    <Pressable onPress={() => !isComponentSealed && onPress(answer)}>
       <StyledAnswerButton status={getStatus()}>
         <StyledText variant={'body2'} css={{ color: theme.white, textAlign: 'center' }}>
           {answer}

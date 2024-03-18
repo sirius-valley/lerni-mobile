@@ -42,11 +42,11 @@ const useTrivia = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (currentQuestionTimesup) dispatch(restartAnswer());
+      if (currentQuestionTimesup || trivia?.questions[0]?.userAnswer) dispatch(restartAnswer());
       setCurrentQuestionTimesup(false);
-    }, 3000);
+    }, 3500);
     return () => clearTimeout(timeout);
-  }, [currentQuestionTimesup]);
+  }, [currentQuestionTimesup, trivia]);
 
   return {
     opponent: triviaData?.opponent,
