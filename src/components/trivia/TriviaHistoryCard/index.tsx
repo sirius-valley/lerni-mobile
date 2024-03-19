@@ -61,9 +61,9 @@ export const TriviaHistoryCard = ({ date, user, opponent, id }: TriviaHistoryCar
           style={{
             color:
               isOpponent && winner
-                ? rgba(theme.white, 0.2)
+                ? rgba(theme.white, 0.3)
                 : !isOpponent && winner === false
-                  ? rgba(theme.white, 0.2)
+                  ? rgba(theme.white, 0.3)
                   : theme.white,
             width: '50%',
           }}
