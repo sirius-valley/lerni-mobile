@@ -99,6 +99,7 @@ const LoginScreen = () => {
                 {({ handleChange, handleBlur, handleSubmit, values, isValid, errors, touched }) => (
                   <>
                     <TextInput
+                      testID={'email-input'}
                       value={values.email}
                       onChangeText={handleChange('email')}
                       placeholder="Email"
@@ -111,6 +112,7 @@ const LoginScreen = () => {
                     />
                     <StyledColumn>
                       <TextInput
+                        testID={'password-input'}
                         value={values.password}
                         onChangeText={handleChange('password')}
                         placeholder="Contraseña"
@@ -135,6 +137,7 @@ const LoginScreen = () => {
                       </StyledText> */}
                     </StyledColumn>
                     <Button
+                      testID={'login-btn'}
                       disabled={!isValid || !values.email || !values.password}
                       onPress={handleSubmit}
                       variant={'dark'}
