@@ -19,8 +19,13 @@ const Page = () => {
       opacity.value = withTiming(0.3, { duration: 250 });
     }, 2750);
     setTimeout(() => {
-      router.push('/(auth)/triviaScreen/battle');
-    }, 2850);
+      router.push({
+        pathname: '/(auth)/triviaScreen/battle',
+        params: {
+          triviaId: 'triviaId01',
+        },
+      });
+    }, 100);
   }, []);
 
   return (
