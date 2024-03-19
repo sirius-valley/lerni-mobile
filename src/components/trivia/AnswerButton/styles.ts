@@ -1,26 +1,27 @@
-import styled, { CSSObject, css as styledComponent } from 'styled-components';
+import styled, { CSSObject, DefaultTheme, css as styledComponent } from 'styled-components';
 import { StyledBox, StyledPropertiesInterface } from '../../styled/styles';
-import { DefaultTheme } from 'styled-components/native';
-export type AnswerStatus = 'unselected' | 'selected' | 'default';
+
+export type AnswerStatus = 'unselected' | 'correct' | 'loading' | 'wrong';
+
 const getStyledFromStatus = (theme: DefaultTheme): Record<AnswerStatus, CSSObject> => ({
   unselected: {
     backgroundColor: theme.primary700,
   },
-  selected: {
+  correct: {
     backgroundColor: theme.primary500,
   },
-  default: {
-    backgroundColor: 'transparent',
-    borderColor: theme.primary500,
-    borderWidth: 1,
-    borderStyle: 'solid',
+  loading: {
+    backgroundColor: theme.primary600,
+  },
+  wrong: {
+    backgroundColor: theme.red600,
   },
 });
 interface StyledAnswerButtonInterface extends StyledPropertiesInterface {
   status: AnswerStatus;
 }
 export const StyledAnswerButton = styled(StyledBox)<StyledAnswerButtonInterface>`
-  padding: 6px 16px;
+  padding: 6px 12px;
   border-radius: 8px;
   width: 100%;
   min-height: 52px;
