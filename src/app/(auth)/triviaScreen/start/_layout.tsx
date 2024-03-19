@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/native';
 
 export default function TriviaLayout() {
   const theme = useTheme();
@@ -13,7 +13,7 @@ export default function TriviaLayout() {
           flex: 1,
           backgroundColor: theme.primary700,
           paddingTop: insets.top + 60,
-          paddingBottom: insets.bottom + 80,
+          paddingBottom: insets.bottom + 120,
           paddingHorizontal: 24,
         },
       }}

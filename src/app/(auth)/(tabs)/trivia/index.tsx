@@ -8,7 +8,7 @@ export default function Page() {
 
   return (
     <StyledColumn>
-      <Button onPress={() => router.push('/(auth)/triviaScreen')}>Trivia</Button>
+      <Button onPress={() => router.push('/(auth)/triviaScreen/start')}>Trivia</Button>
     </StyledColumn>
   );
 }
