@@ -1,9 +1,12 @@
+export type TriviaAnswerResponseStatus = 'Won' | 'Lost' | 'In Progress' | 'Waiting' | 'timeout';
+
 export type TriviaQuestion = {
   id: string;
   question: string;
-  answers: { text: string; id: string }[];
-  correctAnswer?: boolean;
+  options: string[];
+  correctOption?: string;
   userAnswer?: string;
+  status: TriviaAnswerResponseStatus;
 };
 
 export type Trivia = {
@@ -31,3 +34,17 @@ export type AssignTriviaResponse = {
     image: string;
   };
 };
+export interface TriviaAnswerQuestionsResponse {
+  id: string;
+  question: string;
+  secondsToAnswer: number;
+  options: string[];
+}
+
+export interface TriviaAnswerResponse {
+  triviaQuestion: TriviaAnswerQuestionsResponse;
+  isCorrect: boolean;
+  status: TriviaAnswerResponseStatus;
+  opponentAnsweredCorrectly?: boolean;
+  correctOption: string;
+}
