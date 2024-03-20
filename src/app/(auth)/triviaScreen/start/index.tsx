@@ -17,39 +17,33 @@ import { TriviaLoaderIcon } from '../../../../../assets/icons/TriviaLoaderIcon';
 import { rgba } from 'polished';
 import { useState } from 'react';
 import { TriviaRadialBackground } from '../../../../../assets/TriviaRadialBackground';
+import { useAssignTriviaQuery, useTriviaByIdQuery } from '../../../../redux/service/trivia.service';
+import { useMeQuery } from '../../../../redux/service/student.service';
+import ErrorDisplay from '../../../../components/common/ErrorDisplay';
 
 const StartTrivia = () => {
   const { programId } = useLocalSearchParams();
-  // const {data: program, isLoading} = useProgramByIdQuery(programId)
-  const program = {
-    programName: 'Introducción a la filosofía alemana',
-  };
-  // const user = useLSelector((state) => state.student);
-  const user = {
-    name: 'Mono',
-    lastname: 'Steve',
-    profession: undefined,
-    career: 'Medicina',
-  };
+  const { data: user, isLoading: meLoading } = useMeQuery();
+  const { data: program, isLoading: programLoading } = useProgramByIdQuery(programId);
+  const [loading, setLoading] = useState(false);
+
+  const { isLoading: triviaLoading, isError } = useAssignTriviaQuery({
+    programId: program ? program.id : 'programId',
+  });
   const theme = useTheme();
   const router = useRouter();
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  if (!program) {
-    router.back();
-  }
-
   const onPress = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      if (!isLoading) {
-        router.push('/(auth)/triviaScreen');
-      }
-      setIsLoading(false);
-    }, 2000);
-    // const {isLoading} = useGetTriviaById()
+    setLoading(true);
+    if (!triviaLoading && !isError) {
+      router.push('/(auth)/triviaScreen');
+      setLoading(false);
+    }
   };
+
+  if (meLoading || !user) {
+    return <ErrorDisplay type="404" />;
+  }
 
   return (
     <StyledColumn
@@ -64,7 +58,7 @@ const StartTrivia = () => {
       <TriviaRadialBackground />
       <StyledColumn css={{ gap: 32 }}>
         <StyledRow css={{ width: '100%', justifyContent: 'left', alignItems: 'center' }}>
-          <Pressable onPress={() => router.back()}>
+          <Pressable onPress={() => router.replace('/(tabs)/explore')}>
             <BackArrow color={theme.gray400} size={24} />
           </Pressable>
         </StyledRow>
@@ -98,7 +92,7 @@ const StartTrivia = () => {
           <TriviaLoaderIcon color={rgba(theme.primary400, 0.1)} size={140} />
         </StyledBox>
       </StyledColumn>
-      <Button loading={isLoading} onPress={onPress} css={{ width: '85%' }}>
+      <Button loading={loading} onPress={onPress} css={{ width: '85%' }}>
         {'Jugar'}
       </Button>
     </StyledColumn>

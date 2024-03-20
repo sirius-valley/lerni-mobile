@@ -1,5 +1,5 @@
 import { api } from './api';
-import { Trivia, TriviaQuestion } from './types/trivia.response';
+import { AssignTriviaResponse, Trivia, TriviaQuestion } from './types/trivia.response';
 
 export const triviaApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -23,7 +23,13 @@ export const triviaApi = api.injectEndpoints({
         body: body,
       }),
     }),
+    assignTrivia: builder.query<AssignTriviaResponse, { programId: string }>({
+      query: ({ programId }) => ({
+        url: `trivia/assign/${programId}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useTriviaByIdQuery, useAnswerTriviaMutation } = triviaApi;
+export const { useTriviaByIdQuery, useAnswerTriviaMutation, useAssignTriviaQuery } = triviaApi;
