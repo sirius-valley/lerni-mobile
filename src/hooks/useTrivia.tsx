@@ -1,86 +1,103 @@
 import { useAnswerTriviaMutation, useTriviaByIdQuery } from '../redux/service/trivia.service';
 import { useLocalSearchParams } from 'expo-router';
 import { useLDispatch, useLSelector } from '../redux/hooks';
-import { useEffect, useState } from 'react';
-import { restartAnswer, setTimesup } from '../redux/slice/trivia.slice';
+import { useEffect } from 'react';
+import { getTriviaNextQuestion, setTimesup } from '../redux/slice/trivia.slice';
 import { useTimer } from 'react-timer-hook';
+import { showToast } from '../redux/slice/utils.slice';
+import { CustomError } from '../redux/service/api';
 
 const useTrivia = () => {
   const dispatch = useLDispatch();
   const { triviaId } = useLocalSearchParams();
   const currentQuestion = useLSelector((state) => state.trivia.currentQuestion);
-  const triviaStatus = useLSelector((state) => state.trivia.status);
+  const triviaStatus = useLSelector((state) => state.trivia.triviaStatus);
   const isTriviaIdAString = typeof triviaId === 'string';
   const timeToAnswer = useLSelector((state) => state.trivia.timeToAnswer);
   const totalQuestionsNumber = useLSelector((state) => state.trivia.totalQuestionsNumber);
   const opponent = useLSelector((state) => state.trivia.opponent);
   const answerHistory = useLSelector((state) => state.trivia.answersHistory);
-
   const currentUserData = useLSelector((state) => state.student);
 
-  const setCurrentQuestionTimesup = (value: boolean) => {
-    dispatch(setTimesup(value));
-  };
-
-  const { seconds, restart } = useTimer({
+  const { seconds, restart, pause } = useTimer({
     autoStart: false,
     expiryTimestamp: new Date(Date.now() + 20000),
-    // onExpire: () => handleTimeout('timeout'),
   });
 
   const {
     error: triviaError,
     isLoading: triviaLoading,
     isSuccess: triviaSuccess,
-  } = useTriviaByIdQuery(
-    { triviaId: triviaId as string },
-    {
-      skip: !triviaId,
-    },
-  );
+  } = useTriviaByIdQuery({ triviaId: triviaId as string }, { skip: !triviaId });
+
   const [
     answerQuestion,
     { data: answerData, error: answerError, isLoading: answerLoading, isSuccess: answerSuccess },
   ] = useAnswerTriviaMutation();
 
   const isRequestLoading = triviaLoading || answerLoading;
+  const didRequestFailed = triviaError || answerError;
 
-  const handleSendAnswer = (questionId: string, answer: string) => {
+  const setCurrentQuestionTimesup = (value: boolean) => dispatch(setTimesup(value));
+  const nextQuestion = () => dispatch(getTriviaNextQuestion());
+
+  const restartTimer = () => {
+    const customDate = Date.now() + timeToAnswer * 1000;
+    restart(new Date(customDate));
+  };
+
+  const handleSendAnswer = (answer: string) => {
+    pause();
     if (answer === 'timeout') {
       setCurrentQuestionTimesup(true);
     }
     if (isTriviaIdAString) {
       const body = {
-        triviaId: triviaId,
-        questionId: questionId,
+        triviaMatchId: triviaId,
+        questionId: currentQuestion.nextQuestionId,
         answer: answer,
       };
       answerQuestion(body);
     }
   };
 
+  // Starts timer at first time.
   useEffect(() => {
     const isTriviaInProgress = triviaStatus === 'In Progress';
     if (timeToAnswer && isTriviaInProgress) {
-      const customDate = Date.now() + timeToAnswer * 1000;
-      restart(new Date(customDate));
+      restartTimer();
     }
   }, [timeToAnswer, triviaStatus]);
 
+  // Handle timeout
   useEffect(() => {
-    if (seconds === 0 && !Number.isNaN(seconds))
-      handleSendAnswer(currentQuestion.nextQuestionId ?? '', 'timeout');
+    if (seconds === 0 && !Number.isNaN(seconds)) handleSendAnswer('timeout');
   }, [seconds]);
 
+  // Bring next question and timer handling.
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (currentQuestion.timesup || currentQuestion?.answer) {
-        dispatch(restartAnswer());
+      if ((currentQuestion.timesup || currentQuestion.correctOption) && !didRequestFailed) {
+        nextQuestion();
+        restartTimer();
       }
       setCurrentQuestionTimesup(false);
     }, 3500);
     return () => clearTimeout(timeout);
-  }, [currentQuestion.timesup, currentQuestion.answer]);
+  }, [currentQuestion.timesup, currentQuestion, didRequestFailed]);
+
+  // Error handling.
+  useEffect(() => {
+    if (didRequestFailed) {
+      const parsedAnswerError = answerError as CustomError;
+      const parsedTriviaError = triviaError as CustomError;
+
+      const errorMessage =
+        parsedTriviaError?.data?.message ?? parsedAnswerError?.data?.message ?? 'Algo salio mal';
+
+      dispatch(showToast({ type: 'error', text: errorMessage }));
+    }
+  }, [didRequestFailed]);
 
   return {
     opponent,

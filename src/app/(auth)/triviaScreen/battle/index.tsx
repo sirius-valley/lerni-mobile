@@ -10,7 +10,7 @@ import AnswerButton from '../../../../components/trivia/AnswerButton';
 import { Countdown } from '../../../../components/trivia/Countdown';
 import PlayersHeader from '../../../../components/trivia/PlayersHeader';
 import Question from '../../../../components/trivia/Question';
-import useTrivia from '../../../../hooks/useQuiz';
+import useTrivia from '../../../../hooks/useTrivia';
 
 const battle = () => {
   const {
@@ -24,20 +24,19 @@ const battle = () => {
     totalQuestionsNumber,
     isRequestLoading,
   } = useTrivia();
-  // const [fakeLoading, setFakeLoading] = useState(false);
   const [startTimer, setStartTimer] = useState(false);
   const theme = useTheme();
 
   const handleAnswer = (answer: string) => {
-    handleSendAnswer(currentQuestion.nextQuestionId ?? '', answer);
+    handleSendAnswer(answer);
     setStartTimer(false);
   };
 
   const getQuestionStatus = () => {
     if (isRequestLoading) return 'loading';
     if (currentQuestion.timesup) return 'timeout';
-    if (triviaStatus === 'Won') return 'correct';
-    if (triviaStatus === 'Lost') return 'incorrect';
+    if (currentQuestion.status === 'correct') return 'correct';
+    if (currentQuestion.status === 'incorrect') return 'incorrect';
     return 'default';
   };
 

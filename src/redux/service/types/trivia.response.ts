@@ -1,5 +1,4 @@
 export type TriviaAnswerResponseStatus = 'Won' | 'Lost' | 'In Progress' | 'Waiting' | 'Tied';
-export type TriviaStatusType = 'finished' | 'winner' | 'loser' | 'not_started' | '';
 
 export type TriviaQuestion = {
   id: string;
@@ -48,6 +47,5 @@ export interface TriviaAnswerResponse {
   triviaQuestion: TriviaAnswerQuestionsResponse;
   isCorrect: boolean;
   status: TriviaAnswerResponseStatus;
-  opponentAnsweredCorrectly?: boolean;
   correctOption: string;
 }
