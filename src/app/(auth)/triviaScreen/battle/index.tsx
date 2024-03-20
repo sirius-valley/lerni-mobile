@@ -10,35 +10,36 @@ import AnswerButton from '../../../../components/trivia/AnswerButton';
 import { Countdown } from '../../../../components/trivia/Countdown';
 import PlayersHeader from '../../../../components/trivia/PlayersHeader';
 import Question from '../../../../components/trivia/Question';
-import useTrivia from '../../../../hooks/useTrivia';
+import useTrivia from '../../../../hooks/useQuiz';
 
 const battle = () => {
-  const { currentQuestion, currentOptions, handleSendAnswer } = useTrivia();
-  const [fakeLoading, setFakeLoading] = useState(false);
+  const {
+    opponent,
+    currentUser,
+    answerHistory,
+    currentQuestion,
+    handleSendAnswer,
+    timeToAnswer,
+    triviaStatus,
+    totalQuestionsNumber,
+    isRequestLoading,
+  } = useTrivia();
+  // const [fakeLoading, setFakeLoading] = useState(false);
   const [startTimer, setStartTimer] = useState(false);
   const theme = useTheme();
 
   const handleAnswer = (answer: string) => {
-    handleSendAnswer(currentQuestion?.id ?? '', answer);
+    handleSendAnswer(currentQuestion.nextQuestionId ?? '', answer);
     setStartTimer(false);
-    setFakeLoading(true);
   };
 
   const getQuestionStatus = () => {
-    if (fakeLoading) return 'loading';
+    if (isRequestLoading) return 'loading';
     if (currentQuestion.timesup) return 'timeout';
-    if (currentQuestion.status === 'Won') return 'correct';
-    if (currentQuestion.status === 'Lost') return 'incorrect';
+    if (triviaStatus === 'Won') return 'correct';
+    if (triviaStatus === 'Lost') return 'incorrect';
     return 'default';
   };
-  const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
-  useEffect(() => {
-    if (currentQuestion.answer)
-      setTimeout(() => {
-        setFakeLoading(false);
-      }, 1500);
-  }, [currentQuestion]);
 
   useEffect(() => {
     if (!currentQuestion.timesup && !currentQuestion.answer) setStartTimer(true);
@@ -53,25 +54,30 @@ const battle = () => {
       <StyledColumn css={{ gap: 32 }}>
         <StyledRow css={{ justifyContent: 'space-between' }}>
           <StyledText css={{ color: theme.white }} variant={'body1'}>
-            {`Ronda ${Number(currentQuestion.id) + 1}/${questions.length} `}
+            {`Ronda ${Number(currentQuestion?.questionNumber ?? 0)}/${totalQuestionsNumber} `}
           </StyledText>
           <StyledBox
             css={{
               height: 23,
             }}
           >
-            {!fakeLoading && startTimer && <Countdown time={20} handleTimeout={handleAnswer} />}
+            {!isRequestLoading && startTimer && <Countdown time={timeToAnswer} />}
           </StyledBox>
         </StyledRow>
-        <PlayersHeader />
+        <PlayersHeader
+          currentUser={currentUser}
+          answerHistory={answerHistory}
+          opponent={opponent}
+          totalQuestions={totalQuestionsNumber}
+        />
         <Question
           question={currentQuestion.question ?? ''}
-          loading={fakeLoading}
+          loading={isRequestLoading}
           status={getQuestionStatus()}
         />
       </StyledColumn>
       <StyledColumn css={{ gap: 16 }}>
-        {currentOptions?.map((option, idx) => (
+        {currentQuestion.options?.map((option, idx) => (
           <AnswerButton
             key={idx}
             answer={option}
@@ -85,7 +91,7 @@ const battle = () => {
               currentQuestion.answer !== currentQuestion.correctOption &&
               currentQuestion.answer === option
             }
-            loading={fakeLoading}
+            loading={isRequestLoading}
             showCorrect={currentQuestion.timesup || !!currentQuestion.answer}
           />
         ))}

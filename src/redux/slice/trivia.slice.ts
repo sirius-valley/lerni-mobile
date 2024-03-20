@@ -1,30 +1,53 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Trivia } from '../service/types/trivia.response';
+import { Trivia, TriviaAnswerResponseStatus } from '../service/types/trivia.response';
 import { triviaApi } from '../service/trivia.service';
+import { quizInitialState } from '../../utils/quizUtils';
 
 interface InitialStateTriviaType {
-  trivia?: Trivia;
+  currentQuestion: {
+    nextQuestionId: string;
+    question: string;
+    options: string[];
+    correctOption?: string;
+    answer?: string;
+    timesup?: boolean;
+    questionNumber?: number;
+  };
+  timeToAnswer: number;
+  totalQuestionsNumber: number;
+  answersHistory: {
+    me: {
+      id: string;
+      isCorrect: boolean;
+    }[];
+    opponent: {
+      id: string;
+      isCorrect: boolean;
+    }[];
+  };
+  status: TriviaAnswerResponseStatus;
+  opponent: {
+    imgUrl?: string;
+    firstName?: string;
+    lastName?: string;
+  };
 }
 
 const initialState: InitialStateTriviaType = {
-  trivia: {
-    id: 'triviaId01',
-    questions: [
-      {
-        id: '0',
-        question: '¿Cuál es la capital de Argentina?',
-        options: ['Buenos Aires', 'Córdoba', 'Rosario', 'Mendoza'],
-        correctOption: undefined,
-        userAnswer: undefined,
-        status: 'In Progress',
-      },
-    ],
-    opponent: {
-      imgUrl: 'https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg',
-      firstName: 'Nico',
-      lastName: 'Di Pietro',
-    },
+  currentQuestion: {
+    nextQuestionId: '',
+    question: '',
+    options: [],
+    timesup: false,
   },
+  answersHistory: {
+    me: [],
+    opponent: [],
+  },
+  timeToAnswer: 0,
+  totalQuestionsNumber: 0,
+  status: 'In Progress',
+  opponent: {},
 };
 
 export const triviaSlice = createSlice({
@@ -32,29 +55,53 @@ export const triviaSlice = createSlice({
   initialState,
   reducers: {
     restartAnswer: (state) => {
-      if (Array.isArray(state.trivia?.questions)) {
-        state.trivia.questions[0].correctOption = undefined;
-        state.trivia.questions[0].userAnswer = undefined;
-        state.trivia.questions[0].status = 'In Progress';
+      if (state.currentQuestion) {
+        state.currentQuestion.correctOption = undefined;
+        state.currentQuestion.answer = undefined;
+        state.status = 'In Progress';
       }
+    },
+    setTimesup: (state, action) => {
+      state.currentQuestion.timesup = action.payload;
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(triviaApi.endpoints.answerTrivia.matchPending, (state, action) => {
-      const { answer } = action.meta.arg.originalArgs;
-      if (Array.isArray(state.trivia?.questions)) {
-        const correctOption = 'Buenos Aires';
-        const questionsLength = state.trivia.questions.length;
-        state.trivia.questions[questionsLength - 1].userAnswer = answer;
-        // 'Buenos Aires' correct answer hardcoded until POST answer endpoint is integrated.
-        state.trivia.questions[questionsLength - 1].correctOption = correctOption;
-        state.trivia.questions[questionsLength - 1].status =
-          correctOption === answer ? 'Won' : 'Lost';
-      }
-    });
+    builder
+      .addMatcher(triviaApi.endpoints.triviaById.matchFulfilled, (state, action) => {
+        state.totalQuestionsNumber = action.payload.totalQuestionsNumber;
+        state.timeToAnswer = action.payload.question.secondsToAnswer;
+        state.status = action.payload.status;
+        state.answersHistory = action.payload.answers;
+        state.currentQuestion = transformTriviaToCurrentQuestion(action.payload);
+        state.opponent = action.payload.opponent;
+        console.log('slice state', JSON.stringify(state, null, 3));
+      })
+      .addMatcher(triviaApi.endpoints.answerTrivia.matchPending, (state, action) => {
+        const { answer } = action.meta.arg.originalArgs;
+        console.log('trivia slice: ', answer);
+        // if (Array.isArray(state.trivia?.options)) {
+        //   const correctOption = 'Buenos Aires';
+        //   state.currentQuestion.answer = answer;
+        //   // 'Buenos Aires' correct answer hardcoded until POST answer endpoint is integrated.
+        //   state.currentQuestion.correctOption = correctOption;
+        //   state.currentQuestion.answer =
+        //     correctOption === answer ? 'Won' : 'Lost';
+        // }
+      });
   },
 });
 
-export const { restartAnswer } = triviaSlice.actions;
+const transformTriviaToCurrentQuestion = (trivia: Trivia) => {
+  return {
+    nextQuestionId: trivia.question.id,
+    question: trivia.question.question,
+    options: trivia.question.options.slice(0, 4),
+    status: trivia.status,
+    timesup: false,
+    questionNumber: trivia.questionNumber,
+  };
+};
+
+export const { restartAnswer, setTimesup } = triviaSlice.actions;
 
 export default triviaSlice.reducer;

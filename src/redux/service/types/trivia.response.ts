@@ -1,4 +1,5 @@
-export type TriviaAnswerResponseStatus = 'Won' | 'Lost' | 'In Progress' | 'Waiting' | 'timeout';
+export type TriviaAnswerResponseStatus = 'Won' | 'Lost' | 'In Progress' | 'Waiting' | 'Tied';
+export type TriviaStatusType = 'finished' | 'winner' | 'loser' | 'not_started' | '';
 
 export type TriviaQuestion = {
   id: string;
@@ -10,12 +11,29 @@ export type TriviaQuestion = {
 };
 
 export type Trivia = {
-  id: string;
-  questions: TriviaQuestion[];
   opponent: {
     imgUrl: string;
     firstName: string;
     lastName: string;
+  };
+  status: TriviaAnswerResponseStatus;
+  totalQuestionsNumber: number;
+  questionNumber: number;
+  question: {
+    id: string;
+    options: string[];
+    question: string;
+    secondsToAnswer: number;
+  };
+  answers: {
+    me: {
+      id: string;
+      isCorrect: boolean;
+    }[];
+    opponent: {
+      id: string;
+      isCorrect: boolean;
+    }[];
   };
 };
 

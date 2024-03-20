@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTheme } from 'styled-components';
 import { BlueCheckIcon } from '../../../../assets/icons/BlueCheckIcon';
 import { TriviaFailedIcon } from '../../../../assets/icons/TriviaFailedIcon';
@@ -17,8 +17,9 @@ export type User = {
 };
 
 type PlayerStatusProps = Pick<User, 'firstName' | 'lastName' | 'imgUrl' | 'job' | 'studies'> & {
-  points: { id: string; correct?: boolean }[];
+  points: { id: string; isCorrect?: boolean }[];
   side: 'left' | 'right';
+  totalQuestionsNumber: number;
 };
 const PlayerStatus = ({
   firstName,
@@ -28,12 +29,22 @@ const PlayerStatus = ({
   studies,
   points,
   side,
+  totalQuestionsNumber,
 }: PlayerStatusProps) => {
   const theme = useTheme();
   const screenWidth = Dimensions.get('screen').width;
   const baseSize = 176;
   const scaleFactor = screenWidth / 400;
   const adjustedSize = baseSize * scaleFactor;
+
+  const renderPoints = useCallback(() => {
+    return [...Array(totalQuestionsNumber)].map((_, idx) => {
+      if (!points[idx]) return <StyledCircle css={{ width: 15, height: 15 }} key={idx} />;
+      if (points[idx].isCorrect)
+        return <BlueCheckIcon size={15} color={theme.primary500} key={idx} />;
+      else return <TriviaFailedIcon size={15} color={theme.red600} key={idx} />;
+    });
+  }, [totalQuestionsNumber, points]);
 
   return (
     <StyledColumn
@@ -70,15 +81,7 @@ const PlayerStatus = ({
           flexDirection: side === 'right' ? 'row-reverse' : 'row',
         }}
       >
-        {points.map((point, idx) =>
-          point.correct ? (
-            <BlueCheckIcon size={15} color={theme.primary500} key={idx} />
-          ) : point.correct === undefined ? (
-            <StyledCircle css={{ width: 15, height: 15 }} key={idx} />
-          ) : (
-            <TriviaFailedIcon size={15} color={theme.red600} key={idx} />
-          ),
-        )}
+        {renderPoints()}
       </StyledRow>
     </StyledColumn>
   );

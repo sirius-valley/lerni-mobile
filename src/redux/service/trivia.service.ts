@@ -5,7 +5,7 @@ export const triviaApi = api.injectEndpoints({
   endpoints: (builder) => ({
     triviaById: builder.query<Trivia, { triviaId: string }>({
       query: ({ triviaId }) => ({
-        url: `trivia/${triviaId}`,
+        url: `api/trivia/question/${triviaId}`,
         method: 'GET',
       }),
     }),
