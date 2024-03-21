@@ -3,14 +3,14 @@ import { useTheme } from 'styled-components/native';
 import { TriviaLoaderIcon } from '../../../../assets/icons/TriviaLoaderIcon';
 import { StyledBox, StyledColumn, StyledRow } from '../../styled/styles';
 import { Participant } from './Participant';
-import { VersusContainer } from './VersusContainer';
+import TriviaTriangleBackground from '../TriviaTriangleBackground';
 
 export const LoadingVersus = () => {
   const theme = useTheme();
   const participants = mockedUsers;
 
   return (
-    <VersusContainer>
+    <TriviaTriangleBackground>
       <StyledColumn
         css={{
           width: '100%',
@@ -49,7 +49,7 @@ export const LoadingVersus = () => {
           />
         </StyledRow>
       </StyledColumn>
-    </VersusContainer>
+    </TriviaTriangleBackground>
   );
 };
 

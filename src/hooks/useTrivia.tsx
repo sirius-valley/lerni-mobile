@@ -64,9 +64,7 @@ const useTrivia = () => {
   // Starts timer at first time.
   useEffect(() => {
     const isTriviaInProgress = triviaStatus === 'In Progress';
-    if (timeToAnswer && isTriviaInProgress) {
-      restartTimer();
-    }
+    if (timeToAnswer && isTriviaInProgress) restartTimer();
   }, [timeToAnswer, triviaStatus]);
 
   // Handle timeout
@@ -82,11 +80,11 @@ const useTrivia = () => {
         restartTimer();
       }
       setCurrentQuestionTimesup(false);
-    }, 3500);
+    }, 3000);
     return () => clearTimeout(timeout);
   }, [currentQuestion.timesup, currentQuestion, didRequestFailed]);
 
-  // Error handling.
+  // Error handling and dispatch to toast.
   useEffect(() => {
     if (didRequestFailed) {
       const parsedAnswerError = answerError as CustomError;
@@ -98,6 +96,13 @@ const useTrivia = () => {
       dispatch(showToast({ type: 'error', text: errorMessage }));
     }
   }, [didRequestFailed]);
+
+  // Trivia status is finished
+  useEffect(() => {
+    if (triviaStatus !== 'In Progress') {
+      pause();
+    }
+  }, []);
 
   return {
     opponent,

@@ -25,7 +25,10 @@ const Page = () => {
           triviaId: 'triviaMatchId',
         },
       });
-    }, 100);
+    }, 2800);
+    return () => {
+      opacity.value = 1;
+    };
   }, []);
 
   return (

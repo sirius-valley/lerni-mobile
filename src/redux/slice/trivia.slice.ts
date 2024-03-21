@@ -113,11 +113,14 @@ export const triviaSlice = createSlice({
         state.answersHistory.me.push({ id: Math.random().toString().slice(0, 6), isCorrect });
         state.currentQuestion.status = isCorrect ? 'correct' : 'incorrect';
         state.currentQuestion.correctOption = action.payload.correctOption;
-        state.nextQuestion.options = action.payload.triviaQuestion.options;
-        state.nextQuestion.question = action.payload.triviaQuestion.question;
-        state.nextQuestion.nextQuestionId = action.payload.triviaQuestion.id;
-        state.nextQuestion.timesup = false;
-        state.nextQuestion.questionNumber = state.answersHistory.me.length + 1;
+        if (action.payload.status === 'In Progress') {
+          state.nextQuestion.options = action.payload.triviaQuestion.options;
+          state.nextQuestion.question = action.payload.triviaQuestion.question;
+          state.nextQuestion.nextQuestionId = action.payload.triviaQuestion.id;
+          state.nextQuestion.timesup = false;
+          state.nextQuestion.questionNumber = state.answersHistory.me.length + 1;
+        }
+        state.triviaStatus = action.payload.status;
       });
   },
 });
