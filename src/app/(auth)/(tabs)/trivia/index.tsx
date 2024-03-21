@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import Button from '../../../../components/styled/Button';
 import { StyledColumn } from '../../../../components/styled/styles';
-import {TriviaHistory} from './TriviaHistory'
+import { TriviaHistory } from './TriviaHistory';
 export default function Page() {
   const router = useRouter();
 
@@ -11,13 +11,13 @@ export default function Page() {
       css={{
         justifyContent: 'center',
         alignItems: 'center',
-        gap: 32,
+        gap: 16,
         width: '100%',
         height: '100%',
       }}
     >
-    <TriviaHistory />
-      <Button onPress={() => router.push('/(auth)/triviaScreen')}>Trivia</Button>
+      <TriviaHistory />
+      <Button onPress={() => router.replace('/(auth)/triviaScreen')}>Trivia</Button>
     </StyledColumn>
   );
 }

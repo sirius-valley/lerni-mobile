@@ -3,23 +3,7 @@ import Avatar from '../../common/Avatar';
 import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../styled/styles';
 import { useTheme } from 'styled-components/native';
 import { rgba } from 'polished';
-
-interface TriviaHistoryCardProps {
-  date: Date;
-  user: {
-    image: string;
-    firstName: string;
-    lastName: string;
-    score: number;
-  };
-  opponent: {
-    image: string;
-    firstName: string;
-    lastName: string;
-    score: number;
-  };
-  id: string;
-}
+import { TriviaHistoryCardProps } from '../../../redux/service/types/trivia.response';
 
 interface ParticipantProps {
   image: string;
@@ -32,7 +16,7 @@ interface ResultComponentProps {
   winner?: boolean;
 }
 
-export const TriviaHistoryCard = ({ date, user, opponent, id }: TriviaHistoryCardProps) => {
+export const TriviaHistoryCard = ({ date, user, opponent, triviaId }: TriviaHistoryCardProps) => {
   const winner =
     user.score > opponent.score ? true : user.score < opponent.score ? false : undefined;
 
