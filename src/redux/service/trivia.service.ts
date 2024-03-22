@@ -1,5 +1,11 @@
 import { api } from './api';
-import { Trivia, TriviaAnswerResponse, TriviaQuestion } from './types/trivia.response';
+import {
+  Trivia,
+  TriviaAnswerResponse,
+  TriviaHistoryCardProps,
+  TriviaQueryParams,
+  TriviaQuestion,
+} from './types/trivia.response';
 
 export const triviaApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -19,7 +25,14 @@ export const triviaApi = api.injectEndpoints({
         body: body,
       }),
     }),
+    triviaHistory: builder.query<TriviaHistoryCardProps[], TriviaQueryParams>({
+      query: (page: TriviaQueryParams) => ({
+        url: `trivia/history`,
+        method: 'GET',
+        params: page,
+      }),
+    }),
   }),
 });
 
-export const { useTriviaByIdQuery, useAnswerTriviaMutation } = triviaApi;
+export const { useTriviaByIdQuery, useAnswerTriviaMutation, useTriviaHistoryQuery } = triviaApi;
