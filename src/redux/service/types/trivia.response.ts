@@ -53,3 +53,26 @@ export interface TriviaAnswerResponse {
     isCorrect: boolean;
   };
 }
+
+export interface TriviaHistoryCardProps {
+  user: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    score: number;
+    image: string;
+  };
+  opponent: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    score: number;
+    image: string;
+  };
+  triviaId: string;
+  date: Date;
+}
+
+export interface TriviaQueryParams {
+  page?: string;
+}
