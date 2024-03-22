@@ -19,6 +19,7 @@ export interface TextInputProps extends ComponentProps<typeof TextInputNative> {
   multiline?: boolean;
   scrollEnabled?: boolean;
   maxLength?: number;
+  testID?: string;
 }
 
 export const TextInput = forwardRef<any, TextInputProps>(
@@ -37,6 +38,7 @@ export const TextInput = forwardRef<any, TextInputProps>(
       multiline = false,
       scrollEnabled = true,
       maxLength,
+      testID,
     }: TextInputProps,
     ref: any,
   ) => {
@@ -44,6 +46,7 @@ export const TextInput = forwardRef<any, TextInputProps>(
 
     return (
       <StyledTextInput
+        testID={testID}
         placeholder={placeholder}
         placeholderTextColor={theme[placeholderColor]}
         css={css}
