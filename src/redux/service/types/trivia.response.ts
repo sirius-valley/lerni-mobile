@@ -19,6 +19,21 @@ export type Trivia = {
   };
 };
 
+export type AssignTriviaResponse = {
+  triviaId: string;
+  program: {
+    id: string;
+    name: string;
+    icon: string;
+    progress: number;
+  };
+  opponent: {
+    id: string;
+    name: string;
+    lastname: string;
+    image: string;
+  };
+};
 export interface TriviaAnswerQuestionsResponse {
   id: string;
   question: string;
