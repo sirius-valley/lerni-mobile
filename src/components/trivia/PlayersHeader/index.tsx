@@ -1,67 +1,47 @@
 import BoltIcon from '../../../../assets/icons/BoltIcon';
 import { VSIcon } from '../../../../assets/icons/VSIcon';
-import useTrivia from '../../../hooks/useTrivia';
-import { StyledBox, StyledRow, StyledText } from '../../styled/styles';
+import { StyledBox, StyledRow } from '../../styled/styles';
 import PlayerStatus from '../PlayerStatus';
-const PlayersHeader = () => {
-  const { opponent } = useTrivia();
+
+interface PlayersHeaderProps {
+  answerHistory: {
+    me: {
+      id: string;
+      isCorrect: boolean;
+    }[];
+    opponent: {
+      id: string;
+      isCorrect: boolean;
+    }[];
+  };
+  opponent: {
+    imgUrl?: string;
+    firstName?: string;
+    lastName?: string;
+  };
+  currentUser: {
+    imgUrl?: string;
+    firstName?: string;
+    lastName?: string;
+  };
+  totalQuestions: number;
+}
+
+const PlayersHeader = ({
+  answerHistory,
+  opponent,
+  currentUser,
+  totalQuestions,
+}: PlayersHeaderProps) => {
   return (
     <StyledRow css={{ position: 'relative', justifyContent: 'center', width: '100%' }}>
       <PlayerStatus
-        points={[
-          {
-            correct: true,
-            id: '1',
-          },
-          {
-            correct: true,
-            id: '2',
-          },
-          {
-            correct: true,
-            id: '1',
-          },
-          {
-            correct: false,
-            id: '2',
-          },
-          {
-            correct: false,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-        ]}
-        firstName={'Mono'}
-        lastName={'Ing. Informática'}
-        imgUrl={undefined}
+        points={answerHistory.me}
+        firstName={currentUser?.firstName}
+        lastName={currentUser?.lastName}
+        imgUrl={currentUser?.imgUrl}
         side={'left'}
+        totalQuestionsNumber={totalQuestions}
       />
       <StyledBox
         style={{
@@ -89,60 +69,12 @@ const PlayersHeader = () => {
         </StyledBox>
       </StyledBox>
       <PlayerStatus
-        points={[
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-          {
-            correct: undefined,
-            id: '1',
-          },
-        ]}
+        points={answerHistory.opponent}
         firstName={opponent?.firstName}
         lastName={opponent?.lastName}
         imgUrl={opponent?.imgUrl}
         side={'right'}
+        totalQuestionsNumber={totalQuestions}
       />
     </StyledRow>
   );

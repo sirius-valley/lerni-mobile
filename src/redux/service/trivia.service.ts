@@ -2,7 +2,6 @@ import { api } from './api';
 import {
   AssignTriviaResponse,
   Trivia,
-  TriviaQuestion,
   TriviaAnswerResponse,
   TriviaHistoryCardProps,
   TriviaQueryParams,
@@ -12,13 +11,13 @@ export const triviaApi = api.injectEndpoints({
   endpoints: (builder) => ({
     triviaById: builder.query<Trivia, { triviaId: string }>({
       query: ({ triviaId }) => ({
-        url: `api/trivia/${triviaId}`,
+        url: `api/trivia/question/${triviaId}`,
         method: 'GET',
       }),
     }),
     answerTrivia: builder.mutation<
       TriviaAnswerResponse,
-      { triviaId: string; questionId: string; answer: string }
+      { triviaMatchId: string; questionId: string; answer: string }
     >({
       query: (body) => ({
         url: `api/trivia/answer`,

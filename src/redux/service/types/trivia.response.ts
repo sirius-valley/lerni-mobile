@@ -1,4 +1,4 @@
-export type TriviaAnswerResponseStatus = 'Won' | 'Lost' | 'In Progress' | 'Waiting' | 'timeout';
+export type TriviaAnswerResponseStatus = 'Won' | 'Lost' | 'In Progress' | 'Waiting' | 'Tied';
 
 export type TriviaQuestion = {
   id: string;
@@ -10,12 +10,30 @@ export type TriviaQuestion = {
 };
 
 export type Trivia = {
-  id: string;
-  questions: TriviaQuestion[];
   opponent: {
-    imgUrl: string;
-    firstName: string;
-    lastName: string;
+    id: string;
+    image?: string;
+    name: string;
+    lastname: string;
+  };
+  status: TriviaAnswerResponseStatus;
+  totalQuestionsNumber: number;
+  questionNumber: number;
+  question: {
+    id: string;
+    options: string[];
+    question: string;
+    secondsToAnswer: number;
+  };
+  answers: {
+    me: {
+      id: string;
+      isCorrect: boolean;
+    }[];
+    opponent: {
+      id: string;
+      isCorrect: boolean;
+    }[];
   };
 };
 
@@ -45,8 +63,11 @@ export interface TriviaAnswerResponse {
   triviaQuestion: TriviaAnswerQuestionsResponse;
   isCorrect: boolean;
   status: TriviaAnswerResponseStatus;
-  opponentAnsweredCorrectly?: boolean;
   correctOption: string;
+  opponentAnswer?: {
+    id: string;
+    isCorrect: boolean;
+  };
 }
 
 export interface TriviaHistoryCardProps {

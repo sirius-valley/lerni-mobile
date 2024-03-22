@@ -1,13 +1,15 @@
 import { Dimensions } from 'react-native';
 import { useTheme } from 'styled-components/native';
-import { StyledBox } from '../../../styled/styles';
-import { StyledTriangle } from '../../styles';
+import { StyledBox } from '../../styled/styles';
+import { StyledTriangle } from '../styles';
+import { CSSProperties } from '../../../utils/utils';
 
 interface VersusContainerProps {
   children: React.ReactNode;
+  css?: CSSProperties;
 }
 
-export const VersusContainer = ({ children }: VersusContainerProps) => {
+const TriviaTriangleBackground = ({ children, css }: VersusContainerProps) => {
   const theme = useTheme();
   const { width } = Dimensions.get('window');
 
@@ -19,6 +21,7 @@ export const VersusContainer = ({ children }: VersusContainerProps) => {
         backgroundColor: theme.primary650,
         width: '100%',
         height: '100%',
+        ...(css && css),
       }}
     >
       <StyledTriangle />
@@ -28,3 +31,5 @@ export const VersusContainer = ({ children }: VersusContainerProps) => {
     </StyledBox>
   );
 };
+
+export default TriviaTriangleBackground;
