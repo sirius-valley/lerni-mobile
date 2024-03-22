@@ -11,9 +11,10 @@ export type TriviaQuestion = {
 
 export type Trivia = {
   opponent: {
-    imgUrl: string;
-    firstName: string;
-    lastName: string;
+    id: string;
+    image?: string;
+    name: string;
+    lastname: string;
   };
   status: TriviaAnswerResponseStatus;
   totalQuestionsNumber: number;

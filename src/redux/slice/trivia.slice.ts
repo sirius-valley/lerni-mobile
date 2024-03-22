@@ -105,7 +105,11 @@ export const triviaSlice = createSlice({
         state.triviaStatus = action.payload.status;
         state.answersHistory = action.payload.answers;
         state.currentQuestion = transformTriviaToCurrentQuestion(action.payload);
-        state.opponent = action.payload.opponent;
+        state.opponent = {
+          imgUrl: action.payload.opponent.image ?? '',
+          firstName: action.payload.opponent.name ?? '',
+          lastName: action.payload.opponent.lastname ?? '',
+        };
       })
       .addMatcher(triviaApi.endpoints.answerTrivia.matchPending, (state, action) => {
         const { answer } = action.meta.arg.originalArgs;

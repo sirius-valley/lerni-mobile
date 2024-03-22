@@ -18,6 +18,7 @@ const Page = () => {
     setTimeout(() => {
       opacity.value = withTiming(0.3, { duration: 250 });
     }, 2750);
+    // triviaMatchId 0 hardcoded until we have real ids.
     setTimeout(() => {
       router.push({
         pathname: '/(auth)/triviaScreen/battle',

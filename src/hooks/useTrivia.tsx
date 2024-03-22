@@ -7,6 +7,7 @@ import { useTimer } from 'react-timer-hook';
 import { showToast } from '../redux/slice/utils.slice';
 import { CustomError } from '../redux/service/api';
 import { AppState } from 'react-native';
+import { useMeQuery } from '../redux/service/student.service';
 
 const useTrivia = () => {
   const dispatch = useLDispatch();
@@ -20,7 +21,8 @@ const useTrivia = () => {
   const totalQuestionsNumber = useLSelector((state) => state.trivia.totalQuestionsNumber);
   const opponent = useLSelector((state) => state.trivia.opponent);
   const answerHistory = useLSelector((state) => state.trivia.answersHistory);
-  const currentUserData = useLSelector((state) => state.student);
+
+  const { data: currentUserData } = useMeQuery();
 
   const { seconds, restart, pause } = useTimer({
     autoStart: false,
@@ -132,9 +134,9 @@ const useTrivia = () => {
   return {
     opponent,
     currentUser: {
-      imgUrl: currentUserData.image,
-      firstName: currentUserData.name,
-      lastName: currentUserData.lastname,
+      imgUrl: currentUserData?.image,
+      firstName: currentUserData?.name,
+      lastName: currentUserData?.lastname,
     },
     answerHistory,
     currentQuestion,
