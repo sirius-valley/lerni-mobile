@@ -1,5 +1,6 @@
 import { api } from './api';
 import {
+  AssignTriviaResponse,
   Trivia,
   TriviaAnswerResponse,
   TriviaHistoryCardProps,
@@ -24,9 +25,15 @@ export const triviaApi = api.injectEndpoints({
         body: body,
       }),
     }),
+    assignTrivia: builder.query<AssignTriviaResponse, { programId: string }>({
+      query: ({ programId }) => ({
+        url: `api/trivia/assign/${programId}`,
+        method: 'GET',
+      }),
+    }),
     triviaHistory: builder.query<TriviaHistoryCardProps[], TriviaQueryParams>({
       query: (page: TriviaQueryParams) => ({
-        url: `trivia/history`,
+        url: `api/trivia/history`,
         method: 'GET',
         params: page,
       }),
@@ -34,4 +41,10 @@ export const triviaApi = api.injectEndpoints({
   }),
 });
 
-export const { useTriviaByIdQuery, useAnswerTriviaMutation, useTriviaHistoryQuery } = triviaApi;
+export const {
+  useTriviaByIdQuery,
+  useAnswerTriviaMutation,
+  useAssignTriviaQuery,
+  useLazyAssignTriviaQuery,
+  useTriviaHistoryQuery,
+} = triviaApi;
