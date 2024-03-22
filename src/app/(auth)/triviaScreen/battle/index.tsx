@@ -11,7 +11,7 @@ import { Countdown } from '../../../../components/trivia/Countdown';
 import PlayersHeader from '../../../../components/trivia/PlayersHeader';
 import Question from '../../../../components/trivia/Question';
 import useTrivia from '../../../../hooks/useTrivia';
-import { Animated, Dimensions, Platform } from 'react-native';
+import { Animated, Dimensions, Platform, AppState } from 'react-native';
 import TriviaResult from '../../../../components/trivia/TriviaResult';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as NavigationBar from 'expo-navigation-bar';
@@ -100,10 +100,6 @@ const battle = () => {
       }, 800);
     }
   }, [triviaStatus]);
-
-  useEffect(() => {
-    return () => handleAnswer('left');
-  }, []);
 
   // Hides navigation bar on android phones.
   const setAndroidNavigationBehaviour = async () =>

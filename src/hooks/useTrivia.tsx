@@ -1,15 +1,18 @@
 import { useAnswerTriviaMutation, useTriviaByIdQuery } from '../redux/service/trivia.service';
 import { useLocalSearchParams } from 'expo-router';
 import { useLDispatch, useLSelector } from '../redux/hooks';
-import { useEffect } from 'react';
-import { getTriviaNextQuestion, setTimesup } from '../redux/slice/trivia.slice';
+import { useEffect, useRef } from 'react';
+import { getTriviaNextQuestion, setAppActiveAgain, setTimesup } from '../redux/slice/trivia.slice';
 import { useTimer } from 'react-timer-hook';
 import { showToast } from '../redux/slice/utils.slice';
 import { CustomError } from '../redux/service/api';
+import { AppState } from 'react-native';
 
 const useTrivia = () => {
   const dispatch = useLDispatch();
   const { triviaId } = useLocalSearchParams();
+  const appState = useRef(AppState.currentState);
+
   const currentQuestion = useLSelector((state) => state.trivia.currentQuestion);
   const triviaStatus = useLSelector((state) => state.trivia.triviaStatus);
   const isTriviaIdAString = typeof triviaId === 'string';
@@ -39,6 +42,7 @@ const useTrivia = () => {
   const didRequestFailed = triviaError || answerError;
 
   const setCurrentQuestionTimesup = (value: boolean) => dispatch(setTimesup(value));
+  const setAppActive = () => dispatch(setAppActiveAgain());
   const nextQuestion = () => dispatch(getTriviaNextQuestion());
 
   const restartTimer = () => {
@@ -75,7 +79,11 @@ const useTrivia = () => {
   // Bring next question and timer handling.
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if ((currentQuestion.timesup || currentQuestion.correctOption) && !didRequestFailed) {
+      if (
+        (currentQuestion.timesup || currentQuestion.correctOption) &&
+        !didRequestFailed &&
+        !currentQuestion.userLeft
+      ) {
         nextQuestion();
         restartTimer();
       }
@@ -83,6 +91,23 @@ const useTrivia = () => {
     }, 3000);
     return () => clearTimeout(timeout);
   }, [currentQuestion.timesup, currentQuestion, didRequestFailed]);
+
+  // Handles when user minimizeses the appication
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (['background'].includes(appState.current) && nextAppState === 'active') {
+        setAppActive();
+      }
+      if (['background'].includes(AppState.currentState)) {
+        handleSendAnswer('left');
+      }
+      appState.current = nextAppState;
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  });
 
   // Error handling and dispatch to toast.
   useEffect(() => {

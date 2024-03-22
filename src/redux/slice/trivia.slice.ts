@@ -12,6 +12,7 @@ interface InitialStateTriviaType {
     correctOption?: string;
     answer?: string;
     timesup: boolean;
+    userLeft: boolean;
     questionNumber?: number;
     status: CurrentQuestionStatusType;
   };
@@ -40,6 +41,7 @@ interface InitialStateTriviaType {
     correctOption?: string;
     answer?: string;
     timesup: boolean;
+    userLeft: boolean;
     questionNumber?: number;
     status: CurrentQuestionStatusType;
   };
@@ -51,6 +53,7 @@ const initialState: InitialStateTriviaType = {
     question: '',
     options: [],
     timesup: false,
+    userLeft: false,
     status: 'default',
   },
   answersHistory: {
@@ -66,6 +69,7 @@ const initialState: InitialStateTriviaType = {
     question: '',
     options: [],
     timesup: false,
+    userLeft: false,
     status: 'default',
   },
 };
@@ -85,8 +89,12 @@ export const triviaSlice = createSlice({
         question: '',
         options: [],
         timesup: false,
+        userLeft: false,
         status: 'default',
       };
+    },
+    setAppActiveAgain: (state) => {
+      state.currentQuestion.userLeft = false;
     },
   },
   extraReducers: (builder) => {
@@ -103,6 +111,8 @@ export const triviaSlice = createSlice({
         const { answer } = action.meta.arg.originalArgs;
         if (answer === 'timeout') {
           state.currentQuestion.timesup = true;
+        } else if (answer === 'left') {
+          state.currentQuestion.userLeft = true;
         } else {
           state.currentQuestion.answer = answer;
         }
@@ -131,11 +141,12 @@ const transformTriviaToCurrentQuestion = (trivia: Trivia) => {
     question: trivia.question.question,
     options: trivia.question.options,
     timesup: false,
+    userLeft: false,
     questionNumber: trivia.questionNumber,
     status: 'default' as CurrentQuestionStatusType,
   };
 };
 
-export const { setTimesup, getTriviaNextQuestion } = triviaSlice.actions;
+export const { setTimesup, getTriviaNextQuestion, setAppActiveAgain } = triviaSlice.actions;
 
 export default triviaSlice.reducer;
