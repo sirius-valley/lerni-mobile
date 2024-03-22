@@ -10,7 +10,7 @@ export const triviaApi = api.injectEndpoints({
   endpoints: (builder) => ({
     triviaById: builder.query<Trivia, { triviaId: string }>({
       query: ({ triviaId }) => ({
-        url: `trivia/${triviaId}`,
+        url: `api/trivia/${triviaId}`,
         method: 'GET',
       }),
     }),
@@ -19,14 +19,14 @@ export const triviaApi = api.injectEndpoints({
       { triviaId: string; questionId: string; answer: string }
     >({
       query: (body) => ({
-        url: `trivia/answer`,
+        url: `api/trivia/answer`,
         method: 'POST',
         body: body,
       }),
     }),
     assignTrivia: builder.query<AssignTriviaResponse, { programId: string }>({
       query: ({ programId }) => ({
-        url: `trivia/assign/${programId}`,
+        url: `api/trivia/assign/${programId}`,
         method: 'GET',
       }),
     }),

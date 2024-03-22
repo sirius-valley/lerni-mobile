@@ -35,6 +35,7 @@ const StartTrivia = () => {
 
   const onPress = () => {
     setLoading(true);
+    useAssignTriviaQuery({ programId: programId as string });
     if (!triviaLoading && !isError) {
       router.push('/(auth)/triviaScreen');
       setLoading(false);
