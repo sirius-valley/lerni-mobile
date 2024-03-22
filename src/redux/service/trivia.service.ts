@@ -4,6 +4,8 @@ import {
   Trivia,
   TriviaQuestion,
   TriviaAnswerResponse,
+  TriviaHistoryCardProps,
+  TriviaQueryParams,
 } from './types/trivia.response';
 
 export const triviaApi = api.injectEndpoints({
@@ -30,6 +32,13 @@ export const triviaApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    triviaHistory: builder.query<TriviaHistoryCardProps[], TriviaQueryParams>({
+      query: (page: TriviaQueryParams) => ({
+        url: `api/trivia/history`,
+        method: 'GET',
+        params: page,
+      }),
+    }),
   }),
 });
 
@@ -38,4 +47,5 @@ export const {
   useAnswerTriviaMutation,
   useAssignTriviaQuery,
   useLazyAssignTriviaQuery,
+  useTriviaHistoryQuery,
 } = triviaApi;

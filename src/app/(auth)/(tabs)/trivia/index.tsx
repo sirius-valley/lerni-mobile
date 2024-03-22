@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
-import { StyledColumn } from '../../../../components/styled/styles';
+import React from 'react';
 import Button from '../../../../components/styled/Button';
-
+import { StyledColumn } from '../../../../components/styled/styles';
 export default function Page() {
   const router = useRouter();
   const programId = 'programNICID';
