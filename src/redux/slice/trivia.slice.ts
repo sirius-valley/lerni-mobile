@@ -120,6 +120,9 @@ export const triviaSlice = createSlice({
       .addMatcher(triviaApi.endpoints.answerTrivia.matchFulfilled, (state, action) => {
         const { isCorrect } = action.payload;
 
+        if (action.payload.opponentAnswer) {
+          state.answersHistory.opponent.push(action.payload.opponentAnswer);
+        }
         state.answersHistory.me.push({ id: Math.random().toString().slice(0, 6), isCorrect });
         state.currentQuestion.status = isCorrect ? 'correct' : 'incorrect';
         state.currentQuestion.correctOption = action.payload.correctOption;

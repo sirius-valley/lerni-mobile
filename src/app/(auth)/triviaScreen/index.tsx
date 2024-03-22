@@ -22,7 +22,7 @@ const Page = () => {
       router.push({
         pathname: '/(auth)/triviaScreen/battle',
         params: {
-          triviaId: 'triviaMatchId',
+          triviaId: 'triviaMatchId 0',
         },
       });
     }, 2800);

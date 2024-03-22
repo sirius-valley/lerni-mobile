@@ -48,4 +48,8 @@ export interface TriviaAnswerResponse {
   isCorrect: boolean;
   status: TriviaAnswerResponseStatus;
   correctOption: string;
+  opponentAnswer?: {
+    id: string;
+    isCorrect: boolean;
+  };
 }
