@@ -33,4 +33,9 @@ export const triviaApi = api.injectEndpoints({
   }),
 });
 
-export const { useTriviaByIdQuery, useAnswerTriviaMutation, useAssignTriviaQuery } = triviaApi;
+export const {
+  useTriviaByIdQuery,
+  useAnswerTriviaMutation,
+  useAssignTriviaQuery,
+  useLazyAssignTriviaQuery,
+} = triviaApi;

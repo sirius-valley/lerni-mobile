@@ -1,44 +1,42 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { rgba } from 'polished';
+import { useState } from 'react';
+import { Pressable } from 'react-native';
+import { useTheme } from 'styled-components/native';
+import { TriviaRadialBackground } from '../../../../../assets/TriviaRadialBackground';
+import BackArrow from '../../../../../assets/icons/BackArrow';
+import { TriviaLoaderIcon } from '../../../../../assets/icons/TriviaLoaderIcon';
+import ErrorDisplay from '../../../../components/common/ErrorDisplay';
+import Button from '../../../../components/styled/Button';
 import {
   StyledBox,
   StyledColumn,
   StyledRow,
   StyledText,
 } from '../../../../components/styled/styles';
-import BackArrow from '../../../../../assets/icons/BackArrow';
-import { useTheme } from 'styled-components/native';
 import { Participant } from '../../../../components/trivia/LoadingVersus/Participant';
-import Button from '../../../../components/styled/Button';
-import { useProgramByIdQuery } from '../../../../redux/service/program.service';
-import { Dimensions, Pressable } from 'react-native';
-import { useLSelector } from '../../../../redux/hooks';
 import { RandomParticipant } from '../../../../components/trivia/LoadingVersus/RandomParticipant';
-import { TriviaLoaderIcon } from '../../../../../assets/icons/TriviaLoaderIcon';
-import { rgba } from 'polished';
-import { useState } from 'react';
-import { TriviaRadialBackground } from '../../../../../assets/TriviaRadialBackground';
-import { useAssignTriviaQuery, useTriviaByIdQuery } from '../../../../redux/service/trivia.service';
+import { useProgramByIdQuery } from '../../../../redux/service/program.service';
 import { useMeQuery } from '../../../../redux/service/student.service';
-import ErrorDisplay from '../../../../components/common/ErrorDisplay';
+import { useLazyAssignTriviaQuery } from '../../../../redux/service/trivia.service';
 
 const StartTrivia = () => {
+  const [fetch, { isLoading }] = useLazyAssignTriviaQuery();
   const { programId } = useLocalSearchParams();
   const { data: user, isLoading: meLoading } = useMeQuery();
   const { data: program, isLoading: programLoading } = useProgramByIdQuery(programId);
   const [loading, setLoading] = useState(false);
 
-  const { isLoading: triviaLoading, isError } = useAssignTriviaQuery({
-    programId: program ? program.id : 'programId',
-  });
   const theme = useTheme();
   const router = useRouter();
 
   const onPress = () => {
     setLoading(true);
-    if (!triviaLoading && !isError) {
+    fetch({ programId: programId as string });
+    if (!isLoading) {
       router.push('/(auth)/triviaScreen');
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   if (meLoading || !user) {
