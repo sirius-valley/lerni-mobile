@@ -1,9 +1,8 @@
 import { Stack } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from 'styled-components/native';
-import { withModal } from '../../../../hoc/withModal';
 
-export const Layout = () => {
+export default function TriviaLayout() {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   return (
@@ -12,14 +11,12 @@ export const Layout = () => {
         headerShown: false,
         contentStyle: {
           flex: 1,
-          backgroundColor: theme.primary900,
-          // paddingTop: insets.top + 30,
-          // paddingBottom: 80,
-          // paddingHorizontal: 24,
+          backgroundColor: theme.primary700,
+          paddingTop: 60,
+          paddingBottom: 120,
+          paddingHorizontal: 24,
         },
       }}
     />
   );
-};
-
-export default withModal(Layout);
+}

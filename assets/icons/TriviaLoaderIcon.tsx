@@ -26,7 +26,7 @@ export const TriviaLoaderIcon = ({ size, color }: IconInterface) => {
           left: 52,
         }}
       >
-        <BoltIcon size={66} color={rgba(theme.gray100, 0.3)} />
+        <BoltIcon size={66} color={rgba(theme.primary400, 0.3)} />
       </StyledBox>
       <StyledBox
         css={{

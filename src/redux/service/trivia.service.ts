@@ -1,33 +1,39 @@
 import { api } from './api';
 import {
+  AssignTriviaResponse,
   Trivia,
   TriviaAnswerResponse,
   TriviaHistoryCardProps,
   TriviaQueryParams,
-  TriviaQuestion,
 } from './types/trivia.response';
 
 export const triviaApi = api.injectEndpoints({
   endpoints: (builder) => ({
     triviaById: builder.query<Trivia, { triviaId: string }>({
       query: ({ triviaId }) => ({
-        url: `trivia/${triviaId}`,
+        url: `api/trivia/question/${triviaId}`,
         method: 'GET',
       }),
     }),
     answerTrivia: builder.mutation<
       TriviaAnswerResponse,
-      { triviaId: string; questionId: string; answer: string }
+      { triviaMatchId: string; questionId: string; answer: string }
     >({
       query: (body) => ({
-        url: `trivia/answer`,
+        url: `api/trivia/answer`,
         method: 'POST',
         body: body,
       }),
     }),
+    assignTrivia: builder.query<AssignTriviaResponse, { programId: string }>({
+      query: ({ programId }) => ({
+        url: `api/trivia/assign/${programId}`,
+        method: 'GET',
+      }),
+    }),
     triviaHistory: builder.query<TriviaHistoryCardProps[], TriviaQueryParams>({
       query: (page: TriviaQueryParams) => ({
-        url: `trivia/history`,
+        url: `api/trivia/history`,
         method: 'GET',
         params: page,
       }),
@@ -35,4 +41,10 @@ export const triviaApi = api.injectEndpoints({
   }),
 });
 
-export const { useTriviaByIdQuery, useAnswerTriviaMutation, useTriviaHistoryQuery } = triviaApi;
+export const {
+  useTriviaByIdQuery,
+  useAnswerTriviaMutation,
+  useAssignTriviaQuery,
+  useLazyAssignTriviaQuery,
+  useTriviaHistoryQuery,
+} = triviaApi;

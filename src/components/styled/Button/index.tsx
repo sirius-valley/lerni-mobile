@@ -17,6 +17,7 @@ export interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   css?: CSSProperties;
+  testID?: string;
 }
 const Button = ({
   onPress,
@@ -27,6 +28,7 @@ const Button = ({
   icon: Icon,
   iconColor,
   css,
+  testID,
 }: ButtonProps) => {
   const [isPressed, setIsPressed] = useState(false);
   const theme = useTheme();
@@ -48,6 +50,7 @@ const Button = ({
 
   return (
     <StyledButton
+      testID={testID}
       type={variant}
       state={isDisabled}
       disabled={disabled}

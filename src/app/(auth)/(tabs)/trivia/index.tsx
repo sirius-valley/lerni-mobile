@@ -1,9 +1,7 @@
 import { useRouter } from 'expo-router';
-import { StyledBox, StyledColumn } from '../../../../components/styled/styles';
-import Button from '../../../../components/styled/Button';
-import TriviaCard from './components/TriviaCardContainer/TriviaCard/Challenged';
-import { FlatList, ScrollView } from 'react-native';
 import { useEffect, useState } from 'react';
+import Button from '../../../../components/styled/Button';
+import { StyledColumn } from '../../../../components/styled/styles';
 import { TriviaCardContainer } from './components/TriviaCardContainer';
 import { TriviaHistory } from './components/TriviaHistory';
 
@@ -29,7 +27,6 @@ export default function Page() {
     <StyledColumn style={{ justifyContent: 'center', alignItems: 'center', gap: 16 }}>
       <TriviaCardContainer />
       <TriviaHistory />
-      <Button onPress={() => router.push('/(auth)/triviaScreen')}>Trivia</Button>
     </StyledColumn>
   );
 }

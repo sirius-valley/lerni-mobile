@@ -6,11 +6,11 @@ import { rgba } from 'polished';
 import Skeleton from '../../../common/Skeleton';
 
 interface ParticipantProps {
-    isOpponent: boolean;
+  isOpponent: boolean;
 }
 
 export const TriviaHistorySkeleton = () => {
-  const Participant = ({isOpponent}: ParticipantProps) => {
+  const Participant = ({ isOpponent }: ParticipantProps) => {
     return (
       <StyledRow
         css={{
@@ -42,8 +42,7 @@ export const TriviaHistorySkeleton = () => {
           borderRadius: 50,
           padding: '4px 8px',
         }}
-      >
-      </StyledBox>
+      ></StyledBox>
     );
   };
 
@@ -67,9 +66,7 @@ export const TriviaHistorySkeleton = () => {
           width: '100%',
         }}
       >
-        <Participant
-          isOpponent={false}
-        />
+        <Participant isOpponent={false} />
         <StyledColumn
           css={{
             justifyContent: 'center',
@@ -78,16 +75,10 @@ export const TriviaHistorySkeleton = () => {
           }}
         >
           <Skeleton width={40} height={15} />
-          <Skeleton
-            height={20} 
-            width={30}
-          />
+          <Skeleton height={20} width={30} />
           <ResultComponent />
         </StyledColumn>
-        <Participant
-          isOpponent={true}
-          
-        />
+        <Participant isOpponent={true} />
       </StyledRow>
     </StyledBox>
   );
