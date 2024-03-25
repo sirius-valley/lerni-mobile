@@ -11,7 +11,7 @@ export default function TriviaLayout() {
         headerShown: false,
         contentStyle: {
           flex: 1,
-          backgroundColor: theme.primary700,
+          backgroundColor: theme.primary900,
           paddingTop: insets.top,
           paddingBottom: insets.bottom + 80,
           paddingHorizontal: 24,

@@ -8,6 +8,23 @@ import { TriviaCard } from './TriviaCard';
 export const TriviaCardContainer = () => {
   const mockedCards = [
     {
+      programName: 'Test challenged card',
+      user: {
+        name: 'Juan',
+        lastname: 'Schcolnik',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Foto_Perfil_.jpg',
+        id: '1',
+      },
+      opponent: {
+        name: 'Oli',
+        lastname: 'Sanguinetti',
+        image:
+          'https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos.jpg',
+        id: '2',
+      },
+      status: TriviaStatus.CHALLENGED,
+    },
+    {
       programName: 'Test pending card',
       user: {
         name: 'Juan',
@@ -50,23 +67,6 @@ export const TriviaCardContainer = () => {
         id: '2',
       },
       status: TriviaStatus.INCOMPLETE,
-    },
-    {
-      programName: 'Test challenged card',
-      user: {
-        name: 'Juan',
-        lastname: 'Schcolnik',
-        image: 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Foto_Perfil_.jpg',
-        id: '1',
-      },
-      opponent: {
-        name: 'Oli',
-        lastname: 'Sanguinetti',
-        image:
-          'https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos.jpg',
-        id: '2',
-      },
-      status: TriviaStatus.CHALLENGED,
     },
   ];
   const router = useRouter();

@@ -14,7 +14,7 @@ import { useTheme } from 'styled-components/native';
 import { LerniTriviaIcon } from '../../../../../../../../../assets/icons/LerniTriviaIcon';
 import { TriviaRadialBackground } from '../../../../../../../../../assets/TriviaCardBackground';
 import { TriviaCardProps } from '../types';
-import ClockIcon from '../../../../../../../../../assets/icons/ClockIcon';
+import { SandClockIcon } from '../../../../../../../../../assets/icons/SandClockIcon';
 
 const WaitingCard = ({ programName, user, opponent, timeLeft, status, score }: TriviaCardProps) => {
   const screenWidth = Dimensions.get('screen').width;
@@ -56,13 +56,13 @@ const WaitingCard = ({ programName, user, opponent, timeLeft, status, score }: T
           }}
         >
           <StyledText variant="h2" color="white">
-            {'Fuiste retado a un duelo'}
+            {'Ya hiciste tu parte!'}
           </StyledText>
           <StyledText variant="body2" color="gray100">
-            {'Responder esta trivia solo te llevar'}
+            {'Ahora a esperar a tu oponente'}
           </StyledText>
           <StyledText variant="body2" color="gray100" css={{ fontFamily: 'Roboto-Bold' }}>
-            {'10 minutos'}
+            {''}
           </StyledText>
         </StyledColumn>
         <StyledRow css={{ justifyContent: 'center', alignItems: 'flex-end' }}>
@@ -92,7 +92,7 @@ const WaitingCard = ({ programName, user, opponent, timeLeft, status, score }: T
             backgroundColor: rgba(theme.primary500, 0.2),
           }}
         >
-          <ClockIcon size={20} color={theme.primary500} />
+          <SandClockIcon size={20} color={theme.primary500} />
           <StyledText variant="body1" color="primary500">
             {'Le quedan 5 hs'}
           </StyledText>
