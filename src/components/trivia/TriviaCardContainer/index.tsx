@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { FlatList, ScrollView } from 'react-native';
 import { useEffect, useState } from 'react';
-import { StyledBox, StyledColumn } from '../../../../../../components/styled/styles';
+import { StyledBox, StyledColumn } from '../../styled/styles';
 import { TriviaStatus } from './TriviaCard/types';
 import { TriviaCard } from './TriviaCard';
 
@@ -16,8 +16,8 @@ export const TriviaCardContainer = () => {
         id: '1',
       },
       opponent: {
-        name: 'Oli',
-        lastname: 'Sanguinetti',
+        name: 'Nico',
+        lastname: 'Dipi',
         image:
           'https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos.jpg',
         id: '2',
@@ -43,8 +43,8 @@ export const TriviaCardContainer = () => {
         id: '1',
       },
       opponent: {
-        name: 'Oli',
-        lastname: 'Sanguinetti',
+        name: 'Nico',
+        lastname: 'Dipi',
         image:
           'https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos.jpg',
         id: '2',
@@ -60,8 +60,8 @@ export const TriviaCardContainer = () => {
         id: '1',
       },
       opponent: {
-        name: 'Oli',
-        lastname: 'Sanguinetti',
+        name: 'Nico',
+        lastname: 'Dipi',
         image:
           'https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos.jpg',
         id: '2',

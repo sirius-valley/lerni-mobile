@@ -1,22 +1,23 @@
 import { useRouter } from 'expo-router';
-import Button from '../../../../../../../../components/styled/Button';
+import Button from '../../../../styled/Button';
 import {
   StyledBox,
   StyledColumn,
   StyledRow,
   StyledText,
-} from '../../../../../../../../components/styled/styles';
+} from '../../../../styled/styles';
 import { Dimensions } from 'react-native';
-import { TriviaLoaderIcon } from '../../../../../../../../../assets/icons/TriviaLoaderIcon';
-import { Participant } from '../../../../../../../../components/trivia/LoadingVersus/Participant';
+import { TriviaLoaderIcon } from '../../../../../../assets/icons/TriviaLoaderIcon';
+import { Participant } from '../../../LoadingVersus/Participant';
 import { rgba } from 'polished';
 import { useTheme } from 'styled-components/native';
-import { LerniTriviaIcon } from '../../../../../../../../../assets/icons/LerniTriviaIcon';
-import { TriviaRadialBackground } from '../../../../../../../../../assets/TriviaCardBackground';
+import { LerniTriviaIcon } from '../../../../../../assets/icons/LerniTriviaIcon';
+import { TriviaRadialBackground } from '../../../../../../assets/TriviaCardBackground';
 import { TriviaCardProps } from '../types';
-import { SandClockIcon } from '../../../../../../../../../assets/icons/SandClockIcon';
+import { RandomParticipant } from '../../../LoadingVersus/RandomParticipant';
+import { useLazyAssignTriviaQuery } from '../../../../../redux/service/trivia.service';
 
-const WaitingCard = ({ programName, user, opponent, timeLeft, status, score }: TriviaCardProps) => {
+const PendingCard = ({ programName, user, opponent, timeLeft, status, score }: TriviaCardProps) => {
   const screenWidth = Dimensions.get('screen').width;
   const baseWidth = 342;
   const baseHeight = 389;
@@ -26,6 +27,12 @@ const WaitingCard = ({ programName, user, opponent, timeLeft, status, score }: T
 
   const router = useRouter();
   const theme = useTheme();
+
+  const onPress = () => {
+    // useLazyAssignTriviaQuery(programId)
+    alert('push to trivia start');
+  };
+
   return (
     <StyledColumn
       css={{
@@ -56,13 +63,13 @@ const WaitingCard = ({ programName, user, opponent, timeLeft, status, score }: T
           }}
         >
           <StyledText variant="h2" color="white">
-            {'Ya hiciste tu parte!'}
+            {'Trivia pendiente'}
           </StyledText>
           <StyledText variant="body2" color="gray100">
-            {'Ahora a esperar a tu oponente'}
+            {'Responder esta trivia solo te llevar'}
           </StyledText>
           <StyledText variant="body2" color="gray100" css={{ fontFamily: 'Roboto-Bold' }}>
-            {''}
+            {'10 minutos'}
           </StyledText>
         </StyledColumn>
         <StyledRow css={{ justifyContent: 'center', alignItems: 'flex-end' }}>
@@ -73,33 +80,15 @@ const WaitingCard = ({ programName, user, opponent, timeLeft, status, score }: T
             lastname={user.lastname}
           />
           <LerniTriviaIcon size={139} color={rgba(theme.gray100, 0.1)} />
-          <Participant
-            size={70}
-            textStyles={{ variant: 'body4' }}
-            name={opponent?.name ?? 'Oponente'}
-            lastname={opponent?.lastname ?? 'al azar'}
-          />
+          <RandomParticipant size={70} />
         </StyledRow>
       </StyledColumn>
-      <StyledBox>
-        <StyledRow
-          css={{
-            justifyCotnent: 'center',
-            alignItems: 'center',
-            borderRadius: 42,
-            gap: 4,
-            padding: '8px 24px',
-            backgroundColor: rgba(theme.primary500, 0.2),
-          }}
-        >
-          <SandClockIcon size={20} color={theme.primary500} />
-          <StyledText variant="body1" color="primary500">
-            {`Le quedan ${timeLeft ?? '5hs'}`}
-          </StyledText>
-        </StyledRow>
-      </StyledBox>
+      {/* En el botón, debería de recibir el id del programa (por props), y reemplazar el router con el link a esa partida */}
+      <Button onPress={onPress} css={{ width: '100%' }}>
+        Jugar ahora
+      </Button>
     </StyledColumn>
   );
 };
 
-export default WaitingCard;
+export default PendingCard;

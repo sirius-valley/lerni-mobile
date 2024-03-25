@@ -1,13 +1,13 @@
 import { FlatList, Pressable, ScrollView } from 'react-native';
-import { TriviaHistoryCard } from '../../../../../../components/trivia/TriviaHistoryCard';
+import { TriviaHistoryCard } from '../TriviaHistoryCard';
 import { useEffect, useState } from 'react';
-import { StyledBox, StyledText } from '../../../../../../components/styled/styles';
-import { TriviaHistorySkeleton } from '../../../../../../components/trivia/TriviaHistoryCard/Skeleton/TriviaHistorySkeleton';
-import Spinner from '../../../../../../components/common/Spinner';
+import { StyledBox, StyledText } from '../../styled/styles';
+import { TriviaHistorySkeleton } from '../TriviaHistoryCard/Skeleton/TriviaHistorySkeleton';
+import Spinner from '../../common/Spinner';
 import { TriviaHistoryMocked } from './mocked';
-import { useTriviaHistoryQuery } from '../../../../../../redux/service/trivia.service';
-import { TriviaHistoryCardProps } from '../../../../../../redux/service/types/trivia.response';
-import { TriviaQueryParams } from '../../../../../../redux/service/types/trivia.response';
+import { useTriviaHistoryQuery } from '../../../redux/service/trivia.service';
+import { TriviaHistoryCardProps } from '../../../redux/service/types/trivia.response';
+import { TriviaQueryParams } from '../../../redux/service/types/trivia.response';
 
 export const TriviaHistory = () => {
   const [currentPage, setCurrentPage] = useState(0);

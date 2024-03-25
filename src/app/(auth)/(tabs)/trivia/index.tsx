@@ -2,8 +2,8 @@ import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import Button from '../../../../components/styled/Button';
 import { StyledColumn } from '../../../../components/styled/styles';
-import { TriviaCardContainer } from './components/TriviaCardContainer';
-import { TriviaHistory } from './components/TriviaHistory';
+import { TriviaCardContainer } from '../../../../components/trivia/TriviaCardContainer';
+import { TriviaHistory } from '../../../../components/trivia/TriviaHistory';
 
 export default function Page() {
   const router = useRouter();

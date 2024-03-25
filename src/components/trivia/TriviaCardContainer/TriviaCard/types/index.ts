@@ -1,5 +1,5 @@
-import { User } from '../../../../../../../../components/trivia/PlayerStatus';
-import { SimpleStudent } from '../../../../../../../../types';
+import { User } from '../../../PlayerStatus';
+import { SimpleStudent } from '../../../../../types';
 
 export enum TriviaStatus {
   INCOMPLETE = 'incomplete',

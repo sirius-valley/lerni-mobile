@@ -1,23 +1,22 @@
 import { useRouter } from 'expo-router';
-import Button from '../../../../../../../../components/styled/Button';
+import Button from '../../../../styled/Button';
 import {
   StyledBox,
   StyledColumn,
   StyledRow,
   StyledText,
-} from '../../../../../../../../components/styled/styles';
+} from '../../../../styled/styles';
 import { Dimensions } from 'react-native';
-import { TriviaLoaderIcon } from '../../../../../../../../../assets/icons/TriviaLoaderIcon';
-import { Participant } from '../../../../../../../../components/trivia/LoadingVersus/Participant';
+import { TriviaLoaderIcon } from '../../../../../../assets/icons/TriviaLoaderIcon';
+import { Participant } from '../../../LoadingVersus/Participant';
 import { rgba } from 'polished';
 import { useTheme } from 'styled-components/native';
-import { LerniTriviaIcon } from '../../../../../../../../../assets/icons/LerniTriviaIcon';
-import { TriviaRadialBackground } from '../../../../../../../../../assets/TriviaCardBackground';
+import { LerniTriviaIcon } from '../../../../../../assets/icons/LerniTriviaIcon';
+import { TriviaRadialBackground } from '../../../../../../assets/TriviaCardBackground';
 import { TriviaCardProps } from '../types';
-import { RandomParticipant } from '../../../../../../../../components/trivia/LoadingVersus/RandomParticipant';
-import { useLazyAssignTriviaQuery } from '../../../../../../../../redux/service/trivia.service';
+import { SandClockIcon } from '../../../../../../assets/icons/SandClockIcon';
 
-const PendingCard = ({ programName, user, opponent, timeLeft, status, score }: TriviaCardProps) => {
+const WaitingCard = ({ programName, user, opponent, timeLeft, status, score }: TriviaCardProps) => {
   const screenWidth = Dimensions.get('screen').width;
   const baseWidth = 342;
   const baseHeight = 389;
@@ -27,12 +26,6 @@ const PendingCard = ({ programName, user, opponent, timeLeft, status, score }: T
 
   const router = useRouter();
   const theme = useTheme();
-
-  const onPress = () => {
-    // useLazyAssignTriviaQuery(programId)
-    alert('push to trivia start');
-  };
-
   return (
     <StyledColumn
       css={{
@@ -63,13 +56,13 @@ const PendingCard = ({ programName, user, opponent, timeLeft, status, score }: T
           }}
         >
           <StyledText variant="h2" color="white">
-            {'Trivia pendiente'}
+            {'Ya hiciste tu parte!'}
           </StyledText>
           <StyledText variant="body2" color="gray100">
-            {'Responder esta trivia solo te llevar'}
+            {'Ahora a esperar a tu oponente'}
           </StyledText>
           <StyledText variant="body2" color="gray100" css={{ fontFamily: 'Roboto-Bold' }}>
-            {'10 minutos'}
+            {''}
           </StyledText>
         </StyledColumn>
         <StyledRow css={{ justifyContent: 'center', alignItems: 'flex-end' }}>
@@ -80,15 +73,33 @@ const PendingCard = ({ programName, user, opponent, timeLeft, status, score }: T
             lastname={user.lastname}
           />
           <LerniTriviaIcon size={139} color={rgba(theme.gray100, 0.1)} />
-          <RandomParticipant size={70} />
+          <Participant
+            size={70}
+            textStyles={{ variant: 'body4' }}
+            name={opponent?.name ?? 'Oponente'}
+            lastname={opponent?.lastname ?? 'al azar'}
+          />
         </StyledRow>
       </StyledColumn>
-      {/* En el botón, debería de recibir el id del programa (por props), y reemplazar el router con el link a esa partida */}
-      <Button onPress={onPress} css={{ width: '100%' }}>
-        Jugar ahora
-      </Button>
+      <StyledBox>
+        <StyledRow
+          css={{
+            justifyCotnent: 'center',
+            alignItems: 'center',
+            borderRadius: 42,
+            gap: 4,
+            padding: '8px 24px',
+            backgroundColor: rgba(theme.primary500, 0.2),
+          }}
+        >
+          <SandClockIcon size={20} color={theme.primary500} />
+          <StyledText variant="body1" color="primary500">
+            {`Le quedan ${timeLeft ?? '5hs'}`}
+          </StyledText>
+        </StyledRow>
+      </StyledBox>
     </StyledColumn>
   );
 };
 
-export default PendingCard;
+export default WaitingCard;

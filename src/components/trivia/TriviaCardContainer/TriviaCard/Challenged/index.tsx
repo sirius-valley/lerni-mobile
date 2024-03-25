@@ -1,22 +1,21 @@
 import { useRouter } from 'expo-router';
-import Button from '../../../../../../../../components/styled/Button';
+import Button from '../../../../styled/Button';
 import {
   StyledBox,
   StyledColumn,
   StyledRow,
   StyledText,
-} from '../../../../../../../../components/styled/styles';
+} from '../../../../styled/styles';
 import { Dimensions } from 'react-native';
-import { TriviaLoaderIcon } from '../../../../../../../../../assets/icons/TriviaLoaderIcon';
-import { Participant } from '../../../../../../../../components/trivia/LoadingVersus/Participant';
+import { TriviaLoaderIcon } from '../../../../../../assets/icons/TriviaLoaderIcon';
+import { Participant } from '../../../LoadingVersus/Participant';
 import { rgba } from 'polished';
 import { useTheme } from 'styled-components/native';
-import { LerniTriviaIcon } from '../../../../../../../../../assets/icons/LerniTriviaIcon';
-import { TriviaRadialBackground } from '../../../../../../../../../assets/TriviaCardBackground';
-import ClockIcon from '../../../../../../../../../assets/icons/ClockIcon';
+import { LerniTriviaIcon } from '../../../../../../assets/icons/LerniTriviaIcon';
+import { TriviaRadialBackground } from '../../../../../../assets/TriviaCardBackground';
 import { TriviaCardProps } from '../types';
 
-const IncompleteCard = ({
+const ChallengedCard = ({
   programName,
   user,
   opponent,
@@ -57,13 +56,13 @@ const IncompleteCard = ({
         }}
       >
         <StyledText variant="h2" color="white">
-          {'Trivia incompleta'}
+          {'Fuiste retado a un duelo'}
         </StyledText>
         <StyledText variant="body2" color="gray100">
-          {'Termina la partida.'}
+          {'Responder esta trivia solo te llevar'}
         </StyledText>
-        <StyledText variant="body2" color="gray100">
-          {'No pierdas la oportunidad de sumar puntos!'}
+        <StyledText variant="body2" color="gray100" css={{ fontFamily: 'Roboto-Bold' }}>
+          {'10 minutos'}
         </StyledText>
       </StyledColumn>
       <StyledRow css={{ justifyContent: 'center', alignItems: 'flex-end' }}>
@@ -92,4 +91,4 @@ const IncompleteCard = ({
   );
 };
 
-export default IncompleteCard;
+export default ChallengedCard;
