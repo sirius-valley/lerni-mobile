@@ -5,11 +5,11 @@ import { ShuffleIcon } from '../../../../../assets/icons/ShuffleIcon';
 
 interface RandomParticipantProps {
   name?: string;
-  occupation?: string;
-  size: number;
+  lastname?: string;
+  size?: number;
 }
 
-export const RandomParticipant = ({ name, occupation, size }: RandomParticipantProps) => {
+export const RandomParticipant = ({ name, lastname, size }: RandomParticipantProps) => {
   const theme = useTheme();
   return (
     <StyledColumn css={{ justifyContent: 'center', alignItems: 'center', gap: 8 }}>
@@ -32,7 +32,7 @@ export const RandomParticipant = ({ name, occupation, size }: RandomParticipantP
           {name ?? 'Oponente'}
         </StyledText>
         <StyledText variant="body2" css={{ color: theme.gray100, alignContent: 'center' }}>
-          {occupation ?? 'al azar'}
+          {lastname ?? 'al azar'}
         </StyledText>
       </StyledColumn>
     </StyledColumn>

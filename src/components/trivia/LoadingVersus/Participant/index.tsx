@@ -6,13 +6,13 @@ import { ViewStyle } from 'react-native';
 interface ParticipantProps {
   image?: string;
   name: string;
-  occupation: string;
+  lastname: string;
   size?: number;
   textStyles?: StyledTextInterface;
   css?: ViewStyle;
 }
 
-export const Participant = ({ image, name, occupation, size, textStyles }: ParticipantProps) => {
+export const Participant = ({ image, name, lastname, size, textStyles }: ParticipantProps) => {
   const theme = useTheme();
   return (
     <StyledColumn css={{ justifyContent: 'center', alignItems: 'center', gap: 8 }}>
@@ -30,7 +30,7 @@ export const Participant = ({ image, name, occupation, size, textStyles }: Parti
           color="gray100"
           css={{ alignContent: 'center' }}
         >
-          {occupation}
+          {lastname}
         </StyledText>
       </StyledColumn>
     </StyledColumn>

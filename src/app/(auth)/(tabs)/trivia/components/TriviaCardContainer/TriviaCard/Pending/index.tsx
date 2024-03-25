@@ -76,8 +76,8 @@ const PendingCard = ({ programName, user, opponent, timeLeft, status, score }: T
           <Participant
             size={70}
             textStyles={{ variant: 'body4' }}
-            name="John"
-            occupation="Developer"
+            name={user.name}
+            lastname={user.lastname}
           />
           <LerniTriviaIcon size={139} color={rgba(theme.gray100, 0.1)} />
           <RandomParticipant size={70} />

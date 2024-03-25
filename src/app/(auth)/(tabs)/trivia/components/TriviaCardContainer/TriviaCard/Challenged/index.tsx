@@ -46,7 +46,7 @@ const ChallengedCard = ({
     >
       <TriviaRadialBackground />
       <StyledText variant="h4" color="primary400">
-        {'Nombre del programa'}
+        {programName}
       </StyledText>
       <StyledColumn
         css={{
@@ -69,19 +69,19 @@ const ChallengedCard = ({
         <Participant
           size={70}
           textStyles={{ variant: 'body4' }}
-          name="John"
-          occupation="Developer"
+          name={user.name}
+          lastname={user.lastname}
         />
         <LerniTriviaIcon size={139} color={rgba(theme.gray100, 0.1)} />
         <Participant
           size={70}
           textStyles={{ variant: 'body4' }}
-          name="Camisetas"
-          occupation="Nani"
+          name={opponent?.name ?? 'Oponente'}
+          lastname={opponent?.lastname ?? 'al azar'}
         />
       </StyledRow>
       <StyledText variant="body2" color="white">
-        {'Te quedan 5hs'}
+        {`Te quedan ${timeLeft ?? '5hs'}`}
       </StyledText>
       {/* En el botón, debería de recibir el id de la partida (por props), y reemplazar el router con el link a esa partida */}
       <Button onPress={() => alert('push to trivia start')} css={{ width: '100%' }}>

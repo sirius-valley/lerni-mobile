@@ -46,7 +46,7 @@ const WaitingCard = ({ programName, user, opponent, timeLeft, status, score }: T
         }}
       >
         <StyledText variant="h4" color="primary400">
-          {'Nombre del programa'}
+          {programName}
         </StyledText>
         <StyledColumn
           css={{
@@ -69,15 +69,15 @@ const WaitingCard = ({ programName, user, opponent, timeLeft, status, score }: T
           <Participant
             size={70}
             textStyles={{ variant: 'body4' }}
-            name="John"
-            occupation="Developer"
+            name={user.name}
+            lastname={user.lastname}
           />
           <LerniTriviaIcon size={139} color={rgba(theme.gray100, 0.1)} />
           <Participant
             size={70}
             textStyles={{ variant: 'body4' }}
-            name="Camisetas"
-            occupation="Nani"
+            name={opponent?.name ?? 'Oponente'}
+            lastname={opponent?.lastname ?? 'al azar'}
           />
         </StyledRow>
       </StyledColumn>
@@ -94,7 +94,7 @@ const WaitingCard = ({ programName, user, opponent, timeLeft, status, score }: T
         >
           <SandClockIcon size={20} color={theme.primary500} />
           <StyledText variant="body1" color="primary500">
-            {'Le quedan 5 hs'}
+            {`Le quedan ${timeLeft ?? '5hs'}`}
           </StyledText>
         </StyledRow>
       </StyledBox>
