@@ -11,7 +11,7 @@ import { Countdown } from '../../../../components/trivia/Countdown';
 import PlayersHeader from '../../../../components/trivia/PlayersHeader';
 import Question from '../../../../components/trivia/Question';
 import useTrivia from '../../../../hooks/useTrivia';
-import { Animated, Dimensions, Platform, AppState } from 'react-native';
+import { Animated, Dimensions, Platform } from 'react-native';
 import TriviaResult from '../../../../components/trivia/TriviaResult';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as NavigationBar from 'expo-navigation-bar';
@@ -29,7 +29,7 @@ const battle = () => {
     totalQuestionsNumber,
     isRequestLoading,
   } = useTrivia();
-  const [startTimer, setStartTimer] = useState(false);
+  const [showTimer, setShowTimer] = useState(false);
   const theme = useTheme();
   const router = useRouter();
 
@@ -52,7 +52,7 @@ const battle = () => {
 
   const handleAnswer = (answer: string) => {
     handleSendAnswer(answer);
-    setStartTimer(false);
+    setShowTimer(false);
   };
 
   const getQuestionStatus = () => {
@@ -70,7 +70,13 @@ const battle = () => {
   };
 
   useEffect(() => {
-    if (!currentQuestion.timesup && !currentQuestion.answer) setStartTimer(true);
+    if (
+      !currentQuestion.timesup &&
+      !currentQuestion.answer &&
+      !currentQuestion.userLeft &&
+      currentQuestion.status === 'default'
+    )
+      setShowTimer(true);
   }, [currentQuestion]);
 
   const animateBoxes = () => {
@@ -109,6 +115,11 @@ const battle = () => {
       NavigationBar.setVisibilityAsync('hidden');
       setAndroidNavigationBehaviour();
     }
+
+    return () => {
+      NavigationBar.setVisibilityAsync('visible');
+      setShowTimer(false);
+    };
   }, []);
 
   return (
@@ -138,7 +149,7 @@ const battle = () => {
                 height: 23,
               }}
             >
-              {!isRequestLoading && startTimer && <Countdown time={timeToAnswer} />}
+              {!isRequestLoading && showTimer && <Countdown time={timeToAnswer} />}
             </StyledBox>
           </StyledRow>
           <PlayersHeader
@@ -170,7 +181,9 @@ const battle = () => {
                 currentQuestion.answer === option
               }
               loading={isRequestLoading}
-              showCorrect={currentQuestion.timesup || !!currentQuestion.answer}
+              showCorrect={
+                currentQuestion.timesup || !!currentQuestion.answer || currentQuestion.userLeft
+              }
             />
           ))}
         </StyledColumn>

@@ -1,4 +1,4 @@
-import { LoginLocatorsType } from "../../common/locators/types";
+import { LoginLocatorsType } from '../../common/locators/types';
 
 const LoginLocators: LoginLocatorsType = {
   loginButton: '//*[@name="login-btn"]',

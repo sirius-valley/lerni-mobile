@@ -117,9 +117,8 @@ export const triviaSlice = createSlice({
           state.currentQuestion.timesup = true;
         } else if (answer === 'left') {
           state.currentQuestion.userLeft = true;
-        } else {
-          state.currentQuestion.answer = answer;
         }
+        state.currentQuestion.answer = answer;
       })
       .addMatcher(triviaApi.endpoints.answerTrivia.matchFulfilled, (state, action) => {
         const { isCorrect } = action.payload;
@@ -136,6 +135,7 @@ export const triviaSlice = createSlice({
           state.nextQuestion.nextQuestionId = action.payload.triviaQuestion.id;
           state.nextQuestion.timesup = false;
           state.nextQuestion.questionNumber = state.answersHistory.me.length + 1;
+          state.nextQuestion.status === 'default';
         }
         state.triviaStatus = action.payload.status;
       });

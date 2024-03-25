@@ -78,7 +78,8 @@ const PlayerStatus = ({
           flexWrap: 'wrap',
           width: 130,
           gap: 8,
-          flexDirection: side === 'right' ? 'row-reverse' : 'row',
+          // flexDirection: side === 'right' ? 'row-reverse' : 'row',
+          flexDirection: 'row',
         }}
       >
         {renderPoints()}

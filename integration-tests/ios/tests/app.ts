@@ -1,5 +1,5 @@
-import { iOSRemoteOptions } from "../../common/projectCapabilities";
-import { launchExpoIOS } from "../utils/init";
+import { iOSRemoteOptions } from '../../common/projectCapabilities';
+import { launchExpoIOS } from '../utils/init';
 
 class TestAppIOS {
   private driver: WebdriverIO.Browser | undefined;
@@ -18,7 +18,7 @@ class TestAppIOS {
 
   getDriver() {
     if (!this.driver) {
-      throw new Error("Driver uninitialized");
+      throw new Error('Driver uninitialized');
     }
     return this.driver;
   }
