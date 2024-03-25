@@ -1,9 +1,11 @@
 import { useRouter } from 'expo-router';
 import { StyledBox, StyledColumn } from '../../../../components/styled/styles';
 import Button from '../../../../components/styled/Button';
-import TriviaCard from '../../../../components/trivia/TriviaCard';
+import TriviaCard from './components/TriviaCardContainer/TriviaCard/Challenged';
 import { FlatList, ScrollView } from 'react-native';
 import { useEffect, useState } from 'react';
+import { TriviaCardContainer } from './components/TriviaCardContainer';
+import { TriviaHistory } from './components/TriviaHistory';
 
 export default function Page() {
   const router = useRouter();
@@ -24,19 +26,9 @@ export default function Page() {
   }, [currentPage]);
 
   return (
-    <StyledColumn>
-      <ScrollView style={{ height: 390, width: 342 }}>
-        <FlatList
-          style={{ height: 390, width: 342 }}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ gap: 16 }}
-          data={showTrivias}
-          onEndReached={handleEndReached}
-          ListFooterComponent={() => <StyledBox></StyledBox>}
-          renderItem={(data) => <TriviaCard />}
-        />
-      </ScrollView>
+    <StyledColumn style={{ justifyContent: 'center', alignItems: 'center', gap: 16 }}>
+      <TriviaCardContainer />
+      <TriviaHistory />
       <Button onPress={() => router.push('/(auth)/triviaScreen')}>Trivia</Button>
     </StyledColumn>
   );
