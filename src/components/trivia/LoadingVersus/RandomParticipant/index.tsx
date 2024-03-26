@@ -4,11 +4,12 @@ import { StyledBox, StyledColumn, StyledText } from '../../../styled/styles';
 import { ShuffleIcon } from '../../../../../assets/icons/ShuffleIcon';
 
 interface RandomParticipantProps {
-  name: string;
-  occupation: string;
+  name?: string;
+  lastname?: string;
+  size?: number;
 }
 
-export const RandomParticipant = ({ name, occupation }: RandomParticipantProps) => {
+export const RandomParticipant = ({ name, lastname, size }: RandomParticipantProps) => {
   const theme = useTheme();
   return (
     <StyledColumn css={{ justifyContent: 'center', alignItems: 'center', gap: 8 }}>
@@ -18,8 +19,8 @@ export const RandomParticipant = ({ name, occupation }: RandomParticipantProps) 
           border: '3px solid',
           borderColor: theme.primary400,
           backgroundColor: theme.primary700,
-          width: 106,
-          height: 106,
+          width: size ?? 106,
+          height: size ?? 106,
           justifyContent: 'center',
           alignItems: 'center',
         }}
@@ -28,10 +29,10 @@ export const RandomParticipant = ({ name, occupation }: RandomParticipantProps) 
       </StyledBox>
       <StyledColumn css={{ alignItems: 'center' }}>
         <StyledText variant="body2" css={{ color: theme.gray100, alignContent: 'center' }}>
-          {name}
+          {name ?? 'Oponente'}
         </StyledText>
         <StyledText variant="body2" css={{ color: theme.gray100, alignContent: 'center' }}>
-          {occupation}
+          {lastname ?? 'al azar'}
         </StyledText>
       </StyledColumn>
     </StyledColumn>

@@ -10,7 +10,7 @@ export interface StyledPropertiesInterface {
 
 type TextVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'body1' | 'body2' | 'body3' | 'body4';
 
-interface StyledTextInterface extends StyledPropertiesInterface {
+export interface StyledTextInterface extends StyledPropertiesInterface {
   variant?: TextVariant;
   color?: keyof ThemeColors;
 }
