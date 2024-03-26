@@ -66,7 +66,7 @@ const PendingCard = ({ programName, user, opponent, timeLeft, status, score }: T
             {'Trivia pendiente'}
           </StyledText>
           <StyledText variant="body2" color="gray100">
-            {'Responder esta trivia solo te llevar'}
+            {'Responder esta trivia solo te llevará'}
           </StyledText>
           <StyledText variant="body2" color="gray100" css={{ fontFamily: 'Roboto-Bold' }}>
             {'10 minutos'}

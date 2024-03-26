@@ -56,7 +56,7 @@ const WaitingCard = ({ programName, user, opponent, timeLeft, status, score }: T
           }}
         >
           <StyledText variant="h2" color="white">
-            {'Ya hiciste tu parte!'}
+            {'¡Ya hiciste tu parte!'}
           </StyledText>
           <StyledText variant="body2" color="gray100">
             {'Ahora a esperar a tu oponente'}
@@ -94,7 +94,7 @@ const WaitingCard = ({ programName, user, opponent, timeLeft, status, score }: T
         >
           <SandClockIcon size={20} color={theme.primary500} />
           <StyledText variant="body1" color="primary500">
-            {`Le quedan ${timeLeft ?? '5hs'}`}
+            {`Le quedan ${timeLeft ?? '5'}hs`}
           </StyledText>
         </StyledRow>
       </StyledBox>

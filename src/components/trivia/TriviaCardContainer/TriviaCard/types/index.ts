@@ -11,7 +11,7 @@ export interface TriviaCardProps {
   programName: string;
   user: SimpleStudent;
   opponent?: SimpleStudent;
-  timeLeft?: number;
+  timeLeft?: string;
   score?: {
     me: number;
     opponent: number;

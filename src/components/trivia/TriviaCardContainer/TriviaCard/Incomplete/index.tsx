@@ -63,7 +63,7 @@ const IncompleteCard = ({
           {'Termina la partida.'}
         </StyledText>
         <StyledText variant="body2" color="gray100">
-          {'No pierdas la oportunidad de sumar puntos!'}
+          {'¡No pierdas la oportunidad de sumar puntos!'}
         </StyledText>
       </StyledColumn>
       <StyledRow css={{ justifyContent: 'center', alignItems: 'flex-end' }}>
@@ -82,7 +82,7 @@ const IncompleteCard = ({
         />
       </StyledRow>
       <StyledText variant="body2" color="white">
-        {`Te quedan ${timeLeft ?? '5hs'}`}
+        {`Te quedan ${timeLeft ?? '5'}`}
       </StyledText>
       {/* En el botón, debería de recibir el id de la partida (por props), y reemplazar el router con el link a esa partida */}
       <Button onPress={() => alert('push to trivia start')} css={{ width: '100%' }}>

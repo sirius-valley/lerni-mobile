@@ -59,7 +59,7 @@ const ChallengedCard = ({
           {'Fuiste retado a un duelo'}
         </StyledText>
         <StyledText variant="body2" color="gray100">
-          {'Responder esta trivia solo te llevar'}
+          {'Responder esta trivia solo te llevará'}
         </StyledText>
         <StyledText variant="body2" color="gray100" css={{ fontFamily: 'Roboto-Bold' }}>
           {'10 minutos'}
@@ -81,7 +81,7 @@ const ChallengedCard = ({
         />
       </StyledRow>
       <StyledText variant="body2" color="white">
-        {`Te quedan ${timeLeft ?? '5hs'}`}
+        {`Te quedan ${timeLeft ?? '5'}hs`}
       </StyledText>
       {/* En el botón, debería de recibir el id de la partida (por props), y reemplazar el router con el link a esa partida */}
       <Button onPress={() => alert('push to trivia start')} css={{ width: '100%' }}>
