@@ -36,8 +36,7 @@ const Page = () => {
   return (
     <Swipeable
       onSwipeableOpen={() => {
-        // Redefine this function to do nothing to prevent the
-        // user to swipe back.
+        // Redefine this function to do nothing when user swipes back.
       }}
     >
       <StyledColumn style={{ width: '100%', height: '100%', backgroundColor: 'black' }}>
