@@ -14,7 +14,7 @@ interface ToastProps {
 
 export const CustomSuccessToast = ({ type, text, onClose }: ToastProps) => {
   return (
-    <ToastContainer type={type ? type : 'success'}>
+    <ToastContainer testID="toast-component" type={type ? type : 'success'}>
       <View
         style={{
           display: 'flex',
@@ -25,7 +25,7 @@ export const CustomSuccessToast = ({ type, text, onClose }: ToastProps) => {
         }}
       >
         <ToastIcon type={type} />
-        <ToastText style={{ flex: 1 }} variant="body2">
+        <ToastText testID="toast-text" style={{ flex: 1 }} variant="body2">
           {text ? text : 'toast'}
         </ToastText>
         <Pressable onPress={onClose}>
