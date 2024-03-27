@@ -11,7 +11,7 @@ export default function Page() {
       <Button
         onPress={() =>
           router.push({
-            pathname: '/(auth)/triviaScreen/start',
+            pathname: '/(auth)/startTrivia',
             params: {
               programId,
             },

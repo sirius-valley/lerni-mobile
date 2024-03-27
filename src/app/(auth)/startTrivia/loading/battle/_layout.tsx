@@ -1,11 +1,9 @@
 import { Stack } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from 'styled-components/native';
-import { withModal } from '../../../../hoc/withModal';
+import { withModal } from '../../../../../hoc/withModal';
 
 export const Layout = () => {
   const theme = useTheme();
-  const insets = useSafeAreaInsets();
   return (
     <Stack
       screenOptions={{
@@ -13,9 +11,6 @@ export const Layout = () => {
         contentStyle: {
           flex: 1,
           backgroundColor: theme.primary900,
-          // paddingTop: insets.top + 30,
-          // paddingBottom: 80,
-          // paddingHorizontal: 24,
         },
       }}
     />

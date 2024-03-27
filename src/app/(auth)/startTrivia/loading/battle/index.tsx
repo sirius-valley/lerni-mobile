@@ -5,17 +5,18 @@ import {
   StyledColumn,
   StyledRow,
   StyledText,
-} from '../../../../components/styled/styles';
-import AnswerButton from '../../../../components/trivia/AnswerButton';
-import { Countdown } from '../../../../components/trivia/Countdown';
-import PlayersHeader from '../../../../components/trivia/PlayersHeader';
-import Question from '../../../../components/trivia/Question';
-import useTrivia from '../../../../hooks/useTrivia';
+} from '../../../../../components/styled/styles';
+import AnswerButton from '../../../../../components/trivia/AnswerButton';
+import { Countdown } from '../../../../../components/trivia/Countdown';
+import PlayersHeader from '../../../../../components/trivia/PlayersHeader';
+import Question from '../../../../../components/trivia/Question';
+import useTrivia from '../../../../../hooks/useTrivia';
 import { Animated, Dimensions, Platform } from 'react-native';
-import TriviaResult from '../../../../components/trivia/TriviaResult';
+import TriviaResult from '../../../../../components/trivia/TriviaResult';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useRouter } from 'expo-router';
+import { Swipeable } from 'react-native-gesture-handler';
 
 const battle = () => {
   const {
@@ -41,7 +42,7 @@ const battle = () => {
   const box1Opacity = useRef(new Animated.Value(1)).current;
 
   const handleResultScreenPress = () => {
-    router.push({
+    router.replace({
       pathname: '(auth)/trivia',
     });
     // Sets Android navigation bar visible back again when leave the screen
@@ -110,6 +111,7 @@ const battle = () => {
   // Hides navigation bar on android phones.
   const setAndroidNavigationBehaviour = async () =>
     await NavigationBar.setBehaviorAsync('overlay-swipe');
+
   useEffect(() => {
     if (Platform.OS === 'android') {
       NavigationBar.setVisibilityAsync('hidden');
@@ -117,13 +119,20 @@ const battle = () => {
     }
 
     return () => {
-      NavigationBar.setVisibilityAsync('visible');
-      setShowTimer(false);
+      if (Platform.OS === 'android') {
+        NavigationBar.setVisibilityAsync('visible');
+        setShowTimer(false);
+      }
     };
   }, []);
 
   return (
-    <>
+    <Swipeable
+      onSwipeableOpen={() => {
+        // Redefine this function to do nothing to prevent the
+        // user to swipe back.
+      }}
+    >
       <Animated.View
         style={{
           opacity: box1Opacity,
@@ -198,7 +207,7 @@ const battle = () => {
           <TriviaResult type={getResultStatus()} onPress={handleResultScreenPress} />
         </StyledBox>
       </Animated.View>
-    </>
+    </Swipeable>
   );
 };
 

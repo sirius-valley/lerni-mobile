@@ -3,22 +3,17 @@ import { rgba } from 'polished';
 import { useState } from 'react';
 import { Pressable } from 'react-native';
 import { useTheme } from 'styled-components/native';
-import { TriviaRadialBackground } from '../../../../../assets/TriviaRadialBackground';
-import BackArrow from '../../../../../assets/icons/BackArrow';
-import { TriviaLoaderIcon } from '../../../../../assets/icons/TriviaLoaderIcon';
-import ErrorDisplay from '../../../../components/common/ErrorDisplay';
-import Button from '../../../../components/styled/Button';
-import {
-  StyledBox,
-  StyledColumn,
-  StyledRow,
-  StyledText,
-} from '../../../../components/styled/styles';
-import { Participant } from '../../../../components/trivia/LoadingVersus/Participant';
-import { RandomParticipant } from '../../../../components/trivia/LoadingVersus/RandomParticipant';
-import { useProgramByIdQuery } from '../../../../redux/service/program.service';
-import { useMeQuery } from '../../../../redux/service/student.service';
-import { useLazyAssignTriviaQuery } from '../../../../redux/service/trivia.service';
+import { TriviaRadialBackground } from '../../../../assets/TriviaRadialBackground';
+import BackArrow from '../../../../assets/icons/BackArrow';
+import { TriviaLoaderIcon } from '../../../../assets/icons/TriviaLoaderIcon';
+import ErrorDisplay from '../../../components/common/ErrorDisplay';
+import Button from '../../../components/styled/Button';
+import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../../components/styled/styles';
+import { Participant } from '../../../components/trivia/LoadingVersus/Participant';
+import { RandomParticipant } from '../../../components/trivia/LoadingVersus/RandomParticipant';
+import { useProgramByIdQuery } from '../../../redux/service/program.service';
+import { useMeQuery } from '../../../redux/service/student.service';
+import { useLazyAssignTriviaQuery } from '../../../redux/service/trivia.service';
 
 const StartTrivia = () => {
   const [fetch, { isLoading }] = useLazyAssignTriviaQuery();
@@ -34,7 +29,7 @@ const StartTrivia = () => {
     setLoading(true);
     fetch({ programId: programId as string });
     if (!isLoading) {
-      router.push('/(auth)/triviaScreen');
+      router.push('/(auth)/startTrivia/loading');
     }
     setLoading(false);
   };
@@ -51,12 +46,15 @@ const StartTrivia = () => {
         justifyContent: 'space-between',
         alignItems: 'center',
         position: 'relative',
+        paddingTop: 60,
+        paddingBottom: 120,
+        paddingHorizontal: 24,
       }}
     >
       <TriviaRadialBackground />
       <StyledColumn css={{ gap: 32 }}>
         <StyledRow css={{ width: '100%', justifyContent: 'left', alignItems: 'center' }}>
-          <Pressable onPress={() => router.replace('/(tabs)/explore')}>
+          <Pressable onPress={() => router.back()}>
             <BackArrow color={theme.gray400} size={24} />
           </Pressable>
         </StyledRow>
