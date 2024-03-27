@@ -24,26 +24,21 @@ const Carousel = ({ blockId, nextBlockId }: CarouselProps) => {
 
   const { ZoomImageComponent, handleOpenImage } = useZoomImage({
     images:
-      block.options?.map((item) => ({
-        url: item.image,
-      })) ?? [],
+      block.options
+        .filter((item) => !sealed || (!!item?.selected && sealed))
+        ?.map((item) => ({
+          url: item.image,
+        })) ?? [],
   });
 
   const handleSelect = (answerId: string) => {
     setValues((prev) => ({
       ...prev,
       options: prev.options.map((option) => {
-        if (option.id === answerId) {
-          return {
-            ...option,
-            selected: !option.selected,
-          };
-        } else {
-          return {
-            ...option,
-            selected: false,
-          };
-        }
+        return {
+          ...option,
+          selected: option.id === answerId ? true : false,
+        };
       }),
     }));
   };
@@ -64,21 +59,23 @@ const Carousel = ({ blockId, nextBlockId }: CarouselProps) => {
         }}
         showsHorizontalScrollIndicator={false}
       >
-        {values.options?.map((item, index) => {
-          return sealed && !item.selected ? null : (
-            <Item
-              key={index}
-              image={item.image}
-              selected={!!item.selected}
-              handleOpenImage={() => handleOpenImage(index)}
-              handleSelect={() => handleSelect(item.id)}
-              description={item.description}
-              id={item.id}
-              disabled={sealed}
-              sealed={sealed}
-            />
-          );
-        })}
+        {values.options
+          .filter((item) => !sealed || (!!item?.selected && sealed))
+          ?.map((item, index) => {
+            return sealed && !item.selected ? null : (
+              <Item
+                key={index}
+                image={item.image}
+                selected={!!item.selected}
+                handleOpenImage={() => handleOpenImage(index)}
+                handleSelect={() => handleSelect(item.id)}
+                description={item.description}
+                id={item.id}
+                disabled={sealed}
+                sealed={sealed}
+              />
+            );
+          })}
       </StyledCarouselContainer>
       <StyledRow
         style={{

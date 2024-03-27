@@ -107,7 +107,8 @@ const MainPill = () => {
               )}
               contentContainerStyle={{
                 paddingHorizontal: 24,
-                padding: 24,
+                paddingTop: 24,
+                paddingBottom: 32,
               }}
               onContentSizeChange={(comp) =>
                 setTimeout(() => {

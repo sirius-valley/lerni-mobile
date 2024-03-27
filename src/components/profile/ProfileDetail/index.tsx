@@ -1,12 +1,27 @@
 import { useTheme } from 'styled-components/native';
 import Avatar from '../../common/Avatar';
 import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../styled/styles';
-import { MeResponse } from '../../../redux/service/types/student.response';
 import { CareerIcon } from '../../../../assets/icons/CareerIcon';
 import { ProfessionIcon } from '../../../../assets/icons/ProfessionIcon';
 import { LocationIcon } from '../../../../assets/icons/LocationIcon';
 
-export const ProfileDetail = ({ image, name, lastname, career, profession, city }: MeResponse) => {
+interface ProfileDetailProps {
+  image: string;
+  name: string;
+  lastname: string;
+  career: string;
+  profession: string;
+  city: string;
+}
+
+export const ProfileDetail = ({
+  image,
+  name,
+  lastname,
+  career,
+  profession,
+  city,
+}: ProfileDetailProps) => {
   const theme = useTheme();
 
   return (

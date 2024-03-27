@@ -45,7 +45,6 @@ const HeaderProgram = ({ imgURL, progress, nextPillId }: HeaderProgramProps) => 
           source={{ uri: imgURL }}
           defaultSource={{ uri: imgURL }}
           style={{ width: '100%', height: 190 }}
-          loadingIndicatorSource={require('../../../../../../../../assets/backgroundProgramImage.png')}
         />
         <StyledBox css={{ width: '100%', position: 'absolute', bottom: 0, left: 0 }}>
           <Progress.Bar
@@ -62,7 +61,7 @@ const HeaderProgram = ({ imgURL, progress, nextPillId }: HeaderProgramProps) => 
           css={{
             width: 60,
             height: 60,
-            borderRadius: '50%',
+            borderRadius: 50,
             backgroundColor: theme.primary500,
             position: 'absolute',
             right: 24,

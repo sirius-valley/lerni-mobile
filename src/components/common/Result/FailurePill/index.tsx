@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import { Result } from '..';
 import { TiredIcon } from '../../../../../assets/icons/TiredIcon';
@@ -6,7 +6,10 @@ import Button from '../../../styled/Button';
 import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../../styled/styles';
 import { useTheme } from 'styled-components/native';
 
-export const FailurePill = () => {
+interface FailurePillProps {
+  callback: () => void;
+}
+export const FailurePill = ({ callback }: FailurePillProps) => {
   const theme = useTheme();
   const router = useRouter();
 
@@ -19,7 +22,14 @@ export const FailurePill = () => {
   const footer = () => {
     return (
       <StyledBox style={{ minWidth: '90%' }}>
-        <Button onPress={() => router.push('explore')}>Ir al inicio </Button>
+        <Button
+          onPress={() => {
+            router.push('explore');
+            callback();
+          }}
+        >
+          Ir al inicio{' '}
+        </Button>
       </StyledBox>
     );
   };

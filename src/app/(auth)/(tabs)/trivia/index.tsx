@@ -1,13 +1,32 @@
-import CustomError from '../../../../components/common/ErrorDisplay/CustomError';
-import WIPIllustration from '../../../../../assets/icons/WIPIllustration';
+import { useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
+import Button from '../../../../components/styled/Button';
+import { StyledColumn } from '../../../../components/styled/styles';
+import { TriviaCardContainer } from '../../../../components/trivia/TriviaCardContainer';
+import { TriviaHistory } from '../../../../components/trivia/TriviaHistory';
 
 export default function Page() {
+  const router = useRouter();
+  const [showTrivias, setShowTrivias] = useState<number[]>();
+  const trivias = [1, 2, 3];
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleEndReached = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  useEffect(() => {
+    if (!showTrivias) {
+      setShowTrivias([trivias[0]]);
+    } else {
+      setShowTrivias([...showTrivias, trivias[currentPage]]);
+    }
+  }, [currentPage]);
+
   return (
-    <CustomError
-      Icon={WIPIllustration}
-      title={'Página en construcción'}
-      content={'El contenido que querés acceder \n no esta disponible ahora.'}
-      buttonText={'Ir a Explorar'}
-    />
+    <StyledColumn style={{ justifyContent: 'center', alignItems: 'center', gap: 16 }}>
+      <TriviaCardContainer />
+      <TriviaHistory />
+    </StyledColumn>
   );
 }

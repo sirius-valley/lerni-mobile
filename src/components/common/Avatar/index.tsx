@@ -20,6 +20,7 @@ const Avatar = ({ uri, size = 28, borderRadius = 50, css = {} }: AvatarProps) =>
       source={{
         uri: uri,
       }}
+      onLoad={() => '...'}
       css={{ width: size, height: size, borderRadius: borderRadius, ...css }}
     />
   );

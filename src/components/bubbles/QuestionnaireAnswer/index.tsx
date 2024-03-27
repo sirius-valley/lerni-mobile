@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledColumn, StyledRow } from '../../styled/styles';
+import { StyledColumn, StyledRow, StyledText } from '../../styled/styles';
 import { LabeledSend } from '../LabeledSend';
 import QuestionnaireChoice from '../../styled/QuestionnaireChoice';
 import { StyledQuestionnaireChoiceMainContainer } from '../../styled/QuestionnaireChoice/styles';
@@ -69,6 +69,11 @@ const QuestionnaireMultipleAnswer = ({
           </StyledRow>
         ))}
       </StyledQuestionnaireChoiceMainContainer>
+      {sealed && !isSingleAnswer && points === 0 && correctAnswers && (
+        <StyledText variant={'body3'} color={'gray500'}>
+          No se seleccionaron todas las respuestas correctas
+        </StyledText>
+      )}
       {sealed && <PointsDisplay points={points ?? 0} />}
       {!sealed && !isSingleAnswer && (
         <LabeledSend
