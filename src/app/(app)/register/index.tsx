@@ -100,6 +100,7 @@ const RegisterScreen = () => {
                 {({ handleChange, handleBlur, handleSubmit, values, isValid, errors, touched }) => (
                   <>
                     <TextInput
+                      testID={'register-email-input'}
                       value={values.email}
                       onChangeText={handleChange('email')}
                       placeholder="Email"
@@ -111,6 +112,7 @@ const RegisterScreen = () => {
                       }}
                     />
                     <TextInput
+                      testID={'register-password-input'}
                       value={values.password}
                       onChangeText={handleChange('password')}
                       placeholder="Contraseña"
@@ -131,6 +133,7 @@ const RegisterScreen = () => {
                       <PasswordValidationDisplay password={values.password} />
                     )}
                     <Button
+                      testID={'register-btn'}
                       disabled={!isValid || !values.email || !values.password}
                       onPress={handleSubmit}
                       variant={'dark'}
@@ -147,12 +150,19 @@ const RegisterScreen = () => {
                       loading={isLoading}
                       css={{
                         backgroundColor: 'transparent',
-                        alignItems: 'center'
+                        alignItems: 'center',
                       }}
                       icon={ChevronLeftIcon}
                       iconColor="primary950"
                     >
-                      {<StyledText variant='body2' css={{color: theme.primary950, alignContent: 'center'}}>Ya tengo cuenta</StyledText>}
+                      {
+                        <StyledText
+                          variant="body2"
+                          css={{ color: theme.primary950, alignContent: 'center' }}
+                        >
+                          Ya tengo cuenta
+                        </StyledText>
+                      }
                     </Button>
                   </>
                 )}
