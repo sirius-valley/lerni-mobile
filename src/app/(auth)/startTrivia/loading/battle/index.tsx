@@ -5,17 +5,18 @@ import {
   StyledColumn,
   StyledRow,
   StyledText,
-} from '../../../../components/styled/styles';
-import AnswerButton from '../../../../components/trivia/AnswerButton';
-import { Countdown } from '../../../../components/trivia/Countdown';
-import PlayersHeader from '../../../../components/trivia/PlayersHeader';
-import Question from '../../../../components/trivia/Question';
-import useTrivia from '../../../../hooks/useTrivia';
-import { Animated, Dimensions, Platform, AppState } from 'react-native';
-import TriviaResult from '../../../../components/trivia/TriviaResult';
+} from '../../../../../components/styled/styles';
+import AnswerButton from '../../../../../components/trivia/AnswerButton';
+import { Countdown } from '../../../../../components/trivia/Countdown';
+import PlayersHeader from '../../../../../components/trivia/PlayersHeader';
+import Question from '../../../../../components/trivia/Question';
+import useTrivia from '../../../../../hooks/useTrivia';
+import { Animated, Dimensions, Platform } from 'react-native';
+import TriviaResult from '../../../../../components/trivia/TriviaResult';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useRouter } from 'expo-router';
+import { Swipeable } from 'react-native-gesture-handler';
 
 const battle = () => {
   const {
@@ -29,7 +30,7 @@ const battle = () => {
     totalQuestionsNumber,
     isRequestLoading,
   } = useTrivia();
-  const [startTimer, setStartTimer] = useState(false);
+  const [showTimer, setShowTimer] = useState(false);
   const theme = useTheme();
   const router = useRouter();
 
@@ -41,7 +42,7 @@ const battle = () => {
   const box1Opacity = useRef(new Animated.Value(1)).current;
 
   const handleResultScreenPress = () => {
-    router.push({
+    router.replace({
       pathname: '(auth)/trivia',
     });
     // Sets Android navigation bar visible back again when leave the screen
@@ -52,7 +53,7 @@ const battle = () => {
 
   const handleAnswer = (answer: string) => {
     handleSendAnswer(answer);
-    setStartTimer(false);
+    setShowTimer(false);
   };
 
   const getQuestionStatus = () => {
@@ -70,7 +71,13 @@ const battle = () => {
   };
 
   useEffect(() => {
-    if (!currentQuestion.timesup && !currentQuestion.answer) setStartTimer(true);
+    if (
+      !currentQuestion.timesup &&
+      !currentQuestion.answer &&
+      !currentQuestion.userLeft &&
+      currentQuestion.status === 'default'
+    )
+      setShowTimer(true);
   }, [currentQuestion]);
 
   const animateBoxes = () => {
@@ -104,15 +111,27 @@ const battle = () => {
   // Hides navigation bar on android phones.
   const setAndroidNavigationBehaviour = async () =>
     await NavigationBar.setBehaviorAsync('overlay-swipe');
+
   useEffect(() => {
     if (Platform.OS === 'android') {
       NavigationBar.setVisibilityAsync('hidden');
       setAndroidNavigationBehaviour();
     }
+
+    return () => {
+      if (Platform.OS === 'android') {
+        NavigationBar.setVisibilityAsync('visible');
+        setShowTimer(false);
+      }
+    };
   }, []);
 
   return (
-    <>
+    <Swipeable
+      onSwipeableOpen={() => {
+        // Redefine this function to do nothing when user swipes back.
+      }}
+    >
       <Animated.View
         style={{
           opacity: box1Opacity,
@@ -138,7 +157,7 @@ const battle = () => {
                 height: 23,
               }}
             >
-              {!isRequestLoading && startTimer && <Countdown time={timeToAnswer} />}
+              {!isRequestLoading && showTimer && <Countdown time={timeToAnswer} />}
             </StyledBox>
           </StyledRow>
           <PlayersHeader
@@ -170,7 +189,9 @@ const battle = () => {
                 currentQuestion.answer === option
               }
               loading={isRequestLoading}
-              showCorrect={currentQuestion.timesup || !!currentQuestion.answer}
+              showCorrect={
+                currentQuestion.timesup || !!currentQuestion.answer || currentQuestion.userLeft
+              }
             />
           ))}
         </StyledColumn>
@@ -185,7 +206,7 @@ const battle = () => {
           <TriviaResult type={getResultStatus()} onPress={handleResultScreenPress} />
         </StyledBox>
       </Animated.View>
-    </>
+    </Swipeable>
   );
 };
 

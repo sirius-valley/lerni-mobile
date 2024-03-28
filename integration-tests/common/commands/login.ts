@@ -1,5 +1,5 @@
 import { CommandsInterface } from '../commandsInterface';
-import { LoginLocatorsType } from "../locators/types";
+import { LoginLocatorsType } from '../locators/types';
 
 export class SessionCommands extends CommandsInterface {
   loginLocators: LoginLocatorsType;

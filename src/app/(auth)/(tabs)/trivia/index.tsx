@@ -27,6 +27,18 @@ export default function Page() {
     <StyledColumn style={{ justifyContent: 'center', alignItems: 'center', gap: 16 }}>
       <TriviaCardContainer />
       <TriviaHistory />
+      <Button
+        onPress={() =>
+          router.push({
+            pathname: '/(auth)/startTrivia',
+            params: {
+              programId: 'triviaMatchId 0',
+            },
+          })
+        }
+      >
+        Go To Trivia
+      </Button>
     </StyledColumn>
   );
 }

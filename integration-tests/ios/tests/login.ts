@@ -1,7 +1,7 @@
-import { SessionCommands } from "../../common/commands/login";
+import { SessionCommands } from '../../common/commands/login';
 //import { createTestUser } from "../../utils/requester";
-import LoginLocators from "../locators/login";
-import { TestAppIOS } from "./app";
+import LoginLocators from '../locators/login';
+import { TestAppIOS } from './app';
 
 describe('Login flow', function () {
   let app: TestAppIOS;
@@ -21,12 +21,9 @@ describe('Login flow', function () {
 
   it('Should input login credentials', async function () {
     if (!process.env.APPIUM_TEST_USERNAME || !process.env.APPIUM_TEST_PASSWORD) {
-      throw new Error("Invalid test user data");
+      throw new Error('Invalid test user data');
     }
-    await sessionCommands.login(
-      process.env.APPIUM_TEST_USERNAME,
-      process.env.APPIUM_TEST_PASSWORD,
-    );
+    await sessionCommands.login(process.env.APPIUM_TEST_USERNAME, process.env.APPIUM_TEST_PASSWORD);
   });
 
   after(async function () {

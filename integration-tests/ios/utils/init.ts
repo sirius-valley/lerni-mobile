@@ -1,8 +1,8 @@
-import { remote, RemoteOptions } from "webdriverio";
+import { remote, RemoteOptions } from 'webdriverio';
 
 async function expoDeepLink(driver: WebdriverIO.Browser) {
   const urlFieldSelector = 'label == "Address"';
-  const urlField = await driver.$(`-ios predicate string:${ urlFieldSelector }`);
+  const urlField = await driver.$(`-ios predicate string:${urlFieldSelector}`);
   await urlField.setValue('exp://127.0.0.1:8081/\uE007');
 }
 
@@ -19,8 +19,8 @@ async function handleFirstLaunch(driver: WebdriverIO.Browser) {
 
 async function reloadExpo(driver: WebdriverIO.Browser) {
   await driver.shake();
-  const reloadSelector = 'type == \'XCUIElementTypeOther\' && name == \'Reload\'';
-  const reload = await driver.$(`-ios predicate string:${ reloadSelector }`);
+  const reloadSelector = "type == 'XCUIElementTypeOther' && name == 'Reload'";
+  const reload = await driver.$(`-ios predicate string:${reloadSelector}`);
   await reload.click();
 }
 

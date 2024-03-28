@@ -1,5 +1,5 @@
-import { androidRemoteOptions } from "../../common/projectCapabilities";
-import { launchExpoAndroid } from "../utils/init";
+import { androidRemoteOptions } from '../../common/projectCapabilities';
+import { launchExpoAndroid } from '../utils/init';
 
 class TestAppAndroid {
   private driver: WebdriverIO.Browser | undefined;
@@ -18,7 +18,7 @@ class TestAppAndroid {
 
   getDriver() {
     if (!this.driver) {
-      throw new Error("Driver uninitialized");
+      throw new Error('Driver uninitialized');
     }
     return this.driver;
   }

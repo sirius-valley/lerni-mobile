@@ -1,11 +1,6 @@
 import { useRouter } from 'expo-router';
 import Button from '../../../../styled/Button';
-import {
-  StyledBox,
-  StyledColumn,
-  StyledRow,
-  StyledText,
-} from '../../../../styled/styles';
+import { StyledBox, StyledColumn, StyledRow, StyledText } from '../../../../styled/styles';
 import { Dimensions } from 'react-native';
 import { TriviaLoaderIcon } from '../../../../../../assets/icons/TriviaLoaderIcon';
 import { Participant } from '../../../LoadingVersus/Participant';
