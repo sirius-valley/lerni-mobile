@@ -29,7 +29,7 @@ export const LoadingVersus = () => {
           <Participant
             image={participants[0].image}
             name={participants[0].name}
-            occupation={participants[0].occupation}
+            lastname={participants[0].lastname}
           />
         </StyledRow>
         <StyledBox css={{}}>
@@ -45,7 +45,7 @@ export const LoadingVersus = () => {
           <Participant
             image={participants[1].image}
             name={participants[1].name}
-            occupation={participants[1].occupation}
+            lastname={participants[1].lastname}
           />
         </StyledRow>
       </StyledColumn>
@@ -56,12 +56,12 @@ export const LoadingVersus = () => {
 const mockedUsers = [
   {
     image: '',
-    name: 'Participant 1',
-    occupation: 'Occupation',
+    name: 'Participant',
+    lastname: '1',
   },
   {
     image: '',
-    name: 'Participant 2',
-    occupation: 'Occupation',
+    name: 'Participant',
+    lastname: '2',
   },
 ];

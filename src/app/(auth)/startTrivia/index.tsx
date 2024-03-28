@@ -71,11 +71,8 @@ const StartTrivia = () => {
           >{`"${program?.programName}"`}</StyledText>
         </StyledColumn>
         <StyledRow css={{ justifyContent: 'space-around', padding: '48px 0px', gap: 2 }}>
-          <Participant
-            name={user.name ?? ''}
-            occupation={user.profession ?? user.career ?? user.lastname ?? ''}
-          />
-          <RandomParticipant name={'Oponente'} occupation={'al azar'} />
+          <Participant name={user.name ?? ''} lastname={user.lastname ?? ''} />
+          <RandomParticipant name={'Oponente'} lastname={'al azar'} />
         </StyledRow>
         <StyledBox
           css={{
